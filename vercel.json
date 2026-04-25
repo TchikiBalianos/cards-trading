@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm install",
+  "public": true,
   "headers": [
     {
       "source": "/(.*)",
