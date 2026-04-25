@@ -241,14 +241,39 @@
 
 @media (max-width: 600px) {
   .comparatif {
-    padding: 5vw !important;
+    padding: 40px 5vw !important;
 
     h2 {
-      padding-bottom: 0;
+      font-size: 28px !important;
+      padding-bottom: 24px;
+    }
+
+    .comparatif-wrapper {
+      flex-direction: column-reverse;
+      gap: 30px;
+    }
+
+    .comparatif__container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .comparatif__table {
-      transform: scale(0.8) translateX(-13%) translateY(-60px);
+      transform: none;
+      min-width: 480px;
+      font-size: 13px;
+
+      th, td {
+        padding: 10px 8px;
+      }
+    }
+
+    .texte-table {
+      width: 100%;
+
+      h3 { font-size: 22px; }
+      p { font-size: 15px; }
     }
   }
 }

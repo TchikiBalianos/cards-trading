@@ -7,7 +7,7 @@
   height: calc(100% - var(--header-height));
 
   .hero-wrapper {
-    padding: 80px 5vw;
+    padding: 80px 5vw 180px;
     align-items: start;
   }
 

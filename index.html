@@ -124,60 +124,57 @@
       </div>
 
       <div class="avantages-container acheteur flex gap30 active">
-        <div class="avantages-item flex column">
-          <div class="item-title">Paiement sécurisé</div>
+        <div class="avantages-item flex column featured">
+          <span class="item-num">01</span>
+          <div class="item-badge">Clé</div>
           <div class="item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="item-title">Paiement sécurisé</div>
           <div class="item-text">
-            Paiement sécurisé avec fonds protégés jusqu’à validation de la
-            réception.
+            Vos fonds sont protégés et bloqués jusqu’à validation de la réception. Zéro risque d’arnaque.
           </div>
         </div>
         <div class="avantages-item flex column">
-          <div class="item-title">Frais</div>
-          <div class="item-icon">
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-          </div>
+          <span class="item-num">02</span>
+          <div class="item-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <div class="item-title">Seulement 3% de frais</div>
           <div class="item-text">
-            Seulement 3% de frais pour acheter au meilleur prix, sans coûts
-            cachés ni surprises au moment du paiement.
+            Achetez au meilleur prix, sans coûts cachés ni surprises au moment du paiement.
           </div>
         </div>
         <div class="avantages-item flex column">
-          <div class="item-title">Envoi suivi</div>
+          <span class="item-num">03</span>
           <div class="item-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <div class="item-title">Envoi suivi</div>
           <div class="item-text">
-            Envoyer en toute sécurité et tracer vos envois a n'importe quel
-            moment depuis l'application.
+            Tracez vos envois en temps réel directement depuis l’application, à chaque étape.
           </div>
         </div>
       </div>
 
       <div class="avantages-container vendeur flex gap30">
-        <div class="avantages-item flex column">
-          <div class="item-title">Prix optimal</div>
+        <div class="avantages-item flex column featured">
+          <span class="item-num">01</span>
+          <div class="item-badge">Clé</div>
           <div class="item-icon"><i class="fa-solid fa-crosshairs"></i></div>
+          <div class="item-title">Prix optimal</div>
           <div class="item-text">
-            Notre outil de pricing vous recommande le prix idéal basé sur les
-            dernières ventes du marché pour maximiser vos chances de vendre
-            rapidement.
+            Notre outil de pricing recommande le prix idéal basé sur les dernières ventes du marché.
           </div>
         </div>
         <div class="avantages-item flex column">
-          <div class="item-title">Frais</div>
-          <div class="item-icon">
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-          </div>
+          <span class="item-num">02</span>
+          <div class="item-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <div class="item-title">Seulement 3% de frais</div>
           <div class="item-text">
-            Seulement 3% de frais pour vendre au meilleur prix, sans coûts
-            cachés ni surprises au moment du paiement.
+            Vendez au meilleur prix, sans coûts cachés ni surprises au moment du paiement.
           </div>
         </div>
         <div class="avantages-item flex column">
-          <div class="item-title">Vente rapide</div>
+          <span class="item-num">03</span>
           <div class="item-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="item-title">Vente rapide</div>
           <div class="item-text">
-            Mettez en vente en un temps record grace au card scanner, qui
-            reconnait votre carte instantanement.
+            Mettez en vente en temps record grâce au card scanner qui reconnaît vos cartes instantanément.
           </div>
         </div>
       </div>
@@ -797,6 +794,21 @@
     </script>
   </body>
 </html>
+
+<!-- smooth scroll -->
+<script>
+  document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const hash = link.getAttribute('href').split('#')[1];
+      if (!hash) return;
+      const target = document.getElementById(hash);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState(null, '', '#' + hash);
+    });
+  });
+</script>
 
 <!-- carrousel -->
 <script>

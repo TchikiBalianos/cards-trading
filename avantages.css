@@ -52,90 +52,131 @@
     }
   }
 
-  .avantages-item {
-    text-align: center !important;
-    padding: 30px 25px;
-    background: linear-gradient(135deg,
-      rgba(41, 151, 255, 0.12) 0%,
-      rgba(42, 52, 99, 0.85) 100%);
+    .avantages-item {
+    text-align: center;
+    padding: 36px 28px 30px;
+    background: linear-gradient(150deg,
+      rgba(41, 151, 255, 0.08) 0%,
+      rgba(20, 27, 60, 0.9) 100%);
     border-radius: 20px;
     width: 30%;
-    min-height: 320px;
-    gap: 20px;
-    justify-content: unset;
-    border: 1px solid rgba(41, 151, 255, 0.25);
+    min-height: 340px;
+    gap: 16px;
+    justify-content: flex-start;
+    border: 1px solid rgba(41, 151, 255, 0.2);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
 
+    /* Shimmer au hover */
     &::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
-      width: 100%;
+      width: 60%;
       height: 100%;
       background: linear-gradient(90deg,
         transparent,
-        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.06),
         transparent);
-      transition: left 0.5s ease;
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+
+    /* Numéro de séquence en filigrane */
+    .item-num {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 64px;
+      font-weight: 900;
+      color: rgba(41, 151, 255, 0.08);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.4s ease;
+      font-family: 'Lexend', sans-serif;
+    }
+
+    /* Badge "Clé" */
+    .item-badge {
+      display: none;
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: linear-gradient(135deg, #2997ff, #0055cc);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    &.featured .item-badge {
+      display: block;
+    }
+
+    &.featured {
+      border-color: rgba(41, 151, 255, 0.45);
+      background: linear-gradient(150deg,
+        rgba(41, 151, 255, 0.14) 0%,
+        rgba(20, 27, 60, 0.95) 100%);
     }
 
     &:hover {
-      transform: translateY(-8px);
-      border-color: rgba(41, 151, 255, 0.6);
-      box-shadow: 0 15px 40px rgba(41, 151, 255, 0.25),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      background: linear-gradient(135deg,
-        rgba(41, 151, 255, 0.2) 0%,
-        rgba(42, 52, 99, 0.95) 100%);
+      transform: translateY(-10px);
+      border-color: rgba(41, 151, 255, 0.65);
+      box-shadow:
+        0 20px 50px rgba(41, 151, 255, 0.2),
+        0 0 0 1px rgba(41, 151, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
 
-      &::before {
-        left: 100%;
-      }
+      &::before { left: 140%; }
+
+      .item-num { color: rgba(41, 151, 255, 0.15); }
 
       .item-icon {
-        transform: scale(1.15) rotate(5deg);
-        color: #4bb0ff;
-        text-shadow: 0 0 20px rgba(41, 151, 255, 0.5);
+        transform: scale(1.12) rotate(6deg);
+        background: rgba(41, 151, 255, 0.2);
+        box-shadow: 0 0 24px rgba(41, 151, 255, 0.35);
       }
 
-      .item-title {
-        color: #4bb0ff;
-      }
-    }
-
-    .item-title {
-      font-weight: bold;
-      font-size: 22px;
-      transition: color 0.3s ease;
-      color: #2997ff;
+      .item-icon i { color: #6ec6ff; }
+      .item-title { color: #6ec6ff; }
+      .item-text { color: #e8e8e8; }
     }
 
     .item-icon {
-      font-size: 50px;
-      color: #2997ff;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      font-size: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 80px;
-      height: 80px;
-      margin: 0 auto;
+      width: 76px;
+      height: 76px;
+      margin: 8px auto 0;
       background: rgba(41, 151, 255, 0.1);
       border-radius: 50%;
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+      i { color: #2997ff; transition: color 0.3s ease; }
+    }
+
+    .item-title {
+      font-weight: 700;
+      font-size: 19px;
+      color: #e0e8ff;
+      transition: color 0.3s ease;
+      margin-top: 4px;
     }
 
     .item-text {
-      font-size: 15px;
-      line-height: 1.5;
-      color: #d0d0d0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #8fa3bf;
       transition: color 0.3s ease;
-    }
-
-    &:hover .item-text {
-      color: #e8e8e8;
     }
   }
 }
