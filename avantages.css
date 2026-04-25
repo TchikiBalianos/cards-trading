@@ -33,13 +33,17 @@
     transition: all 0.2s ease-in-out;
 
     &.active {
-      background: #fff;
-      color: #000;
+      background: #2997ff;
+      border-color: #2997ff;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(41, 151, 255, 0.4);
     }
 
     &:hover {
-      transition: all 0.2s ease-in-out;
-      transform: scale(1.1);
+      background: rgba(41, 151, 255, 0.2);
+      border-color: #2997ff;
+      color: #fff;
+      transform: translateY(-2px);
     }
   }
 

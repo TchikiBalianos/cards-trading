@@ -45,6 +45,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="landing.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -126,7 +127,7 @@
     <div class="separator"></div>
 
     <div class="avantages" id="avantages">
-      <h2>Les avantages Cards trading</h2>
+      <h2 data-aos="fade-up">Les avantages Cards trading</h2>
       <div class="subline">
         Achetez & Vendez vos cartes de collection en toute sécurité
       </div>
@@ -195,7 +196,7 @@
     <div class="separator"></div>
 
     <div class="questionnaire" id="beta">
-      <h2>Et toi, a quoi tu joues ?</h2>
+      <h2 data-aos="fade-up">Et toi, a quoi tu joues ?</h2>
       <div class="questionnaire-wrapper flex gap30">
         <div class="questionnaire-texte">
           Réponds aux questions pour t'inscrire a la beta. Ca nous aidera a
@@ -338,7 +339,7 @@
     <section class="features flex column" id="features">
       <div class="features-inner flex gap100">
         <div class="col-left">
-          <h2>
+          <h2 data-aos="fade-up">
             Profitez d’une expérience optimisée grâce à des fonctionnalités
             pensées pour vous
           </h2>
@@ -532,7 +533,7 @@
     <div class="separator"></div>
 
     <div class="comparatif" id="comparatif">
-      <h2>Comparez nos services</h2>
+      <h2 data-aos="fade-up">Comparez nos services</h2>
 
       <div class="flex gap50 comparatif-wrapper">
         <div class="comparatif__container">
@@ -592,6 +593,47 @@
             </tbody>
           </table>
         </div>
+        
+        <!-- Mobile Cards View -->
+        <div class="comparatif-mobile">
+          <div class="mobile-card highlight">
+            <h4>Cards-Trading</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Commission 0 %</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="check">✓</span></div>
+          </div>
+          <div class="mobile-card">
+            <h4>Cardmarket</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Commission 0 %</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="dash">—</span></div>
+          </div>
+          <div class="mobile-card">
+            <h4>Vinted</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Commission 0 %</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="cross">✕</span></div>
+          </div>
+          <div class="mobile-card">
+            <h4>eBay</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Commission 0 %</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="dash">—</span></div>
+          </div>
+        </div>
+
         <div class="texte-table">
           <h3>L'offre la plus complete</h3>
           <p>
@@ -641,7 +683,7 @@
       <div class="container flex gap30">
         <!-- LEFT -->
         <div class="content col-left">
-          <h2>Outils vendeur pro</h2>
+          <h2 data-aos="fade-up">Outils vendeur pro</h2>
           <div class="seller-args">
             <div class="item">
               <h3>Pilotez votre activité</h3>
@@ -1340,5 +1382,15 @@
         closeLightbox();
       }
     });
+    });
   })();
+</script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true,
+    offset: 100
+  });
 </script>

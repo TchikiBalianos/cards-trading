@@ -51,8 +51,12 @@
         color: #c2c2c2;
 
         &:nth-child(2) {
-          background-color: rgba(255, 255, 255, 0.2);
+          background-color: rgba(41, 151, 255, 0.15);
           color: #fff;
+          border-top: 2px solid #2997ff;
+          border-left: 2px solid #2997ff;
+          border-right: 2px solid #2997ff;
+          box-shadow: 0 -10px 20px rgba(41, 151, 255, 0.25);
         }
       }
 
@@ -61,6 +65,11 @@
 
         &:last-of-type {
           border: none;
+
+          td:nth-child(2) {
+            border-bottom: 2px solid #2997ff;
+            box-shadow: 0 10px 20px rgba(41, 151, 255, 0.25);
+          }
         }
 
         td {
@@ -71,11 +80,23 @@
           }
 
           &:nth-child(2) {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(41, 151, 255, 0.15);
+            border-left: 2px solid #2997ff;
+            border-right: 2px solid #2997ff;
           }
         }
       }
     }
+  }
+
+  /* Mobile Cards Container (hidden on desktop) */
+  .comparatif-mobile {
+    display: none;
+    width: 100%;
+    gap: 20px;
+    flex-direction: column;
+    z-index: 2;
+    position: relative;
   }
 
   .texte-table {
@@ -253,19 +274,63 @@
       gap: 30px;
     }
 
+    /* Hide table on mobile */
     .comparatif__container {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      display: none;
     }
 
-    .comparatif__table {
-      transform: none;
-      min-width: 480px;
-      font-size: 13px;
+    /* Show mobile cards */
+    .comparatif-mobile {
+      display: flex;
+    }
 
-      th, td {
-        padding: 10px 8px;
+    .mobile-card {
+      background: linear-gradient(135deg, rgba(95, 95, 163, 0.4) 0%, rgba(50, 52, 87, 0.8) 100%);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+
+      &.highlight {
+        background: linear-gradient(135deg, rgba(41, 151, 255, 0.2) 0%, rgba(20, 27, 60, 0.9) 100%);
+        border: 2px solid #2997ff;
+        box-shadow: 0 0 20px rgba(41, 151, 255, 0.3);
+      }
+
+      h4 {
+        font-size: 22px;
+        margin: 0 0 15px 0;
+        text-align: center;
+        color: #fff;
+      }
+
+      &.highlight h4 {
+        color: #6ec6ff;
+      }
+
+      .mobile-feature {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .check {
+          color: #2997ff;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        .cross {
+          color: #ff4d4d;
+        }
+        .dash {
+          color: #888;
+        }
       }
     }
 

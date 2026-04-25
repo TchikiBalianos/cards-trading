@@ -6,8 +6,23 @@
   align-items: unset !important;
   height: calc(100vh - var(--header-height));
   margin-top: var(--header-height);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 50%, rgba(41, 151, 255, 0.25) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
   .hero-wrapper {
+    position: relative;
+    z-index: 1;
     padding: 60px 5vw 100px;
     align-items: start;
   }
