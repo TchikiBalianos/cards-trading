@@ -1,0 +1,254 @@
+.comparatif {
+  background: url(assets/img/bg.svg) no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  padding: 70px 5vw;
+
+  h2 {
+    color: #fff;
+    font-size: 45px;
+    padding: 0 0 50px 0;
+  }
+
+  h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #2997ff;
+  }
+
+  .comparatif__container {
+    width: 60%;
+    position: relative;
+    z-index: 2;
+
+    table {
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+      border-collapse: collapse;
+      background: linear-gradient(
+        90deg,
+        rgb(95 95 163 / 38%) 12%,
+        rgb(50 52 87) 73%
+      );
+      border-radius: 5px;
+      overflow: hidden;
+      color: #fff;
+      box-shadow: 2px 2px 59px -14px rgba(255, 255, 255, 0.3);
+
+      thead {
+        background: linear-gradient(
+          90deg,
+          rgb(95 95 163 / 38%) 12%,
+          rgb(50 52 87) 73%
+        );
+        border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+      }
+
+      th {
+        padding: 15px;
+        color: #c2c2c2;
+
+        &:nth-child(2) {
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #fff;
+        }
+      }
+
+      tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+        &:last-of-type {
+          border: none;
+        }
+
+        td {
+          padding: 15px;
+
+          &:first-of-type {
+            text-align: left;
+          }
+
+          &:nth-child(2) {
+            background-color: rgba(255, 255, 255, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  .texte-table {
+    width: 40%;
+    color: #9ca3ad;
+
+    p {
+      line-height: 27px;
+      font-size: 20px;
+    }
+  }
+
+  .anim {
+    height: 500px;
+    opacity: 0.3;
+    position: absolute;
+    width: 100%;
+    right: 0;
+    top: 0;
+  }
+
+  .card {
+    opacity: 0;
+    position: absolute;
+    width: 150px;
+    img {
+      width: 100%;
+    }
+  }
+
+  .card1 {
+    right: 12%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 8s;
+    animation-delay: -4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card2 {
+    right: 24%;
+    width: 100px !important;
+    animation-name: loop3;
+    animation-duration: 10s;
+    animation-delay: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card3 {
+    right: 0;
+    width: 80px !important;
+    animation-name: loop2;
+    animation-duration: 8s;
+    animation-delay: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card4 {
+    right: 18%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 10s;
+    animation-delay: 9s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card5 {
+    right: 37%;
+    width: 70px;
+    animation-name: loop3;
+    animation-duration: 8s;
+    animation-delay: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card6 {
+    right: -20%;
+    width: 100px !important;
+    animation-name: loop2;
+    animation-duration: 10s;
+    animation-delay: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card7 {
+    right: 8%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 8s;
+    animation-delay: -2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card8 {
+    width: 100px !important;
+    right: 2%;
+    animation-name: loop2;
+    animation-duration: 10s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card8 {
+    right: 40%;
+    width: 80px;
+    animation-name: loop3;
+    animation-duration: 8s;
+    animation-delay: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card9 {
+    right: 28%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 10s;
+    animation-delay: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card10 {
+    right: 16%;
+    width: 70px !important;
+    animation-name: loop3;
+    animation-duration: 8s;
+    animation-delay: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card11 {
+    right: 2%;
+    width: 100px !important;
+    animation-name: loop2;
+    animation-duration: 10s;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+
+@media (max-width: 980px) {
+  .comparatif-wrapper {
+    flex-direction: column-reverse;
+
+    .comparatif__container,
+    .texte-table {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .comparatif {
+    padding: 5vw !important;
+
+    h2 {
+      padding-bottom: 0;
+    }
+
+    .comparatif__table {
+      transform: scale(0.8) translateX(-13%) translateY(-60px);
+    }
+  }
+}

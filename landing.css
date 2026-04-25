@@ -1,0 +1,42 @@
+@import url(animations.css);
+@import url(avantages.css);
+@import url(comparatif.css);
+@import url(features.css);
+@import url(hero.css);
+@import url(layout.css);
+@import url(questionnaire.css);
+@import url(seller-tools.css);
+
+header {
+  background-color: #272727 !important;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 20px;
+  height: var(--header-height);
+
+  .logo {
+    width: 180px;
+    margin-left: 5vw;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+footer {
+  background-color: #272727 !important;
+  height: var(--header-height);
+  justify-content: center;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  header {
+    justify-content: center;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+    }
+  }
+}

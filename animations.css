@@ -1,0 +1,183 @@
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-1 * var(--loop-width)));
+  }
+}
+
+@keyframes loop1 {
+  0% {
+    opacity: 0;
+    transform: rotateX(20deg) translateY(0) rotateY(10deg) rotateZ(40deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(35deg) translateY(100vh) rotateZ(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes loop2 {
+  0% {
+    opacity: 0;
+    transform: rotateX(35deg) rotateY(20deg) rotateZ(-20deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(35deg) rotateY(40deg) translateY(100vh) rotateZ(20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes loop3 {
+  0% {
+    transform: rotateX(-20deg) rotateY(20deg) rotateZ(-20deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(100vh) rotateX(40deg) rotateY(60deg) rotateZ(40deg);
+  }
+}
+
+.separator {
+  height: 3px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #0b0f1a; /* fond dark */
+}
+
+.separator {
+  height: 3px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #070b14;
+}
+
+/* couche glow principale */
+.separator::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(0, 110, 255, 0.15) 15%,
+    rgba(0, 160, 255, 0.6) 35%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(0, 180, 255, 0.7) 65%,
+    rgba(0, 110, 255, 0.2) 85%,
+    transparent 100%
+  );
+  filter: blur(1px);
+  transform: translateX(-120%);
+  animation: lightFast 3s linear infinite;
+}
+
+/* couche secondaire plus lente pour effet riche */
+.separator::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(0, 90, 255, 0.1) 25%,
+    rgba(0, 200, 255, 0.5) 50%,
+    rgba(0, 90, 255, 0.1) 75%,
+    transparent 100%
+  );
+  transform: translateX(-150%);
+  animation: lightSlow 6s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+/* vitesse rapide */
+@keyframes lightFast {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* vitesse lente + variation */
+@keyframes lightSlow {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(150%);
+  }
+}
+
+@media (max-width: 980px) {
+  /* avantages */
+  .avantages-container {
+    .avantages-item {
+      width: 60%;
+      margin: 20px auto;
+    }
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  h2 {
+    padding: 50px 0 0;
+  }
+
+  .carousel-wrapper {
+    .carousel {
+      height: 300px;
+    }
+
+    .card {
+      width: 90%;
+
+      &.is-left {
+        transform: translate(-95%, -50%) scale(0.65) rotateY(18deg);
+      }
+
+      &.is-right {
+        transform: translate(-5%, -50%) scale(0.65) rotateY(-18deg);
+      }
+    }
+  }
+}

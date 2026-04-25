@@ -1,0 +1,51 @@
+:root {
+  --header-height: 60px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.flex {
+  align-items: center;
+  display: flex;
+
+  &.column {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+}
+
+.gap30 {
+  gap: 30px;
+}
+
+.gap50 {
+  gap: 50px;
+}
+
+.gap100 {
+  gap: 100px;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Google Sans", sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+section {
+  height: 100%;
+  position: relative;
+}
