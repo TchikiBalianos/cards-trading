@@ -60,10 +60,10 @@
       </div>
       <nav class="header-nav" id="headerNav">
         <a href="#avantages" class="nav-link">Avantages</a>
+        <a href="#beta" class="nav-link">Beta</a>
         <a href="#features" class="nav-link">Fonctionnalités</a>
         <a href="#comparatif" class="nav-link">Comparaison</a>
         <a href="#vendeur-pro" class="nav-link">Vendeur Pro</a>
-        <a href="#beta" class="nav-link">Beta</a>
       </nav>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu" type="button">
         <span></span>
@@ -187,6 +187,147 @@
           <div class="item-title">Vente rapide</div>
           <div class="item-text">
             Mettez en vente en temps record grâce au card scanner qui reconnaît vos cartes instantanément.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="questionnaire" id="beta">
+      <h2>Et toi, a quoi tu joues ?</h2>
+      <div class="questionnaire-wrapper flex gap30">
+        <div class="questionnaire-texte">
+          Réponds aux questions pour t'inscrire a la beta. Ca nous aidera a
+          mieux te connaitre et a te proposer une meilleure expérience de trade
+          et te permettras d'acceder a la plateforme en pré-release.
+          <br /><br />
+          <span>En plus tu beneficieras de:</span>
+          <ul>
+            <li>Accès anticipé à la plateforme</li>
+            <li>Zero frais pendant 3 mois</li>
+            <li>Pack merchandising offert</li>
+          </ul>
+        </div>
+
+        <div class="quiz-wrapper">
+          <div class="quiz-slider" id="quizSlider">
+            <div class="quiz-progress">
+              <span id="current-question">1</span>/<span id="total-questions"
+                >7</span
+              >
+            </div>
+
+            <div class="question-card active">
+              <div class="title">Quel est votre âge ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q1" /> - de 18 ans</label>
+                  <label><input type="radio" name="q1" /> 18–24 ans</label>
+                  <label><input type="radio" name="q1" /> 25–34 ans</label>
+                  <label><input type="radio" name="q1" /> 35–44 ans</label>
+                  <label><input type="radio" name="q1" /> 45 ans et +</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quel est votre genre ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q2" /> Homme</label>
+                  <label><input type="radio" name="q2" /> Femme</label>
+                  <label><input type="radio" name="q2" /> Autre</label>
+                  <label
+                    ><input type="radio" name="q2" /> Ne pas répondre</label
+                  >
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quels TCG préférez-vous ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="checkbox" name="q3" /> Pokémon</label>
+                  <label><input type="checkbox" name="q3" /> One Piece</label>
+                  <label><input type="checkbox" name="q3" /> Magic</label>
+                  <label><input type="checkbox" name="q3" /> Yu-Gi-Oh!</label>
+                  <label><input type="checkbox" name="q3" /> Lorcana</label>
+                  <label><input type="checkbox" name="q3" /> Dragon Ball</label>
+                  <label><input type="checkbox" name="q3" /> Riftbound</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quelle plateforme utilisez-vous le plus ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q4" /> Cardmarket</label>
+                  <label><input type="radio" name="q4" /> eBay</label>
+                  <label><input type="radio" name="q4" /> Vinted</label>
+                  <label
+                    ><input type="radio" name="q4" /> Facebook / Discord</label
+                  >
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quel est votre profil ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q5" /> Joueur</label>
+                  <label><input type="radio" name="q5" /> Collectionneur</label>
+                  <label><input type="radio" name="q5" /> Les deux</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Vos informations</div>
+              <div class="options">
+                <div>
+                  <input type="text" placeholder="Nom" />
+                  <input type="text" placeholder="Prénom" />
+                  <input type="email" placeholder="Email" />
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Consentement RGPD</div>
+              <div class="options">
+                <div>
+                  <label style="margin-left: 0 !important; display: flex; align-items: flex-start; gap: 15px;">
+                    <input type="checkbox" name="rgpd" style="margin-top: 5px;" />
+                    <span>
+                      J'accepte que mes données soient traitées conformément à la <a href="mentions-legales.html" target="_blank" style="color: #2997ff; text-decoration: underline;">politique RGPD</a> et les <a href="cgu.html" target="_blank" style="color: #2997ff; text-decoration: underline;">CGU</a> de Cards Trading. Aucun marketing. Aucune vente de données.
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card confirmation-card">
+              <div class="title">
+                <i class="fa-solid fa-circle-check"></i> Merci !
+              </div>
+              <div>
+                <img src="assets/img/goku.png" alt="" />
+              </div>
+              <div class="options">
+                Votre inscription à la beta a bien été prise en compte.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -495,148 +636,6 @@
       </div>
     </div>
 
-    <div class="separator"></div>
-
-    <div class="questionnaire" id="beta">
-      <h2>Et toi, a quoi tu joues ?</h2>
-      <div class="questionnaire-wrapper flex gap30">
-        <div class="questionnaire-texte">
-          Réponds aux questions pour t'inscrire a la beta. Ca nous aidera a
-          mieux te connaitre et a te proposer une meilleure expérience de trade
-          et te permettras d'acceder a la plateforme en pré-release.
-          <br /><br />
-          <span>En plus tu beneficieras de:</span>
-          <ul>
-            <li>Accès anticipé à la plateforme</li>
-            <li>Zero frais pendant 3 mois</li>
-            <li>Pack merchandising offert</li>
-          </ul>
-        </div>
-
-        <div class="quiz-wrapper">
-          <div class="quiz-slider" id="quizSlider">
-            <div class="quiz-progress">
-              <span id="current-question">1</span>/<span id="total-questions"
-                >7</span
-              >
-            </div>
-
-            <div class="question-card active">
-              <div class="title">Quel est votre âge ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="radio" name="q1" /> - de 18 ans</label>
-                  <label><input type="radio" name="q1" /> 18–24 ans</label>
-                  <label><input type="radio" name="q1" /> 25–34 ans</label>
-                  <label><input type="radio" name="q1" /> 35–44 ans</label>
-                  <label><input type="radio" name="q1" /> 45 ans et +</label>
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Quel est votre genre ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="radio" name="q2" /> Homme</label>
-                  <label><input type="radio" name="q2" /> Femme</label>
-                  <label><input type="radio" name="q2" /> Autre</label>
-                  <label
-                    ><input type="radio" name="q2" /> Ne pas répondre</label
-                  >
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Quels TCG préférez-vous ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="checkbox" name="q3" /> Pokémon</label>
-                  <label><input type="checkbox" name="q3" /> One Piece</label>
-                  <label><input type="checkbox" name="q3" /> Magic</label>
-                  <label><input type="checkbox" name="q3" /> Yu-Gi-Oh!</label>
-                  <label><input type="checkbox" name="q3" /> Lorcana</label>
-                  <label><input type="checkbox" name="q3" /> Dragon Ball</label>
-                  <label><input type="checkbox" name="q3" /> Riftbound</label>
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Quelle plateforme utilisez-vous le plus ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="radio" name="q4" /> Cardmarket</label>
-                  <label><input type="radio" name="q4" /> eBay</label>
-                  <label><input type="radio" name="q4" /> Vinted</label>
-                  <label
-                    ><input type="radio" name="q4" /> Facebook / Discord</label
-                  >
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Quel est votre profil ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="radio" name="q5" /> Joueur</label>
-                  <label><input type="radio" name="q5" /> Collectionneur</label>
-                  <label><input type="radio" name="q5" /> Les deux</label>
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Vos informations</div>
-              <div class="options">
-                <div>
-                  <input type="text" placeholder="Nom" />
-                  <input type="text" placeholder="Prénom" />
-                  <input type="email" placeholder="Email" />
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Consentement RGPD</div>
-              <div class="options">
-                <div>
-                  <label style="margin-left: 0 !important; display: flex; align-items: flex-start; gap: 15px;">
-                    <input type="checkbox" name="rgpd" style="margin-top: 5px;" />
-                    <span>
-                      J'accepte que mes données soient traitées conformément à la <a href="mentions-legales.html" target="_blank" style="color: #2997ff; text-decoration: underline;">politique RGPD</a> et les <a href="cgu.html" target="_blank" style="color: #2997ff; text-decoration: underline;">CGU</a> de Cards Trading. Aucun marketing. Aucune vente de données.
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card confirmation-card">
-              <div class="title">
-                <i class="fa-solid fa-circle-check"></i> Merci !
-              </div>
-              <div>
-                <img src="assets/img/goku.png" alt="" />
-              </div>
-              <div class="options">
-                Votre inscription à la beta a bien été prise en compte.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="separator"></div>
 
     <section class="seller-tools" id="vendeur-pro">
       <div class="container flex gap30">
@@ -734,10 +733,10 @@
             <h4>Plateforme</h4>
             <ul>
               <li><a href="index.html#avantages">Avantages</a></li>
+              <li><a href="index.html#beta">Inscription Beta</a></li>
               <li><a href="index.html#features">Fonctionnalités</a></li>
               <li><a href="index.html#comparatif">Comparatif</a></li>
               <li><a href="index.html#vendeur-pro">Vendeur Pro</a></li>
-              <li><a href="index.html#beta">Inscription Beta</a></li>
             </ul>
           </div>
 
@@ -863,7 +862,7 @@
     }
 
     /* ── Scroll-spy: active nav link ── */
-    const sections = ['avantages', 'features', 'comparatif', 'vendeur-pro', 'beta']
+    const sections = ['avantages', 'beta', 'features', 'comparatif', 'vendeur-pro']
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
