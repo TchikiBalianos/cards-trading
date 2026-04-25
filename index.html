@@ -54,10 +54,21 @@
     />
   </head>
   <body>
-    <header class="flex">
+    <header class="flex header-sticky">
       <div class="logo">
         <img src="assets/img/logo.png" alt="logo cards-trading.com" />
       </div>
+      <nav class="header-nav" id="headerNav">
+        <a href="#avantages" class="nav-link">Avantages</a>
+        <a href="#features" class="nav-link">Fonctionnalités</a>
+        <a href="#comparatif" class="nav-link">Comparaison</a>
+        <a href="#beta" class="nav-link">Beta</a>
+      </nav>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
     <section class="hero flex">
       <div class="flex gap30 hero-wrapper">
@@ -808,6 +819,75 @@
       history.pushState(null, '', '#' + hash);
     });
   });
+</script>
+
+<!-- navbar: scroll-shrink + scroll-spy + hamburger -->
+<script>
+  (function () {
+    const header = document.querySelector('header');
+    const hamburger = document.getElementById('navHamburger');
+    const nav = document.getElementById('headerNav');
+    const navLinks = nav ? nav.querySelectorAll('.nav-link') : [];
+
+    /* ── Scroll-shrink ── */
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ── Hamburger toggle ── */
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.toggle('open');
+        nav.classList.toggle('mobile-open', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen);
+      });
+
+      /* Close on nav-link click (mobile) */
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          nav.classList.remove('mobile-open');
+          hamburger.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      /* Close on outside click */
+      document.addEventListener('click', e => {
+        if (!header.contains(e.target)) {
+          hamburger.classList.remove('open');
+          nav.classList.remove('mobile-open');
+        }
+      });
+    }
+
+    /* ── Scroll-spy: active nav link ── */
+    const sections = ['avantages', 'features', 'comparatif', 'beta']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    function setActiveLink(id) {
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href').replace('#', '');
+        link.classList.toggle('active', href === id);
+      });
+    }
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveLink(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s));
+  })();
 </script>
 
 <!-- carrousel -->

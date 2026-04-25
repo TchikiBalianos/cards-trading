@@ -50,3 +50,11 @@ section {
   height: 100%;
   position: relative;
 }
+
+/* Anchor offset for fixed header */
+#avantages,
+#features,
+#comparatif,
+#beta {
+  scroll-margin-top: var(--header-height);
+}
