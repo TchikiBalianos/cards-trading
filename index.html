@@ -62,6 +62,7 @@
         <a href="#avantages" class="nav-link">Avantages</a>
         <a href="#features" class="nav-link">Fonctionnalités</a>
         <a href="#comparatif" class="nav-link">Comparaison</a>
+        <a href="#vendeur-pro" class="nav-link">Vendeur Pro</a>
         <a href="#beta" class="nav-link">Beta</a>
       </nav>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu" type="button">
@@ -637,7 +638,7 @@
 
     <div class="separator"></div>
 
-    <section class="seller-tools">
+    <section class="seller-tools" id="vendeur-pro">
       <div class="container flex gap30">
         <!-- LEFT -->
         <div class="content col-left">
@@ -735,6 +736,7 @@
               <li><a href="index.html#avantages">Avantages</a></li>
               <li><a href="index.html#features">Fonctionnalités</a></li>
               <li><a href="index.html#comparatif">Comparatif</a></li>
+              <li><a href="index.html#vendeur-pro">Vendeur Pro</a></li>
               <li><a href="index.html#beta">Inscription Beta</a></li>
             </ul>
           </div>
@@ -861,7 +863,7 @@
     }
 
     /* ── Scroll-spy: active nav link ── */
-    const sections = ['avantages', 'features', 'comparatif', 'beta']
+    const sections = ['avantages', 'features', 'comparatif', 'vendeur-pro', 'beta']
       .map(id => document.getElementById(id))
       .filter(Boolean);
 

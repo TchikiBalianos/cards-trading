@@ -40,12 +40,12 @@
   }
 
   .subline {
-    font-size: clamp(16px, 2vw, 32px);
+    font-size: clamp(13px, 1.4vw, 22px);
     color: #fff;
   }
 
   .button-container {
-    padding-top: 60px;
+    padding-top: 22px;
   }
 
   button {
