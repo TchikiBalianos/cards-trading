@@ -2,6 +2,7 @@
 
 ## v0.0.1 (2026-04-25)
 **Status:** Initial landing page with responsive design
+**Founders:** Julian Schmerkin & Valérian Selvon
 **Key Features:**
 - Hero section avec carousel de logos TCG
 - Section avantages (Acheteur/Vendeur toggle)
@@ -17,6 +18,7 @@
 
 ## v0.0.2 (2026-04-25)
 **Status:** Production-ready with backend integration
+**Founders:** Julian Schmerkin & Valérian Selvon
 **Major Changes:**
 - ✅ Ajout Dragon Ball & Riftbound aux TCG du formulaire
 - ✅ Intégration Resend pour envoi d'email

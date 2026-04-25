@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Database error' });
     }
 
-    // Send email to admin
+    // Send email to co-founders
     const emailContent = `
 Nouvelle inscription à la bêta Cards Trading
 
