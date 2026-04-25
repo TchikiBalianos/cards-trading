@@ -83,7 +83,7 @@ Ne répondez pas à cet email. Ce message vient de votre formulaire d'inscriptio
 
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: 'Cards Trading <onboarding@resend.dev>',
-      to: ['julian.schmerkin@gmail.com', 'vselvon@gmail.com'],
+      to: ['lesamiscrypto@gmail.com'],
       reply_to: email,
       subject: `✨ Nouvelle inscription beta - ${prenom} ${nom}`,
       html: `
