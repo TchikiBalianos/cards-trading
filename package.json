@@ -4,7 +4,7 @@
   "description": "Landing page for Cards Trading marketplace",
   "scripts": {
     "dev": "vercel dev",
-    "build": "vercel build"
+    "install-deps": "npm install"
   },
   "dependencies": {
     "resend": "^3.0.0",
