@@ -550,6 +550,8 @@
                   <label><input type="checkbox" name="q3" /> Magic</label>
                   <label><input type="checkbox" name="q3" /> Yu-Gi-Oh!</label>
                   <label><input type="checkbox" name="q3" /> Lorcana</label>
+                  <label><input type="checkbox" name="q3" /> Dragon Ball</label>
+                  <label><input type="checkbox" name="q3" /> Riftbound</label>
                 </div>
               </div>
               <button class="next-btn">Valider</button>
@@ -589,6 +591,21 @@
                   <input type="text" placeholder="Nom" />
                   <input type="text" placeholder="Prénom" />
                   <input type="email" placeholder="Email" />
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Consentement RGPD</div>
+              <div class="options">
+                <div>
+                  <label style="margin-left: 0 !important; display: flex; align-items: flex-start; gap: 15px;">
+                    <input type="checkbox" name="rgpd" style="margin-top: 5px;" />
+                    <span>
+                      J'accepte que mes données soient traitées conformément à la <a href="mentions-legales.html" target="_blank" style="color: #2997ff; text-decoration: underline;">politique RGPD</a> et les <a href="cgu.html" target="_blank" style="color: #2997ff; text-decoration: underline;">CGU</a> de Cards Trading. Aucun marketing. Aucune vente de données.
+                    </span>
+                  </label>
                 </div>
               </div>
               <button class="next-btn">Valider</button>
@@ -939,12 +956,79 @@
     return true;
   }
 
+  async function submitForm() {
+    const quizSlider = document.getElementById("quizSlider");
+
+    // Collect all form data
+    const formData = {
+      age: document.querySelector('input[name="q1"]:checked')?.parentElement?.textContent?.trim() || null,
+      genre: document.querySelector('input[name="q2"]:checked')?.parentElement?.textContent?.trim() || null,
+      tcgs: Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(input => input.parentElement.textContent.trim()),
+      platform: document.querySelector('input[name="q4"]:checked')?.parentElement?.textContent?.trim() || null,
+      profile: document.querySelector('input[name="q5"]:checked')?.parentElement?.textContent?.trim() || null,
+      nom: document.querySelector('input[placeholder="Nom"]')?.value || null,
+      prenom: document.querySelector('input[placeholder="Prénom"]')?.value || null,
+      email: document.querySelector('input[placeholder="Email"]')?.value || null,
+      rgpd: document.querySelector('input[name="rgpd"]')?.checked || false,
+    };
+
+    // Show loading state
+    const submitBtn = cards[currentIndex].querySelector(".next-btn");
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Envoi en cours...";
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Move to confirmation screen
+        cards[currentIndex].classList.add("exit-left");
+        cards[currentIndex].classList.remove("active");
+        cards[currentIndex + 1].classList.add("active");
+        currentIndex++;
+        currentQuestionEl.textContent = currentIndex + 1;
+
+        setTimeout(() => {
+          cards[currentIndex - 1].classList.remove("exit-left");
+        }, 450);
+      } else {
+        submitBtn.textContent = result.error || "Erreur lors de l'envoi";
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      submitBtn.textContent = "Erreur réseau";
+      setTimeout(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 2000);
+    }
+  }
+
   function goToNextQuestion(event) {
     const button = event.currentTarget;
     const currentCard = cards[currentIndex];
     const nextCard = cards[currentIndex + 1];
 
     if (!isCardValid(currentCard, button)) {
+      return;
+    }
+
+    // If this is the last question (RGPD), submit the form
+    if (currentIndex === cards.length - 2) {
+      submitForm();
       return;
     }
 

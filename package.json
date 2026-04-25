@@ -1,0 +1,14 @@
+{
+  "name": "cards-trading-landing",
+  "version": "0.0.2",
+  "description": "Landing page for Cards Trading marketplace",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build"
+  },
+  "dependencies": {
+    "resend": "^3.0.0",
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {}
+}
