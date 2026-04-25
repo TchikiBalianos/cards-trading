@@ -52,11 +52,11 @@ export default async function handler(req, res) {
       ]);
 
     if (supabaseError) {
+      // Log but don't block — email must still be sent
       console.error('Supabase error:', supabaseError);
-      return res.status(500).json({ error: 'Database error' });
     }
 
-    // Send email to co-founders
+    // Send email notification (runs even if Supabase failed)
     const emailContent = `
 Nouvelle inscription à la bêta Cards Trading
 
@@ -81,9 +81,10 @@ IP: ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}
 Ne répondez pas à cet email. Ce message vient de votre formulaire d'inscription Cards Trading.
     `;
 
-    const { error: emailError } = await resend.emails.send({
-      from: 'Cards Trading <noreply@cards-trading.vercel.app>',
-      to: 'julian.schmerkin@gmail.com',
+    const { data: emailData, error: emailError } = await resend.emails.send({
+      from: 'Cards Trading <onboarding@resend.dev>',
+      to: ['julian.schmerkin@gmail.com', 'vselvon@gmail.com'],
+      reply_to: email,
       subject: `✨ Nouvelle inscription beta - ${prenom} ${nom}`,
       html: `
 <!DOCTYPE html>
@@ -153,16 +154,19 @@ Ne répondez pas à cet email. Ce message vient de votre formulaire d'inscriptio
     });
 
     if (emailError) {
-      console.error('Resend error:', emailError);
-      // Don't fail the request if email fails - data was saved to DB
+      console.error('Resend error:', JSON.stringify(emailError));
+    } else {
+      console.log('Email sent, id:', emailData?.id);
     }
 
     return res.status(200).json({
       success: true,
       message: 'Inscription réussie! Vous recevrez bientôt un email de confirmation.',
+      emailSent: !emailError,
+      dbSaved: !supabaseError,
     });
   } catch (error) {
     console.error('Unexpected error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: 'Internal server error', detail: error.message });
   }
 }

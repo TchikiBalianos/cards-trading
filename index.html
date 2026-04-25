@@ -1129,6 +1129,16 @@
       return true;
     }
 
+    // RGPD checkbox specifically
+    const rgpdCheckbox = card.querySelector('input[name="rgpd"]');
+    if (rgpdCheckbox) {
+      if (!rgpdCheckbox.checked) {
+        showRequiredMessage(button, "consentement requis");
+        return false;
+      }
+      return true;
+    }
+
     return true;
   }
 
