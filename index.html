@@ -113,7 +113,7 @@
 
     <div class="separator"></div>
 
-    <div class="avantages">
+    <div class="avantages" id="avantages">
       <h2>Les avantages Cards trading</h2>
       <div class="subline">
         Achetez & Vendez vos cartes de collection en toute sécurité
@@ -185,7 +185,7 @@
 
     <div class="separator"></div>
 
-    <section class="features flex column">
+    <section class="features flex column" id="features">
       <div class="features-inner flex gap100">
         <div class="col-left">
           <h2>
@@ -381,7 +381,7 @@
 
     <div class="separator"></div>
 
-    <div class="comparatif">
+    <div class="comparatif" id="comparatif">
       <h2>Comparez nos services</h2>
 
       <div class="flex gap50 comparatif-wrapper">
@@ -488,7 +488,7 @@
 
     <div class="separator"></div>
 
-    <div class="questionnaire">
+    <div class="questionnaire" id="beta">
       <h2>Et toi, a quoi tu joues ?</h2>
       <div class="questionnaire-wrapper flex gap30">
         <div class="questionnaire-texte">
@@ -711,7 +711,90 @@
     </div>
     <div class="separator"></div>
 
-    <footer class="flex">Cards-Trading.com - © 2026 Julian Schmerkin & Valérian Selvon</footer>
+    <footer>
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="assets/img/logo.png" alt="Cards Trading - Marketplace TCG" class="footer-logo" />
+          <p class="footer-desc">
+            La marketplace spécialisée TCG pour <strong>acheter</strong> et <strong>vendre</strong> vos cartes de collection en toute sécurité. Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana, Dragon Ball, Riftbound.
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navigation secondaire">
+          <div class="footer-col">
+            <h4>Plateforme</h4>
+            <ul>
+              <li><a href="index.html#avantages">Avantages</a></li>
+              <li><a href="index.html#features">Fonctionnalités</a></li>
+              <li><a href="index.html#comparatif">Comparatif</a></li>
+              <li><a href="index.html#beta">Inscription Beta</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>TCG supportés</h4>
+            <ul>
+              <li><a href="index.html">Pokémon</a></li>
+              <li><a href="index.html">One Piece</a></li>
+              <li><a href="index.html">Magic: The Gathering</a></li>
+              <li><a href="index.html">Yu-Gi-Oh!</a></li>
+              <li><a href="index.html">Lorcana</a></li>
+              <li><a href="index.html">Dragon Ball</a></li>
+              <li><a href="index.html">Riftbound</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Légal & Contact</h4>
+            <ul>
+              <li><a href="cgu.html">Conditions Générales d'Utilisation</a></li>
+              <li><a href="mentions-legales.html">Mentions Légales & RGPD</a></li>
+              <li><a href="mailto:julian.schmerkin@gmail.com">julian.schmerkin@gmail.com</a></li>
+              <li><a href="mailto:vselvon@gmail.com">vselvon@gmail.com</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Cards Trading — Tous droits réservés.</span>
+        <span class="footer-founders">Co-fondateurs : Julian Schmerkin & Valérian Selvon</span>
+      </div>
+    </footer>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Cards Trading",
+      "description": "Marketplace spécialisée TCG pour acheter et vendre des cartes de collection Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball, Riftbound.",
+      "url": "https://cards-trading.vercel.app",
+      "logo": "https://cards-trading.vercel.app/assets/img/logo.png",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "email": "julian.schmerkin@gmail.com",
+          "contactType": "customer support"
+        },
+        {
+          "@type": "ContactPoint",
+          "email": "vselvon@gmail.com",
+          "contactType": "customer support"
+        }
+      ],
+      "sameAs": [],
+      "founder": [
+        {
+          "@type": "Person",
+          "name": "Julian Schmerkin"
+        },
+        {
+          "@type": "Person",
+          "name": "Valérian Selvon"
+        }
+      ]
+    }
+    </script>
   </body>
 </html>
 
