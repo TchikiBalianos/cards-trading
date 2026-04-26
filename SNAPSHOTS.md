@@ -61,7 +61,10 @@
 **Founders:** Julian Schmerkin & Valérian Selvon
 **Major Changes:**
 - ✅ **Design UI/UX global** : Intégration de `AOS` pour des animations au scroll (fade-up).
-- ✅ **Hero Section** : Refonte du layout avec `align-items: stretch` et `gap` dynamique (`vh`) pour un espacement vertical harmonieux et responsive, particulièrement sur grand écran (1080p+). Ajout d'un halo radial d'arrière-plan.
+- ✅ **Hero Section** : 
+  - Refonte du layout avec `align-items: stretch` et `gap` dynamique (`vh`) pour un espacement vertical harmonieux et responsive, particulièrement sur grand écran (1080p+).
+  - Ajout d'un halo radial d'arrière-plan.
+  - **Fix du chevauchement boutons/carousel** : Augmentation largeur du contenu texte (60% → 100% avec max-width: 600px), padding-bottom desktop (140px → 200px), ajout margin-top: auto au button-container, adaptations breakpoints tablet (980px) et mobile.
 - ✅ **Comparatif & Mobile** : Effet néon (glow bleu) sur la colonne Cards-Trading en desktop. Remplacement du tableau par des cartes interactives sur mobile.
 - ✅ **Formulaire (Beta)** :
   - Rendu de la hauteur 100% dynamique (`height: auto` gérée en JS avec `offsetHeight` et transitions) pour épouser le contenu de chaque étape (évite les espaces vides ou coupures).
@@ -69,7 +72,7 @@
   - Fixation du bouton Valider pour éviter son aplatissement visuel.
 - ✅ **Vendeur Pro** : Correction d'une erreur de syntaxe JS (`});`) qui empêchait l'exécution du script. Réactivation de l'affichage des contrôles manuels (`display: flex`) pour naviguer dans le carrousel.
 - ✅ **Fonctionnalités** : Ajout d'espace (`padding-bottom`) sous les bullets de pagination pour aérer la section.
-- ✅ **Footer & Navigation** : Retrait des adresses email de la colonne "Légal & Contact". Réorganisation de l'ordre global du site (Avantages -> Beta -> Fonctionnalités -> Comparatif -> Vendeur Pro).
+- ✅ **Footer & Navigation** : Retrait des adresses email de la colonne "Légal & Contact". Réorganisation de l'ordre global du site (Avantages -> Beta -> Fonctionnalités -> Comparatif -> Vendeur Pro). Structure sticky navbar ajoutée (en cours).
 
 **Git Tag:** `git tag v0.0.3`
 
