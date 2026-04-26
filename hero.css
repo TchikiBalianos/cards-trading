@@ -36,22 +36,24 @@
   }
 
   > span {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding-left: 50px;
     width: 60%;
+    height: 100%;
   }
 
   h1 {
     color: #fff;
     font-size: clamp(16px, 5vw, 60px);
-    margin-bottom: 25px;
+    margin-bottom: clamp(15px, 4vh, 35px);
   }
 
   .baseline {
     color: #2997ff;
-    font-size: 3vw;
     font-size: clamp(16px, 3vw, 40px);
-    margin-bottom: 25px;
+    margin-bottom: clamp(15px, 4vh, 35px);
   }
 
   .subline {
@@ -60,7 +62,7 @@
   }
 
   .button-container {
-    padding-top: 27px;
+    padding-top: clamp(25px, 6vh, 60px);
     gap: 14px;
   }
 
