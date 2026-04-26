@@ -87,15 +87,18 @@
   }
 
   .col-right {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
     width: 50%;
 
     .feature-right {
-      height: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       padding: 50px 0 0;
 
       ul {
-        height: 100%;
+        flex: 1;
         list-style: none;
         margin: 0;
         padding: 0;
