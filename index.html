@@ -913,8 +913,23 @@
       const target = document.getElementById(hash);
       if (!target) return;
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.pushState(null, '', '#' + hash);
+
+      /* Close mobile menu first, then scroll after transition ends */
+      const hamburger = document.getElementById('navHamburger');
+      const nav = document.getElementById('headerNav');
+      const isMenuOpen = hamburger && hamburger.classList.contains('open');
+      const doScroll = () => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', '#' + hash);
+      };
+      if (isMenuOpen) {
+        hamburger.classList.remove('open');
+        nav.classList.remove('mobile-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        setTimeout(doScroll, 360); /* wait for 0.35s CSS slide-out transition */
+      } else {
+        doScroll();
+      }
     });
   });
 
