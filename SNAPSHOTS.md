@@ -168,5 +168,22 @@
 
 ---
 
+## v0.0.7 (2026-04-26)
+**Status:** Phase 2 — SEO & Métadonnées
+**Founders:** Julian Schmerkin & Valérian Selvon
+**Changes:**
+- ✅ DOCTYPE HTML5 (`<!DOCTYPE html>`) — remplace l'ancien HTML 4.01 Strict
+- ✅ `lang="fr"` sur `<html>` pour accessibilité et SEO
+- ✅ `<meta name="format-detection" content="telephone=no">`
+- ✅ `<title>` enrichi avec — Acheter & Vendre vos Cartes
+- ✅ `<meta name="description">` complétée avec commission 0%, paiement sécurisé
+- ✅ `og:url`, `og:locale`, `og:image:width`, `og:image:height`, `og:image:alt` ajoutés
+- ✅ OG/Twitter images pointent vers URL absolue (cards-trading.com)
+- ✅ JSON-LD structured data : `@graph` avec `Organization` + `WebSite`
+
+**Git Tag:** `git tag v0.0.7`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.
