@@ -23,7 +23,7 @@
   .hero-wrapper {
     position: relative;
     z-index: 1;
-    padding: 60px 5vw 140px; /* extra bottom padding for carousel */
+    padding: 60px 5vw 200px; /* extra bottom padding for carousel */
     align-items: stretch;
     height: 100%;
   }
@@ -48,7 +48,8 @@
     justify-content: center;
     gap: clamp(15px, 4vh, 40px); /* Proportional spacing between all elements */
     padding-left: 50px;
-    width: 60%;
+    width: 100%;
+    max-width: 600px;
     height: 100%;
   }
 
@@ -71,8 +72,9 @@
   }
 
   .button-container {
-    padding-top: clamp(10px, 2vh, 20px);
+    padding-top: clamp(8px, 1.5vh, 15px);
     gap: 14px;
+    margin-top: auto; /* Push buttons towards the bottom while staying in viewport */
   }
 
   /* Primary CTA — gradient bleu */
@@ -167,10 +169,16 @@
 @media (max-width: 980px) {
   .hero-wrapper {
     flex-direction: column;
+    padding-bottom: 180px; /* Adjust for carousel spacing on tablet */
 
     .hero-left {
       width: 100%;
       text-align: center;
+    }
+
+    .hero-left span {
+      max-width: 100%;
+      padding-left: 0;
     }
 
     .button-container {
