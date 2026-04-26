@@ -906,52 +906,52 @@
 
 <!-- smooth scroll -->
 <script>
-  document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const hash = link.getAttribute('href').split('#')[1];
+  /* Unified scroller — accounts for sticky header height; reliable on iOS Safari */
+  function smoothScrollTo(target, hash) {
+    if (!target) return;
+    var headerEl = document.querySelector('header');
+    var headerH = headerEl ? headerEl.offsetHeight : 0;
+    var rect = target.getBoundingClientRect();
+    var top = Math.max(0, rect.top + window.pageYOffset - headerH - 8);
+    window.scrollTo({ top: top, behavior: 'smooth' });
+    if (hash) history.pushState(null, '', '#' + hash);
+  }
+
+  /* Anchor links — close mobile menu first if open, then scroll */
+  document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var hash = link.getAttribute('href').split('#')[1];
       if (!hash) return;
-      const target = document.getElementById(hash);
+      var target = document.getElementById(hash);
       if (!target) return;
       e.preventDefault();
 
-      /* Close mobile menu first, then scroll after transition ends */
-      const hamburger = document.getElementById('navHamburger');
-      const nav = document.getElementById('headerNav');
-      const isMenuOpen = hamburger && hamburger.classList.contains('open');
-      const doScroll = () => {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.pushState(null, '', '#' + hash);
-      };
+      var hamburger = document.getElementById('navHamburger');
+      var nav = document.getElementById('headerNav');
+      var isMenuOpen = hamburger && hamburger.classList.contains('open');
+
       if (isMenuOpen) {
         hamburger.classList.remove('open');
         nav.classList.remove('mobile-open');
         hamburger.setAttribute('aria-expanded', 'false');
-        setTimeout(doScroll, 360); /* wait for 0.35s CSS slide-out transition */
+        /* Wait for the 0.35s CSS slide-out, then RAF for layout stability */
+        setTimeout(function () {
+          requestAnimationFrame(function () { smoothScrollTo(target, hash); });
+        }, 380);
       } else {
-        doScroll();
+        smoothScrollTo(target, hash);
       }
     });
   });
 
   /* Hero CTA buttons scroll */
-  const heroButtons = document.querySelectorAll('.hero-left .button-container button');
+  var heroButtons = document.querySelectorAll('.hero-left .button-container button');
   if (heroButtons.length >= 2) {
-    // "S'inscrire a la beta" button -> scroll to #beta
-    heroButtons[1].addEventListener('click', () => {
-      const target = document.getElementById('beta');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.pushState(null, '', '#beta');
-      }
+    heroButtons[1].addEventListener('click', function () {
+      smoothScrollTo(document.getElementById('beta'), 'beta');
     });
-
-    // "En savoir plus" button -> scroll to #avantages
-    heroButtons[0].addEventListener('click', () => {
-      const target = document.getElementById('avantages');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.pushState(null, '', '#avantages');
-      }
+    heroButtons[0].addEventListener('click', function () {
+      smoothScrollTo(document.getElementById('avantages'), 'avantages');
     });
   }
 </script>
@@ -977,20 +977,16 @@
         hamburger.setAttribute('aria-expanded', isOpen);
       });
 
-      /* Close on nav-link click (mobile) */
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('open');
-          nav.classList.remove('mobile-open');
-          hamburger.setAttribute('aria-expanded', 'false');
-        });
-      });
+      /* NOTE: nav-link click closure is handled by the smoothScrollTo block
+         in the previous <script>, which closes the menu first and waits for
+         the slide-out transition before scrolling — avoids race condition. */
 
       /* Close on outside click */
       document.addEventListener('click', e => {
         if (!header.contains(e.target)) {
           hamburger.classList.remove('open');
           nav.classList.remove('mobile-open');
+          hamburger.setAttribute('aria-expanded', 'false');
         }
       });
     }
