@@ -243,11 +243,14 @@
   .questionnaire {
     height: auto;
     background-position: left;
+    padding: 0 5vw 60px;
 
     h2 {
       color: #fff;
-      font-size: 35px;
-      margin-bottom: 25px;
+      font-size: 30px;
+      text-align: center;
+      padding: 40px 0 16px;
+      margin-bottom: 0;
     }
 
     .questionnaire-wrapper {
@@ -260,6 +263,12 @@
       }
 
       .questionnaire-texte {
+        text-align: center;
+        font-size: 15px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.85);
+        margin-bottom: 8px;
+
         span,
         ul,
         br {

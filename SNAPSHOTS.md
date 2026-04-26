@@ -125,5 +125,31 @@
 
 ---
 
+## v0.0.5 (2026-04-26)
+**Status:** Mobile & Desktop Full Polish — Review Complete
+**Founders:** Julian Schmerkin & Valérian Selvon
+**Major Changes:**
+
+### Mobile (412px) — Corrections critiques
+- ✅ **Navbar** : Plus de débordement horizontal (width 100% au lieu de 100vw, overflow-x hidden sur html/body)
+- ✅ **Hero** : Espacements resserrés (titre↔navbar, mockup↔carousel licences)
+- ✅ **Beta** : Titre et texte intro centrés, labels formulaire alignés à gauche
+- ✅ **Fonctionnalités** : Items de liste contenus dans la card (position relative au lieu d'absolute), image phone visible
+- ✅ **Comparaison** : Tableau remplacé par carousel horizontal swipeable (scroll-snap), Cards-Trading mis en avant
+- ✅ **Vendeur Pro** : Refonte complète — liste numérotée avec CSS counters (cercles bleus), carousel horizontal scroll (contrôles ‹ › cachés sur mobile)
+- ✅ **Fix CSS nesting bug** : `.col-right { .carousel-wrapper { ... } }` → `.carousel-wrapper.col-right { ... }` (selector mismatch corrigé)
+- ✅ **Footer** : Layout 3 colonnes (PLATEFORME | TCG SUPPORTÉS | LÉGAL & CONTACT)
+
+### Desktop (1280px) — Vérification complète
+- ✅ Hero 2 colonnes, Avantages 3 cartes, Beta formulaire 2 colonnes
+- ✅ Fonctionnalités avec carte feature + image device, dots de pagination
+- ✅ Comparaison tableau + texte "L'Offre la Plus Complète"
+- ✅ Vendeur Pro liste features + carousel 3D avec ‹ › controls
+- ✅ Footer 4 colonnes
+
+**Git Tag:** `git tag v0.0.5`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.

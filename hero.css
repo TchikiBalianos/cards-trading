@@ -196,36 +196,36 @@
   .hero {
     height: auto !important;
     margin-top: var(--header-height);
-    padding: 30px 0 144px !important;
+    padding: 0 0 120px !important; /* reduce top padding — navbar already provides separation */
 
     h1 {
-      font-size: 48px !important;
-      padding: 0 30px;
+      font-size: 42px !important;
+      padding: 0 24px;
       margin-bottom: 0;
     }
 
     .baseline {
-      font-size: 27px !important;
-      padding: 0 30px;
+      font-size: 24px !important;
+      padding: 0 24px;
       text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3);
       -webkit-text-stroke: 0.5px rgba(255,255,255,0.4);
     }
 
     .subline {
-      font-size: 19px;
-      padding: 0 30px;
+      font-size: 17px;
+      padding: 0 24px;
       color: #fff;
     }
 
     .hero-wrapper {
-      padding: 60px 0 160px !important;
+      padding: 30px 0 120px !important; /* was 60px top — reduced to tighten gap with navbar */
       flex-direction: column;
       align-items: center;
       text-align: center;
 
       .hero-left {
         width: 100%;
-        margin-top: 20px;
+        margin-top: 0;
       }
 
       .hero-left span {
@@ -233,16 +233,17 @@
         padding-left: 0;
         padding-right: 0;
         align-items: center;
+        gap: clamp(10px, 2.5vh, 24px);
       }
 
       .button-container {
-        padding-top: 24px;
+        padding-top: 16px;
         justify-content: center;
         flex-wrap: wrap;
 
         button {
           width: 85%;
-          max-width: 280px;
+          max-width: 260px;
         }
       }
     }
@@ -253,6 +254,12 @@
 
     .hero-right {
       padding-top: 0 !important;
+      margin-top: -20px; /* pull image closer to text */
+    }
+
+    /* tighten gap between mockup image and carousel */
+    .licence-caroussel {
+      padding: 10px 0 20px;
     }
   }
 }
