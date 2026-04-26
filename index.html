@@ -305,10 +305,10 @@
               <button class="next-btn">Valider</button>
             </div>
 
-            <div class="question-card">
+            <div class="question-card tcg-question">
               <div class="title">Quels TCG préférez-vous ?</div>
               <div class="options">
-                <div>
+                <div class="tcg-grid">
                   <label><input type="checkbox" name="q3" /> Pokémon</label>
                   <label><input type="checkbox" name="q3" /> One Piece</label>
                   <label><input type="checkbox" name="q3" /> Magic</label>
@@ -316,6 +316,7 @@
                   <label><input type="checkbox" name="q3" /> Lorcana</label>
                   <label><input type="checkbox" name="q3" /> Dragon Ball</label>
                   <label><input type="checkbox" name="q3" /> Riftbound</label>
+                  <label><input type="checkbox" name="q3" /> Star Wars</label>
                 </div>
               </div>
               <button class="next-btn">Valider</button>
@@ -1506,6 +1507,20 @@
   AOS.init({
     duration: 800,
     once: true,
-    offset: 100
+    offset: 50
   });
+
+  // Fallback robuste : force aos-animate sur les éléments visibles
+  // (couvre les navigations directes par ancre #section)
+  function forceAOSVisible() {
+    document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('aos-animate');
+      }
+    });
+  }
+  setTimeout(forceAOSVisible, 100);
+  setTimeout(forceAOSVisible, 400);
+  window.addEventListener('load', () => setTimeout(forceAOSVisible, 100));
 </script>

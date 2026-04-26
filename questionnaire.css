@@ -31,6 +31,8 @@
 
     .quiz-slider {
       position: relative;
+      height: 480px;        /* hauteur fixe — absorbe toutes les étapes */
+      overflow: hidden;
       transition: height 0.4s ease-out;
 
       .quiz-progress {
@@ -46,6 +48,14 @@
         top: -37px;
         border-radius: 50%;
         color: #fff;
+      }
+
+      /* Grille 2 colonnes pour la question TCG */
+      .tcg-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px !important;
+        width: 88% !important;
       }
 
       .question-card {
