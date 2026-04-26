@@ -1,3 +1,16 @@
+/* ── REVEAL H2 (remplace AOS pour les titres de section) ── */
+/* Threshold: 0 → déclenche dès qu'UN pixel entre dans le viewport */
+.reveal-h2 {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.reveal-h2.visible {
+  opacity: 1;
+  transform: none;
+}
+
 @keyframes scroll {
   from {
     transform: translateX(0);

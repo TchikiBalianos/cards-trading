@@ -184,7 +184,7 @@
     <div class="separator"></div>
 
     <div class="avantages" id="avantages">
-      <h2 data-aos="fade-up">Les avantages Cards trading</h2>
+      <h2 class="reveal-h2">Les avantages Cards trading</h2>
       <div class="subline">
         Achetez & Vendez vos cartes de collection en toute sécurité
       </div>
@@ -253,7 +253,7 @@
     <div class="separator"></div>
 
     <div class="questionnaire" id="beta">
-      <h2 data-aos="fade-up">Et toi, a quoi tu joues ?</h2>
+      <h2 class="reveal-h2">Et toi, a quoi tu joues ?</h2>
       <div class="questionnaire-wrapper flex gap30">
         <div class="questionnaire-texte">
           Réponds aux questions pour t'inscrire a la beta. Ca nous aidera a
@@ -269,12 +269,10 @@
         </div>
 
         <div class="quiz-wrapper">
+          <div class="quiz-progress">
+            <span id="current-question">1</span>/<span id="total-questions">7</span>
+          </div>
           <div class="quiz-slider" id="quizSlider">
-            <div class="quiz-progress">
-              <span id="current-question">1</span>/<span id="total-questions"
-                >7</span
-              >
-            </div>
 
             <div class="question-card active">
               <div class="title">Quel est votre âge ?</div>
@@ -397,7 +395,7 @@
     <section class="features flex column" id="features">
       <div class="features-inner flex gap100">
         <div class="col-left">
-          <h2 data-aos="fade-up">
+          <h2 class="reveal-h2">
             Profitez d’une expérience optimisée grâce à des fonctionnalités
             pensées pour vous
           </h2>
@@ -591,7 +589,7 @@
     <div class="separator"></div>
 
     <div class="comparatif" id="comparatif">
-      <h2 data-aos="fade-up">Comparez nos services</h2>
+      <h2 class="reveal-h2">Comparez nos services</h2>
 
       <div class="flex gap50 comparatif-wrapper">
         <div class="comparatif__container">
@@ -741,7 +739,7 @@
       <div class="container flex gap30">
         <!-- LEFT -->
         <div class="content col-left">
-          <h2 data-aos="fade-up">Outils vendeur pro</h2>
+          <h2 class="reveal-h2">Outils vendeur pro</h2>
           <div class="seller-args">
             <div class="item">
               <h3>Pilotez votre activité</h3>
@@ -1523,4 +1521,38 @@
   setTimeout(forceAOSVisible, 100);
   setTimeout(forceAOSVisible, 400);
   window.addEventListener('load', () => setTimeout(forceAOSVisible, 100));
+</script>
+
+<!-- Reveal h2 : IntersectionObserver custom — inline styles pour battre la spécificité CSS -->
+<script>
+  (function () {
+    function initRevealH2() {
+      var headings = document.querySelectorAll('.reveal-h2');
+
+      // Cacher immédiatement via inline styles (imbattable en spécificité)
+      headings.forEach(function (el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = 'opacity 0.75s ease, transform 0.75s ease';
+      });
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'none';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
+
+      headings.forEach(function (el) { observer.observe(el); });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRevealH2);
+    } else {
+      initRevealH2();
+    }
+  })();
 </script>
