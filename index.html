@@ -1245,6 +1245,19 @@
     }
   }
 
+  function adjustQuizHeight() {
+    const quizSlider = document.getElementById("quizSlider");
+    const activeCard = cards[currentIndex];
+    if (quizSlider && activeCard) {
+      // Temporarily remove opacity to get accurate offsetHeight if it was hidden
+      quizSlider.style.height = activeCard.offsetHeight + "px";
+    }
+  }
+
+  // Initial adjustment
+  setTimeout(adjustQuizHeight, 100);
+  window.addEventListener('resize', adjustQuizHeight);
+
   function goToNextQuestion(event) {
     const button = event.currentTarget;
     const currentCard = cards[currentIndex];
@@ -1272,6 +1285,9 @@
 
     currentIndex++;
     currentQuestionEl.textContent = currentIndex + 1;
+    
+    // Adjust height for the new card
+    setTimeout(adjustQuizHeight, 50);
 
     setTimeout(() => {
       currentCard.classList.remove("exit-left");
