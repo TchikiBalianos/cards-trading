@@ -185,5 +185,23 @@
 
 ---
 
+## v0.0.8 (2026-04-26)
+**Status:** Phase 3 — Performance & Loading Optimization
+**Founders:** Julian Schmerkin & Valérian Selvon
+**Changes:**
+- ✅ **LCP Image** : `<link rel="preload" as="image">` pour `hero-img.png` + `fetchpriority="high"` + `decoding="sync"` + dimensions explicites (800×560)
+- ✅ **DNS Prefetch** : 4 domaines externes préchargés (fonts.googleapis.com, fonts.gstatic.com, unpkg.com, cdnjs.cloudflare.com)
+- ✅ **Lazy Loading** : 37 images below-fold avec `loading="lazy" decoding="async"` (carousel licences, comparatif, features, seller-tools)
+- ✅ **Dimensions images** : Attributs `width/height` sur hero image pour éviter CLS (Cumulative Layout Shift)
+
+**Performance Impact (estimé) :**
+- LCP : -20 à -40% (preload + fetchpriority sur hero)
+- CLS : Réduit (dimensions explicites hero)
+- Bande passante initiale : Réduite (lazy loading below-fold)
+
+**Git Tag:** `git tag v0.0.8`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.
