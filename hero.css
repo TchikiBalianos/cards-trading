@@ -24,7 +24,8 @@
     position: relative;
     z-index: 1;
     padding: 60px 5vw 100px;
-    align-items: start;
+    align-items: center;
+    height: 100%;
   }
 
   .hero-right {
@@ -35,7 +36,7 @@
     }
   }
 
-  > span {
+  .hero-left span {
     display: flex;
     flex-direction: column;
     justify-content: center;
