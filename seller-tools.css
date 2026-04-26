@@ -166,6 +166,11 @@
 }
 
 @media (max-width: 980px) {
+  /* Orphan last card spans full width */
+  .seller-tools .seller-args .item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .seller-tools {
     height: auto;
     padding: 5vw;
@@ -190,13 +195,28 @@
         .seller-args {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
+          gap: 16px;
 
           .item {
             margin-bottom: 0;
-            background: #323457;
-            padding: 0 20px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(95,95,163,0.35) 0%, #323457 100%);
+            padding: 16px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+
+            h3 {
+              font-size: 17px;
+              margin-bottom: 6px;
+            }
+
+            p {
+              font-size: 13px;
+              max-width: 100%;
+            }
+
+            &:last-child:nth-child(odd) {
+              grid-column: 1 / -1;
+            }
           }
         }
       }

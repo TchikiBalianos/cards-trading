@@ -177,15 +177,20 @@
 
     .features-inner {
       flex-direction: column;
-      gap: 50px !important;
+      gap: 30px !important;
 
       .col-left {
         width: 100%;
         padding-top: 0;
+
+        .feature-left {
+          height: 380px;
+        }
       }
 
       .col-right {
         width: 100%;
+        min-height: 280px;
 
         img {
           height: auto;
@@ -193,8 +198,18 @@
 
         .feature-right {
           padding: 0;
+          min-height: 280px;
+
+          ul {
+            min-height: 280px;
+          }
         }
       }
+    }
+
+    .features-dots {
+      padding-bottom: 40px;
+      margin-top: 10px;
     }
   }
 }

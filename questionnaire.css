@@ -271,21 +271,23 @@
         padding: 50px 0px 80px;
 
         .options > div {
-          width: 90% !important;
-          align-items: center;
-          justify-content: center;
+          width: 92% !important;
+          align-items: stretch;
+          justify-content: flex-start;
         }
 
         label {
-          gap: 15px !important;
-          margin: 0 auto !important;
+          gap: 14px !important;
+          margin: 0 !important;
           width: 100% !important;
-          justify-content: center;
+          justify-content: flex-start;
+          padding-left: 16px !important;
           white-space: normal;
+          text-align: left;
 
           input[type="radio"],
           input[type="checkbox"] {
-            transform: scale(2) !important;
+            transform: scale(1.4) !important;
             flex-shrink: 0;
           }
         }

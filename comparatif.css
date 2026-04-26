@@ -93,10 +93,28 @@
   .comparatif-mobile {
     display: none;
     width: 100%;
-    gap: 20px;
-    flex-direction: column;
+    gap: 0;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
     z-index: 2;
     position: relative;
+    padding-bottom: 16px;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(41,151,255,0.7);
+      border-radius: 2px;
+    }
   }
 
   .texte-table {
@@ -270,8 +288,8 @@
     }
 
     .comparatif-wrapper {
-      flex-direction: column-reverse;
-      gap: 30px;
+      flex-direction: column;
+      gap: 24px;
     }
 
     .comparatif__container {
@@ -359,27 +377,43 @@
       }
     }
 
-    /* Show mobile cards */
+    /* Show mobile carousel */
     .comparatif-mobile {
       display: flex;
     }
 
+    /* Hide desktop table entirely */
+    .comparatif__container {
+      display: none !important;
+    }
+
     .mobile-card {
       background: linear-gradient(135deg, rgba(95, 95, 163, 0.4) 0%, rgba(50, 52, 87, 0.8) 100%);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 20px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: #fff;
+      flex: 0 0 80%;
+      min-width: 0;
+      scroll-snap-align: center;
+      margin-right: 12px;
+
+      &:first-child {
+        margin-left: 10%;
+      }
+      &:last-child {
+        margin-right: 10%;
+      }
 
       &.highlight {
-        background: linear-gradient(135deg, rgba(41, 151, 255, 0.2) 0%, rgba(20, 27, 60, 0.9) 100%);
+        background: linear-gradient(135deg, rgba(41, 151, 255, 0.22) 0%, rgba(20, 27, 60, 0.95) 100%);
         border: 2px solid #2997ff;
-        box-shadow: 0 0 20px rgba(41, 151, 255, 0.3);
+        box-shadow: 0 0 24px rgba(41, 151, 255, 0.35);
       }
 
       h4 {
-        font-size: 22px;
-        margin: 0 0 15px 0;
+        font-size: 20px;
+        margin: 0 0 14px 0;
         text-align: center;
         color: #fff;
       }
@@ -392,7 +426,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 0;
+        padding: 9px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         font-size: 14px;
 
