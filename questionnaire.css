@@ -151,11 +151,10 @@
         }
 
         img {
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
+          display: block;
+          margin: 20px auto 0;
           width: 45%;
+          max-width: 300px;
         }
 
         .options {
