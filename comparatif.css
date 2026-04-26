@@ -62,6 +62,11 @@
 
       tr {
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        transition: background 0.2s ease;
+
+        &:not(thead tr):hover {
+          background: rgba(255, 255, 255, 0.04);
+        }
 
         &:last-of-type {
           border: none;

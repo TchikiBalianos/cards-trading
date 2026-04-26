@@ -24,11 +24,23 @@
 
   .item {
     margin-bottom: 24px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: background 0.25s ease, transform 0.25s ease;
+    cursor: default;
+
+    &:hover {
+      background: rgba(41, 151, 255, 0.06);
+      transform: translateX(6px);
+
+      h3 { color: #6ec6ff; }
+    }
 
     h3 {
       font-size: 20px;
       margin-bottom: 8px;
       color: #2997ff;
+      transition: color 0.25s ease;
     }
 
     p {

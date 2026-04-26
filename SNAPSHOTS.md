@@ -151,5 +151,22 @@
 
 ---
 
+## v0.0.6 (2026-04-26)
+**Status:** Phase 1 — Micro-animations & Hover Polish
+**Founders:** Julian Schmerkin & Valérian Selvon
+**Changes:**
+- ✅ `@keyframes pulse-dot` — dot actif des fonctionnalités pulse doucement
+- ✅ `@keyframes cta-attention` — CTA hero pulse glow toutes les 4s (after 3s delay)
+- ✅ `@keyframes label-select` — spring bounce sur la sélection d'option quiz
+- ✅ Comparaison table: `tr:hover` highlight subtil sur les lignes desktop
+- ✅ Vendeur Pro items desktop: hover lift (`translateX(6px)`) + glow blue
+- ✅ Features dots: animation `pulse-dot` sur le dot actif + hover state sur inactifs
+- ✅ Licence carousel: pause on mouse hover (mouseleave reprend)
+- ✅ Hero CTA button: `animation: cta-attention 4s infinite` pour attirer l'oeil
+
+**Git Tag:** `git tag v0.0.6`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.

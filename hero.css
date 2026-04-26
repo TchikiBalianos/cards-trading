@@ -90,6 +90,7 @@
     box-shadow: 0 4px 18px rgba(41, 151, 255, 0.45);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    animation: cta-attention 4s ease-in-out 3s infinite;
 
     &:hover {
       transform: translateY(-2px);

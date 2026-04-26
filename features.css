@@ -154,6 +154,12 @@
       &.active {
         background: #fff;
         transform: scale(1.2);
+        animation: pulse-dot 2.5s ease-in-out infinite;
+      }
+
+      &:hover:not(.active) {
+        background: rgba(255,255,255,0.65);
+        transform: scale(1.1);
       }
     }
   }

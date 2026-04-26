@@ -1017,6 +1017,18 @@
 
   window.addEventListener("load", initCarousel);
   window.addEventListener("resize", initCarousel);
+
+  /* Pause on hover */
+  const licenceCarousel = document.querySelector('.licence-caroussel');
+  if (licenceCarousel) {
+    licenceCarousel.addEventListener('mouseenter', () => {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    });
+    licenceCarousel.addEventListener('mouseleave', () => {
+      if (!rafId) step();
+    });
+  }
 </script>
 
 <!-- toggle avantage -->
