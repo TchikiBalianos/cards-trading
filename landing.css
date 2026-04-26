@@ -7,6 +7,51 @@
 @import url(questionnaire.css);
 @import url(seller-tools.css);
 
+/* ── SKIP LINK (accessibilité clavier) ─────────────────── */
+.skip-link {
+  position: absolute;
+  top: -56px;
+  left: 16px;
+  background: #2997ff;
+  color: #fff;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  transition: top 0.2s ease;
+
+  &:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+/* ── FOCUS VISIBLE (accessibilité clavier) ──────────────── */
+*:focus { outline: none; }
+
+*:focus-visible {
+  outline: 2px solid #2997ff;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+.btn:focus-visible,
+.nav-hamburger:focus-visible {
+  outline: 2px solid #2997ff;
+  outline-offset: 3px;
+  border-radius: 50px;
+}
+
+a:focus-visible {
+  outline: 2px solid #2997ff;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 /* ── STICKY HEADER ─────────────────────────────────────── */
 header {
   background: rgba(30, 30, 30, 0.85);

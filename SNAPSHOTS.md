@@ -203,5 +203,29 @@
 
 ---
 
+## v0.0.9 (2026-04-26)
+**Status:** Phase 4 — Accessibilité (ARIA, Alt texts, Focus, Landmarks)
+**Founders:** Julian Schmerkin & Valérian Selvon
+**Changes:**
+- ✅ **Skip link** : `<a class="skip-link" href="#main-content">` visible au focus clavier (top:-56px → 0)
+- ✅ **`<main>` landmark** : Contenu principal enveloppé dans `<main id="main-content">` pour screen readers
+- ✅ **Hamburger** : `aria-expanded="false"` initial + `aria-controls="headerNav"` (mis à jour dynamiquement en JS)
+- ✅ **Navigation** : `aria-label="Navigation principale"` sur `<nav>` header + `aria-label="Navigation secondaire"` déjà sur footer
+- ✅ **Scroll-spy** : `aria-current="true"` posé/retiré dynamiquement sur le lien actif (en plus du `.active` CSS)
+- ✅ **Hero buttons** : `type="button"` + `aria-label` explicites sur les 2 CTA
+- ✅ **Avantages toggle** : `aria-pressed="true/false"` initial + mis à jour en JS au clic
+- ✅ **Tableau comparatif** : `scope="col"` sur les `<th>` d'en-tête + `<th scope="row">` sur les cellules de ligne
+- ✅ **Carousel Vendeur Pro** : `aria-label="Slide précédente/suivante"` sur les boutons `‹` / `›`
+- ✅ **Lightbox** : `aria-label="Fermer la lightbox"` sur le bouton `×`
+- ✅ **Logo alt** : `alt="Cards Trading"` (était `"logo cards-trading.com"`)
+- ✅ **Logos TCG carousel** : Alt texts descriptifs (ex. `"Pokémon Trading Card Game"`, `"Magic: The Gathering"`)
+- ✅ **Feature images** : Alt texts descriptifs (ex. `"Aperçu du Card Scanner sur mobile"`)
+- ✅ **Focus-visible CSS** : `outline: 2px solid #2997ff` global + overrides pill pour boutons et liens
+- ✅ **`*:focus`** : `outline: none` + `*:focus-visible` assure l'anneau uniquement en navigation clavier
+
+**Git Tag:** `git tag v0.0.9`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.

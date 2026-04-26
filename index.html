@@ -106,23 +106,25 @@
     />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <header class="flex header-sticky">
       <div class="logo">
-        <img src="assets/img/logo.png" alt="logo cards-trading.com" />
+        <img src="assets/img/logo.png" alt="Cards Trading" />
       </div>
-      <nav class="header-nav" id="headerNav">
+      <nav class="header-nav" id="headerNav" aria-label="Navigation principale">
         <a href="#avantages" class="nav-link">Avantages</a>
         <a href="#beta" class="nav-link">Beta</a>
         <a href="#features" class="nav-link">Fonctionnalités</a>
         <a href="#comparatif" class="nav-link">Comparaison</a>
         <a href="#vendeur-pro" class="nav-link">Vendeur Pro</a>
       </nav>
-      <button class="nav-hamburger" id="navHamburger" aria-label="Menu" type="button">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false" aria-controls="headerNav" type="button">
         <span></span>
         <span></span>
         <span></span>
       </button>
     </header>
+    <main id="main-content">
     <section class="hero flex">
       <div class="flex gap30 hero-wrapper">
         <div class="hero-left col">
@@ -135,8 +137,8 @@
               Achetez & Vendez vos cartes de collection en toute sécurité
             </div>
             <div class="button-container flex gap30">
-              <button>En savoir plus</button>
-              <button>S'inscrire a la beta</button>
+              <button type="button" aria-label="En savoir plus sur Cards Trading">En savoir plus</button>
+              <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire a la beta</button>
             </div>
           </span>
         </div>
@@ -155,25 +157,25 @@
       <div class="licence-caroussel">
         <div class="track" id="licenceTrack">
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-dbz.png" alt="logo-dbz" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-dbz.png" alt="Dragon Ball Super Card Game" />
           </div>
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-lorcana.png" alt="logo-lorcana" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-lorcana.png" alt="Disney Lorcana" />
           </div>
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-magic.png" alt="logo-magic" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-magic.png" alt="Magic: The Gathering" />
           </div>
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-onepiece.png" alt="logo-onepiece" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-onepiece.png" alt="One Piece Card Game" />
           </div>
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-pokemon.png" alt="logo-pokemon" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-pokemon.png" alt="Pokémon Trading Card Game" />
           </div>
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-riftbound.png" alt="logo-riftbound" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-riftbound.png" alt="Riftbound TCG" />
           </div>
           <div class="item">
-            <img loading="lazy" decoding="async" src="assets/img/logo-yugiho.png" alt="logo-yugiho" />
+            <img loading="lazy" decoding="async" src="assets/img/logo-yugiho.png" alt="Yu-Gi-Oh! Trading Card Game" />
           </div>
         </div>
       </div>
@@ -187,8 +189,8 @@
         Achetez & Vendez vos cartes de collection en toute sécurité
       </div>
       <div class="button-container flex gap30">
-        <button class="btn active" data-target="acheteur">Acheteur</button>
-        <button class="btn" data-target="vendeur">Vendeur</button>
+        <button class="btn active" data-target="acheteur" aria-pressed="true" type="button">Acheteur</button>
+        <button class="btn" data-target="vendeur" aria-pressed="false" type="button">Vendeur</button>
       </div>
 
       <div class="avantages-container acheteur flex gap30 active">
@@ -545,16 +547,16 @@
           <div class="feature-right">
             <ul>
               <li class="active">
-                <img loading="lazy" decoding="async" src="assets/img/feature1.png" alt="" />
+                <img loading="lazy" decoding="async" src="assets/img/feature1.png" alt="Aperçu du Card Scanner sur mobile" />
               </li>
               <li>
-                <img loading="lazy" decoding="async" src="assets/img/feature2.png" alt="" />
+                <img loading="lazy" decoding="async" src="assets/img/feature2.png" alt="Aperçu du Market Tracker sur mobile" />
               </li>
               <li>
-                <img loading="lazy" decoding="async" src="assets/img/feature3.png" alt="" />
+                <img loading="lazy" decoding="async" src="assets/img/feature3.png" alt="Aperçu de la Smart Wishlist sur mobile" />
               </li>
               <li>
-                <img loading="lazy" decoding="async" src="assets/img/feature4.png" alt="" />
+                <img loading="lazy" decoding="async" src="assets/img/feature4.png" alt="Aperçu des Filtres Avancés sur mobile" />
               </li>
             </ul>
           </div>
@@ -595,51 +597,51 @@
           <table class="comparatif__table">
             <thead>
               <tr>
-                <th></th>
-                <th>Cards-Trading</th>
-                <th>Cardmarket</th>
-                <th>Vinted</th>
-                <th>eBay</th>
+                <th scope="col"></th>
+                <th scope="col">Cards-Trading</th>
+                <th scope="col">Cardmarket</th>
+                <th scope="col">Vinted</th>
+                <th scope="col">eBay</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>UX mobile moderne</td>
+                <th scope="row">UX mobile moderne</th>
                 <td>✓</td>
                 <td>✕</td>
                 <td>—</td>
                 <td>—</td>
               </tr>
               <tr>
-                <td>Spécialisation TCG</td>
+                <th scope="row">Spécialisation TCG</th>
                 <td>✓</td>
                 <td>—</td>
                 <td>✕</td>
                 <td>✕</td>
               </tr>
               <tr>
-                <td>Escrow / paiement sécurisé</td>
+                <th scope="row">Escrow / paiement sécurisé</th>
                 <td>✓</td>
                 <td>✕</td>
                 <td>✓</td>
                 <td>—</td>
               </tr>
               <tr>
-                <td>Litiges structurés</td>
+                <th scope="row">Litiges structurés</th>
                 <td>✓</td>
                 <td>—</td>
                 <td>—</td>
                 <td>—</td>
               </tr>
               <tr>
-                <td>Commission 0 %</td>
+                <th scope="row">Commission 0 %</th>
                 <td>✓</td>
                 <td>✕</td>
                 <td>✕</td>
                 <td>✕</td>
               </tr>
               <tr>
-                <td>Outils vendeur</td>
+                <th scope="row">Outils vendeur</th>
                 <td>✓</td>
                 <td>—</td>
                 <td>✕</td>
@@ -802,8 +804,8 @@
           </div>
 
           <div class="controls">
-            <button class="prev" type="button">‹</button>
-            <button class="next" type="button">›</button>
+            <button class="prev" type="button" aria-label="Slide précédente">‹</button>
+            <button class="next" type="button" aria-label="Slide suivante">›</button>
           </div>
         </div>
       </div>
@@ -811,10 +813,11 @@
 
     <!-- POPIN FULLSCREEN -->
     <div class="lightbox" id="lightbox">
-      <button class="lightbox-close" type="button">×</button>
+      <button class="lightbox-close" type="button" aria-label="Fermer la lightbox">×</button>
       <img class="lightbox-img" src="" alt="" />
     </div>
     <div class="separator"></div>
+    </main>
 
     <footer>
       <div class="footer-main">
@@ -986,7 +989,13 @@
     function setActiveLink(id) {
       navLinks.forEach(link => {
         const href = link.getAttribute('href').replace('#', '');
-        link.classList.toggle('active', href === id);
+        const isActive = href === id;
+        link.classList.toggle('active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'true');
+        } else {
+          link.removeAttribute('aria-current');
+        }
       });
     }
 
@@ -1095,8 +1104,12 @@
     button.addEventListener("click", () => {
       const target = button.dataset.target;
 
-      buttons.forEach((btn) => btn.classList.remove("active"));
+      buttons.forEach((btn) => {
+        btn.classList.remove("active");
+        btn.setAttribute("aria-pressed", "false");
+      });
       button.classList.add("active");
+      button.setAttribute("aria-pressed", "true");
 
       containers.forEach((container) => {
         container.classList.remove("active");
