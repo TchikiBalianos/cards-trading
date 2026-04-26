@@ -78,5 +78,38 @@
 
 ---
 
+## v0.0.4 (2026-04-26)
+**Status:** Navigation & Layout Refinement
+**Founders:** Julian Schmerkin & Valérian Selvon
+**Major Changes:**
+- ✅ **Navigation Sticky** :
+  - Header fixé au top avec glass-morphism backdrop (blur 16px)
+  - Menu navigation avec 5 sections : Avantages, Beta, Fonctionnalités, Comparaison, Vendeur Pro
+  - Scroll-spy : Active links highlighting automatique basé sur IntersectionObserver
+  - Underline animation hover/active sur desktop
+  - Hamburger menu animé sur mobile (<768px)
+  - Fermeture menu au clic sur lien ou clic extérieur
+  - Transition smooth scale-in hamburger (45deg rotations)
+  - Scroll shrink : Header réduit légèrement après 40px de scroll
+- ✅ **Hero Section Hero** : Corrigé complètement le chevauchement boutons/carousel
+  - Contenu texte width: 100% (avec max-width: 600px)
+  - Padding-bottom augmenté (140px → 200px)
+  - Margin-top: auto sur buttons pour positionnement optimal
+  - Adaptations responsive à tous les breakpoints (980px, 768px, 600px)
+- ✅ **CSS Enhancements** :
+  - rgba backdrop-filter pour effet glassmorphism moderne
+  - Z-index management (1000 header, 1001 hamburger)
+  - Transitions fluides (0.3s à 0.35s ease)
+  - Fixed positioning avec perfect viewport coverage
+
+**Responsive Breakpoints:**
+- Desktop (1280px+): Navigation horizontale complète
+- Tablet (768px-980px): Navigation horizontale, hamburger caché, layout column hero
+- Mobile (<768px): Hamburger visible, menu déroulant fixe, navigation collapse
+
+**Git Tag:** `git tag v0.0.4`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.
