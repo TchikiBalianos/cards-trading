@@ -176,7 +176,6 @@
 
     .container {
       gap: 0;
-
       flex-direction: column;
 
       .content {
@@ -205,6 +204,70 @@
       .col-right {
         padding: 0;
         width: 100%;
+
+        .carousel-wrapper {
+          &.col-right {
+            width: 100%;
+            padding-top: 0;
+            padding-bottom: 40px;
+          }
+
+          .carousel {
+            height: auto;
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 0;
+            -webkit-overflow-scrolling: touch;
+
+            &::-webkit-scrollbar {
+              height: 6px;
+            }
+
+            &::-webkit-scrollbar-track {
+              background: rgba(255,255,255,0.1);
+              border-radius: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: rgba(41,151,255,0.6);
+              border-radius: 3px;
+
+              &:hover {
+                background: rgba(41,151,255,0.9);
+              }
+            }
+          }
+
+          .card {
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
+            transform: none !important;
+            filter: none !important;
+            flex: 0 0 calc(100% - 32px);
+            min-width: calc(100% - 32px);
+            width: calc(100% - 32px);
+            height: auto;
+            top: auto;
+            left: auto;
+            z-index: 1;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+
+            &.is-active,
+            &.is-left,
+            &.is-right {
+              opacity: 1;
+              transform: none !important;
+              filter: none !important;
+            }
+          }
+
+          .controls {
+            display: none;
+          }
+        }
       }
     }
   }

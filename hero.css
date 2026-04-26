@@ -48,8 +48,8 @@
     justify-content: center;
     gap: clamp(15px, 4vh, 40px); /* Proportional spacing between all elements */
     padding-left: 50px;
+    padding-right: 40px;
     width: 100%;
-    max-width: 600px;
     height: 100%;
   }
 
@@ -207,6 +207,8 @@
     .baseline {
       font-size: 27px !important;
       padding: 0 30px;
+      text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3);
+      -webkit-text-stroke: 0.5px rgba(255,255,255,0.4);
     }
 
     .subline {
@@ -216,10 +218,31 @@
     }
 
     .hero-wrapper {
-      padding: 0 !important;
+      padding: 40px 0 160px !important;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .hero-left {
+        width: 100%;
+      }
+
+      .hero-left span {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        align-items: center;
+      }
 
       .button-container {
-        padding-top: 40px;
+        padding-top: 24px;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        button {
+          width: 85%;
+          max-width: 280px;
+        }
       }
     }
 
