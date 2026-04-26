@@ -233,18 +233,34 @@ footer {
     .footer-main {
       flex-direction: row;
       gap: 0;
-      padding: 40px 5vw;
+      padding: 50px 5vw 40px;
+      align-items: flex-start;
+      justify-content: space-between;
     }
 
     .footer-brand {
-      flex: 0 0 0;
-      display: none;
+      flex: 0 0 25%;
+      display: block;
+
+      .footer-logo {
+        width: 120px;
+        margin-bottom: 12px;
+      }
+
+      .footer-desc {
+        font-size: 12px;
+        line-height: 1.6;
+      }
     }
 
     .footer-nav {
-      width: 100%;
-      justify-content: space-around;
-      gap: 20px;
+      width: calc(75% - 30px);
+      flex: 1;
+      justify-content: space-between;
+      gap: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
 
       .footer-col {
         flex: 1;
@@ -282,35 +298,59 @@ footer {
 
 @media (max-width: 768px) {
   header {
-    padding: 0 20px;
+    padding: 0 15px;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+
+    .logo {
+      width: 140px;
+      margin: 0;
+    }
   }
 
   .header-nav {
     position: fixed;
-    top: var(--header-height);
+    top: 60px;
     left: 0;
-    width: 100%;
+    right: 0;
+    width: 100vw;
     flex-direction: column;
-    align-items: flex-start;
-    background: rgba(18,18,18,0.97);
+    align-items: stretch;
+    background: rgba(15,15,20,0.99);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 16px 24px 24px;
-    gap: 4px;
-    transform: translateY(-110%);
+    padding: 12px 0;
+    gap: 0;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(-100%);
     transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.6);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    z-index: 1000;
 
     &.mobile-open {
-      transform: translateY(0);
+      transform: translateX(0);
     }
 
     .nav-link {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 20px;
       font-size: 15px;
-      border-radius: 12px;
+      border-radius: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: block;
+
+      &:hover {
+        background: rgba(255,255,255,0.1);
+      }
+
+      &.active {
+        background: rgba(41,151,255,0.2);
+        border-left: 3px solid #2997ff;
+        padding-left: 17px;
+      }
 
       &::after {
         display: none;
@@ -320,5 +360,7 @@ footer {
 
   .nav-hamburger {
     display: flex;
+    order: 2;
+    margin-left: auto;
   }
 }
