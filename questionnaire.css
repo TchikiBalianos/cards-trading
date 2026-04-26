@@ -257,15 +257,30 @@
       .quiz-wrapper {
         padding: 50px 0px 80px;
 
+        .options > div {
+          width: 90% !important;
+          align-items: center;
+          justify-content: center;
+        }
+
         label {
-          gap: 30px !important;
-          margin-left: 24% !important;
-          white-space: nowrap;
+          gap: 15px !important;
+          margin: 0 auto !important;
+          width: 100% !important;
+          justify-content: center;
+          white-space: normal;
 
           input[type="radio"],
           input[type="checkbox"] {
             transform: scale(2) !important;
+            flex-shrink: 0;
           }
+        }
+
+        input[type="text"],
+        input[type="email"] {
+          width: 90% !important;
+          margin: 0 auto !important;
         }
 
         .quiz-progress {

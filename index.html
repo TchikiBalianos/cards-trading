@@ -860,6 +860,28 @@
       history.pushState(null, '', '#' + hash);
     });
   });
+
+  /* Hero CTA buttons scroll */
+  const heroButtons = document.querySelectorAll('.hero-left .button-container button');
+  if (heroButtons.length >= 2) {
+    // "S'inscrire a la beta" button -> scroll to #beta
+    heroButtons[1].addEventListener('click', () => {
+      const target = document.getElementById('beta');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', '#beta');
+      }
+    });
+
+    // "En savoir plus" button -> scroll to #avantages
+    heroButtons[0].addEventListener('click', () => {
+      const target = document.getElementById('avantages');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', '#avantages');
+      }
+    });
+  }
 </script>
 
 <!-- navbar: scroll-shrink + scroll-spy + hamburger -->

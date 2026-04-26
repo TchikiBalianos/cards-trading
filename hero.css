@@ -218,13 +218,14 @@
     }
 
     .hero-wrapper {
-      padding: 40px 0 160px !important;
+      padding: 60px 0 160px !important;
       flex-direction: column;
       align-items: center;
       text-align: center;
 
       .hero-left {
         width: 100%;
+        margin-top: 20px;
       }
 
       .hero-left span {
