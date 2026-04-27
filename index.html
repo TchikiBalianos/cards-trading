@@ -906,18 +906,14 @@
 
 <!-- smooth scroll -->
 <script>
-  /* Unified scroller — accounts for sticky header height; reliable on iOS Safari */
+  /* Unified scroller — scroll-padding-top on <html> handles the sticky header offset */
   function smoothScrollTo(target, hash) {
     if (!target) return;
-    var headerEl = document.querySelector('header');
-    var headerH = headerEl ? headerEl.offsetHeight : 0;
-    var rect = target.getBoundingClientRect();
-    var top = Math.max(0, rect.top + window.pageYOffset - headerH - 8);
-    window.scrollTo({ top: top, behavior: 'smooth' });
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (hash) history.pushState(null, '', '#' + hash);
   }
 
-  /* Anchor links — close mobile menu first if open, then scroll */
+  /* Anchor links — if mobile menu is open, wait for its transitionend before scrolling */
   document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
       var hash = link.getAttribute('href').split('#')[1];
@@ -934,10 +930,18 @@
         hamburger.classList.remove('open');
         nav.classList.remove('mobile-open');
         hamburger.setAttribute('aria-expanded', 'false');
-        /* Wait for the 0.35s CSS slide-out, then RAF for layout stability */
-        setTimeout(function () {
-          requestAnimationFrame(function () { smoothScrollTo(target, hash); });
-        }, 380);
+        /* Wait for CSS slide-out (0.35s); setTimeout fallback for iOS Safari */
+        var fired = false;
+        var doScroll = function() {
+          if (fired) return;
+          fired = true;
+          smoothScrollTo(target, hash);
+        };
+        nav.addEventListener('transitionend', function handler() {
+          nav.removeEventListener('transitionend', handler);
+          doScroll();
+        });
+        setTimeout(doScroll, 400); /* fallback if transitionend never fires */
       } else {
         smoothScrollTo(target, hash);
       }
