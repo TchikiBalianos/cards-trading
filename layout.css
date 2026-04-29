@@ -2,8 +2,11 @@
   --header-height: 60px;
 }
 
-html, body {
-  /* Offset sticky header so scrollIntoView / hash-scroll land below it */
+html {
+  /* Offset sticky header so scrollIntoView / hash-scroll land below it.
+     ⚠️ Doit rester sur <html> uniquement : ajouter aussi sur <body>
+     double l'offset (60+60=120px) car body est aussi scroll container
+     dans certaines combinaisons viewport/contenu. */
   scroll-padding-top: var(--header-height);
 }
 
