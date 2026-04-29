@@ -18,6 +18,94 @@
   transform: none;
 }
 
+/* ── SOCIAL PROOF BADGE (hero) ─────────────────────────── */
+@keyframes social-proof-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.social-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 7px 18px 7px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 100px;
+  width: fit-content;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: social-proof-fade-in 0.6s ease-out 0.4s forwards;
+}
+
+.social-proof-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.social-proof-avatars .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgb(15, 17, 30);
+  display: inline-block;
+  margin-left: -10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.social-proof-avatars .avatar:first-child {
+  margin-left: 0;
+}
+
+.avatar-1 { background: linear-gradient(135deg, #FFCB05 0%, #F47B20 100%); }
+.avatar-2 { background: linear-gradient(135deg, #2997ff 0%, #00D4FF 100%); }
+.avatar-3 { background: linear-gradient(135deg, #E51E25 0%, #8B27BB 100%); }
+.avatar-4 { background: linear-gradient(135deg, #4DAFE5 0%, #2997ff 100%); }
+
+.social-proof-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+}
+
+.social-proof-count {
+  font-weight: 800;
+  color: #2997ff;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 12px rgba(41, 151, 255, 0.4);
+}
+
+.social-proof-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .social-proof {
+    margin: 16px auto 0;
+    padding: 6px 14px 6px 6px;
+    max-width: 92%;
+  }
+
+  .social-proof-avatars .avatar {
+    width: 26px;
+    height: 26px;
+    margin-left: -8px;
+    border-width: 1.5px;
+  }
+
+  .social-proof-text {
+    font-size: 12px;
+  }
+}
+
 /* ── SKIP LINK (accessibilité clavier) ─────────────────── */
 .skip-link {
   position: absolute;
