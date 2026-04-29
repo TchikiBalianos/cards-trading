@@ -140,6 +140,20 @@
               <button type="button" aria-label="En savoir plus sur Cards Trading">En savoir plus</button>
               <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire à la bêta</button>
             </div>
+
+            <!-- Social proof badge -->
+            <div class="social-proof" aria-live="polite">
+              <div class="social-proof-avatars" aria-hidden="true">
+                <span class="avatar avatar-1"></span>
+                <span class="avatar avatar-2"></span>
+                <span class="avatar avatar-3"></span>
+                <span class="avatar avatar-4"></span>
+              </div>
+              <div class="social-proof-text">
+                <span class="social-proof-count" data-target="62">62</span>
+                joueurs et collectionneurs <strong>déjà inscrits</strong> à la bêta
+              </div>
+            </div>
           </span>
         </div>
         <div class="hero-right col">
@@ -1114,6 +1128,73 @@
       if (!rafId) step();
     });
   }
+</script>
+
+<!-- Social proof badge — counter Upstash + count-up animation -->
+<script>
+  (function () {
+    const countEl = document.querySelector('.social-proof-count');
+    if (!countEl) return;
+
+    const STORAGE_KEY = 'ct:visited';
+    const FALLBACK = parseInt(countEl.dataset.target, 10) || 62;
+
+    /* Animation count-up easing-cubic-out */
+    function animateTo(el, target, duration) {
+      duration = duration || 1800;
+      const start = parseInt(el.textContent, 10) || 0;
+      const t0 = performance.now();
+      function frame(now) {
+        const t = Math.min((now - t0) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const v = Math.round(start + (target - start) * eased);
+        el.textContent = v;
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* Fetch — POST si jamais visité, sinon GET pure lecture */
+    async function fetchCount() {
+      let visited = false;
+      try { visited = !!localStorage.getItem(STORAGE_KEY); } catch (e) {}
+      const method = visited ? 'GET' : 'POST';
+      try {
+        const res = await fetch('/api/views', { method, headers: { 'Content-Type': 'application/json' } });
+        if (!res.ok) return FALLBACK;
+        const data = await res.json();
+        if (!visited) {
+          try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+        }
+        return Number(data.count) || FALLBACK;
+      } catch (e) {
+        return FALLBACK;
+      }
+    }
+
+    /* Lance count-up dès que le badge est visible (1ère fois uniquement) */
+    let pendingTarget = FALLBACK;
+    let animated = false;
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !animated) {
+          animated = true;
+          countEl.textContent = '0';
+          animateTo(countEl, pendingTarget, 1800);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    /* Lecture du compteur au load — la valeur est utilisée quand l'animation se déclenche */
+    fetchCount().then(function (count) {
+      pendingTarget = count;
+      /* Si déjà animé (rare), refresh sans animation */
+      if (animated) countEl.textContent = String(count);
+    });
+
+    observer.observe(countEl);
+  })();
 </script>
 
 <!-- toggle avantage -->
