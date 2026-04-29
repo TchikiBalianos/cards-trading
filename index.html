@@ -8,7 +8,7 @@
     <title>Cards Trading | Marketplace TCG — Acheter &amp; Vendre vos Cartes</title>
     <meta
       name="description"
-      content="Cards Trading est la marketplace TCG française pour acheter, vendre et collectionner vos cartes Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana et Dragon Ball en toute sécurité. Commission 0 %, paiement sécurisé, expédition suivie."
+      content="Cards Trading est la marketplace TCG française pour acheter, vendre et collectionner vos cartes Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana et Dragon Ball en toute sécurité. Commission 0 % en bêta, paiement sécurisé, expédition suivie."
     />
     <meta
       name="keywords"
@@ -38,7 +38,7 @@
     <meta name="twitter:title" content="Cards Trading | Marketplace TCG" />
     <meta
       name="twitter:description"
-      content="La marketplace dédiée aux TCG : Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball. Commission 0 %, paiement sécurisé."
+      content="La marketplace dédiée aux TCG : Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball. Commission 0 % en bêta, paiement sécurisé."
     />
     <meta name="twitter:image" content="https://cards-trading.com/assets/img/og-cover.png" />
 
@@ -129,16 +129,16 @@
       <div class="flex gap30 hero-wrapper">
         <div class="hero-left col">
           <span>
-            <h1>Decouvrez Cards Trading</h1>
+            <h1>Découvrez Cards Trading</h1>
             <div class="baseline">
-              <strong>La nouvelle marketplace dediée a vos TCG préférés</strong>
+              <strong>La nouvelle marketplace dédiée à vos TCG préférés</strong>
             </div>
             <div class="subline">
               Achetez & Vendez vos cartes de collection en toute sécurité
             </div>
             <div class="button-container flex gap30">
               <button type="button" aria-label="En savoir plus sur Cards Trading">En savoir plus</button>
-              <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire a la beta</button>
+              <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire à la bêta</button>
             </div>
           </span>
         </div>
@@ -186,7 +186,7 @@
     <div class="avantages" id="avantages">
       <h2 class="reveal-h2">Les avantages Cards trading</h2>
       <div class="subline">
-        Achetez & Vendez vos cartes de collection en toute sécurité
+        Ce qui change pour les acheteurs comme pour les vendeurs.
       </div>
       <div class="button-container flex gap30">
         <button class="btn active" data-target="acheteur" aria-pressed="true" type="button">Acheteur</button>
@@ -256,25 +256,75 @@
       <h2 class="reveal-h2">Et toi, a quoi tu joues ?</h2>
       <div class="questionnaire-wrapper flex gap30">
         <div class="questionnaire-texte">
-          Réponds aux questions pour t'inscrire a la beta. Ca nous aidera a
-          mieux te connaitre et a te proposer une meilleure expérience de trade
-          et te permettras d'acceder a la plateforme en pré-release.
+          Réponds aux questions pour t'inscrire à la bêta. Ça nous aidera à
+          mieux te connaître et à te proposer une meilleure expérience de trade
+          et te permettra d'accéder à la plateforme en pré-release.
           <br /><br />
-          <span>En plus tu beneficieras de:</span>
+          <span>En plus tu bénéficieras de :</span>
           <ul>
             <li>Accès anticipé à la plateforme</li>
-            <li>Zero frais pendant 3 mois</li>
+            <li>Zéro frais pendant 3 mois</li>
             <li>Pack merchandising offert</li>
           </ul>
         </div>
 
         <div class="quiz-wrapper">
-          <div class="quiz-progress">
-            <span id="current-question">1</span>/<span id="total-questions">7</span>
+          <div class="quiz-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progression du questionnaire">
+            <div class="xp-info">
+              <span class="xp-step">Étape <span id="current-question">1</span><span class="xp-step-total">/<span id="total-questions">8</span></span></span>
+              <span class="xp-percentage">0%</span>
+            </div>
+            <div class="xp-track">
+              <div class="xp-fill"></div>
+            </div>
           </div>
           <div class="quiz-slider" id="quizSlider">
 
-            <div class="question-card active">
+            <div class="question-card tcg-question active">
+              <div class="title">Quels TCG préférez-vous ?</div>
+              <div class="options">
+                <div class="tcg-grid">
+                  <label data-tcg="pokemon"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Pokémon</label>
+                  <label data-tcg="onepiece"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>One Piece</label>
+                  <label data-tcg="magic"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Magic</label>
+                  <label data-tcg="yugioh"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Yu-Gi-Oh!</label>
+                  <label data-tcg="lorcana"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Lorcana</label>
+                  <label data-tcg="dragonball"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Dragon Ball</label>
+                  <label data-tcg="riftbound"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Riftbound</label>
+                  <label data-tcg="starwars"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Star Wars</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quel est votre profil ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q5" /> Joueur</label>
+                  <label><input type="radio" name="q5" /> Collectionneur</label>
+                  <label><input type="radio" name="q5" /> Les deux</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quelle plateforme utilisez-vous le plus ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q4" /> Cardmarket</label>
+                  <label><input type="radio" name="q4" /> eBay</label>
+                  <label><input type="radio" name="q4" /> Vinted</label>
+                  <label
+                    ><input type="radio" name="q4" /> Facebook / Discord</label
+                  >
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
               <div class="title">Quel est votre âge ?</div>
               <div class="options">
                 <div>
@@ -298,50 +348,6 @@
                   <label
                     ><input type="radio" name="q2" /> Ne pas répondre</label
                   >
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card tcg-question">
-              <div class="title">Quels TCG préférez-vous ?</div>
-              <div class="options">
-                <div class="tcg-grid">
-                  <label><input type="checkbox" name="q3" /> Pokémon</label>
-                  <label><input type="checkbox" name="q3" /> One Piece</label>
-                  <label><input type="checkbox" name="q3" /> Magic</label>
-                  <label><input type="checkbox" name="q3" /> Yu-Gi-Oh!</label>
-                  <label><input type="checkbox" name="q3" /> Lorcana</label>
-                  <label><input type="checkbox" name="q3" /> Dragon Ball</label>
-                  <label><input type="checkbox" name="q3" /> Riftbound</label>
-                  <label><input type="checkbox" name="q3" /> Star Wars</label>
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Quelle plateforme utilisez-vous le plus ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="radio" name="q4" /> Cardmarket</label>
-                  <label><input type="radio" name="q4" /> eBay</label>
-                  <label><input type="radio" name="q4" /> Vinted</label>
-                  <label
-                    ><input type="radio" name="q4" /> Facebook / Discord</label
-                  >
-                </div>
-              </div>
-              <button class="next-btn">Valider</button>
-            </div>
-
-            <div class="question-card">
-              <div class="title">Quel est votre profil ?</div>
-              <div class="options">
-                <div>
-                  <label><input type="radio" name="q5" /> Joueur</label>
-                  <label><input type="radio" name="q5" /> Collectionneur</label>
-                  <label><input type="radio" name="q5" /> Les deux</label>
                 </div>
               </div>
               <button class="next-btn">Valider</button>
@@ -409,27 +415,27 @@
                   <span>
                     <div class="title-feature">Scan ultra rapide</div>
                     <div class="text-feature">
-                      Notre technologie reconnait vos cartes en un instant
+                      Notre technologie reconnaît vos cartes en un instant
                     </div>
                   </span>
                 </li>
                 <li class="flex gap30">
                   <i class="fa-solid fa-expand"></i>
                   <span>
-                    <div class="title-feature">Infos completes</div>
+                    <div class="title-feature">Infos complètes</div>
                     <div class="text-feature">
-                      Nom, édition,raréte, Accedez a toutes les informations sur
-                      vos cartes préférés
+                      Nom, édition, rareté. Accédez à toutes les informations
+                      sur vos cartes préférées
                     </div>
                   </span>
                 </li>
                 <li class="flex gap30">
                   <i class="fa-solid fa-chart-line"></i>
                   <span>
-                    <div class="title-feature">Données du marche</div>
+                    <div class="title-feature">Données du marché</div>
                     <div class="text-feature">
-                      Sourcées depuis cardmarket, ebay, TCGplayer, consultez les
-                      prix des dernieres ventes.
+                      Sourcées depuis Cardmarket, eBay et TCGplayer, consultez
+                      les prix des dernières ventes.
                     </div>
                   </span>
                 </li>
@@ -441,7 +447,7 @@
                 <li class="flex gap30">
                   <i class="fa-solid fa-clock"></i>
                   <span>
-                    <div class="title-feature">Dernieres ventes réelles</div>
+                    <div class="title-feature">Dernières ventes réelles</div>
                     <div class="text-feature">
                       Consultez les prix du marché pour optimiser vos achats et
                       vos ventes
@@ -451,10 +457,10 @@
                 <li class="flex gap30">
                   <i class="fa-solid fa-arrow-trend-up"></i>
                   <span>
-                    <div class="title-feature">Mise a jour en temps réel</div>
+                    <div class="title-feature">Mise à jour en temps réel</div>
                     <div class="text-feature">
-                      Des donnees actualisées en continu pour une vision fiable
-                      du marche
+                      Des données actualisées en continu pour une vision fiable
+                      du marché
                     </div>
                   </span>
                 </li>
@@ -478,7 +484,7 @@
                   <span>
                     <div class="title-feature">Alertes nouvelles annonces</div>
                     <div class="text-feature">
-                      Soyez notifie des qu'une carte de votre wishlist est mise
+                      Soyez notifié dès qu'une carte de votre wishlist est mise
                       en vente
                     </div>
                   </span>
@@ -488,7 +494,7 @@
                   <span>
                     <div class="title-feature">Alerte prix</div>
                     <div class="text-feature">
-                      Fixer vos prix d'achats et soyez notifie quand un produit
+                      Fixez vos prix d'achat et soyez notifié quand un produit
                       correspond
                     </div>
                   </span>
@@ -498,8 +504,8 @@
                   <span>
                     <div class="title-feature">Suivi intelligent</div>
                     <div class="text-feature">
-                      Analyse du marche pour vous proposer les meilleures
-                      opportunites
+                      Analyse du marché pour vous proposer les meilleures
+                      opportunités
                     </div>
                   </span>
                 </li>
@@ -511,9 +517,9 @@
                 <li class="flex gap30">
                   <i class="fa-solid fa-filter"></i>
                   <span>
-                    <div class="title-feature">Affiner chaque details</div>
+                    <div class="title-feature">Affinez chaque détail</div>
                     <div class="text-feature">
-                      Filtrer par nom, extension, état, langue, et bien plus
+                      Filtrez par nom, extension, état, langue, et bien plus
                       encore, pour ne rater aucune occasion.
                     </div>
                   </span>
@@ -521,9 +527,9 @@
                 <li class="flex gap30">
                   <i class="fa-solid fa-euro-sign"></i>
                   <span>
-                    <div class="title-feature">Maitriser votre budget</div>
+                    <div class="title-feature">Maîtrisez votre budget</div>
                     <div class="text-feature">
-                      Définisser une fourchette de prix pour trouver les
+                      Définissez une fourchette de prix pour trouver les
                       meilleures offres.
                     </div>
                   </span>
@@ -533,7 +539,7 @@
                   <span>
                     <div class="title-feature">Annonces de confiance</div>
                     <div class="text-feature">
-                      Filtrer, et n'afficher que les meilleurs vendeurs.
+                      Filtrez et n'affichez que les meilleurs vendeurs.
                     </div>
                   </span>
                 </li>
@@ -633,7 +639,7 @@
                 <td>—</td>
               </tr>
               <tr>
-                <th scope="row">Commission 0 %</th>
+                <th scope="row">Commission 0 % en bêta</th>
                 <td>✓</td>
                 <td>✕</td>
                 <td>✕</td>
@@ -658,7 +664,7 @@
             <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="check">✓</span></div>
             <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="check">✓</span></div>
             <div class="mobile-feature"><span>Litiges structurés</span> <span class="check">✓</span></div>
-            <div class="mobile-feature"><span>Commission 0 %</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="check">✓</span></div>
             <div class="mobile-feature"><span>Outils vendeur</span> <span class="check">✓</span></div>
           </div>
           <div class="mobile-card">
@@ -667,7 +673,7 @@
             <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="dash">—</span></div>
             <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="cross">✕</span></div>
             <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
-            <div class="mobile-feature"><span>Commission 0 %</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="cross">✕</span></div>
             <div class="mobile-feature"><span>Outils vendeur</span> <span class="dash">—</span></div>
           </div>
           <div class="mobile-card">
@@ -676,7 +682,7 @@
             <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="cross">✕</span></div>
             <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="check">✓</span></div>
             <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
-            <div class="mobile-feature"><span>Commission 0 %</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="cross">✕</span></div>
             <div class="mobile-feature"><span>Outils vendeur</span> <span class="cross">✕</span></div>
           </div>
           <div class="mobile-card">
@@ -685,13 +691,13 @@
             <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="cross">✕</span></div>
             <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="dash">—</span></div>
             <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
-            <div class="mobile-feature"><span>Commission 0 %</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="cross">✕</span></div>
             <div class="mobile-feature"><span>Outils vendeur</span> <span class="dash">—</span></div>
           </div>
         </div>
 
         <div class="texte-table">
-          <h3>L'offre la plus complete</h3>
+          <h3>L'offre la plus complète</h3>
           <p>
             <strong>Cards Trading</strong> s’impose comme la
             <strong>marketplace</strong> TCG la plus complète du marché, en
@@ -823,7 +829,7 @@
         <div class="footer-brand">
           <img loading="lazy" decoding="async" src="assets/img/logo.png" alt="Cards Trading - Marketplace TCG" class="footer-logo" />
           <p class="footer-desc">
-            La marketplace spécialisée TCG pour <strong>acheter</strong> et <strong>vendre</strong> vos cartes de collection en toute sécurité. Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana, Dragon Ball, Riftbound.
+            La marketplace spécialisée TCG pour <strong>acheter</strong> et <strong>vendre</strong> vos cartes de collection en toute sécurité. Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana, Dragon Ball, Riftbound, Star Wars.
           </p>
         </div>
 
@@ -849,6 +855,7 @@
               <li><a href="index.html">Lorcana</a></li>
               <li><a href="index.html">Dragon Ball</a></li>
               <li><a href="index.html">Riftbound</a></li>
+              <li><a href="index.html">Star Wars</a></li>
             </ul>
           </div>
 
@@ -1227,9 +1234,25 @@
   const cards = document.querySelectorAll(".question-card");
   const currentQuestionEl = document.getElementById("current-question");
   const totalQuestionsEl = document.getElementById("total-questions");
+  const xpFillEl = document.querySelector(".xp-fill");
+  const xpPercentEl = document.querySelector(".xp-percentage");
+  const xpProgressEl = document.querySelector(".quiz-progress");
 
   let currentIndex = 0;
   totalQuestionsEl.textContent = cards.length;
+
+  /* XP bar — fill grows from 0% to 100% across the cards (0 at start, 100% on confirmation) */
+  function updateXPBar(index) {
+    const total = cards.length;
+    const pct = Math.round((index / (total - 1)) * 100);
+    if (xpFillEl) {
+      xpFillEl.style.width = pct + "%";
+      xpFillEl.classList.add("level-up");
+      setTimeout(() => xpFillEl.classList.remove("level-up"), 600);
+    }
+    if (xpPercentEl) xpPercentEl.textContent = pct + "%";
+    if (xpProgressEl) xpProgressEl.setAttribute("aria-valuenow", String(pct));
+  }
 
   function showRequiredMessage(button, message = "reponse requise") {
     const defaultText = button.dataset.defaultText || "Valider";
@@ -1338,6 +1361,7 @@
         cards[currentIndex + 1].classList.add("active");
         currentIndex++;
         currentQuestionEl.textContent = currentIndex + 1;
+        updateXPBar(currentIndex);
 
         setTimeout(() => {
           cards[currentIndex - 1].classList.remove("exit-left");
@@ -1399,7 +1423,8 @@
 
     currentIndex++;
     currentQuestionEl.textContent = currentIndex + 1;
-    
+    updateXPBar(currentIndex);
+
     // Adjust height for the new card
     setTimeout(adjustQuizHeight, 50);
 
