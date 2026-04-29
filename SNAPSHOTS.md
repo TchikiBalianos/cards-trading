@@ -227,5 +227,41 @@
 
 ---
 
+## v0.1.0 (2026-04-29)
+**Status:** Bugfix release — page stable desktop & mobile
+**Founders:** Julian Schmerkin & Valérian Selvon
+
+### Bugfixes visuels
+- ✅ **Hero image distordue** : `height: auto` sur `.hero-right img` (attribut HTML `height="560"` écrasait le ratio)
+- ✅ **Section Fonctionnalités — images disparues** : Refactoring du chaîne de hauteur flex (`height: 100%` → `flex: 1` + `display: flex; flex-direction: column`) qui empêchait `align-items: stretch` de fonctionner
+- ✅ **Titres h2 invisibles** : Remplacement d'AOS (échouait pour les éléments déjà dans le viewport) par un IntersectionObserver custom avec **inline styles** (spécificité maximale, imbattable)
+- ✅ **Badge quiz coupé** : Badge `1/8` déplacé hors du `quiz-slider { overflow: hidden }` → sibling du slider, positionné en `absolute` sur le `quiz-wrapper`
+- ✅ **Hauteur formulaire instable** : Hauteur fixe `480px` sur `.quiz-slider` + `height: 100%` sur `.question-card` pour cohérence entre toutes les étapes
+- ✅ **Comparatif : ✓ mal centré** : Sélecteur `td:first-of-type` cassé après refactoring a11y (`<td>` → `<th scope="row">`) → corrigé en `th[scope="row"]`
+- ✅ **Sous-titre hero bleu illisible** : Ajout `text-shadow: rgba(0,0,0,0.9)` sur `.baseline` desktop et mobile (remplace le white-glow inutile)
+
+### Améliorations formulaire beta
+- ✅ Grille 2 colonnes (`grid-template-columns: 1fr 1fr`) pour la question TCG
+- ✅ Ajout de **Star Wars** comme 8ème option TCG (nombre pair pour la grille)
+
+### Boutons Vendeur Pro
+- ✅ Boutons `‹ ›` redesignés : border bleu, glassmorphism, hover fill bleu, scale au clic
+
+### Navigation mobile — scroll fiable
+- ✅ `transitionend` natif pour attendre la fin du slide-out du menu (0.35s) avant de scroller
+- ✅ `setTimeout(400)` en fallback pour iOS Safari (où `transitionend` peut ne pas se déclencher)
+- ✅ Flag `fired` pour éviter le double-scroll transitionend + setTimeout
+- ✅ `scroll-padding-top: var(--header-height)` sur `html` + `body` pour compenser le header sticky lors des scrolls natifs (hash URL)
+- ✅ Suppression du handler de fermeture dupliqué dans le script navbar (race condition éliminée)
+
+**Testé :**
+- ✅ Desktop (1280px+) — toutes sections stables
+- ✅ Mobile 412px — 4 clics consécutifs navbar, scroll correct à chaque fois
+- ✅ Formulaire beta — 8 étapes, badge visible, hauteur fixe
+
+**Git Tag:** `git tag v0.1.0`
+
+---
+
 ## Future Snapshots
 À remplir au fur et à mesure des itérations.
