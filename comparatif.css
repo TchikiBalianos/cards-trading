@@ -27,6 +27,7 @@
       width: 100%;
       text-align: center;
       border-collapse: collapse;
+      table-layout: fixed; /* fixe les largeurs définies sur le thead */
       background: linear-gradient(
         90deg,
         rgb(95 95 163 / 38%) 12%,
@@ -36,6 +37,13 @@
       overflow: hidden;
       color: #fff;
       box-shadow: 2px 2px 59px -14px rgba(255, 255, 255, 0.3);
+
+      /* Largeurs des 5 colonnes — Cardmarket, Vinted, eBay parfaitement égales */
+      thead th:nth-child(1) { width: 28%; }            /* label de ligne */
+      thead th:nth-child(2) { width: 22%; }            /* Cards-Trading (mise en avant) */
+      thead th:nth-child(3),
+      thead th:nth-child(4),
+      thead th:nth-child(5) { width: 16.666%; }        /* concurrents équilibrés */
 
       thead {
         background: linear-gradient(
