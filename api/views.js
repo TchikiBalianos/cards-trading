@@ -17,7 +17,7 @@
 import { Redis } from '@upstash/redis';
 
 const KEY = 'cards-trading:beta:counter';
-const SEED = 62;
+const SEED = 42;
 
 let redis = null;
 function getRedis() {
