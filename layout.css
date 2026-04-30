@@ -45,19 +45,10 @@ html {
   height: 100%;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  scrollbar-width: thin;            /* Firefox : scrollbar fine */
-  scrollbar-color: rgba(255,255,255,0.18) transparent; /* Firefox : thumb / track */
-}
-
-/* Scrollbar Webkit (Chrome / Edge / Safari) — fine et thémée dark */
-::-webkit-scrollbar        { width: 6px; }
-::-webkit-scrollbar-track  { background: transparent; }
-::-webkit-scrollbar-thumb  {
-  background: rgba(255,255,255,0.16);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.3);
+  /* Toujours réserver la gouttière scrollbar → évite le layout-shift quand
+     la page devient scrollable. Combiné avec --scrollbar-width (JS), le
+     header s'arrête exactement à la bordure gauche de la scrollbar. */
+  scrollbar-gutter: stable;
 }
 
 body {

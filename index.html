@@ -104,6 +104,15 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+  <script>
+    /* Mesure la scrollbar avant le 1er rendu → pas de flash.
+       scrollbar-gutter:stable sur <html> garantit que clientWidth
+       exclut toujours la gouttière, même sans scroll actif. */
+    (function () {
+      var w = window.innerWidth - document.documentElement.clientWidth;
+      if (w > 0) document.documentElement.style.setProperty('--scrollbar-width', w + 'px');
+    })();
+  </script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>

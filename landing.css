@@ -258,7 +258,10 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  /* S'arrête à la bordure gauche de la scrollbar — var définie par le
+     script inline dans <head> grâce à scrollbar-gutter:stable sur <html>.
+     Fallback 0px pour macOS/overlay scrollbar (scrollbar width = 0). */
+  width: calc(100% - var(--scrollbar-width, 0px));
   z-index: 1000;
   display: flex;
   align-items: center;
