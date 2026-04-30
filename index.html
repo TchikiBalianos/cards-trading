@@ -105,11 +105,16 @@
       referrerpolicy="no-referrer"
     />
   <script>
-    /* Mesure la scrollbar avant le 1er rendu → pas de flash.
-       scrollbar-gutter:stable sur <html> garantit que clientWidth
-       exclut toujours la gouttière, même sans scroll actif. */
+    /* Mesure la largeur de la scrollbar native AVANT le 1er rendu.
+       Crée un div invisible avec overflow:scroll, mesure l'écart
+       offsetWidth − clientWidth, puis le supprime. Fonctionne sur
+       tous les OS / navigateurs sans toucher au layout réel. */
     (function () {
-      var w = window.innerWidth - document.documentElement.clientWidth;
+      var d = document.createElement('div');
+      d.style.cssText = 'position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll';
+      document.documentElement.appendChild(d);
+      var w = d.offsetWidth - d.clientWidth;
+      document.documentElement.removeChild(d);
       if (w > 0) document.documentElement.style.setProperty('--scrollbar-width', w + 'px');
     })();
   </script>
