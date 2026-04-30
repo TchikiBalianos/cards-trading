@@ -43,7 +43,7 @@
     display: flex;
   }
 
-  .hero-left span {
+  .hero-left > span {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -180,7 +180,7 @@
       text-align: center;
     }
 
-    .hero-left span {
+    .hero-left > span {
       max-width: 100%;
       padding-left: 0;
     }
@@ -231,7 +231,7 @@
         margin-top: 0;
       }
 
-      .hero-left span {
+      .hero-left > span {
         width: 100%;
         padding-left: 0;
         padding-right: 0;
