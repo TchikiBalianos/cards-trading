@@ -44,7 +44,10 @@
   gap: 10px;
   margin-top: 5px;
   padding: 10px 40px 10px 25px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  /* 'translate' est une propriété individuelle CSS : elle se compose avec
+     l'animation 'transform' au lieu de la court-circuiter → hover fonctionne
+     même quand social-proof-fade-in est en fill-mode: forwards */
+  transition: translate 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
   background: linear-gradient(135deg, rgba(41, 151, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 100px;
@@ -60,7 +63,7 @@
   transform: translateY(8px);
   animation:
     social-proof-fade-in 0.6s ease-out 0.4s forwards,
-    social-proof-glow 3.5s ease-in-out 1.2s infinite;
+    pill-attention 8s ease-in-out 1.8s infinite;
 }
 
 /* Halo coloré derrière la pilule */
@@ -73,6 +76,30 @@
   z-index: -1;
   opacity: 0.6;
   filter: blur(10px);
+}
+
+/* Couche shimmer — sweep de lumière périodique + au hover */
+.social-proof::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.13) 42%,
+    rgba(255, 255, 255, 0.2)  50%,
+    rgba(255, 255, 255, 0.13) 58%,
+    transparent 80%
+  );
+  background-size: 250% 100%;
+  pointer-events: none;
+  z-index: 2;
+  animation: pill-shimmer-idle 9s ease-in-out 4s infinite;
+}
+
+.social-proof:hover::after {
+  animation: pill-shimmer-hover 0.6s ease-in-out forwards;
 }
 
 .social-proof-avatars {
@@ -104,12 +131,13 @@
 .social-proof-avatars .avatar:nth-child(4) { --avatar-opacity: 0.3;  animation-delay: 0.8s; z-index: 2; }
 .social-proof-avatars .avatar:nth-child(5) { --avatar-opacity: 0.1;  animation-delay: 0.9s; z-index: 1; }
 
-/* Hover pill : légère élévation + lueur bleue + bordure plus visible */
+/* Hover pill — translate individuel (se compose avec l'animation transform,
+   ne la court-circuite pas) + lueur bleue + bordure visible */
 .social-proof:hover {
-  transform: translateY(-2px);
-  border-color: rgba(41, 151, 255, 0.45);
-  background: linear-gradient(135deg, rgba(41, 151, 255, 0.2) 0%, rgba(255, 255, 255, 0.07) 100%);
-  box-shadow: 0 12px 36px rgba(41, 151, 255, 0.28), 0 2px 10px rgba(0, 0, 0, 0.35);
+  translate: 0 -3px;
+  border-color: rgba(41, 151, 255, 0.5);
+  background: linear-gradient(135deg, rgba(41, 151, 255, 0.22) 0%, rgba(255, 255, 255, 0.07) 100%);
+  box-shadow: 0 14px 38px rgba(41, 151, 255, 0.3), 0 2px 10px rgba(0, 0, 0, 0.35);
 }
 
 /* Hover avatars : révèle l'opacité + arc en éventail */

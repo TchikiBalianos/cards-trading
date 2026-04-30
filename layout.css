@@ -44,8 +44,20 @@ h2 {
 html {
   height: 100%;
   scroll-behavior: smooth;
-  overflow-x: hidden; /* prevent any element from causing horizontal page scroll */
-  scrollbar-gutter: stable; /* réserve toujours l'espace scrollbar → évite que la navbar passe dessous */
+  overflow-x: hidden;
+  scrollbar-width: thin;            /* Firefox : scrollbar fine */
+  scrollbar-color: rgba(255,255,255,0.18) transparent; /* Firefox : thumb / track */
+}
+
+/* Scrollbar Webkit (Chrome / Edge / Safari) — fine et thémée dark */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  {
+  background: rgba(255,255,255,0.16);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
 }
 
 body {
