@@ -17,6 +17,9 @@
     <meta name="author" content="Cards Trading" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#07111f" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/logo.png" />
+    <link rel="apple-touch-icon" href="assets/img/logo.png" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -47,7 +50,6 @@
     <!-- Preconnect & DNS prefetch -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link rel="dns-prefetch" href="https://unpkg.com" />
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
 
     <!-- Preload LCP image -->
@@ -96,7 +98,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="landing.css" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -146,13 +147,9 @@
       <div class="flex gap30 hero-wrapper">
         <div class="hero-left col">
           <span>
-            <h1>Découvrez Cards Trading</h1>
-            <div class="baseline">
-              <strong>La nouvelle marketplace dédiée à vos TCG préférés</strong>
-            </div>
-            <div class="subline">
-              Achetez & Vendez vos cartes de collection en toute sécurité
-            </div>
+            <h1>Achetez & Vendez vos Cartes sur Cards-Trading</h1>
+            <h2 class="baseline">La nouvelle marketplace dédiée à vos TCG préférés</h2>
+            <h3 class="subline">Pour les fans de Pokémon, Magic, One Piece, Dragon Ball, Lorcana, Yu-Gi-Oh!, StarWars...</h3>
             <div class="button-container flex gap30">
               <button type="button" aria-label="En savoir plus sur Cards Trading">En savoir plus</button>
               <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire à la bêta</button>
@@ -168,7 +165,7 @@
                 <img class="avatar avatar-5" src="https://api.dicebear.com/9.x/fun-emoji/svg?seed=Riku&radius=50&backgroundColor=bbf7d0" alt="" loading="lazy" decoding="async" />
               </div>
               <div class="social-proof-text">
-                <span class="live-dot" aria-hidden="true"></span><span class="social-proof-count" data-target="42">42</span><span>joueurs <strong>déjà inscrits</strong> à la bêta</span>
+                <span class="live-dot" aria-hidden="true"></span><span class="social-proof-count" data-target="51">51</span><span>joueurs <strong>déjà inscrits</strong> à la bêta</span>
               </div>
             </div>
           </span>
@@ -215,7 +212,7 @@
     <div class="separator"></div>
 
     <div class="avantages" id="avantages">
-      <h2 class="reveal-h2">Les avantages Cards trading</h2>
+      <h2 class="reveal-h2">Les Avantages Cards Trading</h2>
       <div class="subline">
         Ce qui change pour les acheteurs comme pour les vendeurs.
       </div>
@@ -284,7 +281,7 @@
     <div class="separator"></div>
 
     <div class="questionnaire" id="beta">
-      <h2 class="reveal-h2">Et toi, a quoi tu joues ?</h2>
+      <h2 class="reveal-h2">Inscription Bêta — À quoi tu joues ?</h2>
       <div class="questionnaire-wrapper flex gap30">
         <div class="questionnaire-texte">
           Réponds aux questions pour t'inscrire à la bêta. Ça nous aidera à
@@ -433,8 +430,7 @@
       <div class="features-inner flex gap100">
         <div class="col-left">
           <h2 class="reveal-h2">
-            Profitez d’une expérience optimisée grâce à des fonctionnalités
-            pensées pour vous
+            Fonctionnalités pensées pour les joueurs et collectionneurs TCG
           </h2>
 
           <div class="feature-left">
@@ -626,7 +622,7 @@
     <div class="separator"></div>
 
     <div class="comparatif" id="comparatif">
-      <h2 class="reveal-h2">Comparez nos services</h2>
+      <h2 class="reveal-h2">Cards Trading vs Cardmarket, Vinted & eBay</h2>
 
       <div class="flex gap50 comparatif-wrapper">
         <div class="comparatif__container">
@@ -776,7 +772,7 @@
       <div class="container flex gap30">
         <!-- LEFT -->
         <div class="content col-left">
-          <h2 class="reveal-h2">Outils vendeur pro</h2>
+          <h2 class="reveal-h2">Outils Vendeur Pro pour votre Boutique TCG</h2>
           <div class="seller-args">
             <div class="item">
               <h3>Pilotez votre activité</h3>
@@ -906,39 +902,6 @@
       </div>
     </footer>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Cards Trading",
-      "description": "Marketplace spécialisée TCG pour acheter et vendre des cartes de collection Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball, Riftbound.",
-      "url": "https://cards-trading.com",
-      "logo": "https://cards-trading.com/assets/img/logo.png",
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "email": "julian.schmerkin@gmail.com",
-          "contactType": "customer support"
-        },
-        {
-          "@type": "ContactPoint",
-          "email": "vselvon@gmail.com",
-          "contactType": "customer support"
-        }
-      ],
-      "sameAs": [],
-      "founder": [
-        {
-          "@type": "Person",
-          "name": "Julian Schmerkin"
-        },
-        {
-          "@type": "Person",
-          "name": "Valérian Selvon"
-        }
-      ]
-    }
-    </script>
   </body>
 </html>
 
@@ -975,7 +938,11 @@
           fired = true;
           smoothScrollTo(target, hash);
         };
-        nav.addEventListener('transitionend', function handler() {
+        nav.addEventListener('transitionend', function handler(e) {
+          /* Filtrer les transitions des enfants (color, opacity…) qui
+             bubblent et fire avant le transform du nav — sinon le scroll
+             se déclenche alors que le menu est encore en train de glisser */
+          if (e.target !== nav) return;
           nav.removeEventListener('transitionend', handler);
           doScroll();
         });
@@ -1171,14 +1138,13 @@
   }
 </script>
 
-<!-- Social proof badge — counter Upstash + count-up animation -->
+<!-- Social proof badge — counter déterministe + count-up animation -->
 <script>
   (function () {
     const countEl = document.querySelector('.social-proof-count');
     if (!countEl) return;
 
-    const STORAGE_KEY = 'ct:visited';
-    const FALLBACK = parseInt(countEl.dataset.target, 10) || 62;
+    const FALLBACK = 51;
 
     /* Animation count-up easing-cubic-out */
     function animateTo(el, target, duration) {
@@ -1195,18 +1161,12 @@
       requestAnimationFrame(frame);
     }
 
-    /* Fetch — POST si jamais visité, sinon GET pure lecture */
+    /* Fetch count — GET only, le compteur est calculé côté serveur */
     async function fetchCount() {
-      let visited = false;
-      try { visited = !!localStorage.getItem(STORAGE_KEY); } catch (e) {}
-      const method = visited ? 'GET' : 'POST';
       try {
-        const res = await fetch('/api/views', { method, headers: { 'Content-Type': 'application/json' } });
+        const res = await fetch('/api/views');
         if (!res.ok) return FALLBACK;
         const data = await res.json();
-        if (!visited) {
-          try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
-        }
         return Number(data.count) || FALLBACK;
       } catch (e) {
         return FALLBACK;
@@ -1227,10 +1187,8 @@
       });
     }, { threshold: 0.4 });
 
-    /* Lecture du compteur au load — la valeur est utilisée quand l'animation se déclenche */
     fetchCount().then(function (count) {
       pendingTarget = count;
-      /* Si déjà animé (rare), refresh sans animation */
       if (animated) countEl.textContent = String(count);
     });
 
@@ -1662,28 +1620,6 @@
   })();
 </script>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 800,
-    once: true,
-    offset: 50
-  });
-
-  // Fallback robuste : force aos-animate sur les éléments visibles
-  // (couvre les navigations directes par ancre #section)
-  function forceAOSVisible() {
-    document.querySelectorAll('[data-aos]:not(.aos-animate)').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add('aos-animate');
-      }
-    });
-  }
-  setTimeout(forceAOSVisible, 100);
-  setTimeout(forceAOSVisible, 400);
-  window.addEventListener('load', () => setTimeout(forceAOSVisible, 100));
-</script>
 
 <!-- Reveal h2 : IntersectionObserver custom — inline styles pour battre la spécificité CSS -->
 <script>
@@ -1777,17 +1713,3 @@
 })();
 </script>
 
-<!-- Social proof live increment -->
-<script>
-setInterval(() => {
-  const countEl = document.querySelector('.social-proof-count');
-  if (!countEl) return;
-  let current = parseInt(countEl.textContent, 10);
-  if (isNaN(current)) return;
-  countEl.textContent = current + 1;
-  countEl.style.textShadow = '0 0 20px rgba(41, 151, 255, 0.9)';
-  setTimeout(() => {
-    countEl.style.textShadow = '0 0 14px rgba(41, 151, 255, 0.6)';
-  }, 400);
-}, 45000);
-</script>

@@ -1,69 +1,52 @@
 /**
- * Compteur de "joueurs et collectionneurs inscrits à la bêta"
- * Stocké dans Upstash Redis (KV REST).
+ * Compteur « joueurs inscrits à la bêta » — incrémentation artificielle
  *
- * Endpoints :
- *   GET  /api/views  → renvoie la valeur actuelle (lecture pure)
- *   POST /api/views  → incrémente puis renvoie la nouvelle valeur
+ * Approche 100 % déterministe : part de 51 le jour du lancement et
+ * ajoute 5 à 8 inscrits par jour via un PRNG seedé sur le n° de jour.
+ * Tous les visiteurs voient la même valeur — aucun état serveur requis.
  *
- * Variables d'env requises (Vercel + .env.local) :
- *   UPSTASH_REDIS_REST_URL
- *   UPSTASH_REDIS_REST_TOKEN
- *
- * Le compteur est seedé à 62 au premier appel si la clé n'existe pas
- * (valeur de départ marketing). Tous les appels suivants l'incrémentent
- * via INCR (atomique, safe en concurrence).
+ * GET /api/views → { count: <nombre> }
  */
-import { Redis } from '@upstash/redis';
 
-const KEY = 'cards-trading:beta:counter';
-const SEED = 42;
+const SEED = 51;
+const LAUNCH_EPOCH = Date.UTC(2026, 4, 7); // 7 mai 2026 00:00 UTC (mois 0-indexé)
 
-let redis = null;
-function getRedis() {
-  if (!redis) {
-    redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
-  }
-  return redis;
+/* mulberry32 — PRNG 32-bit rapide et reproductible */
+function mulberry32(seed) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }
 
-export default async function handler(req, res) {
-  // Pas de cache CDN — la valeur change en permanence
-  res.setHeader('Cache-Control', 'no-store, max-age=0');
-
-  // Si Upstash n'est pas configuré, renvoyer la valeur seed sans crasher
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return res.status(200).json({ count: SEED, source: 'seed-fallback' });
+function getCount() {
+  const now = Date.now();
+  const daysSinceLaunch = Math.max(
+    0,
+    Math.floor((now - LAUNCH_EPOCH) / 86_400_000)
+  );
+  let total = SEED;
+  for (let d = 0; d < daysSinceLaunch; d++) {
+    const rng = mulberry32(d * 31337 + 12345);
+    total += Math.floor(rng() * 4) + 5; // 5, 6, 7 ou 8
   }
+  return total;
+}
 
-  try {
-    const r = getRedis();
+export default function handler(req, res) {
+  /* Cache 1 h au CDN, stale-while-revalidate 10 min — la valeur ne
+     change qu'une fois par jour, pas besoin de la recalculer à chaque hit */
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=600'
+  );
 
-    if (req.method === 'GET') {
-      let val = await r.get(KEY);
-      if (val === null || val === undefined) {
-        await r.set(KEY, SEED);
-        val = SEED;
-      }
-      return res.status(200).json({ count: Number(val) });
-    }
-
-    if (req.method === 'POST') {
-      // Garantir que la clé est seedée avant le 1er INCR
-      const exists = await r.exists(KEY);
-      if (!exists) {
-        await r.set(KEY, SEED);
-      }
-      const newVal = await r.incr(KEY);
-      return res.status(200).json({ count: Number(newVal) });
-    }
-
+  if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
-  } catch (err) {
-    console.error('Upstash error:', err);
-    return res.status(200).json({ count: SEED, source: 'error-fallback' });
   }
+
+  return res.status(200).json({ count: getCount() });
 }
