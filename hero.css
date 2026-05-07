@@ -59,7 +59,7 @@
 
   h1 {
     color: #fff;
-    font-size: clamp(16px, 5vw, 60px);
+    font-size: clamp(16px, 5vw, 45px);
     margin: 0;
     opacity: 0;
     transform: translateY(30px);
