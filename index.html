@@ -131,6 +131,7 @@
         <a href="#features" class="nav-link">Fonctionnalités</a>
         <a href="#comparatif" class="nav-link">Comparaison</a>
         <a href="#vendeur-pro" class="nav-link">Vendeur Pro</a>
+        <div class="nav-indicator"></div>
       </nav>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false" aria-controls="headerNav" type="button">
         <span></span>
@@ -140,6 +141,8 @@
     </header>
     <main id="main-content">
     <section class="hero flex">
+      <canvas class="hero-particles" aria-hidden="true"></canvas>
+      <div class="hero-spotlight" aria-hidden="true"></div>
       <div class="flex gap30 hero-wrapper">
         <div class="hero-left col">
           <span>
@@ -165,7 +168,7 @@
                 <img class="avatar avatar-5" src="https://api.dicebear.com/9.x/fun-emoji/svg?seed=Riku&radius=50&backgroundColor=bbf7d0" alt="" loading="lazy" decoding="async" />
               </div>
               <div class="social-proof-text">
-                <span class="social-proof-count" data-target="42">42</span><span>joueurs <strong>déjà inscrits</strong> à la bêta</span>
+                <span class="live-dot" aria-hidden="true"></span><span class="social-proof-count" data-target="42">42</span><span>joueurs <strong>déjà inscrits</strong> à la bêta</span>
               </div>
             </div>
           </span>
@@ -1030,22 +1033,36 @@
       });
     }
 
+    /* ── Sliding indicator (NAV-1) ── */
+    function moveIndicator(link) {
+      const indicator = document.querySelector('.nav-indicator');
+      if (!indicator || !link) return;
+      const navRect = link.closest('.header-nav').getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      indicator.style.left = (linkRect.left - navRect.left) + 'px';
+      indicator.style.width = linkRect.width + 'px';
+      indicator.style.top = ((navRect.height - 32) / 2) + 'px';
+    }
+
     /* ── Scroll-spy: active nav link ── */
     const sections = ['avantages', 'beta', 'features', 'comparatif', 'vendeur-pro']
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
     function setActiveLink(id) {
+      let activeLink = null;
       navLinks.forEach(link => {
         const href = link.getAttribute('href').replace('#', '');
         const isActive = href === id;
         link.classList.toggle('active', isActive);
         if (isActive) {
           link.setAttribute('aria-current', 'true');
+          activeLink = link;
         } else {
           link.removeAttribute('aria-current');
         }
       });
+      if (activeLink) moveIndicator(activeLink);
     }
 
     const observerOptions = {
@@ -1063,6 +1080,16 @@
     }, observerOptions);
 
     sections.forEach(s => observer.observe(s));
+
+    /* Initialiser l'indicateur sur le lien actif au chargement */
+    const initialActive = nav.querySelector('.nav-link.active');
+    if (initialActive) moveIndicator(initialActive);
+
+    /* Repositionner l'indicateur au resize */
+    window.addEventListener('resize', () => {
+      const current = nav.querySelector('.nav-link.active');
+      if (current) moveIndicator(current);
+    });
   })();
 </script>
 
@@ -1690,4 +1717,77 @@
       initRevealH2();
     }
   })();
+</script>
+
+<!-- Hero spotlight cursor effect -->
+<script>
+(function() {
+  const hero = document.querySelector('.hero');
+  const spot = document.querySelector('.hero-spotlight');
+  if (!hero || !spot) return;
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    spot.style.setProperty('--spot-x', (e.clientX - rect.left) + 'px');
+    spot.style.setProperty('--spot-y', (e.clientY - rect.top) + 'px');
+    spot.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', () => { spot.style.opacity = '0'; });
+})();
+</script>
+
+<!-- Hero particles -->
+<script>
+(function() {
+  const hero = document.querySelector('.hero');
+  const canvas = document.querySelector('.hero-particles');
+  if (!hero || !canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = Array.from({ length: 30 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.5,
+    dx: (Math.random() - 0.5) * 0.3,
+    dy: (Math.random() - 0.5) * 0.2,
+    opacity: Math.random() * 0.5 + 0.2
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(41, 151, 255, ${p.opacity})`;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<!-- Social proof live increment -->
+<script>
+setInterval(() => {
+  const countEl = document.querySelector('.social-proof-count');
+  if (!countEl) return;
+  let current = parseInt(countEl.textContent, 10);
+  if (isNaN(current)) return;
+  countEl.textContent = current + 1;
+  countEl.style.textShadow = '0 0 20px rgba(41, 151, 255, 0.9)';
+  setTimeout(() => {
+    countEl.style.textShadow = '0 0 14px rgba(41, 151, 255, 0.6)';
+  }, 400);
+}, 45000);
 </script>

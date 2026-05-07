@@ -180,6 +180,31 @@
   -webkit-text-fill-color: transparent;
 }
 
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 4px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(34, 197, 94, 0.5);
+  animation: live-ring 2s ease-out infinite;
+}
+
+@keyframes live-ring {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
 @media (max-width: 600px) {
   .social-proof {
     margin: 18px auto 0;
@@ -291,6 +316,7 @@ header {
 
 /* ── NAV LINKS ──────────────────────────────────────────── */
 .header-nav {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -338,6 +364,39 @@ header {
       }
     }
   }
+}
+
+/* ── NAV INDICATOR (sliding pill) ──────────────────────── */
+.nav-indicator {
+  position: absolute;
+  height: 32px;
+  background: rgba(41, 151, 255, 0.15);
+  border: 1px solid rgba(41, 151, 255, 0.3);
+  border-radius: 20px;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: 0 0 12px rgba(41, 151, 255, 0.2);
+}
+
+/* ── BADGE BETA (pulsing dot) ─────────────────────────── */
+.nav-link[href="#beta"]::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background: #ff6b35;
+  border-radius: 50%;
+  animation: badge-pulse 2.5s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(255, 107, 53, 0.6);
+}
+
+@keyframes badge-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
 }
 
 /* ── MOBILE HAMBURGER ───────────────────────────────────── */
@@ -609,6 +668,10 @@ footer {
       transform: translateX(0);
     }
 
+    .nav-indicator {
+      display: none;
+    }
+
     .nav-link {
       width: 100%;
       padding: 14px 20px;
@@ -631,6 +694,29 @@ footer {
         display: none;
       }
     }
+
+    /* ── Stagger entrée liens mobile (NAV-5) ── */
+    &.mobile-open .nav-link {
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: nav-slide-in 0.3s ease forwards;
+    }
+
+    &.mobile-open .nav-link:nth-child(1) { animation-delay: 0.05s; }
+    &.mobile-open .nav-link:nth-child(2) { animation-delay: 0.1s; }
+    &.mobile-open .nav-link:nth-child(3) { animation-delay: 0.15s; }
+    &.mobile-open .nav-link:nth-child(4) { animation-delay: 0.2s; }
+    &.mobile-open .nav-link:nth-child(5) { animation-delay: 0.25s; }
+
+    /* Lien actif mobile : barre latérale bleue renforcée */
+    &.mobile-open .nav-link.active {
+      border-left: 3px solid #2997ff;
+      box-shadow: inset 4px 0 12px rgba(41, 151, 255, 0.15);
+    }
+  }
+
+  @keyframes nav-slide-in {
+    to { opacity: 1; transform: translateX(0); }
   }
 
   .nav-hamburger {
