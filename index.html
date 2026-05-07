@@ -899,6 +899,23 @@
           <span class="social-card-handle">Cards Trading</span>
         </div>
       </div>
+
+      <!-- Dernier post tous réseaux confondus -->
+      <div class="latest-post" id="latestPost">
+        <div class="latest-post-label">Dernier post</div>
+        <a class="latest-post-card" id="latestPostCard" href="#" target="_blank" rel="noopener noreferrer">
+          <img class="latest-post-avatar" id="lpAvatar" src="" alt="" loading="lazy" />
+          <div class="latest-post-body">
+            <div class="latest-post-header">
+              <i class="latest-post-platform-icon" id="lpIcon"></i>
+              <span class="latest-post-platform" id="lpPlatform"></span>
+              <span class="latest-post-handle" id="lpHandle"></span>
+              <span class="latest-post-date" id="lpDate"></span>
+            </div>
+            <p class="latest-post-text" id="lpText"></p>
+          </div>
+        </a>
+      </div>
     </section>
     </main>
 
@@ -1784,6 +1801,66 @@
     requestAnimationFrame(draw);
   }
   draw();
+})();
+</script>
+
+<!-- Social feed — dernier post tous réseaux -->
+<script>
+(function () {
+  var PLATFORM_META = {
+    x:         { name: 'X (Twitter)',  icon: 'fa-brands fa-x-twitter',  avatar: 'assets/img/logo-social-x.png' },
+    instagram: { name: 'Instagram',    icon: 'fa-brands fa-instagram',  avatar: 'assets/img/logo-social-instagram.png' },
+    tiktok:    { name: 'TikTok',       icon: 'fa-brands fa-tiktok',     avatar: 'assets/img/logo-social-tiktok.png' },
+    facebook:  { name: 'Facebook',     icon: 'fa-brands fa-facebook',   avatar: 'assets/img/logo-social-facebook.png' },
+    linkedin:  { name: 'LinkedIn',     icon: 'fa-brands fa-linkedin',   avatar: 'assets/img/logo-social-linkedin.png' },
+    whatnot:   { name: 'WhatNot',      icon: 'fa-solid fa-store',       avatar: 'assets/img/logo-social-whatnot.png' }
+  };
+
+  function timeAgo(dateStr) {
+    var diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
+    if (diff < 60) return "à l'instant";
+    if (diff < 3600) return Math.floor(diff / 60) + ' min';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' h';
+    if (diff < 2592000) return Math.floor(diff / 86400) + ' j';
+    return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  }
+
+  fetch('/api/social-feed')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.post) return;
+      var post = data.post;
+      var meta = PLATFORM_META[post.platform] || PLATFORM_META.x;
+
+      document.getElementById('lpAvatar').src = meta.avatar;
+      document.getElementById('lpAvatar').alt = meta.name;
+      document.getElementById('lpIcon').className = 'latest-post-platform-icon ' + meta.icon;
+      document.getElementById('lpPlatform').textContent = meta.name;
+      document.getElementById('lpHandle').textContent = post.handle;
+      document.getElementById('lpDate').textContent = timeAgo(post.date);
+      document.getElementById('lpText').textContent = post.text;
+      document.getElementById('latestPostCard').href = post.url;
+
+      // Image attachée
+      if (post.image) {
+        var img = document.createElement('img');
+        img.className = 'latest-post-image';
+        img.src = post.image;
+        img.alt = 'Image du post';
+        img.loading = 'lazy';
+        document.getElementById('latestPostCard').appendChild(img);
+      }
+
+      // Reveal avec animation
+      var el = document.getElementById('latestPost');
+      el.style.display = 'block';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          el.classList.add('visible');
+        });
+      });
+    })
+    .catch(function () { /* silencieux si l'API n'est pas configurée */ });
 })();
 </script>
 
