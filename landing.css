@@ -6,6 +6,7 @@
 @import url(layout.css);
 @import url(questionnaire.css);
 @import url(seller-tools.css);
+@import url(social.css);
 
 /* ── REVEAL H2 — IntersectionObserver custom (remplace AOS) */
 .reveal-h2 {
