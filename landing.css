@@ -205,6 +205,30 @@
   100% { transform: scale(2.2); opacity: 0; }
 }
 
+/* +1 hover animation — desktop only (reverse rain) */
+@media (hover: hover) {
+  .social-proof-plus-one {
+    position: absolute;
+    top: 50%;
+    font-size: 22px;
+    font-weight: 900;
+    color: #2997ff;
+    text-shadow: 0 0 14px rgba(41, 151, 255, 0.7);
+    pointer-events: none;
+    z-index: 10;
+    user-select: none;
+    animation: plus-one-rise 0.9s ease-out forwards;
+  }
+
+  @keyframes plus-one-rise {
+    0%   { opacity: 0; transform: translateY(6px) scale(0.7); }
+    12%  { opacity: 1; transform: translateY(0) scale(1.15); }
+    30%  { transform: translateY(-12px) scale(1); }
+    75%  { opacity: 0.7; }
+    100% { opacity: 0; transform: translateY(-52px) scale(0.85); }
+  }
+}
+
 @media (max-width: 600px) {
   .social-proof {
     margin: 18px auto 0;

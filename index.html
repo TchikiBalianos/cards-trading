@@ -1196,6 +1196,29 @@
   })();
 </script>
 
+<!-- Social proof +1 hover (desktop only) -->
+<script>
+(function () {
+  var pill = document.querySelector('.social-proof');
+  if (!pill || !window.matchMedia('(hover: hover)').matches) return;
+  var ready = true;
+  pill.addEventListener('mouseenter', function () {
+    if (!ready) return;
+    ready = false;
+    var el = document.createElement('span');
+    el.className = 'social-proof-plus-one';
+    el.textContent = '+1';
+    /* Position aléatoire horizontale dans la zone du compteur */
+    el.style.left = (25 + Math.random() * 45) + '%';
+    pill.appendChild(el);
+    el.addEventListener('animationend', function () {
+      el.remove();
+      ready = true;
+    });
+  });
+})();
+</script>
+
 <!-- toggle avantage -->
 <script>
   const buttons = document.querySelectorAll(".btn");
