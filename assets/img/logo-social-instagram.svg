@@ -9,7 +9,7 @@
     </linearGradient>
   </defs>
   <circle cx="256" cy="256" r="246" fill="url(#ig)"/>
-  <g fill="#fff" transform="translate(256,256)">
+  <g fill="#fff" transform="translate(256,256) scale(-1,1)">
     <rect x="55" y="-8" width="105" height="16" rx="4" transform="rotate(150)"/>
     <rect x="55" y="-10" width="100" height="20" rx="5" transform="rotate(125)"/>
     <rect x="55" y="-13" width="95" height="25" rx="5" transform="rotate(100)"/>
