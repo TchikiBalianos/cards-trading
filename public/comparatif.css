@@ -1,0 +1,477 @@
+.comparatif {
+  background: url(assets/img/bg.svg) no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  padding: 70px 5vw;
+
+  h2 {
+    color: #fff;
+    font-size: 45px;
+    padding: 0 0 50px 0;
+  }
+
+  h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #2997ff;
+  }
+
+  .comparatif__container {
+    width: 60%;
+    position: relative;
+    z-index: 2;
+
+    table {
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+      border-collapse: collapse;
+      table-layout: fixed; /* fixe les largeurs définies sur le thead */
+      background: linear-gradient(
+        90deg,
+        rgb(95 95 163 / 38%) 12%,
+        rgb(50 52 87) 73%
+      );
+      border-radius: 5px;
+      overflow: hidden;
+      color: #fff;
+      box-shadow: 2px 2px 59px -14px rgba(255, 255, 255, 0.3);
+
+      /* Largeurs des 5 colonnes — Cardmarket, Vinted, eBay parfaitement égales */
+      thead th:nth-child(1) { width: 28%; }            /* label de ligne */
+      thead th:nth-child(2) { width: 22%; }            /* Cards-Trading (mise en avant) */
+      thead th:nth-child(3),
+      thead th:nth-child(4),
+      thead th:nth-child(5) { width: 16.666%; }        /* concurrents équilibrés */
+
+      thead {
+        background: linear-gradient(
+          90deg,
+          rgb(95 95 163 / 38%) 12%,
+          rgb(50 52 87) 73%
+        );
+        border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+      }
+
+      th {
+        padding: 15px;
+        color: #c2c2c2;
+
+        &:nth-child(2) {
+          background-color: rgba(41, 151, 255, 0.15);
+          color: #fff;
+          border-top: 2px solid #2997ff;
+          border-left: 2px solid #2997ff;
+          border-right: 2px solid #2997ff;
+          box-shadow: 0 -10px 20px rgba(41, 151, 255, 0.25);
+        }
+      }
+
+      tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        transition: background 0.2s ease;
+
+        &:not(thead tr):hover {
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        &:last-of-type {
+          border: none;
+
+          td:nth-child(2) {
+            border-bottom: 2px solid #2997ff;
+            box-shadow: 0 10px 20px rgba(41, 151, 255, 0.25);
+          }
+        }
+
+        /* Row-header cells (th[scope=row]) */
+        th[scope="row"] {
+          padding: 15px;
+          text-align: left;
+          font-weight: 400;
+          color: #fff;
+        }
+
+        td {
+          padding: 15px;
+          text-align: center;
+
+          /* Cards-Trading column = nth-child(2) since th is child 1 */
+          &:nth-child(2) {
+            background-color: rgba(41, 151, 255, 0.15);
+            border-left: 2px solid #2997ff;
+            border-right: 2px solid #2997ff;
+          }
+        }
+      }
+    }
+  }
+
+  /* Mobile Cards Container (hidden on desktop) */
+  .comparatif-mobile {
+    display: none;
+    width: 100%;
+    gap: 0;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    z-index: 2;
+    position: relative;
+    padding-bottom: 16px;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(41,151,255,0.7);
+      border-radius: 2px;
+    }
+  }
+
+  .texte-table {
+    width: 40%;
+    color: #9ca3ad;
+
+    p {
+      line-height: 27px;
+      font-size: 20px;
+    }
+  }
+
+  .anim {
+    height: 500px;
+    opacity: 0.3;
+    position: absolute;
+    width: 100%;
+    right: 0;
+    top: 0;
+  }
+
+  .card {
+    opacity: 0;
+    position: absolute;
+    width: 150px;
+    img {
+      width: 100%;
+    }
+  }
+
+  .card1 {
+    right: 12%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 8s;
+    animation-delay: -4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card2 {
+    right: 24%;
+    width: 100px !important;
+    animation-name: loop3;
+    animation-duration: 10s;
+    animation-delay: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card3 {
+    right: 0;
+    width: 80px !important;
+    animation-name: loop2;
+    animation-duration: 8s;
+    animation-delay: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card4 {
+    right: 18%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 10s;
+    animation-delay: 9s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card5 {
+    right: 37%;
+    width: 70px;
+    animation-name: loop3;
+    animation-duration: 8s;
+    animation-delay: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card6 {
+    right: -20%;
+    width: 100px !important;
+    animation-name: loop2;
+    animation-duration: 10s;
+    animation-delay: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card7 {
+    right: 8%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 8s;
+    animation-delay: -2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card8 {
+    width: 100px !important;
+    right: 2%;
+    animation-name: loop2;
+    animation-duration: 10s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card8 {
+    right: 40%;
+    width: 80px;
+    animation-name: loop3;
+    animation-duration: 8s;
+    animation-delay: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card9 {
+    right: 28%;
+    width: 90px !important;
+    animation-name: loop1;
+    animation-duration: 10s;
+    animation-delay: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card10 {
+    right: 16%;
+    width: 70px !important;
+    animation-name: loop3;
+    animation-duration: 8s;
+    animation-delay: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .card11 {
+    right: 2%;
+    width: 100px !important;
+    animation-name: loop2;
+    animation-duration: 10s;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+
+@media (max-width: 980px) {
+  .comparatif-wrapper {
+    flex-direction: column-reverse;
+
+    .comparatif__container,
+    .texte-table {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .comparatif {
+    padding: 40px 5vw !important;
+
+    h2 {
+      font-size: 28px !important;
+      padding-bottom: 24px;
+    }
+
+    .comparatif-wrapper {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .comparatif__container {
+      width: 100% !important;
+      padding: 0 !important;
+      overflow: hidden;
+
+      table {
+        display: flex !important;
+        gap: 16px !important;
+        width: auto !important;
+        overflow-x: auto !important;
+        padding: 0 0 12px 0 !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(255,255,255,0.1);
+          border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(41,151,255,0.6);
+          border-radius: 3px;
+
+          &:hover {
+            background: rgba(41,151,255,0.9);
+          }
+        }
+
+        thead {
+          display: none !important;
+        }
+
+        tbody {
+          display: flex !important;
+          gap: 16px !important;
+          width: 100% !important;
+
+          tr {
+            flex: 0 0 calc(100% - 80px) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            padding: 16px 12px !important;
+            background: linear-gradient(135deg,
+              rgba(41, 151, 255, 0.12) 0%,
+              rgba(50, 52, 87) 100%) !important;
+            border: 1px solid rgba(41, 151, 255, 0.3) !important;
+            border-radius: 12px !important;
+            min-width: calc(100% - 80px) !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+            white-space: normal !important;
+            align-items: center !important;
+
+            td {
+              text-align: center !important;
+              padding: 8px 0 !important;
+              border-bottom: none !important;
+              background: none !important;
+              font-size: 14px !important;
+
+              &:first-of-type {
+                font-weight: 600 !important;
+                color: #2997ff !important;
+                font-size: 16px !important;
+                padding-bottom: 12px !important;
+                border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+              }
+            }
+
+            &:nth-child(2) {
+              background: linear-gradient(135deg,
+                rgba(41, 151, 255, 0.25) 0%,
+                rgba(20, 27, 60, 0.95) 100%) !important;
+              border-color: #2997ff !important;
+              box-shadow: 0 0 24px rgba(41,151,255,0.4) !important;
+            }
+          }
+        }
+      }
+    }
+
+    /* Show mobile carousel */
+    .comparatif-mobile {
+      display: flex;
+    }
+
+    /* Hide desktop table entirely */
+    .comparatif__container {
+      display: none !important;
+    }
+
+    .mobile-card {
+      background: linear-gradient(135deg, rgba(95, 95, 163, 0.4) 0%, rgba(50, 52, 87, 0.8) 100%);
+      border-radius: 14px;
+      padding: 20px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      flex: 0 0 80%;
+      min-width: 0;
+      scroll-snap-align: center;
+      margin-right: 12px;
+
+      &:first-child {
+        margin-left: 10%;
+      }
+      &:last-child {
+        margin-right: 10%;
+      }
+
+      &.highlight {
+        background: linear-gradient(135deg, rgba(41, 151, 255, 0.22) 0%, rgba(20, 27, 60, 0.95) 100%);
+        border: 2px solid #2997ff;
+        box-shadow: 0 0 24px rgba(41, 151, 255, 0.35);
+      }
+
+      h4 {
+        font-size: 20px;
+        margin: 0 0 14px 0;
+        text-align: center;
+        color: #fff;
+      }
+
+      &.highlight h4 {
+        color: #6ec6ff;
+      }
+
+      .mobile-feature {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 9px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .check {
+          color: #2997ff;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        .cross {
+          color: #ff4d4d;
+        }
+        .dash {
+          color: #888;
+        }
+      }
+    }
+
+    .texte-table {
+      width: 100%;
+
+      h3 { font-size: 22px; }
+      p { font-size: 15px; }
+    }
+  }
+}

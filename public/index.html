@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <title>Cards Trading | Marketplace TCG — Acheter &amp; Vendre vos Cartes</title>
+    <meta
+      name="description"
+      content="Cards Trading est la marketplace TCG française pour acheter, vendre et collectionner vos cartes Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana et Dragon Ball en toute sécurité. Commission 0 % en bêta, paiement sécurisé, expédition suivie."
+    />
+    <meta
+      name="keywords"
+      content="marketplace TCG, acheter cartes TCG, vendre cartes Pokémon, cartes One Piece, Magic The Gathering, Yu-Gi-Oh, Lorcana, Dragon Ball Super, Cards Trading, sécurité TCG"
+    />
+    <meta name="author" content="Cards Trading" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#07111f" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/logo.png" />
+    <link rel="apple-touch-icon" href="assets/img/logo.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cards-trading.com/" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Cards Trading" />
+    <meta property="og:title" content="Cards Trading | Marketplace TCG — Acheter &amp; Vendre vos Cartes" />
+    <meta
+      property="og:description"
+      content="Achetez et vendez vos cartes TCG en toute sécurité : commission 0 %, paiement escrow, expédition suivie. Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball."
+    />
+    <meta property="og:image" content="https://cards-trading.com/assets/img/og-cover.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cards Trading — La marketplace TCG sécurisée" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cards Trading | Marketplace TCG" />
+    <meta
+      name="twitter:description"
+      content="La marketplace dédiée aux TCG : Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball. Commission 0 % en bêta, paiement sécurisé."
+    />
+    <meta name="twitter:image" content="https://cards-trading.com/assets/img/og-cover.png" />
+
+    <link rel="canonical" href="https://cards-trading.com/" />
+
+    <!-- Preconnect & DNS prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+    <!-- Preload LCP image -->
+    <link rel="preload" as="image" href="assets/img/hero-img.png" fetchpriority="high" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://cards-trading.com/#organization",
+          "name": "Cards Trading",
+          "url": "https://cards-trading.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cards-trading.com/assets/img/logo.png",
+            "width": 160,
+            "height": 40
+          },
+          "description": "Marketplace française spécialisée dans l'achat et la vente de cartes TCG (Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball).",
+          "foundingDate": "2026",
+          "founders": [
+            { "@type": "Person", "name": "Julian Schmerkin" },
+            { "@type": "Person", "name": "Valérian Selvon" }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://cards-trading.com/#website",
+          "url": "https://cards-trading.com/",
+          "name": "Cards Trading",
+          "description": "La marketplace TCG pour acheter et vendre vos cartes en toute sécurité.",
+          "publisher": { "@id": "https://cards-trading.com/#organization" },
+          "inLanguage": "fr-FR"
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  <script>
+    /* Mesure la largeur de la scrollbar native AVANT le 1er rendu.
+       Crée un div invisible avec overflow:scroll, mesure l'écart
+       offsetWidth − clientWidth, puis le supprime. Fonctionne sur
+       tous les OS / navigateurs sans toucher au layout réel. */
+    (function () {
+      var d = document.createElement('div');
+      d.style.cssText = 'position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll';
+      document.documentElement.appendChild(d);
+      var w = d.offsetWidth - d.clientWidth;
+      document.documentElement.removeChild(d);
+      if (w > 0) document.documentElement.style.setProperty('--scrollbar-width', w + 'px');
+    })();
+  </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <header class="flex header-sticky">
+      <div class="logo">
+        <img src="assets/img/logo.png" alt="Cards Trading" />
+      </div>
+      <nav class="header-nav" id="headerNav" aria-label="Navigation principale">
+        <a href="#avantages" class="nav-link">Avantages</a>
+        <a href="#beta" class="nav-link">Beta</a>
+        <a href="#features" class="nav-link">Fonctionnalités</a>
+        <a href="#comparatif" class="nav-link">Comparaison</a>
+        <a href="#vendeur-pro" class="nav-link">Vendeur Pro</a>
+        <a href="/blog" class="nav-link">Blog</a>
+        <div class="nav-indicator"></div>
+      </nav>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false" aria-controls="headerNav" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+    <main id="main-content">
+    <section class="hero flex">
+      <canvas class="hero-particles" aria-hidden="true"></canvas>
+      <div class="hero-spotlight" aria-hidden="true"></div>
+      <div class="flex gap30 hero-wrapper">
+        <div class="hero-left col">
+          <span>
+            <h1>Achetez & Vendez<br>sur Cards-Trading</h1>
+            <h2 class="baseline">La nouvelle marketplace dédiée à vos TCG préférés</h2>
+            <h3 class="subline">Pour les fans de cartes Pokémon, Magic, One Piece, Dragon Ball, Lorcana, Yu-Gi-Oh!, StarWars...</h3>
+            <div class="button-container flex gap30">
+              <button type="button" aria-label="En savoir plus sur Cards Trading">En savoir plus</button>
+              <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire à la bêta</button>
+            </div>
+
+            <!-- Social proof badge -->
+            <div class="social-proof" aria-live="polite">
+              <div class="social-proof-avatars" aria-hidden="true">
+                <img class="avatar avatar-1" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aiden&radius=50&backgroundColor=fde68a" alt="" loading="lazy" decoding="async" />
+                <img class="avatar avatar-2" src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Pixel&radius=50&backgroundColor=bae6fd" alt="" loading="lazy" decoding="async" />
+                <img class="avatar avatar-3" src="https://api.dicebear.com/9.x/big-smile/svg?seed=Mira&radius=50&backgroundColor=fbcfe8" alt="" loading="lazy" decoding="async" />
+                <img class="avatar avatar-4" src="https://api.dicebear.com/9.x/lorelei/svg?seed=Kai&radius=50&backgroundColor=c7d2fe" alt="" loading="lazy" decoding="async" />
+
+              </div>
+              <div class="social-proof-text">
+                <span class="live-dot" aria-hidden="true"></span><span class="social-proof-count" data-target="51">51</span><span>joueurs <strong>déjà inscrits</strong> à la bêta</span>
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="hero-right col">
+          <img
+            src="assets/img/hero-img.png"
+            alt="Aperçu de l'application Cards Trading sur MacBook et iPhone"
+            fetchpriority="high"
+            decoding="sync"
+            width="800"
+            height="560"
+          />
+        </div>
+      </div>
+
+      <div class="licence-caroussel">
+        <div class="track" id="licenceTrack">
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-dbz.png" alt="Dragon Ball Super Card Game" />
+          </div>
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-lorcana.png" alt="Disney Lorcana" />
+          </div>
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-magic.png" alt="Magic: The Gathering" />
+          </div>
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-onepiece.png" alt="One Piece Card Game" />
+          </div>
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-pokemon.png" alt="Pokémon Trading Card Game" />
+          </div>
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-riftbound.png" alt="Riftbound TCG" />
+          </div>
+          <div class="item">
+            <img loading="lazy" decoding="async" src="assets/img/logo-yugiho.png" alt="Yu-Gi-Oh! Trading Card Game" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <div class="avantages" id="avantages">
+      <h2 class="reveal-h2">Les Avantages Cards Trading</h2>
+      <div class="subline">
+        Ce qui change pour les acheteurs comme pour les vendeurs.
+      </div>
+      <div class="button-container flex gap30">
+        <button class="btn active" data-target="acheteur" aria-pressed="true" type="button">Acheteur</button>
+        <button class="btn" data-target="vendeur" aria-pressed="false" type="button">Vendeur</button>
+      </div>
+
+      <div class="avantages-container acheteur flex gap30 active">
+        <div class="avantages-item flex column featured">
+          <span class="item-num">01</span>
+          <div class="item-badge">Clé</div>
+          <div class="item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="item-title">Paiement sécurisé</div>
+          <div class="item-text">
+            Vos fonds sont protégés et bloqués jusqu’à validation de la réception. Zéro risque d’arnaque.
+          </div>
+        </div>
+        <div class="avantages-item flex column">
+          <span class="item-num">02</span>
+          <div class="item-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <div class="item-title">Seulement 3% de frais</div>
+          <div class="item-text">
+            Achetez au meilleur prix, sans coûts cachés ni surprises au moment du paiement.
+          </div>
+        </div>
+        <div class="avantages-item flex column">
+          <span class="item-num">03</span>
+          <div class="item-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <div class="item-title">Envoi suivi</div>
+          <div class="item-text">
+            Tracez vos envois en temps réel directement depuis l’application, à chaque étape.
+          </div>
+        </div>
+      </div>
+
+      <div class="avantages-container vendeur flex gap30">
+        <div class="avantages-item flex column featured">
+          <span class="item-num">01</span>
+          <div class="item-badge">Clé</div>
+          <div class="item-icon"><i class="fa-solid fa-crosshairs"></i></div>
+          <div class="item-title">Prix optimal</div>
+          <div class="item-text">
+            Notre outil de pricing recommande le prix idéal basé sur les dernières ventes du marché.
+          </div>
+        </div>
+        <div class="avantages-item flex column">
+          <span class="item-num">02</span>
+          <div class="item-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <div class="item-title">Seulement 3% de frais</div>
+          <div class="item-text">
+            Vendez au meilleur prix, sans coûts cachés ni surprises au moment du paiement.
+          </div>
+        </div>
+        <div class="avantages-item flex column">
+          <span class="item-num">03</span>
+          <div class="item-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="item-title">Vente rapide</div>
+          <div class="item-text">
+            Mettez en vente en temps record grâce au card scanner qui reconnaît vos cartes instantanément.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="questionnaire" id="beta">
+      <h2 class="reveal-h2">Inscription Bêta — À quoi tu joues ?</h2>
+      <div class="questionnaire-wrapper flex gap30">
+        <div class="questionnaire-texte">
+          Réponds aux questions pour t'inscrire à la bêta. Ça nous aidera à
+          mieux te connaître et à te proposer une meilleure expérience de trade
+          et te permettra d'accéder à la plateforme en pré-release.
+          <br /><br />
+          <span>En plus tu bénéficieras de :</span>
+          <ul>
+            <li>Accès anticipé à la plateforme</li>
+            <li>Zéro frais pendant 3 mois</li>
+            <li>Pack merchandising offert</li>
+          </ul>
+        </div>
+
+        <div class="quiz-wrapper">
+          <div class="quiz-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progression du questionnaire">
+            <div class="xp-info">
+              <span class="xp-step">Étape <span id="current-question">1</span><span class="xp-step-total">/<span id="total-questions">8</span></span></span>
+              <span class="xp-percentage">0%</span>
+            </div>
+            <div class="xp-track">
+              <div class="xp-fill"></div>
+            </div>
+          </div>
+          <div class="quiz-slider" id="quizSlider">
+
+            <div class="question-card tcg-question active">
+              <div class="title">Quels TCG préférez-vous ?</div>
+              <div class="options">
+                <div class="tcg-grid">
+                  <label data-tcg="pokemon"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Pokémon</label>
+                  <label data-tcg="onepiece"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>One Piece</label>
+                  <label data-tcg="magic"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Magic</label>
+                  <label data-tcg="yugioh"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Yu-Gi-Oh!</label>
+                  <label data-tcg="lorcana"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Lorcana</label>
+                  <label data-tcg="dragonball"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Dragon Ball</label>
+                  <label data-tcg="riftbound"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Riftbound</label>
+                  <label data-tcg="starwars"><input type="checkbox" name="q3" /><span class="tcg-dot"></span>Star Wars</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quel est votre profil ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q5" /> Joueur</label>
+                  <label><input type="radio" name="q5" /> Collectionneur</label>
+                  <label><input type="radio" name="q5" /> Les deux</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quelle plateforme utilisez-vous le plus ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q4" /> Cardmarket</label>
+                  <label><input type="radio" name="q4" /> eBay</label>
+                  <label><input type="radio" name="q4" /> Vinted</label>
+                  <label
+                    ><input type="radio" name="q4" /> Facebook / Discord</label
+                  >
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quel est votre âge ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q1" /> - de 18 ans</label>
+                  <label><input type="radio" name="q1" /> 18–24 ans</label>
+                  <label><input type="radio" name="q1" /> 25–34 ans</label>
+                  <label><input type="radio" name="q1" /> 35–44 ans</label>
+                  <label><input type="radio" name="q1" /> 45 ans et +</label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Quel est votre genre ?</div>
+              <div class="options">
+                <div>
+                  <label><input type="radio" name="q2" /> Homme</label>
+                  <label><input type="radio" name="q2" /> Femme</label>
+                  <label><input type="radio" name="q2" /> Autre</label>
+                  <label
+                    ><input type="radio" name="q2" /> Ne pas répondre</label
+                  >
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Vos informations</div>
+              <div class="options">
+                <div>
+                  <input type="text" placeholder="Nom" />
+                  <input type="text" placeholder="Prénom" />
+                  <input type="email" placeholder="Email" />
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card">
+              <div class="title">Consentement RGPD</div>
+              <div class="options">
+                <div>
+                  <label style="margin-left: 0 !important; display: flex; align-items: flex-start; gap: 15px;">
+                    <input type="checkbox" name="rgpd" style="margin-top: 5px;" />
+                    <span>
+                      J'accepte que mes données soient traitées conformément à la <a href="mentions-legales.html" target="_blank" style="color: #2997ff; text-decoration: underline;">politique RGPD</a> et les <a href="cgu.html" target="_blank" style="color: #2997ff; text-decoration: underline;">CGU</a> de Cards Trading. Aucun marketing. Aucune vente de données.
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <button class="next-btn">Valider</button>
+            </div>
+
+            <div class="question-card confirmation-card">
+              <div class="title">
+                <i class="fa-solid fa-circle-check"></i> Merci !
+              </div>
+              <div class="options">
+                Votre inscription à la beta a bien été prise en compte.
+              </div>
+              <div>
+                <img loading="lazy" decoding="async" src="assets/img/goku.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <section class="features flex column" id="features">
+      <div class="features-inner flex gap100">
+        <div class="col-left">
+          <h2 class="reveal-h2">
+            Fonctionnalités pensées pour les joueurs et collectionneurs TCG
+          </h2>
+
+          <div class="feature-left">
+            <div class="item active">
+              <h3>Card Scanner</h3>
+              <ul>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-bolt"></i>
+                  <span>
+                    <div class="title-feature">Scan ultra rapide</div>
+                    <div class="text-feature">
+                      Notre technologie reconnaît vos cartes en un instant
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-expand"></i>
+                  <span>
+                    <div class="title-feature">Infos complètes</div>
+                    <div class="text-feature">
+                      Nom, édition, rareté. Accédez à toutes les informations
+                      sur vos cartes préférées
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-chart-line"></i>
+                  <span>
+                    <div class="title-feature">Données du marché</div>
+                    <div class="text-feature">
+                      Sourcées depuis Cardmarket, eBay et TCGplayer, consultez
+                      les prix des dernières ventes.
+                    </div>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="item">
+              <h3>Market Tracker</h3>
+              <ul>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-clock"></i>
+                  <span>
+                    <div class="title-feature">Dernières ventes réelles</div>
+                    <div class="text-feature">
+                      Consultez les prix du marché pour optimiser vos achats et
+                      vos ventes
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-arrow-trend-up"></i>
+                  <span>
+                    <div class="title-feature">Mise à jour en temps réel</div>
+                    <div class="text-feature">
+                      Des données actualisées en continu pour une vision fiable
+                      du marché
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-chart-pie"></i>
+                  <span>
+                    <div class="title-feature">Analyse des tendances</div>
+                    <div class="text-feature">
+                      Visualisez l'évolution des prix selon les périodes pour
+                      piloter vos transactions
+                    </div>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="item">
+              <h3>Smart wishlist</h3>
+              <ul>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-bell"></i>
+                  <span>
+                    <div class="title-feature">Alertes nouvelles annonces</div>
+                    <div class="text-feature">
+                      Soyez notifié dès qu'une carte de votre wishlist est mise
+                      en vente
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-crosshairs"></i>
+                  <span>
+                    <div class="title-feature">Alerte prix</div>
+                    <div class="text-feature">
+                      Fixez vos prix d'achat et soyez notifié quand un produit
+                      correspond
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-eye"></i>
+                  <span>
+                    <div class="title-feature">Suivi intelligent</div>
+                    <div class="text-feature">
+                      Analyse du marché pour vous proposer les meilleures
+                      opportunités
+                    </div>
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="item">
+              <h3>Filtres avancés</h3>
+              <ul>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-filter"></i>
+                  <span>
+                    <div class="title-feature">Affinez chaque détail</div>
+                    <div class="text-feature">
+                      Filtrez par nom, extension, état, langue, et bien plus
+                      encore, pour ne rater aucune occasion.
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-euro-sign"></i>
+                  <span>
+                    <div class="title-feature">Maîtrisez votre budget</div>
+                    <div class="text-feature">
+                      Définissez une fourchette de prix pour trouver les
+                      meilleures offres.
+                    </div>
+                  </span>
+                </li>
+                <li class="flex gap30">
+                  <i class="fa-solid fa-user-check"></i>
+                  <span>
+                    <div class="title-feature">Annonces de confiance</div>
+                    <div class="text-feature">
+                      Filtrez et n'affichez que les meilleurs vendeurs.
+                    </div>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="feature-right">
+            <ul>
+              <li class="active">
+                <img loading="lazy" decoding="async" src="assets/img/feature1.png" alt="Aperçu du Card Scanner sur mobile" />
+              </li>
+              <li>
+                <img loading="lazy" decoding="async" src="assets/img/feature2.png" alt="Aperçu du Market Tracker sur mobile" />
+              </li>
+              <li>
+                <img loading="lazy" decoding="async" src="assets/img/feature3.png" alt="Aperçu de la Smart Wishlist sur mobile" />
+              </li>
+              <li>
+                <img loading="lazy" decoding="async" src="assets/img/feature4.png" alt="Aperçu des Filtres Avancés sur mobile" />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-dots">
+        <button
+          class="dot active"
+          type="button"
+          aria-label="Afficher la slide 1"
+        ></button>
+        <button
+          class="dot"
+          type="button"
+          aria-label="Afficher la slide 2"
+        ></button>
+        <button
+          class="dot"
+          type="button"
+          aria-label="Afficher la slide 3"
+        ></button>
+        <button
+          class="dot"
+          type="button"
+          aria-label="Afficher la slide 4"
+        ></button>
+      </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <div class="comparatif" id="comparatif">
+      <h2 class="reveal-h2">Cards Trading vs Cardmarket, Vinted & eBay</h2>
+
+      <div class="flex gap50 comparatif-wrapper">
+        <div class="comparatif__container">
+          <table class="comparatif__table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Cards-Trading</th>
+                <th scope="col">Cardmarket</th>
+                <th scope="col">Vinted</th>
+                <th scope="col">eBay</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">UX mobile moderne</th>
+                <td>✓</td>
+                <td>✕</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <th scope="row">Spécialisation TCG</th>
+                <td>✓</td>
+                <td>—</td>
+                <td>✕</td>
+                <td>✕</td>
+              </tr>
+              <tr>
+                <th scope="row">Escrow / paiement sécurisé</th>
+                <td>✓</td>
+                <td>✕</td>
+                <td>✓</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <th scope="row">Litiges structurés</th>
+                <td>✓</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <th scope="row">Commission 0 % en bêta</th>
+                <td>✓</td>
+                <td>✕</td>
+                <td>✕</td>
+                <td>✕</td>
+              </tr>
+              <tr>
+                <th scope="row">Outils vendeur</th>
+                <td>✓</td>
+                <td>—</td>
+                <td>✕</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Mobile Cards View -->
+        <div class="comparatif-mobile">
+          <div class="mobile-card highlight">
+            <h4>Cards-Trading</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="check">✓</span></div>
+          </div>
+          <div class="mobile-card">
+            <h4>Cardmarket</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="dash">—</span></div>
+          </div>
+          <div class="mobile-card">
+            <h4>Vinted</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="check">✓</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="cross">✕</span></div>
+          </div>
+          <div class="mobile-card">
+            <h4>eBay</h4>
+            <div class="mobile-feature"><span>UX mobile moderne</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Spécialisation TCG</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Paiement sécurisé</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Litiges structurés</span> <span class="dash">—</span></div>
+            <div class="mobile-feature"><span>Commission 0 % en bêta</span> <span class="cross">✕</span></div>
+            <div class="mobile-feature"><span>Outils vendeur</span> <span class="dash">—</span></div>
+          </div>
+        </div>
+
+        <div class="texte-table">
+          <h3>L'offre la plus complète</h3>
+          <p>
+            <strong>Cards Trading</strong> s’impose comme la
+            <strong>marketplace</strong> TCG la plus complète du marché, en
+            réunissant dans une seule plateforme l’ensemble des fonctionnalités
+            essentielles pour
+            <strong>acheter, vendre et collectionner</strong> dans les
+            meilleures conditions. Pensée mobile-first, spécialisée à 100 % dans
+            le <strong>TCG</strong>, elle combine sécurité des paiements,
+            gestion des litiges, commission 0 % et outils avancés pour les
+            vendeurs.
+          </p>
+        </div>
+      </div>
+
+      <div class="anim">
+        <div class="card card1">
+          <img loading="lazy" decoding="async" src="assets/img/card10.webp" alt="carte animation" />
+        </div>
+        <div class="card card2">
+          <img loading="lazy" decoding="async" src="assets/img/card3.png" alt="carte animation" />
+        </div>
+        <div class="card card3">
+          <img loading="lazy" decoding="async" src="assets/img/card7.png" alt="carte animation" />
+        </div>
+        <div class="card card4">
+          <img loading="lazy" decoding="async" src="assets/img/card6.jpg" alt="carte animation" />
+        </div>
+        <div class="card card5">
+          <img loading="lazy" decoding="async" src="assets/img/card12.jpg" alt="carte animation" />
+        </div>
+        <div class="card card6">
+          <img loading="lazy" decoding="async" src="assets/img/card14.webp" alt="carte animation" />
+        </div>
+        <div class="card card7">
+          <img loading="lazy" decoding="async" src="assets/img/card2.webp" alt="carte animation" />
+        </div>
+        <div class="card card8">
+          <img loading="lazy" decoding="async" src="assets/img/card4.webp" alt="carte animation" />
+        </div>
+      </div>
+    </div>
+
+
+    <section class="seller-tools" id="vendeur-pro">
+      <div class="container flex gap30">
+        <!-- LEFT -->
+        <div class="content col-left">
+          <h2 class="reveal-h2">Outils Vendeur Pro pour votre Boutique TCG</h2>
+          <div class="seller-args">
+            <div class="item">
+              <h3>Pilotez votre activité</h3>
+              <p>
+                Suivez vos performances en temps réel avec un dashboard clair :
+                chiffre d’affaires, ventes, conversion et évolution.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Gérez vos commandes facilement</h3>
+              <p>
+                Visualisez, filtrez et traitez toutes vos commandes en quelques
+                clics, du paiement à l’expédition.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Boostez vos ventes</h3>
+              <p>
+                Envoyez des offres ciblées aux acheteurs intéressés pour
+                maximiser vos conversions.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Optimisez vos prix</h3>
+              <p>
+                Des recommandations basées sur le marché pour vendre au bon
+                prix.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Analysez vos performances</h3>
+              <p>
+                Identifiez vos produits les plus rentables et ajustez votre
+                stratégie.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="carousel-wrapper col-right">
+          <div class="carousel">
+            <div class="card">
+              <img loading="lazy" decoding="async" src="assets/img/dashboard.png" alt="Dashboard vendeur" />
+            </div>
+
+            <div class="card">
+              <img loading="lazy" decoding="async" src="assets/img/commandes.png" alt="Gestion des commandes" />
+            </div>
+
+            <div class="card">
+              <img
+                src="assets/img/wishlist.png"
+                alt="Offres ciblées wishlist"
+              />
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="prev" type="button" aria-label="Slide précédente">‹</button>
+            <button class="next" type="button" aria-label="Slide suivante">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POPIN FULLSCREEN -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" type="button" aria-label="Fermer la lightbox">×</button>
+      <img class="lightbox-img" src="" alt="" />
+    </div>
+    <div class="separator"></div>
+
+    <section class="social-section" id="reseaux">
+      <h2 class="section-title reveal-h2">Rejoignez la communauté</h2>
+      <p class="section-subtitle">Suivez Cards Trading sur les réseaux pour ne rien rater</p>
+
+      <div class="social-grid">
+        <!-- Actifs -->
+        <a href="https://x.com/CardsTradingCom" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Suivre Cards Trading sur X">
+          <img class="social-card-logo" src="assets/img/logo-social-x.png" alt="Cards Trading sur X" loading="lazy" decoding="async" />
+          <span class="social-card-name">X (Twitter)</span>
+          <span class="social-card-handle">@CardsTradingCom</span>
+          <span class="social-card-cta"><i class="fa-brands fa-x-twitter"></i> Suivre</span>
+        </a>
+
+        <a href="https://www.instagram.com/CardsTradingCom/" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Suivre Cards Trading sur Instagram">
+          <img class="social-card-logo" src="assets/img/logo-social-instagram.png" alt="Cards Trading sur Instagram" loading="lazy" decoding="async" />
+          <span class="social-card-name">Instagram</span>
+          <span class="social-card-handle">@CardsTradingCom</span>
+          <span class="social-card-cta"><i class="fa-brands fa-instagram"></i> Suivre</span>
+        </a>
+
+        <div class="social-card coming-soon">
+          <span class="social-card-badge">Bientôt</span>
+          <img class="social-card-logo" src="assets/img/logo-social-tiktok.png" alt="Cards Trading sur TikTok" loading="lazy" decoding="async" />
+          <span class="social-card-name">TikTok</span>
+          <span class="social-card-handle">@CardsTradingCom</span>
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="social-card coming-soon">
+          <span class="social-card-badge">Bientôt</span>
+          <img class="social-card-logo" src="assets/img/logo-social-facebook.png" alt="Cards Trading sur Facebook" loading="lazy" decoding="async" />
+          <span class="social-card-name">Facebook</span>
+          <span class="social-card-handle">Cards Trading</span>
+        </div>
+
+        <div class="social-card coming-soon">
+          <span class="social-card-badge">Bientôt</span>
+          <img class="social-card-logo" src="assets/img/logo-social-linkedin.png" alt="Cards Trading sur LinkedIn" loading="lazy" decoding="async" />
+          <span class="social-card-name">LinkedIn</span>
+          <span class="social-card-handle">Cards Trading</span>
+        </div>
+
+        <div class="social-card coming-soon">
+          <span class="social-card-badge">Bientôt</span>
+          <img class="social-card-logo" src="assets/img/logo-social-whatnot.png" alt="Cards Trading sur WhatNot" loading="lazy" decoding="async" />
+          <span class="social-card-name">WhatNot</span>
+          <span class="social-card-handle">Cards Trading</span>
+        </div>
+      </div>
+
+      <!-- Dernier post tous réseaux confondus -->
+      <div class="latest-post" id="latestPost">
+        <div class="latest-post-label">Dernier post</div>
+        <a class="latest-post-card" id="latestPostCard" href="#" target="_blank" rel="noopener noreferrer">
+          <img class="latest-post-avatar" id="lpAvatar" src="" alt="" loading="lazy" />
+          <div class="latest-post-body">
+            <div class="latest-post-header">
+              <i class="latest-post-platform-icon" id="lpIcon"></i>
+              <span class="latest-post-platform" id="lpPlatform"></span>
+              <span class="latest-post-handle" id="lpHandle"></span>
+              <span class="latest-post-date" id="lpDate"></span>
+            </div>
+            <p class="latest-post-text" id="lpText"></p>
+          </div>
+        </a>
+      </div>
+    </section>
+    </main>
+
+    <footer>
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img loading="lazy" decoding="async" src="assets/img/logo.png" alt="Cards Trading - Marketplace TCG" class="footer-logo" />
+          <p class="footer-desc">
+            La marketplace spécialisée TCG pour <strong>acheter</strong> et <strong>vendre</strong> vos cartes de collection en toute sécurité. Pokémon, One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana, Dragon Ball, Riftbound, Star Wars.
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navigation secondaire">
+          <div class="footer-col">
+            <h4>Plateforme</h4>
+            <ul>
+              <li><a href="index.html#avantages">Avantages</a></li>
+              <li><a href="index.html#beta">Inscription Beta</a></li>
+              <li><a href="index.html#features">Fonctionnalités</a></li>
+              <li><a href="index.html#comparatif">Comparatif</a></li>
+              <li><a href="index.html#vendeur-pro">Vendeur Pro</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>TCG supportés</h4>
+            <ul>
+              <li><a href="index.html">Pokémon</a></li>
+              <li><a href="index.html">One Piece</a></li>
+              <li><a href="index.html">Magic: The Gathering</a></li>
+              <li><a href="index.html">Yu-Gi-Oh!</a></li>
+              <li><a href="index.html">Lorcana</a></li>
+              <li><a href="index.html">Dragon Ball</a></li>
+              <li><a href="index.html">Riftbound</a></li>
+              <li><a href="index.html">Star Wars</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Légal & Contact</h4>
+            <ul>
+              <li><a href="cgu.html">Conditions Générales d'Utilisation</a></li>
+              <li><a href="mentions-legales.html">Mentions Légales & RGPD</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Cards Trading — Tous droits réservés.</span>
+        <span class="footer-founders">Co-fondateurs : Julian Schmerkin & Valérian Selvon</span>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<!-- smooth scroll -->
+<script>
+  /* Unified scroller — scroll-padding-top on <html> handles the sticky header offset */
+  function smoothScrollTo(target, hash) {
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (hash) history.pushState(null, '', '#' + hash);
+  }
+
+  /* Anchor links — if mobile menu is open, wait for its transitionend before scrolling */
+  document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var hash = link.getAttribute('href').split('#')[1];
+      if (!hash) return;
+      var target = document.getElementById(hash);
+      if (!target) return;
+      e.preventDefault();
+
+      var hamburger = document.getElementById('navHamburger');
+      var nav = document.getElementById('headerNav');
+      var isMenuOpen = hamburger && hamburger.classList.contains('open');
+
+      if (isMenuOpen) {
+        hamburger.classList.remove('open');
+        nav.classList.remove('mobile-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        /* Wait for CSS slide-out (0.35s); setTimeout fallback for iOS Safari */
+        var fired = false;
+        var doScroll = function() {
+          if (fired) return;
+          fired = true;
+          smoothScrollTo(target, hash);
+        };
+        nav.addEventListener('transitionend', function handler(e) {
+          /* Filtrer les transitions des enfants (color, opacity…) qui
+             bubblent et fire avant le transform du nav — sinon le scroll
+             se déclenche alors que le menu est encore en train de glisser */
+          if (e.target !== nav) return;
+          nav.removeEventListener('transitionend', handler);
+          doScroll();
+        });
+        setTimeout(doScroll, 400); /* fallback if transitionend never fires */
+      } else {
+        smoothScrollTo(target, hash);
+      }
+    });
+  });
+
+  /* Hero CTA buttons scroll */
+  var heroButtons = document.querySelectorAll('.hero-left .button-container button');
+  if (heroButtons.length >= 2) {
+    heroButtons[1].addEventListener('click', function () {
+      smoothScrollTo(document.getElementById('beta'), 'beta');
+    });
+    heroButtons[0].addEventListener('click', function () {
+      smoothScrollTo(document.getElementById('avantages'), 'avantages');
+    });
+  }
+</script>
+
+<!-- navbar: scroll-shrink + scroll-spy + hamburger -->
+<script>
+  (function () {
+    const header = document.querySelector('header');
+    const hamburger = document.getElementById('navHamburger');
+    const nav = document.getElementById('headerNav');
+    const navLinks = nav ? nav.querySelectorAll('.nav-link') : [];
+
+    /* ── Scroll-shrink ── */
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ── Hamburger toggle ── */
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.toggle('open');
+        nav.classList.toggle('mobile-open', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen);
+      });
+
+      /* NOTE: nav-link click closure is handled by the smoothScrollTo block
+         in the previous <script>, which closes the menu first and waits for
+         the slide-out transition before scrolling — avoids race condition. */
+
+      /* Close on outside click */
+      document.addEventListener('click', e => {
+        if (!header.contains(e.target)) {
+          hamburger.classList.remove('open');
+          nav.classList.remove('mobile-open');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    /* ── Sliding indicator (NAV-1) ── */
+    function moveIndicator(link) {
+      const indicator = document.querySelector('.nav-indicator');
+      if (!indicator || !link) return;
+      const navRect = link.closest('.header-nav').getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      indicator.style.left = (linkRect.left - navRect.left) + 'px';
+      indicator.style.width = linkRect.width + 'px';
+      indicator.style.top = ((navRect.height - 32) / 2) + 'px';
+    }
+
+    /* ── Scroll-spy: active nav link ── */
+    const sections = ['avantages', 'beta', 'features', 'comparatif', 'vendeur-pro']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    function setActiveLink(id) {
+      let activeLink = null;
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href').replace('#', '');
+        const isActive = href === id;
+        link.classList.toggle('active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'true');
+          activeLink = link;
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+      if (activeLink) moveIndicator(activeLink);
+    }
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveLink(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(s => observer.observe(s));
+
+    /* Initialiser l'indicateur sur le lien actif au chargement */
+    const initialActive = nav.querySelector('.nav-link.active');
+    if (initialActive) moveIndicator(initialActive);
+
+    /* Repositionner l'indicateur au resize */
+    window.addEventListener('resize', () => {
+      const current = nav.querySelector('.nav-link.active');
+      if (current) moveIndicator(current);
+    });
+  })();
+</script>
+
+<!-- carrousel -->
+<script>
+  const track = document.getElementById("licenceTrack");
+  const baseItems = Array.from(track.children).map((item) =>
+    item.cloneNode(true)
+  );
+
+  let position = 0;
+  let rafId = null;
+  const speed = 0.5;
+
+  function getItemFullWidth(item) {
+    const styles = window.getComputedStyle(item);
+    const marginRight = parseFloat(styles.marginRight) || 0;
+
+    return item.offsetWidth + marginRight;
+  }
+
+  function fillTrack() {
+    track.innerHTML = "";
+
+    baseItems.forEach((item) => {
+      track.appendChild(item.cloneNode(true));
+    });
+
+    let safety = 0;
+
+    while (track.scrollWidth < window.innerWidth * 2 && safety < 50) {
+      baseItems.forEach((item) => {
+        track.appendChild(item.cloneNode(true));
+      });
+
+      safety++;
+    }
+  }
+
+  function step() {
+    position += speed;
+    track.style.transform = `translateX(-${position}px)`;
+
+    const firstItem = track.children[0];
+
+    if (firstItem) {
+      const firstItemWidth = getItemFullWidth(firstItem);
+
+      if (position >= firstItemWidth) {
+        position -= firstItemWidth;
+        track.appendChild(firstItem);
+        track.style.transform = `translateX(-${position}px)`;
+      }
+    }
+
+    rafId = requestAnimationFrame(step);
+  }
+
+  function initCarousel() {
+    cancelAnimationFrame(rafId);
+    position = 0;
+    fillTrack();
+    step();
+  }
+
+  window.addEventListener("load", initCarousel);
+  window.addEventListener("resize", initCarousel);
+
+  /* Pause on hover */
+  const licenceCarousel = document.querySelector('.licence-caroussel');
+  if (licenceCarousel) {
+    licenceCarousel.addEventListener('mouseenter', () => {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    });
+    licenceCarousel.addEventListener('mouseleave', () => {
+      if (!rafId) step();
+    });
+  }
+</script>
+
+<!-- Social proof badge — counter déterministe + count-up animation -->
+<script>
+  (function () {
+    const countEl = document.querySelector('.social-proof-count');
+    if (!countEl) return;
+
+    const FALLBACK = 51;
+
+    /* Animation count-up easing-cubic-out */
+    function animateTo(el, target, duration) {
+      duration = duration || 1800;
+      const start = parseInt(el.textContent, 10) || 0;
+      const t0 = performance.now();
+      function frame(now) {
+        const t = Math.min((now - t0) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const v = Math.round(start + (target - start) * eased);
+        el.textContent = v;
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* Fetch count — GET only, le compteur est calculé côté serveur */
+    async function fetchCount() {
+      try {
+        const res = await fetch('/api/views');
+        if (!res.ok) return FALLBACK;
+        const data = await res.json();
+        return Number(data.count) || FALLBACK;
+      } catch (e) {
+        return FALLBACK;
+      }
+    }
+
+    /* Lance count-up dès que le badge est visible (1ère fois uniquement) */
+    let pendingTarget = FALLBACK;
+    let animated = false;
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !animated) {
+          animated = true;
+          countEl.textContent = '0';
+          animateTo(countEl, pendingTarget, 1800);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    fetchCount().then(function (count) {
+      pendingTarget = count;
+      if (animated) countEl.textContent = String(count);
+    });
+
+    observer.observe(countEl);
+  })();
+</script>
+
+<!-- Social proof +1 continuous rain while hovering (desktop only) -->
+<script>
+(function () {
+  var pill = document.querySelector('.social-proof');
+  if (!pill || !window.matchMedia('(hover: hover)').matches) return;
+  var interval = null;
+
+  function spawnBurst() {
+    var burst = 3 + Math.floor(Math.random() * 2); /* 3-4 à la fois */
+    for (var i = 0; i < burst; i++) {
+      var el = document.createElement('span');
+      el.className = 'social-proof-plus-one';
+      el.textContent = '+1';
+      el.style.left = (8 + Math.random() * 80) + '%';
+      var scale = 0.55 + Math.random() * 0.75;
+      el.style.fontSize = (22 * scale) + 'px';
+      el.style.animationDuration = (0.55 + Math.random() * 0.55) + 's';
+      pill.appendChild(el);
+      el.addEventListener('animationend', function () { this.remove(); });
+    }
+  }
+
+  pill.addEventListener('mouseenter', function () {
+    if (interval) return;
+    spawnBurst(); /* burst immédiat */
+    interval = setInterval(spawnBurst, 80);
+  });
+
+  pill.addEventListener('mouseleave', function () {
+    clearInterval(interval);
+    interval = null;
+  });
+})();
+</script>
+
+<!-- toggle avantage -->
+<script>
+  const buttons = document.querySelectorAll(".btn");
+  const containers = document.querySelectorAll(".avantages-container");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.target;
+
+      buttons.forEach((btn) => {
+        btn.classList.remove("active");
+        btn.setAttribute("aria-pressed", "false");
+      });
+      button.classList.add("active");
+      button.setAttribute("aria-pressed", "true");
+
+      containers.forEach((container) => {
+        container.classList.remove("active");
+
+        if (container.classList.contains(target)) {
+          container.classList.add("active");
+        }
+      });
+    });
+  });
+</script>
+
+<!-- features carrousel-->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const section = document.querySelector(".features");
+    const dots = section.querySelectorAll(".dot");
+    const images = section.querySelectorAll(".feature-right li");
+    const items = section.querySelectorAll(".feature-left .item");
+
+    let currentIndex = 0;
+    let interval = null;
+    let started = false;
+
+    function showSlide(index) {
+      dots.forEach((dot) => {
+        dot.classList.remove("active");
+      });
+
+      images.forEach((image) => {
+        image.classList.remove("active");
+      });
+
+      items.forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      dots[index].classList.add("active");
+      images[index].classList.add("active");
+      items[index].classList.add("active");
+
+      currentIndex = index;
+    }
+
+    function startCarousel() {
+      if (started) {
+        return;
+      }
+
+      started = true;
+
+      interval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+      }, 5000);
+    }
+
+    function resetInterval() {
+      clearInterval(interval);
+
+      interval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+      }, 5000);
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        resetInterval();
+      });
+    });
+
+    items.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        showSlide(index);
+        resetInterval();
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startCarousel();
+          }
+        });
+      },
+      {
+        threshold: 0.4,
+      }
+    );
+
+    showSlide(0);
+    observer.observe(section);
+  });
+</script>
+
+<!-- questionnaire -->
+<script>
+  const cards = document.querySelectorAll(".question-card");
+  const currentQuestionEl = document.getElementById("current-question");
+  const totalQuestionsEl = document.getElementById("total-questions");
+  const xpFillEl = document.querySelector(".xp-fill");
+  const xpPercentEl = document.querySelector(".xp-percentage");
+  const xpProgressEl = document.querySelector(".quiz-progress");
+
+  let currentIndex = 0;
+  totalQuestionsEl.textContent = cards.length;
+
+  /* XP bar — fill grows from 0% to 100% across the cards (0 at start, 100% on confirmation) */
+  function updateXPBar(index) {
+    const total = cards.length;
+    const pct = Math.round((index / (total - 1)) * 100);
+    if (xpFillEl) {
+      xpFillEl.style.width = pct + "%";
+      xpFillEl.classList.add("level-up");
+      setTimeout(() => xpFillEl.classList.remove("level-up"), 600);
+    }
+    if (xpPercentEl) xpPercentEl.textContent = pct + "%";
+    if (xpProgressEl) xpProgressEl.setAttribute("aria-valuenow", String(pct));
+  }
+
+  function showRequiredMessage(button, message = "reponse requise") {
+    const defaultText = button.dataset.defaultText || "Valider";
+
+    button.textContent = message;
+
+    clearTimeout(button.requiredTimeout);
+
+    button.requiredTimeout = setTimeout(() => {
+      button.textContent = defaultText;
+    }, 1500);
+  }
+
+  function isCardValid(card, button) {
+    const radios = card.querySelectorAll('input[type="radio"]');
+    const checkboxes = card.querySelectorAll('input[type="checkbox"]');
+    const texts = card.querySelectorAll(
+      'input[type="text"], input[type="email"]'
+    );
+    const email = card.querySelector('input[type="email"]');
+
+    if (radios.length) {
+      if (!Array.from(radios).some((input) => input.checked)) {
+        showRequiredMessage(button);
+        return false;
+      }
+      return true;
+    }
+
+    if (checkboxes.length) {
+      if (!Array.from(checkboxes).some((input) => input.checked)) {
+        showRequiredMessage(button);
+        return false;
+      }
+      return true;
+    }
+
+    if (texts.length) {
+      const allFieldsFilled = Array.from(texts).every(
+        (input) => input.value.trim() !== ""
+      );
+
+      if (!allFieldsFilled) {
+        showRequiredMessage(button, "champs requis");
+        return false;
+      }
+
+      if (email && !email.checkValidity()) {
+        showRequiredMessage(button, "email invalide");
+        return false;
+      }
+
+      return true;
+    }
+
+    // RGPD checkbox specifically
+    const rgpdCheckbox = card.querySelector('input[name="rgpd"]');
+    if (rgpdCheckbox) {
+      if (!rgpdCheckbox.checked) {
+        showRequiredMessage(button, "consentement requis");
+        return false;
+      }
+      return true;
+    }
+
+    return true;
+  }
+
+  async function submitForm() {
+    const quizSlider = document.getElementById("quizSlider");
+
+    // Collect all form data
+    const formData = {
+      age: document.querySelector('input[name="q1"]:checked')?.parentElement?.textContent?.trim() || null,
+      genre: document.querySelector('input[name="q2"]:checked')?.parentElement?.textContent?.trim() || null,
+      tcgs: Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(input => input.parentElement.textContent.trim()),
+      platform: document.querySelector('input[name="q4"]:checked')?.parentElement?.textContent?.trim() || null,
+      profile: document.querySelector('input[name="q5"]:checked')?.parentElement?.textContent?.trim() || null,
+      nom: document.querySelector('input[placeholder="Nom"]')?.value || null,
+      prenom: document.querySelector('input[placeholder="Prénom"]')?.value || null,
+      email: document.querySelector('input[placeholder="Email"]')?.value || null,
+      rgpd: document.querySelector('input[name="rgpd"]')?.checked || false,
+    };
+
+    // Show loading state
+    const submitBtn = cards[currentIndex].querySelector(".next-btn");
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Envoi en cours...";
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Move to confirmation screen
+        cards[currentIndex].classList.add("exit-left");
+        cards[currentIndex].classList.remove("active");
+        cards[currentIndex + 1].classList.add("active");
+        currentIndex++;
+        currentQuestionEl.textContent = currentIndex + 1;
+        updateXPBar(currentIndex);
+
+        setTimeout(() => {
+          cards[currentIndex - 1].classList.remove("exit-left");
+        }, 450);
+      } else {
+        submitBtn.textContent = result.error || "Erreur lors de l'envoi";
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      submitBtn.textContent = "Erreur réseau";
+      setTimeout(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 2000);
+    }
+  }
+
+  function adjustQuizHeight() {
+    const quizSlider = document.getElementById("quizSlider");
+    const activeCard = cards[currentIndex];
+    if (quizSlider && activeCard) {
+      // Temporarily remove opacity to get accurate offsetHeight if it was hidden
+      quizSlider.style.height = activeCard.offsetHeight + "px";
+    }
+  }
+
+  // Initial adjustment
+  setTimeout(adjustQuizHeight, 100);
+  window.addEventListener('resize', adjustQuizHeight);
+
+  function goToNextQuestion(event) {
+    const button = event.currentTarget;
+    const currentCard = cards[currentIndex];
+    const nextCard = cards[currentIndex + 1];
+
+    if (!isCardValid(currentCard, button)) {
+      return;
+    }
+
+    // If this is the last question (RGPD), submit the form
+    if (currentIndex === cards.length - 2) {
+      submitForm();
+      return;
+    }
+
+    if (!nextCard) {
+      currentQuestionEl.textContent = cards.length;
+      return;
+    }
+
+    currentCard.classList.add("exit-left");
+    currentCard.classList.remove("active");
+
+    nextCard.classList.add("active");
+
+    currentIndex++;
+    currentQuestionEl.textContent = currentIndex + 1;
+    updateXPBar(currentIndex);
+
+    // Adjust height for the new card
+    setTimeout(adjustQuizHeight, 50);
+
+    setTimeout(() => {
+      currentCard.classList.remove("exit-left");
+    }, 450);
+  }
+
+  document.querySelectorAll(".next-btn").forEach((button) => {
+    button.dataset.defaultText = button.textContent;
+    button.addEventListener("click", goToNextQuestion);
+  });
+</script>
+
+<!-- carrousel vendeur pro -->
+<script>
+  (() => {
+    const section = document.querySelector(".seller-tools");
+    if (!section) return;
+
+    const carousel = section.querySelector(".carousel");
+    const slides = carousel.querySelectorAll(".card");
+    const nextBtn = section.querySelector(".next");
+    const prevBtn = section.querySelector(".prev");
+
+    if (!carousel || slides.length === 0) return;
+
+    let currentIndex = 0;
+    let autoPlay;
+
+    function updateCarousel() {
+      slides.forEach((slide) => {
+        slide.classList.remove("is-left", "is-active", "is-right");
+      });
+
+      const leftIndex = (currentIndex - 1 + slides.length) % slides.length;
+      const rightIndex = (currentIndex + 1) % slides.length;
+
+      slides[leftIndex].classList.add("is-left");
+      slides[currentIndex].classList.add("is-active");
+      slides[rightIndex].classList.add("is-right");
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateCarousel();
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlay = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlay) clearInterval(autoPlay);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      startAutoPlay();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      startAutoPlay();
+    });
+
+    carousel.addEventListener("mouseenter", stopAutoPlay);
+    carousel.addEventListener("mouseleave", startAutoPlay);
+
+    updateCarousel();
+    startAutoPlay();
+
+    /* LIGHTBOX */
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.querySelector(".lightbox-img");
+    const lightboxClose = document.querySelector(".lightbox-close");
+
+    slides.forEach((slide) => {
+      const img = slide.querySelector("img");
+
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add("active");
+        stopAutoPlay();
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove("active");
+      startAutoPlay();
+    }
+
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
+  })();
+</script>
+
+
+<!-- Reveal h2 : IntersectionObserver custom — inline styles pour battre la spécificité CSS -->
+<script>
+  (function () {
+    function initRevealH2() {
+      var headings = document.querySelectorAll('.reveal-h2');
+
+      // Cacher immédiatement via inline styles (imbattable en spécificité)
+      headings.forEach(function (el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = 'opacity 0.75s ease, transform 0.75s ease';
+      });
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'none';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
+
+      headings.forEach(function (el) { observer.observe(el); });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRevealH2);
+    } else {
+      initRevealH2();
+    }
+  })();
+</script>
+
+<!-- Hero spotlight cursor effect -->
+<script>
+(function() {
+  const hero = document.querySelector('.hero');
+  const spot = document.querySelector('.hero-spotlight');
+  if (!hero || !spot) return;
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    spot.style.setProperty('--spot-x', (e.clientX - rect.left) + 'px');
+    spot.style.setProperty('--spot-y', (e.clientY - rect.top) + 'px');
+    spot.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', () => { spot.style.opacity = '0'; });
+})();
+</script>
+
+<!-- Hero particles -->
+<script>
+(function() {
+  const hero = document.querySelector('.hero');
+  const canvas = document.querySelector('.hero-particles');
+  if (!hero || !canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = Array.from({ length: 30 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.5,
+    dx: (Math.random() - 0.5) * 0.3,
+    dy: (Math.random() - 0.5) * 0.2,
+    opacity: Math.random() * 0.5 + 0.2
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(41, 151, 255, ${p.opacity})`;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<!-- Social feed — dernier post tous réseaux -->
+<script>
+(function () {
+  var PLATFORM_META = {
+    x:         { name: 'X (Twitter)',  icon: 'fa-brands fa-x-twitter',  avatar: 'assets/img/logo-social-x.png' },
+    instagram: { name: 'Instagram',    icon: 'fa-brands fa-instagram',  avatar: 'assets/img/logo-social-instagram.png' },
+    tiktok:    { name: 'TikTok',       icon: 'fa-brands fa-tiktok',     avatar: 'assets/img/logo-social-tiktok.png' },
+    facebook:  { name: 'Facebook',     icon: 'fa-brands fa-facebook',   avatar: 'assets/img/logo-social-facebook.png' },
+    linkedin:  { name: 'LinkedIn',     icon: 'fa-brands fa-linkedin',   avatar: 'assets/img/logo-social-linkedin.png' },
+    whatnot:   { name: 'WhatNot',      icon: 'fa-solid fa-store',       avatar: 'assets/img/logo-social-whatnot.png' }
+  };
+
+  function timeAgo(dateStr) {
+    var diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
+    if (diff < 60) return "à l'instant";
+    if (diff < 3600) return Math.floor(diff / 60) + ' min';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' h';
+    if (diff < 2592000) return Math.floor(diff / 86400) + ' j';
+    return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  }
+
+  fetch('/api/social-feed')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.post) return;
+      var post = data.post;
+      var meta = PLATFORM_META[post.platform] || PLATFORM_META.x;
+
+      document.getElementById('lpAvatar').src = meta.avatar;
+      document.getElementById('lpAvatar').alt = meta.name;
+      document.getElementById('lpIcon').className = 'latest-post-platform-icon ' + meta.icon;
+      document.getElementById('lpPlatform').textContent = meta.name;
+      document.getElementById('lpHandle').textContent = post.handle;
+      document.getElementById('lpDate').textContent = timeAgo(post.date);
+      document.getElementById('lpText').textContent = post.text;
+      document.getElementById('latestPostCard').href = post.url;
+
+      // Image attachée
+      if (post.image) {
+        var img = document.createElement('img');
+        img.className = 'latest-post-image';
+        img.src = post.image;
+        img.alt = 'Image du post';
+        img.loading = 'lazy';
+        document.getElementById('latestPostCard').appendChild(img);
+      }
+
+      // Reveal avec animation
+      var el = document.getElementById('latestPost');
+      el.style.display = 'block';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          el.classList.add('visible');
+        });
+      });
+    })
+    .catch(function () { /* silencieux si l'API n'est pas configurée */ });
+})();
+</script>
+
