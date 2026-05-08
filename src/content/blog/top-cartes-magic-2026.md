@@ -41,7 +41,7 @@ Ce sont les cartes qui obtiennent un score élevé sur **au moins trois** de ces
 | 4 | Time Walk | Alpha (1993) | ~9 500 |
 | 5 | Mox Sapphire | Alpha (1993) | ~11 500 |
 | 6 | Underground Sea | Revised (1994) | ~1 800 |
-| 7 | Sheldon Menery's Memorial | Hommage 2024 | ~850 |
+| 7 | Mana Crypt | Mystery Booster (1997 reprint) | ~180 |
 | 8 | Force of Will | Alliances (1996) | ~180 |
 | 9 | Ragavan, Nimble Pilferer | Modern Horizons 2 (2021) | ~95 |
 | 10 | Tarmogoyf | Future Sight (2007) | ~45 |
@@ -86,11 +86,11 @@ La star des **dual lands** originales. L'Underground Sea, terre bleu/noir, est l
 
 Prix moyen Revised NM en 2026 : **environ 1 800 EUR**. Les versions Beta (sans symbole de set) atteignent 7 000 EUR. *Marché* : extrêmement actif, c'est probablement la dual la plus échangée toute version confondue. Les versions Light Played (LP) restent demandées entre 1 200 et 1 400 EUR pour les joueurs Legacy.
 
-### 7. Sheldon Menery's Memorial
+### 7. Mana Crypt
 
-Carte hommage imprimée en 2024 en mémoire de **Sheldon Menery**, co-fondateur du format Commander, décédé en 2023. Distribuée en quantité limitée via un Secret Lair caritatif et certains événements dédiés, cette carte commémorative a immédiatement acquis un statut iconique.
+Artefact 0-cost qui génère deux mana incolores à chaque tour, moyennant un risque de 3 dégâts sur un pile-ou-face. Originalement imprimée en édition limitée dans le *Book Promo* de 1995, puis reprintée en *Eternal Masters* (2016) et *Mystery Booster* (2020), **Mana Crypt** est un staple absolu en Commander et un accélérateur de mana historique en Vintage.
 
-Prix moyen NM en 2026 : **environ 850 EUR**, avec une tendance haussière à mesure que les exemplaires en bon état se raréfient. *Marché* : émotionnel et communautaire, ce qui en fait une valeur atypique mais étonnamment stable. Les exemplaires gradés PSA 10 dépassent les 1 500 EUR.
+Prix moyen NM en 2026 : **environ 180 EUR** pour l'édition Mystery Booster, les versions originales Book Promo atteignent **800 EUR+**. *Marché* : très actif, demande constante des joueurs Commander, prix en légère hausse depuis le ban controversé en Commander puis réinstauration du format cEDH.
 
 ### 8. Force of Will (Alliances)
 
@@ -164,7 +164,7 @@ Le grading certifie l'authenticité et l'état, mais ne couvre pas la transactio
 
 C'est précisément l'angle développé par **Cards-Trading.com**. La plateforme proposera prochainement un système combinant :
 
-![Dashboard Cards-Trading.com — plateforme sécurisée d'achat et vente de cartes Magic: The Gathering](/assets/img/dashboard.png)
+![Cards-Trading.com — fiche carte Magic avec courbe de prix et annonces de vendeurs vérifiés](/assets/img/feature2.png)
 
 - Vendeurs vérifiés (KYC pour les transactions au-delà d'un certain seuil).
 - Service d'authentification interne pour les cartes sous 500 EUR, partenariat avec PSA/BGS au-delà.
@@ -179,7 +179,7 @@ Magic: The Gathering reste la référence du marché haut de gamme, mais l'écos
 
 - **[Guide du débutant Pokémon TCG 2026](/blog/guide-demarrage-pokemon-tcg)** : le guide complet pour bien démarrer dans le TCG le plus populaire au monde.
 - **[One Piece Card Game : la révolution TCG](/blog/one-piece-card-game-revolution-tcg)** : le 3e TCG mondial, avec des Manga Rare qui rivalisent avec le vintage Magic.
-- **[Dragon Ball Fusion World et Ultrabout 2026](/blog/dragon-ball-fusion-world-ultrabout-2026)** : gameplay explosif et championnat mondial pour les fans de la licence.
+- **[Dragon Ball Fusion World : guide complet et meta 2026](/blog/dragon-ball-fusion-world-ultrabout-2026)** : gameplay explosif et circuit compétitif pour les fans de la licence.
 
 Achetez et vendez vos cartes Magic en toute sécurité sur [Cards-Trading.com](https://cards-trading.com), la marketplace TCG francophone.
 

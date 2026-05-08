@@ -11,7 +11,7 @@ draft: false
 
 ## Pourquoi commencer le Pokémon TCG en 2026 ?
 
-Près de **trois décennies** après son lancement japonais en 1996, le Pokémon Trading Card Game n'a jamais été aussi vivant. La franchise a dépassé les **64 milliards de cartes imprimées** dans le monde, et le segment compétitif comme la collection traversent une phase de croissance soutenue depuis la pandémie. En 2026, deux dynamiques se combinent : l'arrivée du bloc *Mega Evolution* qui rebat profondément les cartes du méta, et la maturation d'un marché secondaire désormais structuré, avec des outils de pricing en temps réel et une professionnalisation des plateformes d'échange.
+Près de **trois décennies** après son lancement japonais en 1996, le Pokémon Trading Card Game n'a jamais été aussi vivant. La franchise a dépassé les **52 milliards de cartes imprimées** dans le monde, et le segment compétitif comme la collection traversent une phase de croissance soutenue depuis la pandémie. En 2026, deux dynamiques se combinent : l'ère *Scarlet & Violet* qui continue de renouveler le méta avec des extensions de haute qualité, et la maturation d'un marché secondaire désormais structuré, avec des outils de pricing en temps réel et une professionnalisation des plateformes d'échange.
 
 Que vous soyez un nostalgique de la base set 1999, un parent qui découvre le hobby avec ses enfants, ou un nouveau venu attiré par le côté investissement, **2026 est probablement le meilleur point d'entrée depuis des années**. Les decks préconstruits sont mieux équilibrés, les ressources francophones plus nombreuses, et les marketplaces comme **Cards-Trading.com** réduisent drastiquement les frictions à l'achat-revente. Ce guide vise à vous donner les fondations techniques et culturelles pour ne pas perdre de temps (ni d'argent) dans vos premiers mois.
 
@@ -50,7 +50,7 @@ Avant de construire quoi que ce soit, il faut savoir lire une carte. Une carte P
 |---|---|---|
 | **PV (HP)** | En haut à droite | Seuil de dégâts avant K.O. |
 | **Type** | Symbole en haut | Détermine faiblesses/résistances |
-| **Stade d'évolution** | En haut à gauche | Base / Stade 1 / Stade 2 / ex / Mega |
+| **Stade d'évolution** | En haut à gauche | Base / Stade 1 / Stade 2 / ex |
 | **Capacité (Ability)** | Encart coloré | Effet passif ou activé hors attaque |
 | **Attaques** | Centre de la carte | Coût en énergies + dégâts + effet |
 | **Faiblesse** | Bas | Multiplicateur de dégâts (×2 généralement) |
@@ -147,7 +147,7 @@ Une fois le deck défini, achetez les cartes manquantes **à l'unité** sur des 
 
 Le marché du *single* est devenu en 2026 le réflexe de tout joueur compétitif sérieux. C'est précisément la raison pour laquelle **Cards-Trading.com** propose une marketplace 100 % dédiée aux cartes à l'unité, avec authentification vendeur et historique de transactions transparent.
 
-![Dashboard Cards-Trading.com — interface marketplace pour acheter et vendre des cartes Pokémon TCG à l'unité](/assets/img/dashboard.png)
+![Cards-Trading.com — fiche carte détaillée avec historique de prix et annonces pour le Pokémon TCG](/assets/img/feature1.png)
 
 ## Erreurs fatales du débutant
 
@@ -185,7 +185,7 @@ La rareté d'une carte se lit dans le coin inférieur droit (un cercle, un losan
 - **Hyper Rare / Gold** : 30-150 €
 - **Illustration Rare alternative** : 50-600 € voire plus
 
-La logique de prix combine trois facteurs : **playabilité méta** (la carte est-elle dans les decks compétitifs ?), **artwork** (la communauté l'apprécie-t-elle ?), et **scarcité d'impression** (combien d'exemplaires existent ?). Les cartes qui cumulent les trois — Pikachu *with Grey Felt Hat* SIR par exemple — atteignent rapidement les **plusieurs centaines d'euros**.
+La logique de prix combine trois facteurs : **playabilité méta** (la carte est-elle dans les decks compétitifs ?), **artwork** (la communauté l'apprécie-t-elle ?), et **scarcité d'impression** (combien d'exemplaires existent ?). Les cartes qui cumulent les trois — comme certaines Illustration Rare alternatives de Charizard ou Pikachu — atteignent rapidement les **plusieurs centaines d'euros**.
 
 > **Conseil de pro** : suivez les *pull rates* officiels publiés à chaque sortie. Une SIR avec un *pull rate* d'1 sur 250 boosters explique mathématiquement son prix.
 
@@ -217,12 +217,12 @@ L'écosystème de ressources francophones et anglophones est aujourd'hui consid�
 - **Limitless TCG** (limitlesstcg.com) : la base de données de référence pour les *decklists* de tous les tournois mondiaux. Indispensable pour étudier le méta réel et non spéculé.
 - **PokéStats** : statistiques fines sur les *match-ups*, taux de victoire par archétype, conversions top 8.
 - **Trainer Hill** et **PokéBeach** : actualité méta, *spoilers* des extensions, *meta reports* hebdomadaires.
-- **Chaînes YouTube** : *Tricky Gym*, *Celio's Network*, *Andrew Mahone* en anglais ; *Ondes Tag*, *Pokémon TCG France* en français pour les *decklists* commentées.
+- **Chaînes YouTube** : *Tricky Gym*, *Celio's Network*, *Andrew Mahone* en anglais ; recherchez les chaînes francophones actives sur le Pokémon TCG pour des *decklists* commentées et des analyses de méta.
 - **Discord communautaires** : la plupart des magasins affiliés tiennent un serveur avec annonces de tournois, recherches de joueurs, et marché de *singles* internes.
 
 Pour la partie marchande, **Cards-Trading.com** centralise une marketplace francophone, des outils de suivi de collection et un système de notation vendeur indispensable pour les transactions à 50 €+ qui deviennent fréquentes dès qu'on construit un deck compétitif.
 
-![Fonctionnalités de la marketplace Cards-Trading.com — suivi de collection, wishlist et gestion de commandes TCG](/assets/img/features-exemple.webp)
+![Cards-Trading.com — wishlist mobile avec alertes de prix et suivi de collection TCG](/assets/img/feature3.png)
 
 ## Aller plus loin dans l'univers TCG
 
@@ -230,7 +230,7 @@ Le Pokémon TCG n'est qu'une porte d'entrée dans un écosystème de jeux de car
 
 - **[Top 10 des cartes Magic les plus recherchées en 2026](/blog/top-cartes-magic-2026)** : pour les collectionneurs attirés par l'investissement et le vintage.
 - **[One Piece Card Game : la révolution TCG arrivée du Japon](/blog/one-piece-card-game-revolution-tcg)** : un gameplay rapide et une licence culte qui explose en France.
-- **[Dragon Ball Fusion World : guide et meta Ultrabout 2026](/blog/dragon-ball-fusion-world-ultrabout-2026)** : le TCG compétitif Dragon Ball avec son championnat mondial.
+- **[Dragon Ball Fusion World : guide complet et meta 2026](/blog/dragon-ball-fusion-world-ultrabout-2026)** : le TCG compétitif Dragon Ball avec Masters et Fusion World.
 
 Tous ces TCG sont disponibles sur la marketplace [Cards-Trading.com](https://cards-trading.com), avec des vendeurs vérifiés et un large catalogue de singles.
 

@@ -17,8 +17,6 @@ Lancé par Bandai en juillet 2022 sur le territoire japonais, puis distribué in
 
 Cette explosion s'explique par une combinaison rare : une licence ultra-puissante (le manga d'Eiichiro Oda dépasse les 520 millions d'exemplaires vendus), un gameplay accessible mais profond, et une stratégie marketing Bandai axée sur la rareté contrôlée. Pour les collectionneurs et joueurs français, OPCG est désormais l'une des catégories les plus actives sur **Cards-Trading.com**, juste derrière Pokémon TCG.
 
-![Cartes One Piece Card Game — le TCG Bandai qui rivalise avec Pokémon et Magic en 2026](/assets/img/card13.jpg)
-
 ## Comment se joue One Piece Card Game
 
 OPCG est un jeu pour deux joueurs où chacun incarne un capitaine — le **Leader** — et tente de réduire le Leader adverse à zéro point de vie tout en lui portant un coup final décisif.
@@ -121,7 +119,7 @@ Trois facteurs expliquent cette flambée :
 
 Pour un investisseur prudent, les sets OP05 à OP07 offrent encore des opportunités d'entrée à prix raisonnables, alors qu'OP01 à OP03 sont déjà sur des plateaux élevés. Les acheteurs sérieux passent désormais par des plateformes communautaires comme **Cards-Trading.com**, où l'authentification entre vendeurs vérifiés réduit les risques de contrefaçon — un fléau croissant sur les Manga Rare reproduites en Asie du Sud-Est.
 
-![Interface marketplace Cards-Trading.com — achat sécurisé de cartes One Piece Card Game à l'unité](/assets/img/dashboard.png)
+![Cards-Trading.com — filtres avancés pour trouver vos cartes One Piece Card Game parmi des milliers d'annonces](/assets/img/feature4.png)
 
 ## Différences clé avec Pokémon et Magic
 
@@ -143,7 +141,7 @@ En France, OPCG est distribué via **Asmodee** depuis 2023, ce qui a considérab
 
 Les communautés Discord francophones comme "OPCG France" comptent plus de 15 000 membres actifs en 2026. Sur le plan e-commerce, plusieurs sites spécialisés ont émergé, mais beaucoup de joueurs français privilégient désormais les marketplaces communautaires comme **Cards-Trading.com** pour leurs achats de singles, où les vendeurs spécialisés OPCG offrent des conseils en plus du simple échange.
 
-![Fonctionnalités Cards-Trading.com — wishlist, suivi de commandes et collection pour joueurs OPCG](/assets/img/features-exemple.webp)
+![Cards-Trading.com — gestion de commandes et suivi des transactions pour vendeurs et acheteurs OPCG](/assets/img/commandes.png)
 
 ## Conseils pour débuter en 2026
 
@@ -163,7 +161,7 @@ One Piece Card Game s'inscrit dans un paysage TCG particulièrement riche en 202
 
 - **[Guide du débutant Pokémon TCG 2026](/blog/guide-demarrage-pokemon-tcg)** : règles, decks meta et premiers achats pour le TCG le plus joué au monde.
 - **[Top 10 des cartes Magic les plus recherchées en 2026](/blog/top-cartes-magic-2026)** : Black Lotus, Power Nine et investissement dans le vintage.
-- **[Dragon Ball Fusion World et Ultrabout 2026](/blog/dragon-ball-fusion-world-ultrabout-2026)** : le TCG compétitif Dragon Ball avec son championnat mondial Bandai.
+- **[Dragon Ball Fusion World : guide complet et meta 2026](/blog/dragon-ball-fusion-world-ultrabout-2026)** : le TCG compétitif Dragon Ball avec Masters et Fusion World.
 
 Toutes ces cartes sont disponibles sur [Cards-Trading.com](https://cards-trading.com), la marketplace communautaire francophone pour les joueurs et collectionneurs TCG.
 
