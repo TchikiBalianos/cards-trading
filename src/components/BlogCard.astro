@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  heroImage?: string;
+  category: string;
+  slug: string;
+}
+
+const { title, description, pubDate, heroImage, category, slug } = Astro.props;
+
+const CATEGORY_LABELS: Record<string, string> = {
+  'pokemon': 'Pokemon',
+  'magic': 'Magic',
+  'one-piece': 'One Piece',
+  'yugioh': 'Yu-Gi-Oh!',
+  'lorcana': 'Lorcana',
+  'dragon-ball': 'Dragon Ball',
+  'star-wars': 'Star Wars',
+  'guide': 'Guide',
+  'actualite': 'Actualite',
+  'strategie': 'Strategie',
+};
+
+const dateFormatted = pubDate.toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<a href={`/blog/${slug}`} class="blog-card">
+  {heroImage && (
+    <div class="blog-card-image-wrapper">
+      <img
+        class="blog-card-image"
+        src={heroImage}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+  <div class="blog-card-body">
+    <span class="blog-card-category">{CATEGORY_LABELS[category] || category}</span>
+    <h2 class="blog-card-title">{title}</h2>
+    <p class="blog-card-description">{description}</p>
+    <div class="blog-card-meta">
+      <time datetime={pubDate.toISOString()}>{dateFormatted}</time>
+    </div>
+  </div>
+</a>

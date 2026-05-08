@@ -1,5 +1,11 @@
 {
   "public": true,
+  "crons": [
+    {
+      "path": "/api/refresh-instagram-token",
+      "schedule": "0 3 1 * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

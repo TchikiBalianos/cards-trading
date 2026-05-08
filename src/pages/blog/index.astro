@@ -1,0 +1,41 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BlogLayout
+  title="Blog"
+  description="Actualites, guides et strategies pour les joueurs et collectionneurs de cartes TCG : Pokemon, Magic, One Piece, Yu-Gi-Oh!, Lorcana, Dragon Ball..."
+>
+  <section class="blog-hero">
+    <h1>Blog Cards Trading</h1>
+    <p>
+      Guides, actualites et strategies pour les fans de cartes TCG.
+    </p>
+  </section>
+
+  {posts.length > 0 ? (
+    <section class="blog-grid">
+      {posts.map((post) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          heroImage={post.data.heroImage}
+          category={post.data.category}
+          slug={post.id}
+        />
+      ))}
+    </section>
+  ) : (
+    <section style="text-align: center; padding: 80px 20px;">
+      <p style="color: rgba(255,255,255,0.5); font-size: 16px;">
+        Les premiers articles arrivent bientot. Restez connectes !
+      </p>
+    </section>
+  )}
+</BlogLayout>
