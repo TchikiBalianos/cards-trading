@@ -74,6 +74,8 @@ Bandai suit un rythme effréné : un nouveau set principal tous les 3 à 4 mois,
 
 Chaque set introduit en moyenne 120 cartes, dont une dizaine en raretés extrêmes (Secret Rare, Manga Rare, Special Card). Les **Manga Rare** sont des illustrations directement extraites du manga, en noir et blanc avec un effet doré, et constituent le Saint Graal des collectionneurs OPCG.
 
+![Roronoa Zoro OP06-118 Alternate Art Manga Rare — l'une des Manga Rare les plus convoitées du One Piece Card Game](https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-118_EN.webp)
+
 ## Les cartes les plus chères et iconiques
 
 Le marché secondaire OPCG a connu plusieurs flambées notables depuis 2022 : l'arrivée internationale fin 2022, le set OP06 (Wings of the Captain) début 2024, puis OP09 (Emperors in the New World) fin 2024. Voici quelques cartes phares parmi les plus recherchées.
@@ -88,6 +90,8 @@ Le marché secondaire OPCG a connu plusieurs flambées notables depuis 2022 : l'
 | Gol D. Roger (Alt Art / Manga) | OP09 | Alternate Art Manga | prix premium (haut de gamme) |
 | Uta (Alt Art) | OP06 | Alternate Art | très demandée |
 | Yamato (Alt Art) | OP04 | Alternate Art | recherchée par les fans Wano |
+
+![Gol D Roger OP09-118 Alternate Art Manga Rare Emperors in the New World — Special Card haut de gamme du One Piece Card Game](https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP09/OP09-118_EN.webp)
 
 > Sur le segment haut de gamme, certaines Special Cards de Roger gradées PSA 10 dépassent désormais les 1 500 EUR à la revente : OPCG est devenu un véritable actif spéculatif pour les collectionneurs aguerris.
 
@@ -107,6 +111,8 @@ Les archétypes compétitifs du méta 2026 se structurent autour de quelques pil
 - **Green/Yellow Yamato Stall** : contrôle des Life avec manipulation des Triggers.
 - **Black Lucci removal** : neutralisation systématique des menaces adverses.
 - **Purple Kaido ramp** : génération de DON supplémentaires pour invoquer des Big Game tour 4.
+
+![Trafalgar Law OP05-069 Awakening of the New Era — carte phare du One Piece Card Game pour les decks Black removal](https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP05/OP05-069_EN.webp)
 
 ## Le marché secondaire : spéculation et opportunités
 
@@ -146,6 +152,8 @@ Les communautés Discord francophones autour d'OPCG sont nombreuses et actives e
 ## Conseils pour débuter en 2026
 
 Si vous voulez vous lancer aujourd'hui dans OPCG, voici un parcours optimisé :
+
+![Monkey D Luffy Gear 5 ST21-001 Leader card — Starter Deck EX Gear 5 One Piece Card Game Bandai 2025](https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/ST21/ST21-001_EN.webp)
 
 1. **Achetez un Starter Deck** : Bandai sort régulièrement des decks préconstruits à 15-20 EUR, équilibrés et jouables immédiatement. ST-01 (Straw Hat Crew), ST-13 (The Three Brothers / Three Captains) ou ST-21 (EX Gear 5, centré sur Luffy Gear 5) sont d'excellents points d'entrée.
 2. **Évitez les boosters anciens** : OP01 et OP02 sont devenus des produits spéculatifs (boîte à 300-500 EUR), inutile d'y mettre votre budget débutant.

@@ -88,11 +88,15 @@ La version Revised NM se négocie typiquement autour de plusieurs centaines à u
 
 ### 7. Mana Crypt
 
+![Mana Crypt Eternal Masters — artefact 0-cost iconique du Commander et du Vintage Magic the Gathering](https://cards.scryfall.io/normal/front/0/c/0cb33b46-4d1b-4f97-bfdc-d815aee111da.jpg)
+
 Artefact 0-cost qui génère deux mana incolores à chaque tour, moyennant un risque de 3 dégâts sur un pile-ou-face. Originalement imprimée comme promo HarperPrism dans le livre *Final Sacrifice* en 1995, puis reprintée en *Eternal Masters* (2016), *Mystery Booster* (2019-2020) et plusieurs Judge Promos, **Mana Crypt** a longtemps été un staple absolu en Commander et un accélérateur de mana historique en Vintage.
 
 Sur Cardmarket, les versions Mystery Booster se négocient typiquement autour de quelques dizaines d'euros NM, tandis que la version Book Promo originale conserve un premium en raison de son artwork et de sa rareté. *Marché* : Mana Crypt a été **bannie en Commander le 23 septembre 2024** par le Commander Rules Committee, ce qui a fait chuter le prix de la carte. Elle reste légale et jouée en cEDH (qui suit sa propre banlist) ainsi qu'en Vintage et Legacy.
 
 ### 8. Force of Will (Alliances)
+
+![Force of Will Alliances 1996 — contre-sort emblématique du format Legacy Magic the Gathering](https://cards.scryfall.io/normal/front/9/a/9a879b60-4381-447d-8a5a-8e0b6a1d49ca.jpg)
 
 Imprimée en 1996 dans **Alliances**, Force of Will est devenue la pierre angulaire de tout deck Legacy bleu. Contre-sort à coût alternatif (exiler une carte bleue + 1 vie), elle reste une des cartes les plus jouées tous formats éternels confondus.
 
@@ -100,11 +104,15 @@ L'édition originale Alliances en NM se négocie typiquement autour de plusieurs
 
 ### 9. Ragavan, Nimble Pilferer (Modern Horizons 2)
 
+![Ragavan Nimble Pilferer Modern Horizons 2 — créature légendaire rouge la plus dominante du format Modern depuis 2021](https://cards.scryfall.io/normal/front/a/9/a9738cda-adb1-47fb-9f4c-ecd930228c4d.jpg)
+
 La star moderne. Ce singe légendaire 1/1 pour un mana rouge, avec dash, vol-de-mana et création de Treasure, a redéfini le format Modern dès sa sortie en 2021. Bien que reprinté dans plusieurs produits depuis (notamment *Multiverse Legends*), la version Modern Horizons 2 originale reste la plus prisée, en particulier en finitions foil ou Borderless.
 
 Sur les principales places de marché, la version standard MH2 se négocie typiquement à plusieurs dizaines d'euros, et la Borderless foil bien plus, sans atteindre les sommets de ses débuts. *Marché* : volatil, fortement corrélé à la métagame Modern et aux annonces de banlist. Les rumeurs de ban et chaque reprint provoquent des oscillations significatives.
 
 ### 10. Tarmogoyf (Future Sight)
+
+![Tarmogoyf Future Sight 2007 — la créature emblématique du format Modern Magic the Gathering pendant une décennie](https://cards.scryfall.io/normal/front/b/6/b6876d9e-0908-43ac-8542-09c7aa02b5ba.jpg)
 
 Le « goyf » a longtemps incarné le standard de la créature efficace en Modern. Une 0/1 qui devient facilement 4/5 ou 5/6 pour deux mana — une équation imbattable pendant une décennie.
 

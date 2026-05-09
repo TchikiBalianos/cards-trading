@@ -87,6 +87,8 @@ La rotation Standard du **10 avril 2026** a profondément rebattu les cartes. Pl
 
 ### Dragapult ex
 
+![Dragapult ex Pokémon TCG Twilight Masquerade — la carte centrale du deck-roi du format Standard 2026](https://images.pokemontcg.io/sv6/130_hires.png)
+
 Le **deck-roi** qui survit à la rotation et reste l'archétype dominant du format. Sa Capacité ne change pas : à chaque attaque **Phantom Dive**, vous placez 6 marqueurs de dégâts sur les Pokémon de banc adverses, en plus des 200 dégâts sur l'actif. Récompense la lecture du *board state* et permet des victoires "à distance" en finissant des Pokémon de banc affaiblis.
 
 - **Coût d'assemblage** : indicatif 200-260 €
@@ -94,6 +96,8 @@ Le **deck-roi** qui survit à la rotation et reste l'archétype dominant du form
 - **Force** : pression diffuse, *snipe* du banc
 
 ### Mega Lucario ex
+
+![Mega Lucario ex Special Illustration Rare set Mega Evolution — l'un des grands gagnants de la rotation Standard 2026](https://images.pokemontcg.io/me1/179_hires.png)
 
 L'un des grands gagnants de la rotation : un archétype Combat qui devient l'un des decks les plus joués du nouveau format. Frappe lourd dès le tour 2 et profite du retour en force des stratégies Combat avec moins de contre-jeu Psy disponible.
 
@@ -122,6 +126,8 @@ L'erreur archétypale du débutant est de dépenser **150 € en boosters scell�
 Idéal pour comprendre le rythme du jeu sans investir. Les decks **Battle Deck** et **League Battle Deck** sortent régulièrement et incluent une *playmat* et des dés. Les listes ne sont pas optimales, mais vous apprenez le *flow* d'une partie.
 
 ### 2. Le kit du dresseur d'élite (45-55 €)
+
+![Logo officiel de l'extension Pokémon TCG Scarlet & Violet Twilight Masquerade — set incontournable pour les Elite Trainer Box 2026](https://images.pokemontcg.io/sv6/logo.png)
 
 L'**Elite Trainer Box** (ETB) reste le meilleur ratio coût-contenu pour un débutant qui veut explorer une extension :
 
@@ -164,6 +170,8 @@ L'ouverture est addictive et donne l'illusion d'investir. Imposez-vous une règl
 Une carte *holo* commune ne vaut pas 5 € sous prétexte qu'elle brille. Vérifiez systématiquement les prix marché (Cardmarket, Cards-Trading.com, TCGPlayer) avant tout achat ou échange.
 
 ### 5. Ignorer la *condition* des cartes
+
+![Charizard ex Special Illustration Rare Pokémon TCG Scarlet & Violet 151 — exemple emblématique de carte SIR à forte valeur de collection](https://images.pokemontcg.io/sv3pt5/199_hires.png)
 
 Le grading **Near Mint / Lightly Played / Moderately Played** affecte radicalement la valeur. Une Charizard ex Special Illustration en *Near Mint* peut valoir 180 €, la même en *Played* tombe à 90 €.
 

@@ -85,7 +85,11 @@ Voici les premiers sets Fusion World qui ont structuré le jeu.
 | FB-01 | Awakened Pulse | Février 2024 | Set de lancement, 4 starter decks (Goku, Vegeta, Broly, Frieza) |
 | FB-02 | Blazing Aura | Mai 2024 (version EN) | Nouvelle ère ajoutée, vague d'Alt Arts et Secret Rares populaires |
 
+![Booster pack officiel Awakened Pulse FB-01 Dragon Ball Super Card Game Fusion World — set de lancement Bandai 2024](https://www.dbs-cardgame.com/fw/bccard/en/news/2024/10/31/JnD83bQDd9OTKdY7/FB01_en.jpg)
+
 Bandai maintient un rythme de sortie soutenu avec de nouveaux sets tous les quelques mois, chacun enrichissant le pool de cartes et redéfinissant le meta compétitif. Les sets suivants continuent d'introduire de nouveaux Leaders, mécaniques et Secret Rares très recherchées par les collectionneurs.
+
+![Key Art officiel Blazing Aura FB-02 Dragon Ball Super Card Game Fusion World — second set Bandai mai 2024](https://dragonball.gg/wp-content/uploads/sites/36/2024/04/Fusion-World-Blazing-Aura-FB02.jpg)
 
 ## Les cartes les plus recherchées en 2026
 
@@ -97,6 +101,8 @@ Le marché collector autour de Fusion World a explosé en 2025, et les prix se s
 | Vegeta (FB02-105) | FB-02 Blazing Aura | Leader Alt Art | Variable selon variante et état |
 
 ### Son Goku — FB-01 Awakened Pulse
+
+![Son Goku FB01-139 Secret Rare Awakened Pulse — la carte phare du set de lancement Dragon Ball Super Card Game Fusion World](https://alcasthq.com/wp-content/uploads/2024/03/FB01-139-Son-Goku-Secret-Rare-Card-Dragon-Ball-Super-Fusion-World-DBSFW.png)
 
 Personnage emblématique du set de lancement, Son Goku existe dans FB-01 sous plusieurs formes (FB01-001 Leader, FB01-139 Super Rare, plus des Alternate Arts). Les variantes Alt Art et les exemplaires gradés PSA 10 atteignent les prix les plus élevés. Toujours très demandée pour les decks rouges comme pour la collection.
 
