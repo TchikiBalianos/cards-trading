@@ -42,7 +42,7 @@ Cette double contrainte d'**une énergie et un seul Supporter par tour** est la 
 
 ## Anatomie d'une carte Pokémon
 
-![Exemple de carte Pokémon TCG — Bulbasaur, carte de base emblématique pour les débutants](/assets/img/card9.png)
+![Pikachu ex Tera — carte récente du set Surging Sparks (2024) illustrant l'anatomie d'une carte Pokémon TCG moderne](https://images.pokemontcg.io/sv8/57_hires.png)
 
 Avant de construire quoi que ce soit, il faut savoir lire une carte. Une carte Pokémon moderne contient huit informations critiques :
 

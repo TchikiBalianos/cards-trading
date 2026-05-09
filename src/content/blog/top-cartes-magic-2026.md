@@ -5,7 +5,7 @@ pubDate: 2026-05-06
 category: "magic"
 tags: ["top", "magic", "collection", "investissement", "vintage"]
 author: "Cards Trading"
-heroImage: "/assets/img/logo-magic.png"
+heroImage: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Magicthegathering-logo.svg"
 draft: false
 ---
 
