@@ -11,11 +11,11 @@ draft: false
 
 ## Pourquoi commencer le Pokémon TCG en 2026 ?
 
-Près de **trois décennies** après son lancement japonais en 1996, le Pokémon Trading Card Game n'a jamais été aussi vivant. La franchise a dépassé les **52 milliards de cartes imprimées** dans le monde, et le segment compétitif comme la collection traversent une phase de croissance soutenue depuis la pandémie. En 2026, deux dynamiques se combinent : l'ère *Scarlet & Violet* qui continue de renouveler le méta avec des extensions de haute qualité, et la maturation d'un marché secondaire désormais structuré, avec des outils de pricing en temps réel et une professionnalisation des plateformes d'échange.
+Près de **trois décennies** après son lancement japonais en octobre 1996, le Pokémon Trading Card Game n'a jamais été aussi vivant. Selon les chiffres officiels de The Pokémon Company, la franchise a dépassé les **75 milliards de cartes imprimées** dans le monde (mars 2025), avec encore plus de 10 milliards de cartes produites sur le seul exercice 2024-2025. Le segment compétitif comme la collection traversent une phase de croissance soutenue depuis la pandémie. En 2026, deux dynamiques se combinent : l'ère *Scarlet & Violet* qui continue de renouveler le méta avec des extensions de haute qualité, et la maturation d'un marché secondaire désormais structuré, avec des outils de pricing en temps réel et une professionnalisation des plateformes d'échange.
 
 Que vous soyez un nostalgique de la base set 1999, un parent qui découvre le hobby avec ses enfants, ou un nouveau venu attiré par le côté investissement, **2026 est probablement le meilleur point d'entrée depuis des années**. Les decks préconstruits sont mieux équilibrés, les ressources francophones plus nombreuses, et les marketplaces comme **Cards-Trading.com** réduisent drastiquement les frictions à l'achat-revente. Ce guide vise à vous donner les fondations techniques et culturelles pour ne pas perdre de temps (ni d'argent) dans vos premiers mois.
 
-> "Le Pokémon TCG est l'un des rares jeux où la courbe d'apprentissage récompense à la fois le théoricien et le bricoleur. Vous pouvez gagner avec un deck à 30 € face à des decks à 400 € si vous comprenez les pivots." — un joueur compétitif au Regional de Lille, mars 2026.
+> Le Pokémon TCG est l'un des rares jeux où la courbe d'apprentissage récompense à la fois le théoricien et le bricoleur : avec un deck bien construit à 30 €, on peut tenir tête à des listes à 400 € si l'on comprend les pivots de tempo.
 
 ## Comprendre les bases du jeu
 
@@ -25,7 +25,7 @@ Le Pokémon TCG oppose deux joueurs avec chacun un deck de **60 cartes**. La par
 
 1. **Prendre toutes vos cartes Récompense** (la voie standard, qui s'obtient en mettant des Pokémon adverses K.O.)
 2. **Mettre K.O. le dernier Pokémon en jeu** de votre adversaire (s'il n'a plus aucun Pokémon sur le terrain au début de son tour)
-3. **Faire bûcher l'adversaire** : s'il ne peut pas piocher au début de son tour parce que son deck est vide
+3. **Faire bûcher l'adversaire** : si l'adversaire ne peut pas piocher au début de son tour parce que son deck est vide
 
 ### Déroulement d'un tour
 
@@ -38,7 +38,7 @@ Un tour standard suit toujours la même séquence :
 5. Utilisation libre de cartes **Objet** et d'**un seul Supporter** par tour
 6. **Attaque** avec le Pokémon actif (ce qui termine automatiquement votre tour)
 
-Cette contrainte d'**une énergie et un Supporter par tour** est la clé qui sépare les bons joueurs des autres : la gestion du tempo est fondamentalement plus importante que la valeur faciale des cartes.
+Cette double contrainte d'**une énergie et un seul Supporter par tour** est la clé qui sépare les bons joueurs des autres : la gestion du tempo pèse fondamentalement plus lourd que la valeur faciale des cartes.
 
 ## Anatomie d'une carte Pokémon
 
@@ -57,7 +57,7 @@ Avant de construire quoi que ce soit, il faut savoir lire une carte. Une carte P
 | **Résistance** | Bas | Réduction fixe (–30 le plus souvent) |
 | **Coût de retraite** | Bas | Énergies à défausser pour changer de Pokémon actif |
 
-La **faiblesse** mérite une attention particulière : un Charizard ex peut perdre face à un Iron Hands ex deux fois moins cher si l'attaquant adverse cible la faiblesse. Comprendre les types dominants du méta vous évite la moitié des défaites du débutant.
+La **faiblesse** mérite une attention particulière : un Pokémon ex à 280 PV peut tomber en un seul tour face à un attaquant deux fois moins cher si celui-ci frappe son type de faiblesse (par exemple, un Pokémon Eau frappant pour ×2 sur un Pokémon Feu). Comprendre les types dominants du méta vous évite la moitié des défaites du débutant.
 
 ## Construction de deck : trouver l'équilibre
 
@@ -67,55 +67,51 @@ Un deck de 60 cartes équilibré suit une répartition éprouvée par dix année
 - **Environ 12 énergies** : combinaison d'énergies de base et d'énergies spéciales selon votre stratégie
 - **Environ 36 dresseurs** : c'est le moteur du deck, soit **60 % de la liste**
 
-Beaucoup de débutants sous-estiment le nombre de **Dresseurs** nécessaires et finissent avec des decks qui ne pivotent pas, ne fouillent pas leur paquet, et bûchent en milieu de partie. Quelques cartes Dresseur sont des standards quasi obligatoires en 2026 :
+Beaucoup de débutants sous-estiment le nombre de **Dresseurs** nécessaires et finissent avec des decks qui ne pivotent pas, ne fouillent pas leur paquet et bûchent en milieu de partie. Quelques cartes Dresseur sont des standards quasi obligatoires en 2026 :
 
 ### Les dresseurs structurels du méta 2026
 
-- **Professeur Sada / Turo** (4 copies) : pioche/setup quasi-universel en début de partie
-- **Boss's Orders** (2-3 copies) : vous force à la victoire en *gust* d'un Pokémon adverse
-- **Iono** (2-3 copies) : réinitialise les mains des deux joueurs, *swing* énorme en fin de partie
-- **Ultra Ball / Buddy-Buddy Poffin** (4 copies de chaque) : fouille du deck pour trouver vos Pokémon
-- **Switch / Escape Rope** (2-3 copies) : mobilité et réponses aux blocages
+Avec la rotation Standard du 10 avril 2026 (sortie des cartes marquées G), le pool de Supporters/Items utiles a évolué. Quelques cartes-clés du format post-rotation :
+
+- **Professor's Research (Sada / Turo)** (3-4 copies) : défausse de la main puis pioche de 7 cartes, le moteur de pioche universel
+- **Boss's Orders** (2-3 copies, version *Journey Together* avec marque I) : vous force la victoire en remontant un Pokémon du banc adverse
+- **Lillie's Determination** : devenu un Supporter de pioche majeur post-rotation pour remplacer Iono
+- **Ultra Ball / Buddy-Buddy Poffin** : fouille du deck pour trouver vos Pokémon (Buddy-Buddy Poffin cherche jusqu'à 2 Pokémon de base à 70 PV ou moins)
+- **Switch / Switch Cart** : mobilité et réponse aux blocages (Escape Rope est sortie du Standard)
 
 > **Règle d'or** : un débutant qui copie une *decklist* du top 8 d'un Regional récent progressera dix fois plus vite que celui qui invente son propre deck. La créativité vient après la maîtrise du moteur.
 
-## Les meilleurs decks méta de 2026
+## Les meilleurs decks méta de 2026 (post-rotation)
 
-Le format Standard de 2026 est l'un des plus diversifiés des dernières années, avec au moins **5 à 6 archétypes** régulièrement représentés en top 8 des Regionals européens. Voici les piliers à connaître :
-
-### Charizard ex (Tera)
-
-L'archétype légendaire qui ne quitte plus le méta depuis sa sortie en 2023. Stratégie en deux temps : *setup* avec Pidgeot ex pour fouiller, puis *snipe* à coup d'attaques infligeant 180+ dégâts avec **Brûlure Infernale**. Robuste, mais vulnérable aux decks Eau accélérés.
-
-- **Coût d'assemblage** : 280-340 €
-- **Difficulté** : intermédiaire
-- **Force** : régularité du *setup*
+La rotation Standard du **10 avril 2026** a profondément rebattu les cartes. Plusieurs piliers historiques (Charizard ex Obsidian Flames, Gardevoir ex Scarlet & Violet, Pidgeot ex Obsidian Flames, ainsi que Iono et Counter Catcher) sont sortis du format avec la marque G. Voici les archétypes qui dominent les premiers tournois post-rotation :
 
 ### Dragapult ex
 
-Le **deck-roi** de la fin 2025, qui place 3 marqueurs de dégâts sur le banc adverse à chaque attaque. Récompense la lecture du *board state* et la gestion fine des PV. Plus technique que Charizard mais permet des victoires "à distance" sans même mettre K.O. l'actif adverse.
+Le **deck-roi** qui survit à la rotation et reste l'archétype dominant du format. Sa Capacité ne change pas : à chaque attaque **Phantom Dive**, vous placez 6 marqueurs de dégâts sur les Pokémon de banc adverses, en plus des 200 dégâts sur l'actif. Récompense la lecture du *board state* et permet des victoires "à distance" en finissant des Pokémon de banc affaiblis.
 
-- **Coût d'assemblage** : 220-260 €
+- **Coût d'assemblage** : indicatif 200-260 €
 - **Difficulté** : avancée
 - **Force** : pression diffuse, *snipe* du banc
 
-### Gardevoir ex (Psy)
+### Mega Lucario ex
 
-Le contrôle absolu via la capacité **Psychic Embrace** qui charge les attaquants depuis la défausse. Permet de placer des bombes psychiques tour 2 et de tenir la partie en longueur. Excellent pour les joueurs qui aiment compter les énergies et planifier 3 tours à l'avance.
+L'un des grands gagnants de la rotation : un archétype Combat qui devient l'un des decks les plus joués du nouveau format. Frappe lourd dès le tour 2 et profite du retour en force des stratégies Combat avec moins de contre-jeu Psy disponible.
 
-- **Coût d'assemblage** : 240-290 €
-- **Difficulté** : élevée
-- **Force** : *late game* et résilience
-
-### Raging Bolt ex
-
-Le rouleau-compresseur Électrique-Dragon arrivé avec *Twilight Masquerade*. Frappe pour 200+ dégâts dès le tour 2 avec Squawkabilly ex et Ogerpon en soutien. Agressif, peu pardonnant en cas d'erreur de pivot.
-
-- **Coût d'assemblage** : 200-240 €
 - **Difficulté** : intermédiaire
-- **Force** : *tempo* explosif
+- **Force** : agressivité et *tempo*
 
-Ces tarifs reflètent les prix marché européens du printemps 2026, observables sur les marketplaces spécialisées dont **Cards-Trading.com**, où les listes complètes sont vendues *singles* (à la carte) plutôt qu'en boosters — la voie la plus économique pour assembler un deck compétitif.
+### Raging Bolt ex (avec Teal Mask Ogerpon)
+
+Le rouleau-compresseur Dragon issu de *Temporal Forces* (mai 2024) survit à la rotation. Son attaque **Bellowing Thunder** demande de défausser des Énergies de base et inflige 70 dégâts par carte défaussée — un *one-shot* possible sur la plupart des Pokémon ex. L'engine est nourrie par Teal Mask Ogerpon ex (qui survit) pour accélérer les Énergies. Squawkabilly ex étant rotaté, le *ramp* est désormais plus dépendant des Supporters de pioche.
+
+- **Difficulté** : intermédiaire
+- **Force** : potentiel de *one-shot* avec accélération d'Énergie
+
+### Mega Starmie ex et autres outsiders
+
+Le format post-rotation est plus lent et laisse de la place à des decks de *spread damage* comme Mega Starmie ex, ou à des stratégies *single-prize* (Alakazam) qui exploitent la disparition de Counter Catcher / Iono.
+
+Ces archétypes sont à recouper avec les *decklists* publiées sur Limitless TCG pour des listes optimales et à jour, le méta évoluant rapidement après chaque tournoi majeur. Pour les budgets, vérifiez les prix actuels sur Cardmarket ou directement sur **Cards-Trading.com**, où les listes complètes sont vendues *singles* (à la carte) plutôt qu'en boosters — la voie la plus économique pour assembler un deck compétitif.
 
 ## Premiers achats : par où commencer concrètement ?
 
@@ -195,20 +191,20 @@ The Pokémon Company International (TPCi) opère le circuit officiel selon trois
 
 ### Les ligues locales
 
-Une centaine de **ligues officielles** existent en France, hébergées par des boutiques affiliées. Inscription gratuite, parties amicales le samedi ou le dimanche, et premiers tournois *League Cup* à 5-15 € l'inscription. C'est l'entrée idéale pour rencontrer des joueurs et tester ses listes.
+De nombreuses **ligues officielles Play! Pokémon** existent en France, hébergées par des boutiques affiliées. Inscription généralement gratuite ou modique pour les parties amicales, et premiers tournois *League Challenge* / *League Cup* à coût d'inscription accessible. C'est l'entrée idéale pour rencontrer des joueurs et tester ses listes.
 
 ### Les Regionals et Internationals
 
-- **Regional Championships** : un par mois en moyenne en Europe, 200-800 joueurs, *cash prize* pour le top 16
-- **Special Events** : intermédiaires, 1500-3000 *Championship Points* en jeu
-- **International Championships** : 4 par an (Europe, Amérique du Nord, Amérique latine, Océanie)
-- **World Championships** : qualification annuelle sur ranking mondial
+- **Regional Championships** : plusieurs étapes par saison en Europe (par exemple en 2026 : Séville, Prague, Frankfurt, Lille, Gdańsk), avec *cash prize* pour les meilleures places
+- **Special Events** : intermédiaires, distribuant des *Championship Points*
+- **International Championships** : organisés par grande région du circuit (Europe, Amérique du Nord, Amérique latine ; le programme exact varie d'une saison à l'autre)
+- **World Championships** : qualification annuelle sur ranking mondial *Championship Points*
 
 ### Les formats de jeu
 
-- **Standard** : extensions des 2 dernières années + *Scarlet & Violet* base. Le format officiel de 95 % des tournois.
-- **Expanded** : englobe toutes les extensions depuis *Black & White* (2011). Plus de combos, moins de tournois.
-- **GLC (Gym Leader Challenge)** : format communautaire, deck mono-type, single-card. Ludique mais non officiel.
+- **Standard** : ne contient que les cartes des séries récentes selon les marques de régulation en cours (post-rotation 10 avril 2026 : marques H, I, J et au-delà). Le format officiel de la grande majorité des tournois Play! Pokémon.
+- **Expanded** : englobe les cartes depuis la série *Black & White* (sortie en avril 2011 en anglais). Plus de combos, moins de tournois officiels.
+- **GLC (Gym Leader Challenge)** : format communautaire, deck mono-type, *singleton* (une seule copie de chaque carte). Ludique mais non officiel.
 
 ## Ressources pour progresser
 
@@ -217,7 +213,7 @@ L'écosystème de ressources francophones et anglophones est aujourd'hui consid�
 - **Limitless TCG** (limitlesstcg.com) : la base de données de référence pour les *decklists* de tous les tournois mondiaux. Indispensable pour étudier le méta réel et non spéculé.
 - **PokéStats** : statistiques fines sur les *match-ups*, taux de victoire par archétype, conversions top 8.
 - **Trainer Hill** et **PokéBeach** : actualité méta, *spoilers* des extensions, *meta reports* hebdomadaires.
-- **Chaînes YouTube** : *Tricky Gym*, *Celio's Network*, *Andrew Mahone* en anglais ; recherchez les chaînes francophones actives sur le Pokémon TCG pour des *decklists* commentées et des analyses de méta.
+- **Chaînes YouTube** : *Tricky Gym* (Andrew Mahone, Champion de Regional et plusieurs fois World Championship competitor) et *Celio's Network* en anglais ; recherchez les chaînes francophones actives sur le Pokémon TCG pour des *decklists* commentées et des analyses de méta.
 - **Discord communautaires** : la plupart des magasins affiliés tiennent un serveur avec annonces de tournois, recherches de joueurs, et marché de *singles* internes.
 
 Pour la partie marchande, **Cards-Trading.com** centralise une marketplace francophone, des outils de suivi de collection et un système de notation vendeur indispensable pour les transactions à 50 €+ qui deviennent fréquentes dès qu'on construit un deck compétitif.
@@ -243,7 +239,7 @@ Si vous deviez résumer ce guide en plan d'action sur 30 jours :
 3. **Semaine 3** : achetez les *singles* de ce deck à l'unité (200-280 €). Sleevez tout en *Near Mint*.
 4. **Semaine 4** : participez à votre première *League Cup* officielle. Vous perdrez probablement 3 matchs sur 5 — c'est normal et c'est précieux.
 
-Le Pokémon TCG est un jeu qui récompense la **patience et la précision** plus que le budget. Les meilleurs joueurs français du circuit ont commencé avec des decks à 50 €.
+Le Pokémon TCG est un jeu qui récompense la **patience et la précision** bien plus que le budget. La plupart des joueurs aujourd'hui en haut du circuit français ont commencé avec des decks modestes : c'est la régularité du jeu qui fait la différence, pas le portefeuille.
 
 Pour vous accompagner dans cette aventure, **Cards-Trading.com** ouvre sa beta en 2026 avec **0 % de commission pendant 3 mois** sur tous les vendeurs inscrits. Que vous achetiez vos premières *singles* ou que vous mettiez en vente des doubles dormants dans vos classeurs, c'est le moment de prendre date.
 
