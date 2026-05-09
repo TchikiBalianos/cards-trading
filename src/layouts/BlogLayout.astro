@@ -39,9 +39,10 @@ const socialImage = image || '/assets/img/og-cover.png';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/img/logo.png" />
-    <link rel="apple-touch-icon" href="/assets/img/logo.png" />
+    <!-- Favicon (cache-busted via ?v=2 pour forcer refresh des navigateurs) -->
+    <link rel="icon" type="image/png" href="/assets/img/logo.png?v=2" />
+    <link rel="shortcut icon" type="image/png" href="/assets/img/logo.png?v=2" />
+    <link rel="apple-touch-icon" href="/assets/img/logo.png?v=2" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
