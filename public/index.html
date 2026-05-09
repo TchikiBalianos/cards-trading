@@ -99,6 +99,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="landing.css" />
+    <link rel="stylesheet" href="easter-eggs.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -1266,40 +1267,13 @@
   })();
 </script>
 
-<!-- Social proof +1 continuous rain while hovering (desktop only) -->
+<!-- Easter Eggs system : popup OG + jeu du +1 (remplace l'ancien script +1) -->
 <script>
-(function () {
-  var pill = document.querySelector('.social-proof');
-  if (!pill || !window.matchMedia('(hover: hover)').matches) return;
-  var interval = null;
-
-  function spawnBurst() {
-    var burst = 3 + Math.floor(Math.random() * 2); /* 3-4 à la fois */
-    for (var i = 0; i < burst; i++) {
-      var el = document.createElement('span');
-      el.className = 'social-proof-plus-one';
-      el.textContent = '+1';
-      el.style.left = (8 + Math.random() * 80) + '%';
-      var scale = 0.55 + Math.random() * 0.75;
-      el.style.fontSize = (22 * scale) + 'px';
-      el.style.animationDuration = (0.55 + Math.random() * 0.55) + 's';
-      pill.appendChild(el);
-      el.addEventListener('animationend', function () { this.remove(); });
-    }
-  }
-
-  pill.addEventListener('mouseenter', function () {
-    if (interval) return;
-    spawnBurst(); /* burst immédiat */
-    interval = setInterval(spawnBurst, 80);
-  });
-
-  pill.addEventListener('mouseleave', function () {
-    clearInterval(interval);
-    interval = null;
-  });
-})();
+  // Webhook URL Google Apps Script (à remplacer une fois déployé)
+  // Voir docs/google-sheet-apps-script.gs pour le setup
+  window.OG_WEBHOOK_URL = '';
 </script>
+<script src="easter-eggs.js" defer></script>
 
 <!-- toggle avantage -->
 <script>

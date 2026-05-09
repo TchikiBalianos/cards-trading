@@ -1,0 +1,409 @@
+/* =========================================================
+   CARDS-TRADING — EASTER EGGS
+   Popup OG + animations partagées
+   ========================================================= */
+
+/* ── Overlay ─────────────────────────────────────────────── */
+.og-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 17, 31, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  padding: 20px;
+}
+
+.og-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Modal ───────────────────────────────────────────────── */
+.og-modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(160deg, #0c1829 0%, #07111f 100%);
+  border: 1px solid rgba(41, 151, 255, 0.4);
+  border-radius: 24px;
+  padding: 40px 32px 32px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(41, 151, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: scale(0.85) translateY(20px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.og-overlay.is-open .og-modal {
+  transform: scale(1) translateY(0);
+}
+
+/* Effet holographique de fond — conic-gradient animé */
+.og-modal::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  background: conic-gradient(
+    from var(--holo-angle, 0deg),
+    transparent 0deg,
+    rgba(41, 151, 255, 0.6) 60deg,
+    rgba(168, 85, 247, 0.5) 120deg,
+    rgba(236, 72, 153, 0.4) 180deg,
+    rgba(251, 191, 36, 0.5) 240deg,
+    rgba(41, 151, 255, 0.6) 300deg,
+    transparent 360deg
+  );
+  filter: blur(20px);
+  opacity: 0.3;
+  z-index: -1;
+  animation: og-holo-rotate 4s linear infinite;
+}
+
+@property --holo-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes og-holo-rotate {
+  from { --holo-angle: 0deg; transform: rotate(0deg); }
+  to   { --holo-angle: 360deg; transform: rotate(360deg); }
+}
+
+/* Bouton close */
+.og-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.og-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* Badge OG en haut */
+.og-badge {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2997ff 0%, #a855f7 100%);
+  border-radius: 50%;
+  font-weight: 900;
+  font-size: 28px;
+  color: #fff;
+  letter-spacing: 0.05em;
+  box-shadow:
+    0 0 0 4px rgba(41, 151, 255, 0.15),
+    0 12px 30px rgba(41, 151, 255, 0.4);
+  animation: og-badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes og-badge-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.15), 0 12px 30px rgba(41, 151, 255, 0.4); }
+  50%      { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(41, 151, 255, 0.1), 0 16px 40px rgba(41, 151, 255, 0.6); }
+}
+
+/* Effet sparkle autour du badge */
+.og-badge::after {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  animation: og-badge-sparkle 3s ease-in-out infinite;
+}
+
+@keyframes og-badge-sparkle {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.15); }
+}
+
+/* Titres */
+.og-eyebrow {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2997ff;
+  margin-bottom: 8px;
+}
+
+.og-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.og-egg-name {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* Bénéfices listés */
+.og-benefits {
+  background: rgba(41, 151, 255, 0.08);
+  border: 1px solid rgba(41, 151, 255, 0.2);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.og-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  list-style: none;
+}
+
+.og-benefits li:last-child { margin-bottom: 0; }
+
+.og-benefits li::before {
+  content: '✓';
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #2997ff, #a855f7);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+/* Form */
+.og-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.og-form-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.og-form-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.og-form-input:focus {
+  outline: none;
+  border-color: rgba(41, 151, 255, 0.6);
+  background: rgba(41, 151, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.15);
+}
+
+.og-form-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.og-form-error {
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-top: -4px;
+  min-height: 16px;
+}
+
+.og-submit {
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #2997ff 0%, #0a6fd8 100%);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.og-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(41, 151, 255, 0.4);
+}
+
+.og-submit:active {
+  transform: translateY(0);
+}
+
+.og-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* État succès */
+.og-success {
+  text-align: center;
+  padding: 12px 0 8px;
+}
+
+.og-success-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+  animation: og-success-bounce 0.6s ease;
+}
+
+@keyframes og-success-bounce {
+  0%   { transform: scale(0.3); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.og-success-text {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.og-discord-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 8px 24px rgba(88, 101, 242, 0.4);
+}
+
+.og-discord-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(88, 101, 242, 0.5);
+}
+
+.og-discord-btn::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Note discrète */
+.og-note {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+/* ── Confettis ───────────────────────────────────────────── */
+.og-confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 14px;
+  z-index: 99998;
+  pointer-events: none;
+  animation: og-confetti-fall linear forwards;
+}
+
+@keyframes og-confetti-fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── Indicateur subtil "egg available" ──────────────────── */
+.og-hint-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(7, 17, 31, 0.95);
+  border: 1px solid rgba(41, 151, 255, 0.3);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-family: 'Google Sans', sans-serif;
+  z-index: 99997;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.og-hint-toast.is-shown {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .og-modal {
+    padding: 32px 24px 24px;
+    border-radius: 20px;
+  }
+
+  .og-title { font-size: 22px; }
+  .og-badge { width: 72px; height: 72px; font-size: 22px; }
+}
