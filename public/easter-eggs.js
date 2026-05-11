@@ -248,8 +248,15 @@
     trigger: function (eggId) {
       if (isClaimed(eggId)) {
         // Déjà claim → on ne re-popup pas. On fait juste une confetti silencieuse.
+        console.warn(
+          '[OG] trigger("' + eggId + '") IGNORÉ — easter egg déjà claim.\n' +
+          'Si tu testes, lance : window.CardsTradingEggs._reset() puis re-trigger.'
+        );
         spawnConfetti(30);
         return false;
+      }
+      if (window.OG_DEBUG) {
+        console.log('%c[OG] trigger("' + eggId + '") → popup en cours d\'ouverture', 'color:#10b981;font-weight:bold');
       }
       showRewardPopup(eggId);
       return true;
@@ -257,7 +264,14 @@
     isClaimed: isClaimed,
     getState: getState,
     // Debug
-    _reset: function () { localStorage.removeItem(STORAGE_KEY); console.log('[OG] state reset'); }
+    _reset: function () {
+      localStorage.removeItem(STORAGE_KEY);
+      console.log('%c[OG] localStorage state reset — tous les easter eggs sont à nouveau triggerables', 'color:#2997ff;font-weight:bold');
+    },
+    _claim: function (eggId) {
+      markClaimed(eggId, '__test__@example.com');
+      console.log('[OG] forced claim of ' + eggId);
+    }
   };
 
   // ─────────────────────────────────────────────────────────
