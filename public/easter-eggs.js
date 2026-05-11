@@ -297,6 +297,9 @@
       spawnCount = 0;
       targetAtEntry = parseInt(countEl.textContent, 10) || 0;
       hoverStartTime = performance.now();
+      if (window.OG_DEBUG) {
+        console.log('%c[+1 game] HOVER START — cible : ' + targetAtEntry + ' +1 à atteindre', 'color:#2997ff;font-weight:bold');
+      }
       spawnBurst(); // burst immédiat
       interval = setInterval(spawnBurst, 80);
     });
@@ -305,10 +308,21 @@
       clearInterval(interval);
       interval = null;
 
-      // Vérification de l'easter egg :
-      // Match exact ? le user a sorti la souris pile au bon moment.
-      // On accepte un hover d'au moins 200ms (sinon c'est juste un effleurement)
       const hoverDuration = performance.now() - hoverStartTime;
+      const diff = spawnCount - targetAtEntry;
+
+      if (window.OG_DEBUG) {
+        const style = spawnCount === targetAtEntry ? 'color:#10b981;font-weight:bold;font-size:14px' : 'color:#888';
+        console.log(
+          '%c[+1 game] HOVER END — spawn: ' + spawnCount + ' | cible: ' + targetAtEntry +
+          ' | écart: ' + (diff > 0 ? '+' : '') + diff +
+          ' | durée: ' + Math.round(hoverDuration) + 'ms' +
+          (spawnCount === targetAtEntry ? ' ✨ MATCH !' : ''),
+          style
+        );
+      }
+
+      // Hover < 200ms ignoré (effleurement involontaire)
       if (hoverDuration < 200) return;
 
       if (spawnCount === targetAtEntry && targetAtEntry > 0) {
@@ -318,6 +332,21 @@
         }
       }
     });
+
+    // Compteur en live pendant le hover (toutes les 80ms à chaque spawn)
+    if (window.OG_DEBUG) {
+      const originalSpawn = spawnBurst;
+      spawnBurst = function () {
+        originalSpawn();
+        const remaining = targetAtEntry - spawnCount;
+        const color = remaining === 0 ? '#10b981' : (remaining > 0 ? '#888' : '#ff6b6b');
+        console.log(
+          '%c[+1 game] spawn: ' + spawnCount + ' / ' + targetAtEntry +
+          (remaining > 0 ? ' (' + remaining + ' restant)' : remaining < 0 ? ' (DÉPASSÉ de ' + Math.abs(remaining) + ')' : ' (PILE !)'),
+          'color:' + color
+        );
+      };
+    }
   }
 
   // ─────────────────────────────────────────────────────────

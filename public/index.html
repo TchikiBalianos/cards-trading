@@ -1269,9 +1269,10 @@
 
 <!-- Easter Eggs system : popup OG + jeu du +1 (remplace l'ancien script +1) -->
 <script>
-  // Webhook URL Google Apps Script (à remplacer une fois déployé)
-  // Voir docs/google-sheet-apps-script.gs pour le setup
-  window.OG_WEBHOOK_URL = '';
+  // Webhook URL Google Apps Script (collecte des emails OG dans une Google Sheet annexe)
+  window.OG_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzASDQOpvoJVXx1GzNgMYLEP9JmAWBMz6hExuXjw0Qi5rjWboOI7Gc23SLsAci7-Mo/exec';
+  // Debug : logs console du compteur silencieux pendant les tests
+  window.OG_DEBUG = true;
 </script>
 <script src="easter-eggs.js" defer></script>
 
