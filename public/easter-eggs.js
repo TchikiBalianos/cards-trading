@@ -515,8 +515,11 @@
       `;
       document.body.appendChild(beamStage);
 
-      // 3) Screen shake
-      document.body.classList.add('kameha-shaking');
+      // 3) Screen shake — via overlay dédié (PAS sur body, sinon transform
+      // sur body brise position:fixed des autres éléments kameha)
+      const shakeOverlay = document.createElement('div');
+      shakeOverlay.className = 'kameha-shake-overlay';
+      document.body.appendChild(shakeOverlay);
 
       // 4) Spawn 4 anneaux qui voyagent le long du beam (décalés dans le temps)
       setTimeout(() => {
@@ -565,7 +568,7 @@
 
       // 7) Cleanup + popup OG (durée totale : 2s pour bien voir l'animation)
       setTimeout(() => {
-        document.body.classList.remove('kameha-shaking');
+        shakeOverlay.remove();
         if (stageEl) { stageEl.remove(); stageEl = null; }
         beamStage.remove();
         isReleasing = false;
