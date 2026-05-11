@@ -364,124 +364,79 @@
   }
 
   // ─────────────────────────────────────────────────────────
-  // EASTER EGG #2 : KAMEHAMEHA — pixel art DBZ style
-  // Hold SPACE 3s → boule d'énergie charge entre les "mains" en bas
-  // → beam horizontal traverse l'écran → flash → popup OG
+  // EASTER EGG #2 : KAMEHAMEHA — pixel art VFX sprite style
+  // Boule d'énergie pixel à gauche → beam horizontal pixel art
+  // → impact pixel art à droite → flash → popup OG
   // ─────────────────────────────────────────────────────────
   function initKamehameha() {
     const HOLD_DURATION = 3000;
-    const SYLLABLES = ['KA', 'ME', 'HA', 'ME', 'HA'];
 
     let isCharging = false;
+    let isReleasing = false;
     let startTime = 0;
     let stageEl = null;
     let rafId = null;
     let particleInterval = null;
-    let lastSyllable = -1;
-    let isReleasing = false;
 
     function buildStage() {
       const stage = document.createElement('div');
       stage.className = 'kameha-stage';
       stage.setAttribute('aria-hidden', 'true');
-
-      // Vignette
-      const v = document.createElement('div');
-      v.className = 'kameha-vignette';
-      stage.appendChild(v);
-
-      // Chant pixel "KA ME HA ME HA"
-      const chant = document.createElement('div');
-      chant.className = 'kameha-chant';
-      SYLLABLES.forEach((s, i) => {
-        const span = document.createElement('span');
-        span.className = 'kameha-chant-syllable';
-        span.dataset.idx = String(i);
-        span.textContent = s;
-        chant.appendChild(span);
-      });
-      stage.appendChild(chant);
-
-      // Hands + Orb wrapper (bottom center, POV "cupped hands")
-      const handsWrap = document.createElement('div');
-      handsWrap.className = 'kameha-hands-wrap';
-      handsWrap.innerHTML = `
-        <div class="kameha-orb"></div>
-        <div class="kameha-hands">
-          <div class="kameha-hand kameha-hand-left"></div>
-          <div class="kameha-hand kameha-hand-right"></div>
+      stage.innerHTML = `
+        <div class="kameha-vignette"></div>
+        <div class="kameha-hint is-shown">▸ HOLD SPACE ◂</div>
+        <div class="kameha-orb-wrap">
+          <div class="kameha-orb-layer kameha-orb-l1"></div>
+          <div class="kameha-orb-layer kameha-orb-l2"></div>
+          <div class="kameha-orb-layer kameha-orb-l3"></div>
+          <div class="kameha-orb-layer kameha-orb-l4"></div>
+          <div class="kameha-orb-layer kameha-orb-l5"></div>
         </div>
       `;
-      stage.appendChild(handsWrap);
-
-      // Particles container
-      const particles = document.createElement('div');
-      particles.className = 'kameha-particles';
-      stage.appendChild(particles);
-
-      // Hint
-      const hint = document.createElement('div');
-      hint.className = 'kameha-hint';
-      hint.textContent = '▼ HOLD SPACE ▼';
-      stage.appendChild(hint);
-      // Show hint after a brief delay
-      setTimeout(() => hint.classList.add('is-shown'), 80);
-
       return stage;
     }
 
     function spawnParticle() {
       if (!stageEl) return;
-      const container = stageEl.querySelector('.kameha-particles');
-      if (!container) return;
+      const orbWrap = stageEl.querySelector('.kameha-orb-wrap');
+      if (!orbWrap) return;
+      const orbRect = orbWrap.getBoundingClientRect();
+      const targetX = orbRect.left + orbRect.width / 2;
+      const targetY = orbRect.top + orbRect.height / 2;
+
+      // Particule part d'un point random sur un cercle autour de la boule
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 200 + Math.random() * 250;
+      const startX = targetX + Math.cos(angle) * radius;
+      const startY = targetY + Math.sin(angle) * radius;
 
       const p = document.createElement('span');
       p.className = 'kameha-particle';
-
-      // Particule part d'un point random au-dessus du bas-centre puis spirale vers l'orb
-      const orbRect = stageEl.querySelector('.kameha-orb').getBoundingClientRect();
-      const orbX = orbRect.left + orbRect.width / 2;
-      const orbY = orbRect.top + orbRect.height / 2;
-
-      // Position de départ : autour, dans un rayon de 200-350px
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 200 + Math.random() * 200;
-      const startX = orbX + Math.cos(angle) * radius;
-      const startY = orbY + Math.sin(angle) * radius;
-
-      // Position fixed pour précision
-      p.style.position = 'fixed';
       p.style.left = startX + 'px';
       p.style.top = startY + 'px';
 
-      // Cible : centre de l'orb (translate négatif depuis la position de départ)
-      p.style.setProperty('--px-from', '0px');
-      p.style.setProperty('--py-from', '0px');
-
-      // Anim : on translate à la fin vers (orbX - startX, orbY - startY)
-      const dx = orbX - startX;
-      const dy = orbY - startY;
-      p.style.transition = 'none';
-      p.style.transform = 'translate(0, 0) scale(1)';
-      p.style.opacity = '0';
-
-      // Couleur random parmi cyan/blanc/bleu
-      const colors = ['#ffffff', '#b4e6ff', '#40c4ff', '#0080ff'];
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      p.style.setProperty('--p-color', color);
+      // Couleur pixel art selon distance (plus loin = plus sombre)
+      const palette = ['#ffffff', '#d4f1ff', '#40c4ff', '#1976ff'];
+      const color = palette[Math.floor(Math.random() * palette.length)];
       p.style.background = color;
-      p.style.boxShadow = `0 0 8px ${color}, 0 0 16px ${color}`;
+      p.style.setProperty('--p-color', color);
 
-      container.appendChild(p);
+      // Animation manuelle : converge vers la boule
+      const dx = targetX - startX;
+      const dy = targetY - startY;
+      p.style.opacity = '0';
+      p.style.transition = 'none';
+      p.style.transform = 'translate(0, 0)';
 
-      // Animation manuelle : fade in puis spirale vers la cible
+      stageEl.appendChild(p);
+
       requestAnimationFrame(() => {
-        p.style.transition = 'transform 0.8s steps(16), opacity 0.15s linear';
+        p.style.transition = 'transform 0.7s steps(12), opacity 0.12s linear';
         p.style.opacity = '1';
-        p.style.transform = `translate(${dx}px, ${dy}px) scale(0.4)`;
+        p.style.transform = `translate(${dx}px, ${dy}px) scale(0.3)`;
       });
 
-      setTimeout(() => p.remove(), 900);
+      setTimeout(() => p.remove(), 800);
     }
 
     function updateProgress() {
@@ -491,14 +446,6 @@
 
       if (stageEl) {
         stageEl.style.setProperty('--kameha-progress', progress);
-      }
-
-      // Reveal syllables en fonction du progress (1 syllabe toutes les ~600ms)
-      const syllableIdx = Math.min(Math.floor(progress * SYLLABLES.length), SYLLABLES.length - 1);
-      if (syllableIdx > lastSyllable && stageEl) {
-        const span = stageEl.querySelector('.kameha-chant-syllable[data-idx="' + syllableIdx + '"]');
-        if (span) span.classList.add('is-shown');
-        lastSyllable = syllableIdx;
       }
 
       if (progress >= 1) {
@@ -512,12 +459,9 @@
       if (isCharging || isReleasing) return;
       isCharging = true;
       startTime = performance.now();
-      lastSyllable = -1;
-
       stageEl = buildStage();
       document.body.appendChild(stageEl);
-
-      particleInterval = setInterval(spawnParticle, 50);
+      particleInterval = setInterval(spawnParticle, 40);
       rafId = requestAnimationFrame(updateProgress);
     }
 
@@ -527,11 +471,11 @@
       cancelAnimationFrame(rafId);
       clearInterval(particleInterval);
       if (stageEl) {
-        // Petit "absorption inverse" : la boule s'efface
+        // Fade out la stage (annulation)
+        stageEl.style.transition = 'opacity 0.25s steps(5)';
         stageEl.style.opacity = '0';
-        stageEl.style.transition = 'opacity 0.3s';
         const el = stageEl;
-        setTimeout(() => el.remove(), 320);
+        setTimeout(() => el.remove(), 280);
         stageEl = null;
       }
     }
@@ -542,60 +486,97 @@
       cancelAnimationFrame(rafId);
       clearInterval(particleInterval);
 
-      // 1) Texte "HAAAA!" massif qui flashe
-      const shout = document.createElement('div');
-      shout.className = 'kameha-shout';
-      shout.textContent = 'HAAAAA!';
-      document.body.appendChild(shout);
+      // 1) Cacher le hint, garder la boule à pleine taille
+      if (stageEl) {
+        const hint = stageEl.querySelector('.kameha-hint');
+        if (hint) hint.style.display = 'none';
+      }
 
-      // 2) Le beam horizontal
-      const beamWrap = document.createElement('div');
-      beamWrap.className = 'kameha-beam-wrap';
-      const beam = document.createElement('div');
-      beam.className = 'kameha-beam';
-      beamWrap.appendChild(beam);
-      document.body.appendChild(beamWrap);
+      // 2) Construire le beam stage (multi-layers pixel art)
+      const beamStage = document.createElement('div');
+      beamStage.className = 'kameha-beam-stage';
+      beamStage.innerHTML = `
+        <div class="kameha-beam">
+          <div class="kameha-beam-layer kameha-beam-outer"></div>
+          <div class="kameha-beam-layer kameha-beam-blue"></div>
+          <div class="kameha-beam-layer kameha-beam-cyan"></div>
+          <div class="kameha-beam-layer kameha-beam-lite"></div>
+          <div class="kameha-beam-layer kameha-beam-core"></div>
+          <div class="kameha-tail"></div>
+        </div>
+      `;
+      document.body.appendChild(beamStage);
 
-      // 3) Screen shake
+      const beam = beamStage.querySelector('.kameha-beam');
+
+      // 3) Animer le beam : width 0 → 82vw, en 500ms avec steps()
+      // (la boule est à 18% du gauche, donc le beam s'étend de 18% à 100% = 82vw)
+      const beamGrowDuration = 500;
+      const startTs = performance.now();
+      function growBeam() {
+        const t = Math.min((performance.now() - startTs) / beamGrowDuration, 1);
+        // Steps de 16 pour effet stop-motion
+        const stepT = Math.floor(t * 16) / 16;
+        beam.style.width = (stepT * 82) + 'vw';
+        if (t < 1) requestAnimationFrame(growBeam);
+      }
+      growBeam();
+
+      // 4) Screen shake
       document.body.classList.add('kameha-shaking');
 
-      // 4) Sparkles le long du beam (15 paillettes pixel art)
+      // 5) Spawn 3 anneaux qui voyagent le long du beam (décalés dans le temps)
       setTimeout(() => {
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 4; i++) {
           setTimeout(() => {
-            const sparkle = document.createElement('span');
-            sparkle.className = 'kameha-sparkle';
-            sparkle.style.position = 'fixed';
-            sparkle.style.left = (Math.random() * 100) + 'vw';
-            sparkle.style.bottom = (12 + Math.random() * 8) + 'vh';
-            sparkle.style.setProperty('--sx', (Math.random() * 60 - 30) + 'px');
-            sparkle.style.setProperty('--sy', (Math.random() * 60 - 30) + 'px');
-            sparkle.style.zIndex = '99999';
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 700);
-          }, i * 30);
+            const ring = document.createElement('div');
+            ring.className = 'kameha-ring';
+            ring.style.setProperty('--ring-duration', (0.55 + Math.random() * 0.2) + 's');
+            beam.appendChild(ring);
+            setTimeout(() => ring.remove(), 900);
+          }, i * 110);
         }
       }, 200);
 
-      // 5) Flash blanc final (au pic du beam)
+      // 6) Impact à droite + flash + sparks
       setTimeout(() => {
-        const flash = document.createElement('div');
-        flash.className = 'kameha-flash';
-        document.body.appendChild(flash);
-        setTimeout(() => flash.remove(), 600);
-      }, 500);
+        const impact = document.createElement('div');
+        impact.className = 'kameha-impact';
+        impact.innerHTML = '<div class="kameha-impact-flash"></div>';
+        document.body.appendChild(impact);
+        setTimeout(() => impact.remove(), 700);
 
-      // 6) Cleanup + popup OG
+        // Sparks éjectés du point d'impact (15)
+        for (let i = 0; i < 15; i++) {
+          const spark = document.createElement('span');
+          spark.className = 'kameha-spark';
+          spark.style.right = '0';
+          spark.style.top = '50%';
+          const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4;
+          const dist = 100 + Math.random() * 300;
+          spark.style.setProperty('--sx', Math.cos(angle) * dist + 'px');
+          spark.style.setProperty('--sy', Math.sin(angle) * dist + 'px');
+          document.body.appendChild(spark);
+          setTimeout(() => spark.remove(), 900);
+        }
+
+        // Flash blanc plein écran au pic
+        const flash = document.createElement('div');
+        flash.className = 'kameha-fullflash';
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 500);
+      }, 500); // après que le beam ait atteint la droite
+
+      // 7) Cleanup + popup OG
       setTimeout(() => {
         document.body.classList.remove('kameha-shaking');
         if (stageEl) { stageEl.remove(); stageEl = null; }
-        shout.remove();
-        beamWrap.remove();
+        beamStage.remove();
         isReleasing = false;
         if (window.CardsTradingEggs) {
           window.CardsTradingEggs.trigger('kamehameha');
         }
-      }, 1200);
+      }, 1400);
     }
 
     function isTyping() {
