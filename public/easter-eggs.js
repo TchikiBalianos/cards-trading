@@ -486,88 +486,84 @@
       cancelAnimationFrame(rafId);
       clearInterval(particleInterval);
 
-      // 1) Cacher le hint, garder la boule à pleine taille
+      if (window.OG_DEBUG) {
+        console.log('%c[Kamehameha] 🔥 BEAM RELEASE !', 'color:#40c4ff;font-weight:bold;font-size:14px');
+      }
+
+      // Cacher le hint, garder la boule à pleine taille
       if (stageEl) {
         const hint = stageEl.querySelector('.kameha-hint');
         if (hint) hint.style.display = 'none';
       }
 
-      // 2) Construire le beam stage (multi-layers pixel art)
+      // 1) Texte "READY!" qui flashe au-dessus de la boule
+      const ready = document.createElement('div');
+      ready.className = 'kameha-ready';
+      ready.textContent = 'HAAAA!';
+      document.body.appendChild(ready);
+      setTimeout(() => ready.remove(), 600);
+
+      // 2) Construire le beam stage avec 5 couches sœurs (chacune anime sa propre width)
       const beamStage = document.createElement('div');
       beamStage.className = 'kameha-beam-stage';
       beamStage.innerHTML = `
-        <div class="kameha-beam">
-          <div class="kameha-beam-layer kameha-beam-outer"></div>
-          <div class="kameha-beam-layer kameha-beam-blue"></div>
-          <div class="kameha-beam-layer kameha-beam-cyan"></div>
-          <div class="kameha-beam-layer kameha-beam-lite"></div>
-          <div class="kameha-beam-layer kameha-beam-core"></div>
-          <div class="kameha-tail"></div>
-        </div>
+        <div class="kameha-beam-layer kameha-beam-outer"></div>
+        <div class="kameha-beam-layer kameha-beam-blue"></div>
+        <div class="kameha-beam-layer kameha-beam-cyan"></div>
+        <div class="kameha-beam-layer kameha-beam-lite"></div>
+        <div class="kameha-beam-layer kameha-beam-core"></div>
       `;
       document.body.appendChild(beamStage);
 
-      const beam = beamStage.querySelector('.kameha-beam');
-
-      // 3) Animer le beam : width 0 → 82vw, en 500ms avec steps()
-      // (la boule est à 18% du gauche, donc le beam s'étend de 18% à 100% = 82vw)
-      const beamGrowDuration = 500;
-      const startTs = performance.now();
-      function growBeam() {
-        const t = Math.min((performance.now() - startTs) / beamGrowDuration, 1);
-        // Steps de 16 pour effet stop-motion
-        const stepT = Math.floor(t * 16) / 16;
-        beam.style.width = (stepT * 82) + 'vw';
-        if (t < 1) requestAnimationFrame(growBeam);
-      }
-      growBeam();
-
-      // 4) Screen shake
+      // 3) Screen shake
       document.body.classList.add('kameha-shaking');
 
-      // 5) Spawn 3 anneaux qui voyagent le long du beam (décalés dans le temps)
+      // 4) Spawn 4 anneaux qui voyagent le long du beam (décalés dans le temps)
       setTimeout(() => {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
           setTimeout(() => {
             const ring = document.createElement('div');
             ring.className = 'kameha-ring';
-            ring.style.setProperty('--ring-duration', (0.55 + Math.random() * 0.2) + 's');
-            beam.appendChild(ring);
-            setTimeout(() => ring.remove(), 900);
-          }, i * 110);
+            ring.style.setProperty('--ring-duration', (0.6 + Math.random() * 0.25) + 's');
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 1000);
+          }, i * 100);
         }
-      }, 200);
+      }, 250);
 
-      // 6) Impact à droite + flash + sparks
+      // 5) Impact à droite + flash + sparks (quand le beam touche le bord)
       setTimeout(() => {
         const impact = document.createElement('div');
         impact.className = 'kameha-impact';
         impact.innerHTML = '<div class="kameha-impact-flash"></div>';
         document.body.appendChild(impact);
-        setTimeout(() => impact.remove(), 700);
+        setTimeout(() => impact.remove(), 800);
 
-        // Sparks éjectés du point d'impact (15)
-        for (let i = 0; i < 15; i++) {
+        // Sparks éjectés du point d'impact (20)
+        for (let i = 0; i < 20; i++) {
           const spark = document.createElement('span');
           spark.className = 'kameha-spark';
-          spark.style.right = '0';
+          spark.style.right = '20px';
           spark.style.top = '50%';
-          const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4;
-          const dist = 100 + Math.random() * 300;
+          const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.6;
+          const dist = 150 + Math.random() * 400;
           spark.style.setProperty('--sx', Math.cos(angle) * dist + 'px');
           spark.style.setProperty('--sy', Math.sin(angle) * dist + 'px');
           document.body.appendChild(spark);
           setTimeout(() => spark.remove(), 900);
         }
 
-        // Flash blanc plein écran au pic
+        // Flash blanc plein écran au pic d'impact
         const flash = document.createElement('div');
         flash.className = 'kameha-fullflash';
         document.body.appendChild(flash);
         setTimeout(() => flash.remove(), 500);
-      }, 500); // après que le beam ait atteint la droite
+      }, 450); // 50ms avant la fin de la croissance du beam pour synchroniser
 
-      // 7) Cleanup + popup OG
+      // 6) Le beam reste visible 1.2s après la fin de sa croissance
+      // (durée totale du beam visible : ~1.6s)
+
+      // 7) Cleanup + popup OG (durée totale : 2s pour bien voir l'animation)
       setTimeout(() => {
         document.body.classList.remove('kameha-shaking');
         if (stageEl) { stageEl.remove(); stageEl = null; }
@@ -576,7 +572,7 @@
         if (window.CardsTradingEggs) {
           window.CardsTradingEggs.trigger('kamehameha');
         }
-      }, 1400);
+      }, 1800);
     }
 
     function isTyping() {

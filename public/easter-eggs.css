@@ -585,7 +585,8 @@
 
 /* ─────────────────────────────────────────────────────────
    BEAM — sprite pixel art horizontal (release)
-   Multi-layers : core blanc + 3 halos cyans + traînée
+   Multi-layers indépendantes, chacune anime sa propre width
+   pour éviter le décalage parent/child et garantir la visibilité
    ───────────────────────────────────────────────────────── */
 .kameha-beam-stage {
   position: fixed;
@@ -595,107 +596,120 @@
   overflow: hidden;
 }
 
-.kameha-beam {
-  position: absolute;
-  top: 50%;
-  left: 18%;
-  height: 0;
-  width: 0;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-/* Chaque couche du beam est un div positionné absolument, centré verticalement */
+/* Chaque couche du beam est positionnée absolument à 50% top, animée width 0→82vw */
 .kameha-beam-layer {
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 100%;
+  left: 18vw;
+  width: 0;
   transform: translateY(-50%);
   pointer-events: none;
+  animation: kameha-beam-grow 0.4s steps(16) forwards;
 }
 
-/* Outer halo bleu marine */
+@keyframes kameha-beam-grow {
+  0%   { width: 0;    opacity: 0.8; }
+  10%  { opacity: 1; }
+  100% { width: 82vw; opacity: 1; }
+}
+
+/* Outer halo bleu marine (fond très chunky) */
 .kameha-beam-outer {
-  height: 100px;
+  height: 140px;
   background: var(--kp-dark);
-  box-shadow: 0 0 48px 8px rgba(25, 118, 255, 0.4);
+  opacity: 0.5;
+  filter: drop-shadow(0 0 24px rgba(25, 118, 255, 0.6));
 }
 
 /* Halo bleu */
 .kameha-beam-blue {
-  height: 64px;
+  height: 90px;
   background: var(--kp-blue);
+  filter: drop-shadow(0 0 16px var(--kp-blue));
 }
 
 /* Halo cyan */
 .kameha-beam-cyan {
-  height: 36px;
+  height: 52px;
   background: var(--kp-cyan);
 }
 
 /* Halo bleu clair */
 .kameha-beam-lite {
-  height: 16px;
+  height: 24px;
   background: var(--kp-lite);
 }
 
-/* Core blanc ultra-lumineux */
+/* Core blanc ultra-lumineux — visible avant tout */
 .kameha-beam-core {
-  height: 6px;
+  height: 8px;
   background: var(--kp-white);
   box-shadow:
-    0 0 12px var(--kp-white),
-    0 0 32px var(--kp-cyan);
+    0 0 20px var(--kp-white),
+    0 0 40px var(--kp-cyan),
+    0 0 80px var(--kp-blue);
+  animation: kameha-beam-grow 0.4s steps(16) forwards,
+             kameha-beam-pulse 0.16s steps(2) infinite 0.4s;
 }
 
-/* Anneaux blancs qui voyagent le long du beam (3 anneaux) */
+@keyframes kameha-beam-pulse {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.6); }
+}
+
+/* Anneaux blancs qui voyagent le long du beam (3-4) */
 .kameha-ring {
-  position: absolute;
+  position: fixed;
   top: 50%;
-  width: 24px;
-  height: 84px;
-  border: 4px solid var(--kp-white);
+  width: 32px;
+  height: 110px;
+  border: 5px solid var(--kp-white);
   border-radius: 50%;
   background: transparent;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scaleY(0.3);
   box-shadow:
-    0 0 0 2px var(--kp-cyan),
-    0 0 20px var(--kp-white),
-    inset 0 0 12px rgba(255, 255, 255, 0.4);
-  animation: kameha-ring-travel var(--ring-duration, 0.6s) steps(20) forwards;
+    0 0 0 3px var(--kp-cyan),
+    0 0 24px var(--kp-white),
+    0 0 48px var(--kp-blue),
+    inset 0 0 16px rgba(255, 255, 255, 0.6);
+  z-index: 99998;
+  pointer-events: none;
+  animation: kameha-ring-travel var(--ring-duration, 0.7s) steps(24) forwards;
 }
 
 @keyframes kameha-ring-travel {
-  0%   { left: 0%;    opacity: 0;   transform: translate(-50%, -50%) scaleY(0.3); }
-  10%  { opacity: 1;  }
-  100% { left: 100%;  opacity: 0.3; transform: translate(-50%, -50%) scaleY(1); }
+  0%   { left: 18vw; opacity: 0; transform: translate(-50%, -50%) scaleY(0.3); }
+  15%  { opacity: 1; }
+  100% { left: 100vw; opacity: 0.4; transform: translate(-50%, -50%) scaleY(1); }
 }
 
-/* Traînée à l'arrière de la boule (queue de la comète) */
-.kameha-tail {
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  height: 36px;
-  width: 80px;
-  transform: translateY(-50%);
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(64, 196, 255, 0.2) 30%,
-    rgba(64, 196, 255, 0.6) 60%,
-    var(--kp-cyan) 90%,
-    var(--kp-lite) 100%
-  );
-  /* Pixel art chunks via repeating-linear-gradient en overlay */
-  mask: repeating-linear-gradient(90deg,
-    #000 0px, #000 6px,
-    transparent 6px, transparent 8px
-  );
-  -webkit-mask: repeating-linear-gradient(90deg,
-    #000 0px, #000 6px,
-    transparent 6px, transparent 8px
-  );
+/* Indicateur "READY!" quand la boule atteint pleine charge */
+.kameha-ready {
+  position: fixed;
+  top: 35%;
+  left: 18%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(20px, 3.5vw, 38px);
+  font-weight: 900;
+  color: var(--kp-white);
+  text-shadow:
+    4px 4px 0 #ff0040,
+    -2px -2px 0 #ff0040,
+    2px -2px 0 #ff0040,
+    -2px 2px 0 #ff0040,
+    0 0 24px rgba(255, 100, 100, 0.9),
+    0 0 48px var(--kp-cyan);
+  z-index: 99999;
+  pointer-events: none;
+  animation: kameha-ready-anim 0.5s steps(6) forwards;
+}
+
+@keyframes kameha-ready-anim {
+  0%   { transform: translate(-50%, -50%) scale(0)   rotate(-10deg); opacity: 0; }
+  40%  { transform: translate(-50%, -50%) scale(1.4) rotate( 4deg);  opacity: 1; }
+  80%  { transform: translate(-50%, -50%) scale(1)   rotate(-2deg);  opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.6) rotate( 0deg);  opacity: 0; }
 }
 
 /* ─────────────────────────────────────────────────────────
