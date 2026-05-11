@@ -364,10 +364,156 @@
   }
 
   // ─────────────────────────────────────────────────────────
+  // EASTER EGG #2 : KAMEHAMEHA (hold spacebar 3 secondes)
+  // ─────────────────────────────────────────────────────────
+  function initKamehameha() {
+    const HOLD_DURATION = 3000; // 3 secondes
+
+    let isCharging = false;
+    let startTime = 0;
+    let overlayEl = null;
+    let rafId = null;
+    let particleInterval = null;
+
+    function createOverlay() {
+      const el = document.createElement('div');
+      el.className = 'kameha-overlay';
+      el.innerHTML = `
+        <div class="kameha-aura" aria-hidden="true"></div>
+        <div class="kameha-ring-wrap" aria-hidden="true">
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <defs>
+              <linearGradient id="kameha-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="40%" stop-color="#40c4ff"/>
+                <stop offset="100%" stop-color="#0080ff"/>
+              </linearGradient>
+            </defs>
+            <circle class="kameha-ring-bg" cx="90" cy="90" r="75"/>
+            <circle class="kameha-ring-fg" cx="90" cy="90" r="75"/>
+          </svg>
+          <div class="kameha-orb"></div>
+          <div class="kameha-particles"></div>
+        </div>
+      `;
+      return el;
+    }
+
+    function spawnParticle() {
+      if (!overlayEl) return;
+      const container = overlayEl.querySelector('.kameha-particles');
+      if (!container) return;
+      const p = document.createElement('span');
+      p.className = 'kameha-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 80 + Math.random() * 60;
+      p.style.setProperty('--px', Math.cos(angle) * distance + 'px');
+      p.style.setProperty('--py', -Math.abs(Math.sin(angle) * distance) - 50 + 'px');
+      p.style.left = (Math.random() * 40 - 20) + 'px';
+      p.style.top = (Math.random() * 40 - 20) + 'px';
+      container.appendChild(p);
+      setTimeout(() => p.remove(), 1200);
+    }
+
+    function updateProgress() {
+      if (!isCharging) return;
+      const elapsed = performance.now() - startTime;
+      const progress = Math.min(elapsed / HOLD_DURATION, 1);
+
+      if (overlayEl) {
+        overlayEl.style.setProperty('--kameha-progress', progress);
+      }
+
+      if (progress >= 1) {
+        triggerKamehameha();
+        return;
+      }
+      rafId = requestAnimationFrame(updateProgress);
+    }
+
+    function startCharging() {
+      if (isCharging) return;
+      isCharging = true;
+      startTime = performance.now();
+
+      overlayEl = createOverlay();
+      document.body.appendChild(overlayEl);
+      // force reflow then add charging class
+      void overlayEl.offsetWidth;
+      overlayEl.classList.add('is-charging');
+
+      particleInterval = setInterval(spawnParticle, 60);
+      rafId = requestAnimationFrame(updateProgress);
+    }
+
+    function cancelCharging() {
+      if (!isCharging) return;
+      isCharging = false;
+      cancelAnimationFrame(rafId);
+      clearInterval(particleInterval);
+      if (overlayEl) {
+        overlayEl.classList.remove('is-charging');
+        const el = overlayEl;
+        setTimeout(() => el.remove(), 200);
+        overlayEl = null;
+      }
+    }
+
+    function triggerKamehameha() {
+      cancelCharging();
+
+      // Flash blanc
+      const flash = document.createElement('div');
+      flash.className = 'kameha-flash';
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 800);
+
+      // Onde de choc
+      const wave = document.createElement('div');
+      wave.className = 'kameha-shockwave';
+      document.body.appendChild(wave);
+      setTimeout(() => wave.remove(), 1100);
+
+      // Popup OG après l'animation
+      setTimeout(() => {
+        if (window.CardsTradingEggs) {
+          window.CardsTradingEggs.trigger('kamehameha');
+        }
+      }, 750);
+    }
+
+    // Ignorer si l'user tape dans un input/textarea/contenteditable
+    function isTyping() {
+      const el = document.activeElement;
+      if (!el) return false;
+      const tag = el.tagName;
+      return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.code !== 'Space' && e.key !== ' ') return;
+      if (isTyping()) return;
+      if (e.repeat) return; // ignore autorépétition (déjà charging)
+      e.preventDefault(); // évite le scroll page sur Space
+      startCharging();
+    });
+
+    document.addEventListener('keyup', function (e) {
+      if (e.code !== 'Space' && e.key !== ' ') return;
+      if (isTyping()) return;
+      cancelCharging();
+    });
+
+    // Si la fenêtre perd le focus, annuler proprement
+    window.addEventListener('blur', cancelCharging);
+  }
+
+  // ─────────────────────────────────────────────────────────
   // INIT
   // ─────────────────────────────────────────────────────────
   function init() {
     initPlusOneGame();
+    initKamehameha();
     // (autres easter eggs ajoutés plus tard)
   }
 

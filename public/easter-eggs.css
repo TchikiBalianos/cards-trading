@@ -397,6 +397,186 @@
   opacity: 1;
 }
 
+/* =========================================================
+   EASTER EGG #2 : KAMEHAMEHA (hold spacebar 3s)
+   ========================================================= */
+.kameha-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99996;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.kameha-overlay.is-charging {
+  opacity: 1;
+}
+
+/* Aura bleue qui pulse en fond */
+.kameha-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%) scale(var(--kameha-progress, 0));
+  background: radial-gradient(
+    circle,
+    rgba(64, 196, 255, 0.4) 0%,
+    rgba(64, 196, 255, 0.2) 30%,
+    rgba(64, 196, 255, 0.05) 60%,
+    transparent 75%
+  );
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+  transition: transform 0.1s linear;
+  animation: kameha-aura-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes kameha-aura-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+/* Anneau de progression SVG */
+.kameha-ring-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  filter:
+    drop-shadow(0 0 12px rgba(64, 196, 255, 0.8))
+    drop-shadow(0 0 24px rgba(64, 196, 255, 0.5));
+}
+
+.kameha-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 6;
+}
+
+.kameha-ring-fg {
+  fill: none;
+  stroke: url(#kameha-grad);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 471.24; /* 2 * PI * 75 */
+  stroke-dashoffset: calc(471.24 - (471.24 * var(--kameha-progress, 0)));
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.05s linear;
+}
+
+/* Sphère d'énergie au centre */
+.kameha-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(80px + 60px * var(--kameha-progress, 0));
+  height: calc(80px + 60px * var(--kameha-progress, 0));
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at 30% 30%,
+    #ffffff 0%,
+    #d4f1ff 25%,
+    #40c4ff 50%,
+    #0080ff 80%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  box-shadow:
+    0 0 40px rgba(64, 196, 255, 0.9),
+    0 0 80px rgba(64, 196, 255, 0.6),
+    inset -10px -10px 30px rgba(0, 80, 200, 0.3);
+  animation: kameha-orb-spin 1s linear infinite;
+}
+
+@keyframes kameha-orb-spin {
+  0%   { background-position: 0% 0%; transform: translate(-50%, -50%) rotate(0deg); }
+  100% { background-position: 100% 100%; transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Particules d'énergie qui montent */
+.kameha-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.kameha-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, #ffffff, #40c4ff);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(64, 196, 255, 0.9);
+  animation: kameha-particle-rise 1.2s ease-out forwards;
+}
+
+@keyframes kameha-particle-rise {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--px, 0), var(--py, -200px)) scale(0); opacity: 0; }
+}
+
+/* Flash final + onde de choc */
+.kameha-flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #ffffff 0%, #40c4ff 30%, transparent 70%);
+  z-index: 99998;
+  pointer-events: none;
+  opacity: 0;
+  animation: kameha-flash-anim 0.7s ease-out forwards;
+}
+
+@keyframes kameha-flash-anim {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.kameha-shockwave {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 4px solid rgba(64, 196, 255, 0.9);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 99997;
+  pointer-events: none;
+  animation: kameha-shockwave-anim 1s ease-out forwards;
+  box-shadow: 0 0 40px rgba(64, 196, 255, 0.8);
+}
+
+@keyframes kameha-shockwave-anim {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 12px; }
+  100% { transform: translate(-50%, -50%) scale(120); opacity: 0; border-width: 1px; }
+}
+
+/* Hint discret au démarrage du hold (les ~500 premiers ms) */
+.kameha-hint {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Google Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 480px) {
   .og-modal {
