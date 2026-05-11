@@ -385,6 +385,7 @@
       stage.innerHTML = `
         <div class="kameha-vignette"></div>
         <div class="kameha-hint is-shown">▸ HOLD SPACE ◂</div>
+        ${gokuSvgHTML()}
         <div class="kameha-orb-wrap">
           <div class="kameha-orb-layer kameha-orb-l1"></div>
           <div class="kameha-orb-layer kameha-orb-l2"></div>
@@ -394,6 +395,102 @@
         </div>
       `;
       return stage;
+    }
+
+    /**
+     * Goku pixel art — silhouette stylisée en SVG inline
+     * Couleurs : hair noir, peau, gi orange, undershirt bleu, ceinture bleu, bottes bleues
+     * Pose : profil droit, mains cuppées sur la droite (vers la boule d'énergie)
+     */
+    function gokuSvgHTML() {
+      // Palette
+      const HAIR = '#000000';
+      const SKIN = '#ffd0a0';
+      const SKIN_S = '#d49968'; // shadow skin
+      const GI   = '#ff7a14'; // gi orange
+      const GI_S = '#c45000'; // gi shadow
+      const BLUE = '#1a4abc'; // undershirt + belt
+      const BOOT = '#0a2670'; // bottes
+      const WRIST = '#1a4abc';
+
+      // Grille 24x32 (chaque "pixel" = 4px en sortie). On dessine avec rect.
+      // Coordonnées (x, y, w, h, color)
+      const pixels = [
+        // ── HAIR (épis) ─────────────────────────────────
+        [7,0, 2,2, HAIR], [10,0, 2,2, HAIR], [13,0, 2,2, HAIR], [16,0, 1,2, HAIR],
+        [6,2, 3,2, HAIR], [9,2, 4,2, HAIR], [13,2, 4,2, HAIR],
+        [5,4, 13,2, HAIR],
+
+        // ── FACE (profil) ──────────────────────────────
+        [7,6, 9,4, SKIN],
+        [16,6, 1,4, SKIN_S], // shadow droite
+        [8,7, 1,1, HAIR], // œil
+        [10,7, 1,1, HAIR], // sourcil
+        [7,10, 8,1, SKIN],
+        [13,10, 2,1, SKIN_S],
+
+        // ── COU ───────────────────────────────────────
+        [9,11, 5,1, SKIN],
+
+        // ── TORSE (gi orange + undershirt bleu) ─────────
+        [7,12, 9,1, GI],
+        [9,13, 5,1, BLUE],
+        [7,13, 2,3, GI],
+        [14,13, 2,3, GI],
+        [9,14, 5,2, GI],
+        // V neck du gi
+        [10,12, 3,1, BLUE],
+
+        // ── BRAS GAUCHE (à l'arrière, en retrait) ──────
+        [5,13, 2,3, GI],
+        [4,15, 2,3, GI],
+        [4,18, 2,2, SKIN], // avant-bras
+        [4,20, 2,1, WRIST], // poignet bleu
+
+        // ── BRAS DROIT TENDU VERS LA DROITE (vers la boule) ──
+        [16,13, 2,3, GI],
+        [18,14, 3,3, GI],
+        [20,15, 2,2, SKIN], // avant-bras
+        [21,15, 3,2, SKIN], // poursuit
+        // MAINS CUPPÉES À DROITE (touchent la boule)
+        [22,14, 2,4, SKIN],
+        [23,15, 1,2, WRIST], // bracelet
+        [22,13, 1,1, SKIN_S], // pouce supérieur
+
+        // ── CEINTURE BLEUE ─────────────────────────────
+        [7,16, 9,2, BLUE],
+
+        // ── BAS DU GI (pantalon orange) ────────────────
+        [7,18, 9,3, GI],
+        [7,21, 9,1, GI_S], // ombre
+        [7,18, 1,4, GI_S], // bordure gauche
+        [15,18, 1,4, GI_S], // bordure droite
+
+        // ── JAMBES (stance large) ──────────────────────
+        [6,22, 3,7, GI],
+        [13,22, 3,7, GI],
+        [6,22, 1,7, GI_S],
+        [15,22, 1,7, GI_S],
+
+        // ── BOTTES BLEUES ──────────────────────────────
+        [5,29, 5,3, BOOT],
+        [13,29, 5,3, BOOT],
+        // Semelles ombre
+        [5,31, 5,1, '#040c30'],
+        [13,31, 5,1, '#040c30']
+      ];
+
+      const rects = pixels.map(([x, y, w, h, c]) =>
+        `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`
+      ).join('');
+
+      return `
+        <div class="kameha-goku">
+          <svg viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+            ${rects}
+          </svg>
+        </div>
+      `;
     }
 
     function spawnParticle() {
