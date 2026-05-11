@@ -62,11 +62,20 @@ section {
   position: relative;
 }
 
-/* Anchor offset for fixed header */
+/* Anchor offset for fixed header — apply to all sections + main-content target */
 #avantages,
 #features,
 #comparatif,
 #vendeur-pro,
-#beta {
+#beta,
+#main-content,
+section[id] {
   scroll-margin-top: var(--header-height);
+}
+
+/* Mobile : header peut être un peu plus grand (logo + hamburger) */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+  }
 }

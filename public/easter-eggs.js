@@ -364,55 +364,124 @@
   }
 
   // ─────────────────────────────────────────────────────────
-  // EASTER EGG #2 : KAMEHAMEHA (hold spacebar 3 secondes)
+  // EASTER EGG #2 : KAMEHAMEHA — pixel art DBZ style
+  // Hold SPACE 3s → boule d'énergie charge entre les "mains" en bas
+  // → beam horizontal traverse l'écran → flash → popup OG
   // ─────────────────────────────────────────────────────────
   function initKamehameha() {
-    const HOLD_DURATION = 3000; // 3 secondes
+    const HOLD_DURATION = 3000;
+    const SYLLABLES = ['KA', 'ME', 'HA', 'ME', 'HA'];
 
     let isCharging = false;
     let startTime = 0;
-    let overlayEl = null;
+    let stageEl = null;
     let rafId = null;
     let particleInterval = null;
+    let lastSyllable = -1;
+    let isReleasing = false;
 
-    function createOverlay() {
-      const el = document.createElement('div');
-      el.className = 'kameha-overlay';
-      el.innerHTML = `
-        <div class="kameha-aura" aria-hidden="true"></div>
-        <div class="kameha-ring-wrap" aria-hidden="true">
-          <svg width="180" height="180" viewBox="0 0 180 180">
-            <defs>
-              <linearGradient id="kameha-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="40%" stop-color="#40c4ff"/>
-                <stop offset="100%" stop-color="#0080ff"/>
-              </linearGradient>
-            </defs>
-            <circle class="kameha-ring-bg" cx="90" cy="90" r="75"/>
-            <circle class="kameha-ring-fg" cx="90" cy="90" r="75"/>
-          </svg>
-          <div class="kameha-orb"></div>
-          <div class="kameha-particles"></div>
+    function buildStage() {
+      const stage = document.createElement('div');
+      stage.className = 'kameha-stage';
+      stage.setAttribute('aria-hidden', 'true');
+
+      // Vignette
+      const v = document.createElement('div');
+      v.className = 'kameha-vignette';
+      stage.appendChild(v);
+
+      // Chant pixel "KA ME HA ME HA"
+      const chant = document.createElement('div');
+      chant.className = 'kameha-chant';
+      SYLLABLES.forEach((s, i) => {
+        const span = document.createElement('span');
+        span.className = 'kameha-chant-syllable';
+        span.dataset.idx = String(i);
+        span.textContent = s;
+        chant.appendChild(span);
+      });
+      stage.appendChild(chant);
+
+      // Hands + Orb wrapper (bottom center, POV "cupped hands")
+      const handsWrap = document.createElement('div');
+      handsWrap.className = 'kameha-hands-wrap';
+      handsWrap.innerHTML = `
+        <div class="kameha-orb"></div>
+        <div class="kameha-hands">
+          <div class="kameha-hand kameha-hand-left"></div>
+          <div class="kameha-hand kameha-hand-right"></div>
         </div>
       `;
-      return el;
+      stage.appendChild(handsWrap);
+
+      // Particles container
+      const particles = document.createElement('div');
+      particles.className = 'kameha-particles';
+      stage.appendChild(particles);
+
+      // Hint
+      const hint = document.createElement('div');
+      hint.className = 'kameha-hint';
+      hint.textContent = '▼ HOLD SPACE ▼';
+      stage.appendChild(hint);
+      // Show hint after a brief delay
+      setTimeout(() => hint.classList.add('is-shown'), 80);
+
+      return stage;
     }
 
     function spawnParticle() {
-      if (!overlayEl) return;
-      const container = overlayEl.querySelector('.kameha-particles');
+      if (!stageEl) return;
+      const container = stageEl.querySelector('.kameha-particles');
       if (!container) return;
+
       const p = document.createElement('span');
       p.className = 'kameha-particle';
+
+      // Particule part d'un point random au-dessus du bas-centre puis spirale vers l'orb
+      const orbRect = stageEl.querySelector('.kameha-orb').getBoundingClientRect();
+      const orbX = orbRect.left + orbRect.width / 2;
+      const orbY = orbRect.top + orbRect.height / 2;
+
+      // Position de départ : autour, dans un rayon de 200-350px
       const angle = Math.random() * Math.PI * 2;
-      const distance = 80 + Math.random() * 60;
-      p.style.setProperty('--px', Math.cos(angle) * distance + 'px');
-      p.style.setProperty('--py', -Math.abs(Math.sin(angle) * distance) - 50 + 'px');
-      p.style.left = (Math.random() * 40 - 20) + 'px';
-      p.style.top = (Math.random() * 40 - 20) + 'px';
+      const radius = 200 + Math.random() * 200;
+      const startX = orbX + Math.cos(angle) * radius;
+      const startY = orbY + Math.sin(angle) * radius;
+
+      // Position fixed pour précision
+      p.style.position = 'fixed';
+      p.style.left = startX + 'px';
+      p.style.top = startY + 'px';
+
+      // Cible : centre de l'orb (translate négatif depuis la position de départ)
+      p.style.setProperty('--px-from', '0px');
+      p.style.setProperty('--py-from', '0px');
+
+      // Anim : on translate à la fin vers (orbX - startX, orbY - startY)
+      const dx = orbX - startX;
+      const dy = orbY - startY;
+      p.style.transition = 'none';
+      p.style.transform = 'translate(0, 0) scale(1)';
+      p.style.opacity = '0';
+
+      // Couleur random parmi cyan/blanc/bleu
+      const colors = ['#ffffff', '#b4e6ff', '#40c4ff', '#0080ff'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      p.style.setProperty('--p-color', color);
+      p.style.background = color;
+      p.style.boxShadow = `0 0 8px ${color}, 0 0 16px ${color}`;
+
       container.appendChild(p);
-      setTimeout(() => p.remove(), 1200);
+
+      // Animation manuelle : fade in puis spirale vers la cible
+      requestAnimationFrame(() => {
+        p.style.transition = 'transform 0.8s steps(16), opacity 0.15s linear';
+        p.style.opacity = '1';
+        p.style.transform = `translate(${dx}px, ${dy}px) scale(0.4)`;
+      });
+
+      setTimeout(() => p.remove(), 900);
     }
 
     function updateProgress() {
@@ -420,69 +489,115 @@
       const elapsed = performance.now() - startTime;
       const progress = Math.min(elapsed / HOLD_DURATION, 1);
 
-      if (overlayEl) {
-        overlayEl.style.setProperty('--kameha-progress', progress);
+      if (stageEl) {
+        stageEl.style.setProperty('--kameha-progress', progress);
+      }
+
+      // Reveal syllables en fonction du progress (1 syllabe toutes les ~600ms)
+      const syllableIdx = Math.min(Math.floor(progress * SYLLABLES.length), SYLLABLES.length - 1);
+      if (syllableIdx > lastSyllable && stageEl) {
+        const span = stageEl.querySelector('.kameha-chant-syllable[data-idx="' + syllableIdx + '"]');
+        if (span) span.classList.add('is-shown');
+        lastSyllable = syllableIdx;
       }
 
       if (progress >= 1) {
-        triggerKamehameha();
+        releaseBeam();
         return;
       }
       rafId = requestAnimationFrame(updateProgress);
     }
 
     function startCharging() {
-      if (isCharging) return;
+      if (isCharging || isReleasing) return;
       isCharging = true;
       startTime = performance.now();
+      lastSyllable = -1;
 
-      overlayEl = createOverlay();
-      document.body.appendChild(overlayEl);
-      // force reflow then add charging class
-      void overlayEl.offsetWidth;
-      overlayEl.classList.add('is-charging');
+      stageEl = buildStage();
+      document.body.appendChild(stageEl);
 
-      particleInterval = setInterval(spawnParticle, 60);
+      particleInterval = setInterval(spawnParticle, 50);
       rafId = requestAnimationFrame(updateProgress);
     }
 
     function cancelCharging() {
-      if (!isCharging) return;
+      if (!isCharging || isReleasing) return;
       isCharging = false;
       cancelAnimationFrame(rafId);
       clearInterval(particleInterval);
-      if (overlayEl) {
-        overlayEl.classList.remove('is-charging');
-        const el = overlayEl;
-        setTimeout(() => el.remove(), 200);
-        overlayEl = null;
+      if (stageEl) {
+        // Petit "absorption inverse" : la boule s'efface
+        stageEl.style.opacity = '0';
+        stageEl.style.transition = 'opacity 0.3s';
+        const el = stageEl;
+        setTimeout(() => el.remove(), 320);
+        stageEl = null;
       }
     }
 
-    function triggerKamehameha() {
-      cancelCharging();
+    function releaseBeam() {
+      isCharging = false;
+      isReleasing = true;
+      cancelAnimationFrame(rafId);
+      clearInterval(particleInterval);
 
-      // Flash blanc
-      const flash = document.createElement('div');
-      flash.className = 'kameha-flash';
-      document.body.appendChild(flash);
-      setTimeout(() => flash.remove(), 800);
+      // 1) Texte "HAAAA!" massif qui flashe
+      const shout = document.createElement('div');
+      shout.className = 'kameha-shout';
+      shout.textContent = 'HAAAAA!';
+      document.body.appendChild(shout);
 
-      // Onde de choc
-      const wave = document.createElement('div');
-      wave.className = 'kameha-shockwave';
-      document.body.appendChild(wave);
-      setTimeout(() => wave.remove(), 1100);
+      // 2) Le beam horizontal
+      const beamWrap = document.createElement('div');
+      beamWrap.className = 'kameha-beam-wrap';
+      const beam = document.createElement('div');
+      beam.className = 'kameha-beam';
+      beamWrap.appendChild(beam);
+      document.body.appendChild(beamWrap);
 
-      // Popup OG après l'animation
+      // 3) Screen shake
+      document.body.classList.add('kameha-shaking');
+
+      // 4) Sparkles le long du beam (15 paillettes pixel art)
       setTimeout(() => {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const sparkle = document.createElement('span');
+            sparkle.className = 'kameha-sparkle';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = (Math.random() * 100) + 'vw';
+            sparkle.style.bottom = (12 + Math.random() * 8) + 'vh';
+            sparkle.style.setProperty('--sx', (Math.random() * 60 - 30) + 'px');
+            sparkle.style.setProperty('--sy', (Math.random() * 60 - 30) + 'px');
+            sparkle.style.zIndex = '99999';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 700);
+          }, i * 30);
+        }
+      }, 200);
+
+      // 5) Flash blanc final (au pic du beam)
+      setTimeout(() => {
+        const flash = document.createElement('div');
+        flash.className = 'kameha-flash';
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 600);
+      }, 500);
+
+      // 6) Cleanup + popup OG
+      setTimeout(() => {
+        document.body.classList.remove('kameha-shaking');
+        if (stageEl) { stageEl.remove(); stageEl = null; }
+        shout.remove();
+        beamWrap.remove();
+        isReleasing = false;
         if (window.CardsTradingEggs) {
           window.CardsTradingEggs.trigger('kamehameha');
         }
-      }, 750);
+      }, 1200);
     }
 
-    // Ignorer si l'user tape dans un input/textarea/contenteditable
     function isTyping() {
       const el = document.activeElement;
       if (!el) return false;
@@ -493,8 +608,8 @@
     document.addEventListener('keydown', function (e) {
       if (e.code !== 'Space' && e.key !== ' ') return;
       if (isTyping()) return;
-      if (e.repeat) return; // ignore autorépétition (déjà charging)
-      e.preventDefault(); // évite le scroll page sur Space
+      if (e.repeat) return;
+      e.preventDefault();
       startCharging();
     });
 
@@ -504,7 +619,6 @@
       cancelCharging();
     });
 
-    // Si la fenêtre perd le focus, annuler proprement
     window.addEventListener('blur', cancelCharging);
   }
 

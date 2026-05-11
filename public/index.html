@@ -95,7 +95,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="landing.css" />
@@ -978,14 +978,34 @@
 
 <!-- smooth scroll -->
 <script>
-  /* Unified scroller — scroll-padding-top on <html> handles the sticky header offset */
+  /**
+   * Unified scroller — calcule manuellement la position cible pour éviter
+   * les bugs mobile de scrollIntoView({behavior:'smooth'}) (iOS Safari < 15.4)
+   * et de scroll-padding-top (parfois ignoré pendant une transition CSS active).
+   */
   function smoothScrollTo(target, hash) {
     if (!target) return;
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (hash) history.pushState(null, '', '#' + hash);
+    var headerStyle = getComputedStyle(document.documentElement);
+    var headerHeight = parseInt(headerStyle.getPropertyValue('--header-height'), 10) || 60;
+    var rect = target.getBoundingClientRect();
+    var absoluteY = rect.top + window.pageYOffset - headerHeight - 8;
+    /* Clamp pour éviter scroll négatif */
+    absoluteY = Math.max(0, absoluteY);
+
+    try {
+      window.scrollTo({ top: absoluteY, behavior: 'smooth' });
+    } catch (e) {
+      /* Fallback iOS Safari très ancien — pas de smooth, mais ça scrolle */
+      window.scrollTo(0, absoluteY);
+    }
+    if (hash) history.replaceState(null, '', '#' + hash);
   }
 
-  /* Anchor links — if mobile menu is open, wait for its transitionend before scrolling */
+  /**
+   * Anchor links — ferme le menu mobile puis scroll avec délai fixe
+   * (transitionend non fiable sur Safari iOS, on utilise un timeout matchant
+   * la durée CSS de slide-out : 0.35s + 30ms buffer).
+   */
   document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
       var hash = link.getAttribute('href').split('#')[1];
@@ -999,25 +1019,11 @@
       var isMenuOpen = hamburger && hamburger.classList.contains('open');
 
       if (isMenuOpen) {
+        /* Ferme le menu (slide-out) puis scroll après la transition CSS */
         hamburger.classList.remove('open');
         nav.classList.remove('mobile-open');
         hamburger.setAttribute('aria-expanded', 'false');
-        /* Wait for CSS slide-out (0.35s); setTimeout fallback for iOS Safari */
-        var fired = false;
-        var doScroll = function() {
-          if (fired) return;
-          fired = true;
-          smoothScrollTo(target, hash);
-        };
-        nav.addEventListener('transitionend', function handler(e) {
-          /* Filtrer les transitions des enfants (color, opacity…) qui
-             bubblent et fire avant le transform du nav — sinon le scroll
-             se déclenche alors que le menu est encore en train de glisser */
-          if (e.target !== nav) return;
-          nav.removeEventListener('transitionend', handler);
-          doScroll();
-        });
-        setTimeout(doScroll, 400); /* fallback if transitionend never fires */
+        setTimeout(function () { smoothScrollTo(target, hash); }, 380);
       } else {
         smoothScrollTo(target, hash);
       }

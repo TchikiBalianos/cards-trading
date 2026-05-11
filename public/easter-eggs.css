@@ -398,184 +398,317 @@
 }
 
 /* =========================================================
-   EASTER EGG #2 : KAMEHAMEHA (hold spacebar 3s)
+   EASTER EGG #2 : KAMEHAMEHA — Pixel-art DBZ style
+   Hold spacebar 3s → charge énergie → beam horizontal
    ========================================================= */
-.kameha-overlay {
+
+/* Conteneur fullscreen — pas de pointer events, n'interfère pas avec la page */
+.kameha-stage {
   position: fixed;
   inset: 0;
   z-index: 99996;
   pointer-events: none;
+  overflow: hidden;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+}
+
+/* Vignette / assombrissement */
+.kameha-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 80%,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(0, 0, 0, 0.55) 75%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  opacity: var(--kameha-progress, 0);
+  transition: opacity 0.1s linear;
+}
+
+/* Container central — bottom center, "first person POV" cupped hands */
+.kameha-hands-wrap {
+  position: absolute;
+  bottom: max(8vh, 60px);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  gap: 0;
 }
 
-.kameha-overlay.is-charging {
-  opacity: 1;
-}
-
-/* Aura bleue qui pulse en fond */
-.kameha-aura {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 600px;
-  height: 600px;
-  transform: translate(-50%, -50%) scale(var(--kameha-progress, 0));
-  background: radial-gradient(
-    circle,
-    rgba(64, 196, 255, 0.4) 0%,
-    rgba(64, 196, 255, 0.2) 30%,
-    rgba(64, 196, 255, 0.05) 60%,
-    transparent 75%
-  );
-  border-radius: 50%;
-  filter: blur(40px);
-  pointer-events: none;
-  transition: transform 0.1s linear;
-  animation: kameha-aura-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes kameha-aura-pulse {
-  0%, 100% { opacity: 0.7; }
-  50%      { opacity: 1; }
-}
-
-/* Anneau de progression SVG */
-.kameha-ring-wrap {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  filter:
-    drop-shadow(0 0 12px rgba(64, 196, 255, 0.8))
-    drop-shadow(0 0 24px rgba(64, 196, 255, 0.5));
-}
-
-.kameha-ring-bg {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.08);
-  stroke-width: 6;
-}
-
-.kameha-ring-fg {
-  fill: none;
-  stroke: url(#kameha-grad);
-  stroke-width: 6;
-  stroke-linecap: round;
-  stroke-dasharray: 471.24; /* 2 * PI * 75 */
-  stroke-dashoffset: calc(471.24 - (471.24 * var(--kameha-progress, 0)));
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  transition: stroke-dashoffset 0.05s linear;
-}
-
-/* Sphère d'énergie au centre */
+/* Boule d'énergie pixel-art : pas de gradient lisse, juste 5 anneaux concentriques durs */
 .kameha-orb {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(80px + 60px * var(--kameha-progress, 0));
-  height: calc(80px + 60px * var(--kameha-progress, 0));
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle at 30% 30%,
-    #ffffff 0%,
-    #d4f1ff 25%,
-    #40c4ff 50%,
-    #0080ff 80%,
-    transparent 100%
-  );
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
   border-radius: 50%;
+  /* Anneaux concentriques en hard-step via box-shadow successifs (rendu pixel art) */
   box-shadow:
-    0 0 40px rgba(64, 196, 255, 0.9),
-    0 0 80px rgba(64, 196, 255, 0.6),
-    inset -10px -10px 30px rgba(0, 80, 200, 0.3);
-  animation: kameha-orb-spin 1s linear infinite;
+    0 0 0 8px #b4e6ff,
+    0 0 0 16px #40c4ff,
+    0 0 0 24px #0080ff,
+    0 0 0 32px #003e7d,
+    0 0 24px 36px rgba(64, 196, 255, 0.5),
+    0 0 48px 50px rgba(64, 196, 255, 0.25);
+  transform: scale(calc(0.5 + 2 * var(--kameha-progress, 0)));
+  transition: transform 0.1s linear;
+  animation: kameha-orb-flicker 0.12s steps(2) infinite;
 }
 
-@keyframes kameha-orb-spin {
-  0%   { background-position: 0% 0%; transform: translate(-50%, -50%) rotate(0deg); }
-  100% { background-position: 100% 100%; transform: translate(-50%, -50%) rotate(360deg); }
+@keyframes kameha-orb-flicker {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.4) hue-rotate(-10deg); }
 }
 
-/* Particules d'énergie qui montent */
+/* "Mains" pixel-art : 2 rectangles bleus en V inversé sous la boule */
+.kameha-hands {
+  position: relative;
+  width: 80px;
+  height: 40px;
+  margin-top: 16px;
+}
+
+.kameha-hand {
+  position: absolute;
+  bottom: 0;
+  width: 26px;
+  height: 36px;
+  background: #1a2a3e;
+  border: 3px solid #2997ff;
+  box-shadow:
+    inset 0 0 0 2px #07111f,
+    0 0 12px rgba(41, 151, 255, 0.6);
+}
+
+.kameha-hand-left  { left: 0;  transform: rotate(-25deg); transform-origin: bottom right; }
+.kameha-hand-right { right: 0; transform: rotate( 25deg); transform-origin: bottom left;  }
+
+/* Particules pixel-art : carrés qui spirale vers la boule */
 .kameha-particles {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
+  inset: 0;
   pointer-events: none;
 }
 
 .kameha-particle {
   position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--p-color, #40c4ff);
+  box-shadow: 0 0 8px var(--p-color, #40c4ff);
+  /* Pas d'antialiasing — pixel net */
+  image-rendering: pixelated;
+  /* Spirale vers le centre (orb) avec step timing pour effet stop-motion */
+  animation: kameha-particle-spiral 1s steps(20) forwards;
+}
+
+@keyframes kameha-particle-spiral {
+  0%   { transform: translate(var(--px-from, 100px), var(--py-from, -100px)) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translate(0, 0) scale(0); opacity: 1; }
+}
+
+/* Texte pixel-art "KA·ME·HA·ME·HA" — chant pendant la charge */
+.kameha-chant {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  font-size: clamp(20px, 4vw, 36px);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-shadow:
+    3px 3px 0 #0080ff,
+    -1px -1px 0 #0080ff,
+    1px -1px 0 #0080ff,
+    -1px 1px 0 #0080ff,
+    0 0 16px rgba(64, 196, 255, 0.9);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  image-rendering: pixelated;
+}
+
+.kameha-chant-syllable {
+  opacity: 0;
+  transform: translateY(8px) scale(0.7);
+  display: inline-block;
+}
+
+.kameha-chant-syllable.is-shown {
+  animation: kameha-syllable-pop 0.3s steps(6) forwards;
+}
+
+@keyframes kameha-syllable-pop {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.7); }
+  60%  { opacity: 1; transform: translateY(-4px) scale(1.15); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Texte "HAAAA!" massif à la release */
+.kameha-shout {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: clamp(48px, 12vw, 140px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-shadow:
+    6px 6px 0 #ff0040,
+    -2px -2px 0 #ff0040,
+    2px -2px 0 #ff0040,
+    -2px 2px 0 #ff0040,
+    0 0 40px rgba(255, 80, 100, 0.8),
+    0 0 80px rgba(255, 255, 255, 0.6);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  z-index: 99998;
+  pointer-events: none;
+  animation: kameha-shout-anim 0.9s steps(8) forwards;
+  image-rendering: pixelated;
+  white-space: nowrap;
+}
+
+@keyframes kameha-shout-anim {
+  0%   { transform: translate(-50%, -50%) scale(0)   rotate(-6deg); opacity: 0; }
+  30%  { transform: translate(-50%, -50%) scale(1.3) rotate( 2deg); opacity: 1; }
+  60%  { transform: translate(-50%, -50%) scale(1)   rotate(-2deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.4) rotate( 0deg); opacity: 0; }
+}
+
+/* ── LE BEAM ────────────────────────────────────────────── */
+/* Horizontal, traverse l'écran, multi-couches pixel-art */
+.kameha-beam-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99997;
+  overflow: hidden;
+}
+
+.kameha-beam {
+  position: absolute;
+  bottom: 12vh;
+  left: 50%;
+  height: 0;
+  width: 0;
+  /* Le beam grossit en width via animation */
+  transform: translate(-50%, 50%);
+  background:
+    /* Stripes verticales hautes fréquence (pixel art shimmer) */
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.3) 0px,
+      transparent 4px,
+      rgba(255, 255, 255, 0.3) 8px,
+      transparent 12px
+    ),
+    /* Halo cyan extérieur */
+    linear-gradient(180deg,
+      transparent 0%,
+      rgba(64, 196, 255, 0.1) 15%,
+      rgba(64, 196, 255, 0.4) 30%,
+      rgba(180, 230, 255, 0.85) 45%,
+      #ffffff 50%,
+      rgba(180, 230, 255, 0.85) 55%,
+      rgba(64, 196, 255, 0.4) 70%,
+      rgba(64, 196, 255, 0.1) 85%,
+      transparent 100%
+    );
+  background-size: 16px 100%, 100% 100%;
+  box-shadow:
+    0 0 40px rgba(64, 196, 255, 0.9),
+    0 0 100px rgba(64, 196, 255, 0.6),
+    0 0 200px rgba(64, 196, 255, 0.3);
+  animation: kameha-beam-fire 0.9s steps(20) forwards;
+}
+
+@keyframes kameha-beam-fire {
+  0%   { width: 0;    height: 0;   }
+  20%  { width: 60vw; height: 80px;  }
+  50%  { width: 100vw; height: 160px; }
+  80%  { width: 100vw; height: 200px; }
+  100% { width: 100vw; height: 60px;  opacity: 0.4; }
+}
+
+/* Sparkles pixel art le long du beam */
+.kameha-sparkle {
+  position: absolute;
   width: 6px;
   height: 6px;
-  background: linear-gradient(135deg, #ffffff, #40c4ff);
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(64, 196, 255, 0.9);
-  animation: kameha-particle-rise 1.2s ease-out forwards;
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff, 0 0 16px #40c4ff;
+  animation: kameha-sparkle-anim 0.6s steps(8) forwards;
 }
 
-@keyframes kameha-particle-rise {
-  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--px, 0), var(--py, -200px)) scale(0); opacity: 0; }
+@keyframes kameha-sparkle-anim {
+  0%   { transform: translate(0, 0) scale(0); opacity: 1; }
+  50%  { transform: translate(0, 0) scale(2); opacity: 1; }
+  100% { transform: translate(var(--sx, 0), var(--sy, 0)) scale(0); opacity: 0; }
 }
 
-/* Flash final + onde de choc */
+/* Flash blanc final */
 .kameha-flash {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #ffffff 0%, #40c4ff 30%, transparent 70%);
+  background: #ffffff;
   z-index: 99998;
   pointer-events: none;
   opacity: 0;
-  animation: kameha-flash-anim 0.7s ease-out forwards;
+  animation: kameha-flash-anim 0.5s steps(6) forwards;
 }
 
 @keyframes kameha-flash-anim {
   0%   { opacity: 0; }
-  20%  { opacity: 1; }
+  30%  { opacity: 0.95; }
   100% { opacity: 0; }
 }
 
-.kameha-shockwave {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border: 4px solid rgba(64, 196, 255, 0.9);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  z-index: 99997;
-  pointer-events: none;
-  animation: kameha-shockwave-anim 1s ease-out forwards;
-  box-shadow: 0 0 40px rgba(64, 196, 255, 0.8);
+/* Screen shake — appliqué sur <body> pendant la release */
+@keyframes kameha-shake {
+  0%, 100% { transform: translate(0, 0); }
+  10%      { transform: translate(-4px, -2px); }
+  20%      { transform: translate( 5px,  3px); }
+  30%      { transform: translate(-3px,  4px); }
+  40%      { transform: translate( 4px, -3px); }
+  50%      { transform: translate(-5px, -1px); }
+  60%      { transform: translate( 3px,  4px); }
+  70%      { transform: translate(-4px,  2px); }
+  80%      { transform: translate( 4px, -4px); }
+  90%      { transform: translate(-2px,  3px); }
 }
 
-@keyframes kameha-shockwave-anim {
-  0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 12px; }
-  100% { transform: translate(-50%, -50%) scale(120); opacity: 0; border-width: 1px; }
+body.kameha-shaking {
+  animation: kameha-shake 0.5s steps(4) infinite;
 }
 
-/* Hint discret au démarrage du hold (les ~500 premiers ms) */
+/* Hint discret "Hold SPACE" */
 .kameha-hint {
   position: absolute;
-  bottom: -40px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.85);
-  font-family: 'Google Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 0 #0080ff, 0 0 12px rgba(64, 196, 255, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
+
+.kameha-hint.is-shown { opacity: 1; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 480px) {
