@@ -365,15 +365,23 @@
 
   // ─────────────────────────────────────────────────────────
   // EASTER EGG #2 : KAMEHAMEHA — pixel art VFX sprite style
-  // Boule d'énergie pixel à gauche → beam horizontal pixel art
-  // → impact pixel art à droite → flash → popup OG
+  //
+  // Mécanique :
+  // 1. SILENT PHASE (0-3s) : l'utilisateur maintient SPACE, rien ne s'affiche
+  //    (phase de "discovery" — il faut commitement pour découvrir l'egg)
+  // 2. CHARGE PHASE (3s-4.2s) : animation de charge visible (orb grandit, Goku
+  //    apparaît, particules convergent)
+  // 3. RELEASE : beam horizontal pixel art, impact, popup OG
   // ─────────────────────────────────────────────────────────
   function initKamehameha() {
-    const HOLD_DURATION = 3000;
+    const SILENT_DURATION = 3000; // 3s de hold silencieux requis
+    const CHARGE_DURATION = 1200; // 1.2s de charge visible avant beam
 
+    let isHolding = false;
     let isCharging = false;
     let isReleasing = false;
-    let startTime = 0;
+    let silentTimer = null;
+    let chargeStart = 0;
     let stageEl = null;
     let rafId = null;
     let particleInterval = null;
@@ -462,8 +470,8 @@
 
     function updateProgress() {
       if (!isCharging) return;
-      const elapsed = performance.now() - startTime;
-      const progress = Math.min(elapsed / HOLD_DURATION, 1);
+      const elapsed = performance.now() - chargeStart;
+      const progress = Math.min(elapsed / CHARGE_DURATION, 1);
 
       if (stageEl) {
         stageEl.style.setProperty('--kameha-progress', progress);
@@ -476,32 +484,76 @@
       rafId = requestAnimationFrame(updateProgress);
     }
 
+    /**
+     * Phase 1 : déclenchée au keydown. On démarre un timer silencieux de
+     * SILENT_DURATION. Si l'utilisateur tient SPACE jusqu'au bout, la phase
+     * de charge visible commence. Sinon (release prématuré), rien ne se passe.
+     */
+    function startHold() {
+      if (isHolding || isCharging || isReleasing) return;
+      isHolding = true;
+
+      if (window.OG_DEBUG) {
+        console.log('%c[Kamehameha] silent hold démarré (3s requis)', 'color:#888');
+      }
+
+      silentTimer = setTimeout(() => {
+        silentTimer = null;
+        if (!isHolding) return; // safety : déjà relâché
+        startCharging();
+      }, SILENT_DURATION);
+    }
+
+    /**
+     * Phase 2 : démarre l'animation visible après la phase silencieuse.
+     */
     function startCharging() {
       if (isCharging || isReleasing) return;
       isCharging = true;
-      startTime = performance.now();
+      chargeStart = performance.now();
+
+      if (window.OG_DEBUG) {
+        console.log('%c[Kamehameha] ⚡ charge visible démarrée !', 'color:#40c4ff;font-weight:bold');
+      }
+
       stageEl = buildStage();
       document.body.appendChild(stageEl);
       particleInterval = setInterval(spawnParticle, 40);
       rafId = requestAnimationFrame(updateProgress);
     }
 
-    function cancelCharging() {
-      if (!isCharging || isReleasing) return;
-      isCharging = false;
-      cancelAnimationFrame(rafId);
-      clearInterval(particleInterval);
-      if (stageEl) {
-        // Fade out la stage (annulation)
-        stageEl.style.transition = 'opacity 0.25s steps(5)';
-        stageEl.style.opacity = '0';
-        const el = stageEl;
-        setTimeout(() => el.remove(), 280);
-        stageEl = null;
+    /**
+     * Cancel propre : appelé au keyup, gère les 2 phases possibles.
+     */
+    function cancelHold() {
+      if (isReleasing) return; // ne pas interrompre le release en cours
+
+      isHolding = false;
+
+      // Cancel pendant la phase silencieuse : rien à nettoyer visuellement
+      if (silentTimer) {
+        clearTimeout(silentTimer);
+        silentTimer = null;
+        return;
+      }
+
+      // Cancel pendant la phase charge visible
+      if (isCharging) {
+        isCharging = false;
+        cancelAnimationFrame(rafId);
+        clearInterval(particleInterval);
+        if (stageEl) {
+          stageEl.style.transition = 'opacity 0.25s steps(5)';
+          stageEl.style.opacity = '0';
+          const el = stageEl;
+          setTimeout(() => el.remove(), 280);
+          stageEl = null;
+        }
       }
     }
 
     function releaseBeam() {
+      isHolding = false;
       isCharging = false;
       isReleasing = true;
       cancelAnimationFrame(rafId);
@@ -611,16 +663,16 @@
       if (isTyping()) return;
       if (e.repeat) return;
       e.preventDefault();
-      startCharging();
+      startHold();
     });
 
     document.addEventListener('keyup', function (e) {
       if (e.code !== 'Space' && e.key !== ' ') return;
       if (isTyping()) return;
-      cancelCharging();
+      cancelHold();
     });
 
-    window.addEventListener('blur', cancelCharging);
+    window.addEventListener('blur', cancelHold);
   }
 
   // ─────────────────────────────────────────────────────────
