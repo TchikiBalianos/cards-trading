@@ -885,6 +885,216 @@
 }
 
 /* =========================================================
+   EASTER EGG #3 : MYTHIC RARE — carte cachée dans le wall
+   Inspiré simeydotme/pokemon-cards-css (conic-gradient holo)
+   ========================================================= */
+.card.is-mythic {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  transform-style: preserve-3d;
+}
+
+/* Tilt 3D au hover (driven par JS via --rx/--ry) */
+.card.is-mythic:hover {
+  z-index: 10;
+  transform: perspective(800px) rotateX(var(--rx)) rotateY(var(--ry)) scale(1.06);
+}
+
+/* Pulse subtil pour signaler que la carte est "spéciale" sans la révéler trop fort */
+.card.is-mythic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s;
+  animation: mythic-idle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes mythic-idle-pulse {
+  0%, 100% { opacity: 0.15; }
+  50%      { opacity: 0.35; }
+}
+
+/* Effet holographique au hover */
+.card.is-mythic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    /* Sparkles haute fréquence */
+    repeating-linear-gradient(
+      115deg,
+      transparent 0%, transparent 6%,
+      rgba(255, 255, 255, 0.4) 6.5%, transparent 7%,
+      transparent 13%
+    ),
+    /* Halo conique multi-couleurs centré sur la souris */
+    radial-gradient(
+      circle at var(--mx) var(--my),
+      hsla(0,  100%, 70%, 0.6) 0%,
+      hsla(60, 100%, 70%, 0.55) 12%,
+      hsla(120,100%, 70%, 0.5) 24%,
+      hsla(180,100%, 70%, 0.55) 36%,
+      hsla(240,100%, 70%, 0.6) 48%,
+      hsla(300,100%, 70%, 0.55) 60%,
+      hsla(360,100%, 70%, 0.5) 72%,
+      transparent 85%
+    );
+  mix-blend-mode: color-dodge;
+  filter: brightness(0.9) contrast(1.4) saturate(1.5);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.25s;
+}
+
+.card.is-mythic:hover::before {
+  opacity: 0.5;
+}
+
+.card.is-mythic:hover::after {
+  opacity: 1;
+}
+
+/* État "discovered" (déjà claimed) : on garde le glow doré subtil mais
+   plus le full holo pour ne pas spoiler aux visiteurs suivants */
+.card.is-mythic.is-discovered::after {
+  opacity: 0;
+}
+
+/* =========================================================
+   EASTER EGG #4 : IDLE WATCHER — peek depuis le coin
+   ========================================================= */
+.idle-peek {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 80px;
+  height: 110px;
+  background: linear-gradient(135deg, #2997ff 0%, #a855f7 100%);
+  border-radius: 8px;
+  border: 3px solid #ffd700;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 24px rgba(255, 215, 0, 0.4),
+    inset 0 0 12px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  z-index: 99990;
+  transform: translateX(120%) rotate(15deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  color: #fff;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.idle-peek.is-shown {
+  transform: translateX(0) rotate(-6deg);
+  animation: idle-peek-bob 1.5s ease-in-out infinite alternate;
+}
+
+.idle-peek.is-leaving {
+  transform: translateX(120%) rotate(15deg);
+  animation: none;
+}
+
+@keyframes idle-peek-bob {
+  0%   { transform: translateX(0) rotate(-6deg) translateY(0); }
+  100% { transform: translateX(0) rotate(-3deg) translateY(-6px); }
+}
+
+.idle-peek-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.idle-peek-text {
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.idle-peek::before {
+  content: '?';
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  width: 28px;
+  height: 28px;
+  background: #ffd700;
+  color: #07111f;
+  border-radius: 50%;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  animation: idle-peek-question 0.8s steps(2) infinite;
+}
+
+@keyframes idle-peek-question {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+/* =========================================================
+   EASTER EGG #5 : LONG-PRESS CARD 3s (mobile-first)
+   Ring progress visible pendant le hold
+   ========================================================= */
+.longpress-ring {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #ffd700;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99996;
+  transform: translate(-50%, -50%);
+  animation: longpress-spin 3s linear forwards;
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));
+}
+
+@keyframes longpress-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg);    border-top-color: #ffd700; }
+  to   { transform: translate(-50%, -50%) rotate(1080deg); border-top-color: #ff9d00; }
+}
+
+/* =========================================================
+   EASTER EGG #6 : TRIPLE-TAP LOGO (mobile + desktop)
+   Visual feedback subtil sur chaque tap
+   ========================================================= */
+.logo-tap-pulse {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(64, 196, 255, 0.7);
+  pointer-events: none;
+  animation: logo-tap-anim 0.5s ease-out forwards;
+}
+
+@keyframes logo-tap-anim {
+  0%   { width: 0;    height: 0;    opacity: 1; transform: translate(-50%, -50%); }
+  100% { width: 100px; height: 100px; opacity: 0; transform: translate(-50%, -50%); }
+}
+
+/* =========================================================
    ACHIEVEMENTS PANEL — déclenché par Tab × 3
    Privacy-preserving : juste un compteur anonyme global
    ========================================================= */

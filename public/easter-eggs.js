@@ -22,6 +22,10 @@
   const EGG_LABELS = {
     'plus_one_game':  'Le jeu du +1 — sortie pile au compteur',
     'kamehameha':     'Kamehameha — barre espace tenue 3 secondes',
+    'mythic_rare':    'Mythic Rare — carte holographique cachée trouvée',
+    'idle_watcher':   'The Watcher — récompense pour les patients',
+    'long_press':     'Long Press — pression continue sur une carte',
+    'triple_tap_logo':'Triple Tap — logo tapoté en rythme',
     'pull_rate':      'Pull Rate du jour — drop holographique attrapé',
     'speedrun':       'Speedrun — combo en moins de 10 secondes',
     'booster_pack':   'Booster Pack secret — ouvert depuis le logo',
@@ -808,13 +812,301 @@
   }
 
   // ─────────────────────────────────────────────────────────
+  // EASTER EGG #3 : MYTHIC RARE — carte cachée dans le card wall
+  // Une carte aléatoire (par session) a un effet holographique au hover.
+  // Click = egg unlocked.
+  // ─────────────────────────────────────────────────────────
+  function initMythicRare() {
+    const cards = document.querySelectorAll('.anim .card');
+    if (cards.length === 0) return;
+
+    // Persistance par session : la même carte reste mythique tant que
+    // l'onglet est ouvert (sinon ce serait trop frustrant à retrouver)
+    let mythicIdx;
+    try {
+      const stored = sessionStorage.getItem('ct-mythic-idx');
+      mythicIdx = stored !== null ? parseInt(stored, 10) : null;
+    } catch (e) { mythicIdx = null; }
+
+    if (mythicIdx === null || isNaN(mythicIdx) || mythicIdx >= cards.length) {
+      mythicIdx = Math.floor(Math.random() * cards.length);
+      try { sessionStorage.setItem('ct-mythic-idx', String(mythicIdx)); }
+      catch (e) { /* private mode */ }
+    }
+
+    const mythicCard = cards[mythicIdx];
+    mythicCard.classList.add('is-mythic');
+
+    // Si déjà claim, on ajoute la classe is-discovered (effet moins fort)
+    if (isClaimed('mythic_rare')) {
+      mythicCard.classList.add('is-discovered');
+    }
+
+    // Mouse tracking pour l'effet 3D holo (driven par CSS variables)
+    mythicCard.addEventListener('mousemove', function (e) {
+      const rect = mythicCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xPct = (x / rect.width) * 100;
+      const yPct = (y / rect.height) * 100;
+      // Tilt 3D max ±10°
+      const rx = ((y / rect.height) - 0.5) * -10;
+      const ry = ((x / rect.width) - 0.5) *  10;
+      mythicCard.style.setProperty('--mx', xPct + '%');
+      mythicCard.style.setProperty('--my', yPct + '%');
+      mythicCard.style.setProperty('--rx', rx + 'deg');
+      mythicCard.style.setProperty('--ry', ry + 'deg');
+    });
+
+    mythicCard.addEventListener('mouseleave', function () {
+      mythicCard.style.setProperty('--rx', '0deg');
+      mythicCard.style.setProperty('--ry', '0deg');
+    });
+
+    // Click = trigger egg
+    mythicCard.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.CardsTradingEggs) {
+        const triggered = window.CardsTradingEggs.trigger('mythic_rare');
+        if (triggered) {
+          // Marquer comme discovered visuellement après le claim
+          setTimeout(function () {
+            mythicCard.classList.add('is-discovered');
+          }, 100);
+        }
+      }
+    });
+
+    // Cursor pointer pour signaler que c'est cliquable
+    mythicCard.style.cursor = 'pointer';
+
+    if (window.OG_DEBUG) {
+      console.log('%c[Mythic Rare] carte #' + (mythicIdx + 1) + ' choisie comme mythic (session)', 'color:#ffd700');
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // EASTER EGG #4 : IDLE WATCHER — peek après 60s d'inactivité
+  // Récompense les "lurkers" qui restent sur la page sans bouger.
+  // Mobile-friendly : touchstart compte comme activité.
+  // ─────────────────────────────────────────────────────────
+  function initIdleWatcher() {
+    const IDLE_THRESHOLD = 60000; // 60s avant le peek
+    const PEEK_VISIBLE_MS = 5000; // 5s pour attraper
+
+    let idleTimer = null;
+    let peekEl = null;
+
+    function resetIdle() {
+      if (isClaimed('idle_watcher')) return;
+      clearTimeout(idleTimer);
+      // Si le peek est visible, ne pas le re-cacher juste parce qu'on a bougé
+      if (peekEl) return;
+      idleTimer = setTimeout(showPeek, IDLE_THRESHOLD);
+    }
+
+    function showPeek() {
+      if (peekEl) return;
+      peekEl = document.createElement('div');
+      peekEl.className = 'idle-peek';
+      peekEl.setAttribute('aria-label', 'Easter egg caché');
+      peekEl.setAttribute('role', 'button');
+      peekEl.tabIndex = 0;
+      peekEl.innerHTML = `
+        <div class="idle-peek-icon">🎴</div>
+        <div class="idle-peek-text">CLICK<br>ME</div>
+      `;
+      document.body.appendChild(peekEl);
+      requestAnimationFrame(function () { peekEl.classList.add('is-shown'); });
+
+      // Auto-hide après PEEK_VISIBLE_MS
+      const autoHide = setTimeout(hidePeek, PEEK_VISIBLE_MS);
+
+      function onClaim(e) {
+        e.preventDefault();
+        clearTimeout(autoHide);
+        if (window.CardsTradingEggs) {
+          window.CardsTradingEggs.trigger('idle_watcher');
+        }
+        hidePeek();
+      }
+
+      peekEl.addEventListener('click', onClaim);
+      peekEl.addEventListener('touchend', onClaim, { passive: false });
+
+      if (window.OG_DEBUG) {
+        console.log('%c[Idle Watcher] 🎴 peek apparaît (5s pour cliquer)', 'color:#ffd700;font-weight:bold');
+      }
+    }
+
+    function hidePeek() {
+      if (!peekEl) return;
+      peekEl.classList.add('is-leaving');
+      peekEl.classList.remove('is-shown');
+      const el = peekEl;
+      setTimeout(function () { el.remove(); }, 700);
+      peekEl = null;
+      // Redémarrer le timer pour re-peek plus tard (sauf si claim)
+      if (!isClaimed('idle_watcher')) {
+        resetIdle();
+      }
+    }
+
+    // Events qui resettent l'idle timer
+    ['mousemove', 'touchstart', 'keydown', 'scroll', 'click'].forEach(function (evt) {
+      document.addEventListener(evt, resetIdle, { passive: true });
+    });
+
+    resetIdle();
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // EASTER EGG #5 : LONG-PRESS CARD 3s (mobile-first)
+  // Maintenir le doigt 3s sur une carte → ring de progress → trigger
+  // ─────────────────────────────────────────────────────────
+  function initLongPress() {
+    const HOLD_DURATION = 3000;
+    const MOVE_THRESHOLD = 20; // px max de mouvement autorisé
+
+    const cards = document.querySelectorAll('.anim .card');
+    if (cards.length === 0) return;
+
+    let pressTimer = null;
+    let ringEl = null;
+    let startX = 0;
+    let startY = 0;
+    let isPressing = false;
+
+    function getCoords(e) {
+      if (e.touches && e.touches.length > 0) {
+        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+      return { x: e.clientX, y: e.clientY };
+    }
+
+    function startPress(e) {
+      if (isPressing || isClaimed('long_press')) return;
+      const coords = getCoords(e);
+      startX = coords.x;
+      startY = coords.y;
+      isPressing = true;
+
+      // Ring visual au point de touch
+      ringEl = document.createElement('div');
+      ringEl.className = 'longpress-ring';
+      ringEl.style.left = startX + 'px';
+      ringEl.style.top = startY + 'px';
+      document.body.appendChild(ringEl);
+
+      pressTimer = setTimeout(function () {
+        // Timer expiré → trigger
+        cleanup();
+        if (window.CardsTradingEggs) {
+          window.CardsTradingEggs.trigger('long_press');
+        }
+      }, HOLD_DURATION);
+    }
+
+    function cancelPress() {
+      if (!isPressing) return;
+      cleanup();
+    }
+
+    function cleanup() {
+      isPressing = false;
+      if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+      if (ringEl) {
+        ringEl.style.transition = 'opacity 0.2s';
+        ringEl.style.opacity = '0';
+        const el = ringEl;
+        setTimeout(function () { el.remove(); }, 220);
+        ringEl = null;
+      }
+    }
+
+    function onMove(e) {
+      if (!isPressing) return;
+      const coords = getCoords(e);
+      const dx = Math.abs(coords.x - startX);
+      const dy = Math.abs(coords.y - startY);
+      if (dx > MOVE_THRESHOLD || dy > MOVE_THRESHOLD) {
+        cancelPress();
+      }
+    }
+
+    cards.forEach(function (card) {
+      // Touch events (mobile)
+      card.addEventListener('touchstart', startPress, { passive: true });
+      card.addEventListener('touchend', cancelPress);
+      card.addEventListener('touchcancel', cancelPress);
+      card.addEventListener('touchmove', onMove, { passive: true });
+
+      // Mouse events (desktop — utile pour tests)
+      card.addEventListener('mousedown', startPress);
+      card.addEventListener('mouseup', cancelPress);
+      card.addEventListener('mouseleave', cancelPress);
+    });
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // EASTER EGG #6 : TRIPLE-TAP LOGO (mobile + desktop)
+  // 3 taps rapides (< 800ms total) sur le logo header → trigger
+  // ─────────────────────────────────────────────────────────
+  function initTripleTapLogo() {
+    const logoLink = document.querySelector('header a[href="#"], header .logo, header [class*="logo"]');
+    const logoImg = document.querySelector('header img[alt="Cards Trading"]');
+    const target = logoImg ? logoImg.closest('a, .logo, [class*="logo"]') || logoImg : logoLink;
+
+    if (!target) return;
+
+    const TAP_WINDOW = 800;
+    let tapTimestamps = [];
+
+    function onTap(e) {
+      // Feedback visuel sur chaque tap
+      const rect = target.getBoundingClientRect();
+      const pulse = document.createElement('span');
+      pulse.className = 'logo-tap-pulse';
+      pulse.style.position = 'fixed';
+      pulse.style.left = (rect.left + rect.width / 2) + 'px';
+      pulse.style.top = (rect.top + rect.height / 2) + 'px';
+      document.body.appendChild(pulse);
+      setTimeout(function () { pulse.remove(); }, 600);
+
+      const now = performance.now();
+      tapTimestamps = tapTimestamps.filter(function (t) { return now - t < TAP_WINDOW; });
+      tapTimestamps.push(now);
+
+      if (tapTimestamps.length >= 3) {
+        tapTimestamps = [];
+        // Prevent default uniquement quand on déclenche pour éviter
+        // navigation/scroll involontaire mais laisser le 1er-2e tap normal
+        e.preventDefault();
+        if (window.CardsTradingEggs) {
+          window.CardsTradingEggs.trigger('triple_tap_logo');
+        }
+      }
+    }
+
+    target.addEventListener('click', onTap);
+
+    if (window.OG_DEBUG) {
+      console.log('%c[Triple-tap logo] listener installé sur', 'color:#ffd700', target);
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────
   // INIT
   // ─────────────────────────────────────────────────────────
   function init() {
     initPlusOneGame();
     initKamehameha();
+    initMythicRare();
+    initIdleWatcher();
+    initLongPress();
+    initTripleTapLogo();
     initAchievementsPanel();
-    // (autres easter eggs ajoutés plus tard)
   }
 
   if (document.readyState === 'loading') {
