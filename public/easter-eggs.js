@@ -403,10 +403,12 @@
      * Si l'image fait 404, onerror cache l'élément silencieusement.
      */
     function gokuSvgHTML() {
+      // ?v=2 : cache-bust nécessaire car Vercel sert avec Cache-Control: immutable
+      // (1 an) — bump cette version à chaque update du fichier PNG
       return `
         <div class="kameha-goku">
           <img
-            src="/assets/img/goku-kamehameha.png"
+            src="/assets/img/goku-kamehameha.png?v=2"
             alt=""
             onerror="this.parentElement.style.display='none'"
             draggable="false"
