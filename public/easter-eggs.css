@@ -478,49 +478,58 @@
 }
 
 /* ─────────────────────────────────────────────────────────
-   GOKU — SVG pixel art, mains collées à la gauche de la boule
-   viewBox -2 -2 36 44 (avec speed lines en x négatif)
-   Hands sont à x≈25 dans le sprite (sur 36 de large = 69%)
-   On positionne pour que les hands tombent à orb-left-edge (~18% - 48px)
+   GOKU — image PNG pixel art fournie par l'utilisateur
+   Chemin : /assets/img/goku-kamehameha.png (transparent PNG)
+   Hands du sprite à ~75-78% de la largeur de l'image
+   On positionne pour que les hands tombent à orb-left-edge
    ───────────────────────────────────────────────────────── */
 .kameha-goku {
   position: absolute;
   top: 50%;
-  left: calc(18% - 156px); /* offset calculé pour que les hands tombent à orb-left-edge */
-  transform: translate(0, -55%) scale(calc(0.7 + 0.4 * var(--kameha-progress, 0)));
+  /* hands à ~78% de 320px = 250px de la gauche de l'image
+     orb left edge à calc(18% - 48px)
+     donc sprite left à calc(18% - 48px - 250px) */
+  left: calc(18% - 298px);
+  transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0)));
   transform-origin: right center;
-  transition: transform 0.08s linear;
+  transition: transform 0.1s linear;
   z-index: 4;
-  image-rendering: pixelated;
-  width: 144px;
-  height: 176px;
+  width: 320px;
+  height: auto;
   filter:
-    drop-shadow(2px 2px 0 rgba(0,0,0,0.6))
-    drop-shadow(0 0 16px rgba(64, 196, 255, 0.6));
-  /* Petit mouvement de stance qui pulse subtilement (effet sprite 2 frames) */
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 24px rgba(64, 196, 255, 0.6));
+  /* Effet pixel art à tout zoom */
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  /* Animation stance 2 frames pour effet sprite vivant */
   animation: kameha-goku-stance 0.32s steps(2) infinite;
+  pointer-events: none;
 }
 
 @keyframes kameha-goku-stance {
-  0%, 100% { transform: translate(0, -55%) scale(calc(0.7 + 0.4 * var(--kameha-progress, 0))) translate(0, 0); }
-  50%      { transform: translate(0, -55%) scale(calc(0.7 + 0.4 * var(--kameha-progress, 0))) translate(1px, -1px); }
+  0%, 100% { transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(0, 0); }
+  50%      { transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(1px, -1px); }
 }
 
-.kameha-goku svg {
+.kameha-goku img {
   width: 100%;
-  height: 100%;
-  shape-rendering: crispEdges;
+  height: auto;
+  display: block;
   image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* Speed lines flicker — disparaissent et réapparaissent pour effet "vibration" */
-.kameha-goku-speedlines {
-  animation: kameha-speedlines-flicker 0.16s steps(2) infinite;
-}
-
-@keyframes kameha-speedlines-flicker {
-  0%, 100% { opacity: 0.8; }
-  50%      { opacity: 0.3; }
+/* Responsive : sur petit écran, réduire la taille */
+@media (max-width: 768px) {
+  .kameha-goku {
+    width: 220px;
+    left: calc(18% - 200px);
+  }
 }
 
 /* Chaque couche est un carré coloré centré (pas de border-radius pour pur pixel art) */

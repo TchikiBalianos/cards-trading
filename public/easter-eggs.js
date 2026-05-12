@@ -398,115 +398,19 @@
     }
 
     /**
-     * Goku pixel art v2 — silhouette stylisée en SVG inline
-     * Grille 32x40 (plus grande pour détail), ASCII art compilé en rects
-     * Pose : profil droit, lean forward, bras tendus vers la droite, mains cuppées
-     * + speed lines + onde de choc au sol
-     *
-     * Couleurs palette (inspiration générique "anime fighter" — pas tracé d'un artwork) :
-     *  # = hair noir
-     *  ' = hair highlight (gris foncé)
-     *  s = peau
-     *  S = peau ombre
-     *  o = gi orange
-     *  O = gi highlight (orange clair)
-     *  D = gi shadow (orange foncé)
-     *  b = blue (undershirt, ceinture, wristbands)
-     *  B = blue boots (bleu marine)
-     *  K = boots sole shadow (très foncé)
-     *  e = eye (noir sur peau)
-     *  m = mouth (bordeaux)
-     *  . = transparent
+     * Goku — image fournie par l'utilisateur (générée IA, droits user)
+     * Chemin attendu : /assets/img/goku-kamehameha.png (PNG transparent recommandé)
+     * Si l'image fait 404, onerror cache l'élément silencieusement.
      */
     function gokuSvgHTML() {
-      const PALETTE = {
-        '#': '#000000', "'": '#2a2a2a',
-        's': '#ffd0a0', 'S': '#c48050',
-        'o': '#ff7a14', 'O': '#ffa050', 'D': '#a04000',
-        'b': '#1a4abc', 'B': '#0a2670', 'K': '#040c30',
-        'e': '#000000', 'm': '#5a2010'
-      };
-
-      // Sprite 32 wide × 40 tall — Goku-style en pose Kamehameha
-      // Chaque caractère = 1 cellule SVG (viewBox 32×40)
-      const ART = [
-        "........####....................", // 0   hair tip
-        ".......######...................", // 1
-        "......########..................", // 2
-        ".....##########.................", // 3
-        "....############................", // 4   hair bulk
-        "....##############..............", // 5
-        "...################.............", // 6
-        "..##################............", // 7
-        "..####'''''#########............", // 8   hair texture
-        ".###sssssssss########...........", // 9   forehead
-        ".###sssssssssss#######..........", // 10
-        "..##sseessssssss######..........", // 11  eye
-        "..##sssssssssssss#####..........", // 12
-        "..###sssSSssSSsss#####..........", // 13  cheek shadow
-        "..####sssssmmsssss####..........", // 14  mouth
-        "...####sssssssss######..........", // 15  jaw
-        ".....##ssssss########...........", // 16  chin
-        ".......bsssb..................s.", // 17  neck w/ blue collar
-        "......oooooo.................sss", // 18  shoulders
-        ".....oobbbboo................sss", // 19  V-neck blue
-        "....ooobbbbboo..............ssss", // 20
-        "...ooobbbbbboo..........sssssssS", // 21  arm extends right
-        "...oobbbbbbbbo........sssssssssS", // 22  full gi top + arm
-        "...obbbbbbbbboooo.....ssssssbbSS", // 23  arm meets hand zone
-        "...oobbbbbbbboooo....sssssbbbbsS", // 24  hands cupped + wristband
-        "...oooobbbbboooooo..sssssbbbbssS", // 25  more wristband
-        "...ooooooobbboooooo.SsssssbbbssS", // 26
-        "...oobbbbbbbbbbbbboo.SSsssssbssS", // 27  belt
-        "...oobbbbbbbbbbbbboo..SSSssssssS", // 28
-        "...oooooooooooooooo.....SSSSSSS.", // 29  below belt
-        "...oooo......oooooo.............", // 30  pants split
-        "...oooo......oooooo.............", // 31
-        "...ooooo.....oooooo.............", // 32
-        "...ooooo.....ooooooo............", // 33
-        "...oooo......ooooooo............", // 34
-        "...oooo......ooooooo............", // 35  back leg straight, front bent
-        "...BBBB......BBBBBBB............", // 36  boots
-        "...BBBBB....BBBBBBBBB...........", // 37
-        "..BBBBBB....BBBBBBBBB...........", // 38
-        ".KKKKKKKKK.KKKKKKKKKKK..........", // 39  soles
-      ];
-
-      // Generate rects in batches : pour chaque ligne, fusionner les runs de
-      // couleur identique en un seul <rect> (économise du DOM)
-      const rects = [];
-      for (let y = 0; y < ART.length; y++) {
-        const row = ART[y];
-        let x = 0;
-        while (x < row.length) {
-          const ch = row[x];
-          if (ch === '.') { x++; continue; }
-          let runEnd = x;
-          while (runEnd < row.length && row[runEnd] === ch) runEnd++;
-          const w = runEnd - x;
-          const color = PALETTE[ch] || '#f0f';
-          rects.push(`<rect x="${x}" y="${y}" width="${w}" height="1" fill="${color}"/>`);
-          x = runEnd;
-        }
-      }
-
       return `
         <div class="kameha-goku">
-          <svg viewBox="-2 -2 36 44" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-            <!-- Speed lines (motion blur) à gauche -->
-            <g class="kameha-goku-speedlines" fill="rgba(255,255,255,0.5)">
-              <rect x="-2" y="14" width="4" height="1"/>
-              <rect x="-2" y="22" width="6" height="1"/>
-              <rect x="-2" y="29" width="3" height="1"/>
-              <rect x="-1" y="34" width="2" height="1"/>
-            </g>
-            <!-- Sprite character -->
-            ${rects.join('')}
-            <!-- Onde de choc au sol sous les pieds -->
-            <rect x="0" y="40" width="20" height="1" fill="rgba(64,196,255,0.6)"/>
-            <rect x="2" y="41" width="16" height="1" fill="rgba(64,196,255,0.4)"/>
-            <rect x="4" y="42" width="12" height="1" fill="rgba(64,196,255,0.2)"/>
-          </svg>
+          <img
+            src="/assets/img/goku-kamehameha.png"
+            alt=""
+            onerror="this.parentElement.style.display='none'"
+            draggable="false"
+          />
         </div>
       `;
     }
