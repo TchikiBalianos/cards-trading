@@ -485,12 +485,11 @@
    ───────────────────────────────────────────────────────── */
 .kameha-goku {
   position: absolute;
+  /* Position légèrement plus à droite (+24px) et plus bas (~+24px) pour
+     mieux aligner les mains du sprite avec le centre de la boule */
   top: 50%;
-  /* hands à ~78% de 320px = 250px de la gauche de l'image
-     orb left edge à calc(18% - 48px)
-     donc sprite left à calc(18% - 48px - 250px) */
-  left: calc(18% - 298px);
-  transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0)));
+  left: calc(18% - 274px);
+  transform: translate(0, -42%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0)));
   transform-origin: right center;
   transition: transform 0.1s linear;
   z-index: 1; /* en fond : passe DERRIÈRE l'orb (z-index 3) */
@@ -509,8 +508,8 @@
 }
 
 @keyframes kameha-goku-stance {
-  0%, 100% { transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(0, 0); }
-  50%      { transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(1px, -1px); }
+  0%, 100% { transform: translate(0, -42%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(0, 0); }
+  50%      { transform: translate(0, -42%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(1px, -1px); }
 }
 
 .kameha-goku img {

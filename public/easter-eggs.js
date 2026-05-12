@@ -408,7 +408,7 @@
       return `
         <div class="kameha-goku">
           <img
-            src="/assets/img/goku-kamehameha.png?v=2"
+            src="/assets/img/goku-kamehameha.png?v=3"
             alt=""
             onerror="this.parentElement.style.display='none'"
             draggable="false"
