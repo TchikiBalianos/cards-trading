@@ -676,11 +676,144 @@
   }
 
   // ─────────────────────────────────────────────────────────
+  // ACHIEVEMENTS PANEL — Tab × 3 rapide ouvre un compteur anonyme
+  //
+  // Privacy-preserving : on n'affiche QUE deux chiffres :
+  //  - Nombre d'OG uniques sur le site (depuis l'Apps Script GET)
+  //  - Nombre d'eggs débloqués par CET utilisateur (depuis localStorage)
+  // Aucun nom d'easter egg n'est révélé — pas d'indice aux chercheurs.
+  // ─────────────────────────────────────────────────────────
+  function initAchievementsPanel() {
+    const TRIGGER_KEY = 'Tab';
+    const TRIGGER_COUNT = 3;       // 3 tabs rapides
+    const TRIGGER_WINDOW = 700;    // dans 700ms
+
+    let activePanelEl = null;
+    let tabTimestamps = [];
+
+    function fetchOgCount() {
+      if (!WEBHOOK_URL) {
+        return Promise.resolve({ uniqueOgs: null, debug: true });
+      }
+      // Apps Script GET retourne du JSON. Pas de no-cors car on veut lire la réponse.
+      return fetch(WEBHOOK_URL, { method: 'GET' })
+        .then(function (r) { return r.json(); })
+        .catch(function (e) {
+          console.warn('[Achievements] fetch failed:', e);
+          return { uniqueOgs: null, error: String(e) };
+        });
+    }
+
+    function userClaimedCount() {
+      const state = getState();
+      return Object.keys(state).filter(function (k) {
+        return state[k] && state[k].claimed === true;
+      }).length;
+    }
+
+    function closePanel() {
+      if (!activePanelEl) return;
+      activePanelEl.classList.remove('is-open');
+      const el = activePanelEl;
+      setTimeout(function () { el.remove(); }, 300);
+      activePanelEl = null;
+      document.removeEventListener('keydown', achEscListener);
+    }
+
+    function achEscListener(e) {
+      if (e.key === 'Escape') closePanel();
+    }
+
+    function showPanel() {
+      if (activePanelEl) return;
+
+      const userCount = userClaimedCount();
+
+      const overlay = document.createElement('div');
+      overlay.className = 'ach-overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', 'Achievements panel');
+      overlay.innerHTML = `
+        <div class="ach-modal" role="document">
+          <button type="button" class="ach-close" aria-label="Fermer">×</button>
+          <div class="ach-trophy">🏆</div>
+          <p class="ach-title">Achievements</p>
+          <div class="ach-stat">
+            <div class="ach-stat-value is-loading" data-stat="global">…</div>
+            <div class="ach-stat-label">OG ont découvert des easter eggs<br>sur Cards-Trading</div>
+          </div>
+          <div class="ach-stat ach-stat-user">
+            <div class="ach-stat-value">${userCount}</div>
+            <div class="ach-stat-label">easter egg${userCount > 1 ? 's' : ''} débloqué${userCount > 1 ? 's' : ''} par toi</div>
+          </div>
+          <p class="ach-hint">Continue à chercher 👀</p>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      activePanelEl = overlay;
+      requestAnimationFrame(function () { overlay.classList.add('is-open'); });
+
+      // Listeners
+      overlay.querySelector('.ach-close').addEventListener('click', closePanel);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closePanel();
+      });
+      document.addEventListener('keydown', achEscListener);
+
+      // Fetch async du compteur global, puis update du DOM
+      fetchOgCount().then(function (data) {
+        const valEl = overlay.querySelector('[data-stat="global"]');
+        if (!valEl) return;
+        valEl.classList.remove('is-loading');
+        if (data.uniqueOgs !== null && data.uniqueOgs !== undefined) {
+          valEl.textContent = String(data.uniqueOgs);
+        } else {
+          valEl.textContent = '—';
+          valEl.style.fontSize = '24px';
+        }
+      });
+    }
+
+    function isTypingInForm() {
+      const el = document.activeElement;
+      if (!el) return false;
+      return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable;
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== TRIGGER_KEY) return;
+      if (isTypingInForm()) return;
+      // ⚠️ On NE preventDefault PAS : la navigation Tab clavier doit
+      // continuer à fonctionner normalement. On compte juste les presses.
+
+      const now = performance.now();
+      // Garder uniquement les presses récentes
+      tabTimestamps = tabTimestamps.filter(function (t) {
+        return now - t < TRIGGER_WINDOW;
+      });
+      tabTimestamps.push(now);
+
+      if (tabTimestamps.length >= TRIGGER_COUNT) {
+        tabTimestamps = [];
+        if (window.OG_DEBUG) {
+          console.log('%c[Achievements] Tab × 3 detected → ouverture panel', 'color:#ffd700;font-weight:bold');
+        }
+        showPanel();
+      }
+    });
+
+    // Expose un trigger manuel pour les tests
+    window.CardsTradingEggs.showAchievements = showPanel;
+  }
+
+  // ─────────────────────────────────────────────────────────
   // INIT
   // ─────────────────────────────────────────────────────────
   function init() {
     initPlusOneGame();
     initKamehameha();
+    initAchievementsPanel();
     // (autres easter eggs ajoutés plus tard)
   }
 

@@ -63,12 +63,41 @@ function doPost(e) {
   }
 }
 
+/**
+ * GET → renvoie le compteur d'OG anonymisé (privacy-preserving) :
+ *   - uniqueOgs   : nombre de personnes uniques ayant débloqué ≥1 easter egg
+ *   - totalClaims : nombre total de claims (eggs débloqués cumulés)
+ *
+ * On ne renvoie JAMAIS :
+ *   - les emails
+ *   - la liste des easter eggs débloqués
+ *   - les noms / identifiants des easter eggs
+ * → aucun indice donné aux visiteurs qui cherchent les eggs.
+ */
 function doGet(e) {
-  return ContentService.createTextOutput(
-    JSON.stringify({
-      service: 'Cards-Trading OG Easter Egg endpoint',
-      status: 'live',
-      message: 'POST your easter egg discoveries here'
-    })
-  ).setMimeType(ContentService.MimeType.JSON);
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const data = sheet.getDataRange().getValues();
+    // Première ligne = headers, on skip
+    const rows = data.slice(1);
+
+    // Set d'emails uniques (lowercase, trimmed) pour le compteur "personnes"
+    const uniqueEmails = new Set();
+    rows.forEach(function (row) {
+      const email = row[1]; // colonne B
+      if (email) uniqueEmails.add(String(email).toLowerCase().trim());
+    });
+
+    return ContentService.createTextOutput(
+      JSON.stringify({
+        uniqueOgs: uniqueEmails.size,
+        totalClaims: rows.length,
+        updatedAt: new Date().toISOString()
+      })
+    ).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(
+      JSON.stringify({ error: String(error) })
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
 }

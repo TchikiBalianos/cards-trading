@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goku Kamehameha by Cards-Trading</title>
+
+  <!--
+    ─────────────────────────────────────────────────────────────────
+    GOKU KAMEHAMEHA — Pixel-art VFX in pure HTML/CSS/JS
+
+    A standalone, zero-dependency Kamehameha animation triggered by
+    holding the spacebar for 3 seconds.
+
+    Originally built as an easter egg for Cards-Trading.com — extracted
+    and packaged here as a reusable VFX demo.
+
+    HOW IT WORKS
+    ────────────
+    The effect runs as a 3-phase state machine :
+
+      1. SILENT (0-3s)   The user holds SPACE. Nothing visible happens
+                         on screen. This is a "discovery" gate — only
+                         persistent users find out the effect exists.
+
+      2. CHARGE (3-4.2s) An energy orb fades in to the left of the
+                         viewport, gently growing as particles spiral
+                         inwards. The Goku sprite fades in behind it.
+                         A vignette darkens the background.
+
+      3. RELEASE  (~2s)  A horizontal beam shoots from the orb to the
+                         right edge of the viewport. Multi-layered :
+                         dark blue halo → blue → cyan → light blue
+                         → ultra-bright white core. 4 white rings
+                         travel along the beam. The right edge bursts
+                         in a pixel-art star explosion with sparks
+                         and a full-screen white flash. A subtle screen
+                         shake overlay reinforces the impact.
+
+    KEY TECHNICAL CHOICES
+    ─────────────────────
+    • All animations use `animation-timing-function: steps(N)` instead
+      of smooth easing. This produces a stop-motion / sprite-sheet feel
+      that matches the pixel-art aesthetic.
+
+    • The "screen shake" is applied to a fixed overlay div, NOT the
+      <body>. Applying transform on <body> creates a new containing
+      block for fixed-positioned descendants, which silently breaks the
+      beam's `position: fixed; top: 50%` (it gets pinned to body's box
+      instead of the viewport). Lesson learned the hard way.
+
+    • The orb is built from 5 concentric `clip-path` polygons with hard
+      edges (no border-radius) — true pixel-art concentric rings.
+
+    • The beam is 5 independent sibling layers, each animating its own
+      `width: 0 → 82vw`. Avoids the parent/child width propagation race
+      condition that happens when animating a parent's width in JS while
+      children use `width: 100%`.
+
+    • Goku sprite is an external PNG (provide your own — see #goku-src
+      below). The CSS positions it so its hands align with the orb's
+      left edge.
+
+    USAGE ON CODEPEN
+    ────────────────
+    Split this file into the HTML / CSS / JS tabs on CodePen :
+      • HTML : everything between <body> and </body>
+      • CSS  : everything between <style> and </style>
+      • JS   : everything between <script> and </script>
+
+    Then upload your own Goku Kamehameha sprite as an asset and update
+    the URL in `gokuSpriteHTML()`. Or skip the sprite entirely and the
+    rest still works (the orb + beam alone are visually striking).
+
+    Title attribution : "Goku Kamehameha by Cards-Trading"
+    ─────────────────────────────────────────────────────────────────
+  -->
+
+  <style>
+    /* ─── PAGE BASE (minimal, just to give a dark backdrop) ────── */
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100vh;
+      background: #07111f;
+      color: #e0e0e0;
+      font-family: 'Press Start 2P', 'Courier New', monospace;
+      overflow-x: hidden;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+    .intro h1 {
+      font-size: clamp(18px, 4vw, 32px);
+      margin: 0 0 16px;
+      background: linear-gradient(90deg, #40c4ff, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .intro p {
+      font-size: clamp(11px, 1.8vw, 16px);
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+    }
+    kbd {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #1a2a3e;
+      border: 1px solid #2997ff;
+      border-radius: 4px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.85em;
+    }
+
+    /* Press Start 2P pixel font from Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    /* ════════════════════════════════════════════════════════════
+       KAMEHAMEHA — Full effect stylesheet
+       ════════════════════════════════════════════════════════════ */
+
+    /* Palette : the whole effect uses exactly 5 colors (16-bit feel) */
+    :root {
+      --kp-white:  #ffffff;
+      --kp-lite:   #d4f1ff;
+      --kp-cyan:   #40c4ff;
+      --kp-blue:   #1976ff;
+      --kp-dark:   #06257a;
+    }
+
+    /* ── Main stage : contains orb + Goku + vignette ─────────── */
+    .kameha-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 99998;            /* above the beam (99997) */
+      pointer-events: none;
+      overflow: hidden;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+    }
+
+    /* Vignette : darkens the page corners during charge */
+    .kameha-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 50%,
+        transparent 0%,
+        rgba(0, 0, 0, 0.15) 30%,
+        rgba(0, 0, 0, 0.55) 70%,
+        rgba(0, 0, 0, 0.85) 100%
+      );
+      /* Opacity bound to JS-set --kameha-progress (0 → 1) */
+      opacity: calc(var(--kameha-progress, 0) * 0.9);
+      transition: opacity 0.05s linear;
+    }
+
+    /* ── Energy orb (left-center, grows during charge) ───────── */
+    .kameha-orb-wrap {
+      position: absolute;
+      top: 50%;
+      left: 18%;
+      transform: translate(-50%, -50%) scale(calc(0.3 + 1.2 * var(--kameha-progress, 0)));
+      transition: transform 0.08s linear;
+      z-index: 3;                /* in front of Goku, behind beam later */
+    }
+    .kameha-orb-layer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: kameha-orb-flicker 0.16s steps(2) infinite;
+    }
+    /* The 5 concentric "pixel rings". Each uses clip-path to render
+       the octagonal silhouette of a chunky-edged circle.  */
+    .kameha-orb-l1 {
+      width: 96px; height: 96px; background: var(--kp-dark);
+      clip-path: polygon(
+        25% 0%, 75% 0%, 75% 8%, 92% 8%, 92% 25%, 100% 25%,
+        100% 75%, 92% 75%, 92% 92%, 75% 92%, 75% 100%,
+        25% 100%, 25% 92%, 8% 92%, 8% 75%, 0% 75%,
+        0% 25%, 8% 25%, 8% 8%, 25% 8%);
+    }
+    .kameha-orb-l2 { width: 72px; height: 72px; background: var(--kp-blue);
+      clip-path: polygon(25% 0%, 75% 0%, 75% 8%, 92% 8%, 92% 25%, 100% 25%, 100% 75%, 92% 75%, 92% 92%, 75% 92%, 75% 100%, 25% 100%, 25% 92%, 8% 92%, 8% 75%, 0% 75%, 0% 25%, 8% 25%, 8% 8%, 25% 8%); }
+    .kameha-orb-l3 { width: 52px; height: 52px; background: var(--kp-cyan);
+      clip-path: polygon(25% 0%, 75% 0%, 75% 12%, 87% 12%, 87% 25%, 100% 25%, 100% 75%, 87% 75%, 87% 87%, 75% 87%, 75% 100%, 25% 100%, 25% 87%, 13% 87%, 13% 75%, 0% 75%, 0% 25%, 13% 25%, 13% 12%, 25% 12%); }
+    .kameha-orb-l4 { width: 32px; height: 32px; background: var(--kp-lite);
+      clip-path: polygon(25% 0%, 75% 0%, 75% 12%, 87% 12%, 87% 25%, 100% 25%, 100% 75%, 87% 75%, 87% 87%, 75% 87%, 75% 100%, 25% 100%, 25% 87%, 13% 87%, 13% 75%, 0% 75%, 0% 25%, 13% 25%, 13% 12%, 25% 12%); }
+    .kameha-orb-l5 { width: 16px; height: 16px; background: var(--kp-white); }
+
+    /* Outer aura : 3 concentric "glows" via stacked box-shadows */
+    .kameha-orb-wrap::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0 0 0 60px rgba(64, 196, 255, 0.18),
+        0 0 0 90px rgba(64, 196, 255, 0.10),
+        0 0 0 130px rgba(64, 196, 255, 0.04);
+      animation: kameha-aura-pulse 0.5s steps(3) infinite;
+    }
+    @keyframes kameha-aura-pulse  { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+    @keyframes kameha-orb-flicker { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.5); } }
+
+    /* ── Goku sprite (optional, replace URL with your own) ───── */
+    .kameha-goku {
+      position: absolute;
+      top: 50%;
+      left: calc(18% - 274px);
+      transform: translate(0, -38%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0)));
+      transform-origin: right center;
+      transition: transform 0.1s linear;
+      z-index: 1;                /* behind the orb */
+      width: 320px;
+      height: auto;
+      filter:
+        drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7))
+        drop-shadow(0 0 24px rgba(64, 196, 255, 0.6));
+      image-rendering: pixelated;
+      animation: kameha-goku-stance 0.32s steps(2) infinite;
+      pointer-events: none;
+    }
+    @keyframes kameha-goku-stance {
+      0%, 100% { transform: translate(0, -38%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(0, 0); }
+      50%      { transform: translate(0, -38%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0))) translate(1px, -1px); }
+    }
+    .kameha-goku img {
+      width: 100%; height: auto; display: block;
+      image-rendering: pixelated;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    @media (max-width: 768px) {
+      .kameha-goku { width: 220px; left: calc(18% - 200px); }
+    }
+
+    /* ── Particles spiraling into the orb during charge ──────── */
+    .kameha-particle {
+      position: fixed;
+      width: 6px; height: 6px;
+      background: var(--p-color, #40c4ff);
+      box-shadow: 2px 2px 0 var(--kp-dark);
+      image-rendering: pixelated;
+      pointer-events: none;
+      z-index: 99996;
+    }
+
+    /* ── Beam : 5 horizontal layers, animated independently ──── */
+    .kameha-beam-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 99997;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .kameha-beam-layer {
+      position: absolute;
+      top: 50%;
+      left: 18vw;
+      width: 0;
+      transform: translateY(-50%);
+      pointer-events: none;
+      animation: kameha-beam-grow 0.4s steps(16) forwards;
+    }
+    @keyframes kameha-beam-grow {
+      0%   { width: 0;    opacity: 0.8; }
+      10%  { opacity: 1; }
+      100% { width: 82vw; opacity: 1; }
+    }
+    .kameha-beam-outer { height: 140px; background: var(--kp-dark);
+      opacity: 0.5;
+      filter: drop-shadow(0 0 24px rgba(25, 118, 255, 0.6)); }
+    .kameha-beam-blue  { height: 90px;  background: var(--kp-blue);
+      filter: drop-shadow(0 0 16px var(--kp-blue)); }
+    .kameha-beam-cyan  { height: 52px;  background: var(--kp-cyan); }
+    .kameha-beam-lite  { height: 24px;  background: var(--kp-lite); }
+    .kameha-beam-core  { height: 8px;   background: var(--kp-white);
+      box-shadow:
+        0 0 20px var(--kp-white),
+        0 0 40px var(--kp-cyan),
+        0 0 80px var(--kp-blue);
+      animation: kameha-beam-grow 0.4s steps(16) forwards,
+                 kameha-beam-pulse 0.16s steps(2) infinite 0.4s; }
+    @keyframes kameha-beam-pulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.6); } }
+
+    /* ── White rings traveling along the beam ────────────────── */
+    .kameha-ring {
+      position: fixed;
+      top: 50%;
+      width: 32px;
+      height: 110px;
+      border: 5px solid var(--kp-white);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scaleY(0.3);
+      box-shadow:
+        0 0 0 3px var(--kp-cyan),
+        0 0 24px var(--kp-white),
+        0 0 48px var(--kp-blue),
+        inset 0 0 16px rgba(255, 255, 255, 0.6);
+      z-index: 99998;
+      pointer-events: none;
+      animation: kameha-ring-travel var(--ring-duration, 0.7s) steps(24) forwards;
+    }
+    @keyframes kameha-ring-travel {
+      0%   { left: 18vw;  opacity: 0; transform: translate(-50%, -50%) scaleY(0.3); }
+      15%  { opacity: 1; }
+      100% { left: 100vw; opacity: 0.4; transform: translate(-50%, -50%) scaleY(1); }
+    }
+
+    /* ── "HAAAA!" pixel-art shout (red text-shadow) ──────────── */
+    .kameha-ready {
+      position: fixed;
+      top: 35%;
+      left: 18%;
+      transform: translate(-50%, -50%);
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(20px, 3.5vw, 38px);
+      font-weight: 900;
+      color: var(--kp-white);
+      text-shadow:
+        4px 4px 0 #ff0040, -2px -2px 0 #ff0040,
+        2px -2px 0 #ff0040, -2px 2px 0 #ff0040,
+        0 0 24px rgba(255, 100, 100, 0.9), 0 0 48px var(--kp-cyan);
+      z-index: 99999;
+      pointer-events: none;
+      animation: kameha-ready-anim 0.5s steps(6) forwards;
+    }
+    @keyframes kameha-ready-anim {
+      0%   { transform: translate(-50%, -50%) scale(0)   rotate(-10deg); opacity: 0; }
+      40%  { transform: translate(-50%, -50%) scale(1.4) rotate( 4deg);  opacity: 1; }
+      80%  { transform: translate(-50%, -50%) scale(1)   rotate(-2deg);  opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.6) rotate( 0deg);  opacity: 0; }
+    }
+
+    /* ── Right-edge impact : pixel-art star burst + sparks ───── */
+    .kameha-impact {
+      position: fixed;
+      top: 50%; right: 0;
+      width: 0; height: 0;
+      transform: translate(50%, -50%);
+      z-index: 99998;
+      pointer-events: none;
+    }
+    .kameha-impact-flash {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 200px; height: 200px;
+      background: var(--kp-white);
+      transform: translate(-50%, -50%) scale(0);
+      box-shadow:
+        0 0 80px var(--kp-white),
+        0 0 160px var(--kp-cyan),
+        0 0 320px var(--kp-blue);
+      animation: kameha-impact-anim 0.6s steps(10) forwards;
+      clip-path: polygon(
+        25% 0%, 75% 0%, 75% 12%, 87% 12%, 87% 25%, 100% 25%,
+        100% 75%, 87% 75%, 87% 87%, 75% 87%, 75% 100%,
+        25% 100%, 25% 87%, 13% 87%, 13% 75%, 0% 75%,
+        0% 25%, 13% 25%, 13% 12%, 25% 12%);
+    }
+    @keyframes kameha-impact-anim {
+      0%   { transform: translate(-50%, -50%) scale(0)   rotate(0deg);   opacity: 1; }
+      40%  { transform: translate(-50%, -50%) scale(2.5) rotate(45deg);  opacity: 1; }
+      80%  { transform: translate(-50%, -50%) scale(4)   rotate(90deg);  opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(5)   rotate(135deg); opacity: 0; }
+    }
+    .kameha-spark {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--kp-white);
+      box-shadow:
+        -8px 0 0 var(--kp-white),
+         8px 0 0 var(--kp-white),
+        0 -8px 0 var(--kp-white),
+        0  8px 0 var(--kp-white),
+        0 0 16px var(--kp-cyan);
+      z-index: 99998;
+      pointer-events: none;
+      animation: kameha-spark-anim 0.8s steps(12) forwards;
+    }
+    @keyframes kameha-spark-anim {
+      0%   { transform: translate(0, 0) scale(1);   opacity: 1; }
+      100% { transform: translate(var(--sx, 0), var(--sy, 0)) scale(0); opacity: 0; }
+    }
+
+    /* ── Full-viewport white flash at impact peak ────────────── */
+    .kameha-fullflash {
+      position: fixed;
+      inset: 0;
+      background: var(--kp-white);
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+      animation: kameha-fullflash-anim 0.4s steps(6) forwards;
+    }
+    @keyframes kameha-fullflash-anim { 0% { opacity: 0; } 30% { opacity: 0.85; } 100% { opacity: 0; } }
+
+    /* ── Screen shake overlay (NOT on body, see comment in JS) ─ */
+    .kameha-shake-overlay {
+      position: fixed;
+      inset: -20px;
+      z-index: 99995;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%,
+        transparent 60%,
+        rgba(64, 196, 255, 0.08) 90%,
+        rgba(64, 196, 255, 0.18) 100%);
+      animation: kameha-overlay-shake 0.4s steps(3) infinite;
+      mix-blend-mode: screen;
+    }
+    @keyframes kameha-overlay-shake {
+      0%, 100% { transform: translate(0, 0); }
+      10%      { transform: translate(-6px, -3px); }
+      20%      { transform: translate( 7px,  4px); }
+      30%      { transform: translate(-4px,  5px); }
+      40%      { transform: translate( 5px, -4px); }
+      50%      { transform: translate(-7px, -2px); }
+      60%      { transform: translate( 4px,  5px); }
+      70%      { transform: translate(-5px,  3px); }
+      80%      { transform: translate( 5px, -5px); }
+      90%      { transform: translate(-3px,  4px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="intro">
+    <h1>Goku Kamehameha</h1>
+    <p>Hold <kbd>SPACE</kbd> for 3 seconds.<br>Then release the Kamehameha.</p>
+    <p style="margin-top:24px; font-size:10px; opacity:0.4;">by Cards-Trading</p>
+  </div>
+
+  <script>
+    /**
+     * ───────────────────────────────────────────────────────────
+     * GOKU KAMEHAMEHA — animation controller
+     *
+     * Public surface : nothing. The IIFE wires the listeners itself.
+     *
+     * State machine :
+     *
+     *   IDLE ───[keydown SPACE]──> HOLDING ───[3s elapsed]──> CHARGING
+     *     ↑                          │                            │
+     *     └───[keyup before 3s]──────┘                            │
+     *                                                             │
+     *   CHARGING ──[1.2s elapsed]──> RELEASING ──[2s]──> IDLE
+     *
+     * The "HOLDING" phase is silent : no DOM is created. This is
+     * intentional — it gates the effect behind an act of commitment
+     * (the user has to "trust" that something will happen).
+     *
+     * After 3s, CHARGING builds the stage and runs the visible charge
+     * animation for 1.2s. Releasing SPACE during CHARGING aborts the
+     * animation gracefully (orb fades out, no beam fires).
+     *
+     * After CHARGING completes, RELEASING is automatic and cannot be
+     * canceled. It runs the full beam + impact + cleanup sequence.
+     * ───────────────────────────────────────────────────────────
+     */
+    (function () {
+      'use strict';
+
+      const SILENT_DURATION = 3000;   // ms of silent hold required
+      const CHARGE_DURATION = 1200;   // ms of visible charge before beam
+
+      // Goku sprite URL — replace with your own image, or remove the
+      // <img> tag entirely (the orb + beam alone look great)
+      const GOKU_SPRITE_URL = 'https://www.cards-trading.com/assets/img/goku-kamehameha.png';
+
+      let isHolding   = false;
+      let isCharging  = false;
+      let isReleasing = false;
+      let silentTimer = null;
+      let chargeStart = 0;
+      let stageEl     = null;
+      let rafId       = null;
+      let particleInterval = null;
+
+      // ── Stage construction ─────────────────────────────────────
+      function buildStage() {
+        const stage = document.createElement('div');
+        stage.className = 'kameha-stage';
+        stage.setAttribute('aria-hidden', 'true');
+        stage.innerHTML = `
+          <div class="kameha-vignette"></div>
+          ${gokuSpriteHTML()}
+          <div class="kameha-orb-wrap">
+            <div class="kameha-orb-layer kameha-orb-l1"></div>
+            <div class="kameha-orb-layer kameha-orb-l2"></div>
+            <div class="kameha-orb-layer kameha-orb-l3"></div>
+            <div class="kameha-orb-layer kameha-orb-l4"></div>
+            <div class="kameha-orb-layer kameha-orb-l5"></div>
+          </div>
+        `;
+        return stage;
+      }
+
+      function gokuSpriteHTML() {
+        if (!GOKU_SPRITE_URL) return '';
+        return `
+          <div class="kameha-goku">
+            <img src="${GOKU_SPRITE_URL}" alt=""
+                 onerror="this.parentElement.style.display='none'"
+                 draggable="false" />
+          </div>
+        `;
+      }
+
+      // ── Particles spiraling into the orb ──────────────────────
+      function spawnParticle() {
+        if (!stageEl) return;
+        const orbWrap = stageEl.querySelector('.kameha-orb-wrap');
+        if (!orbWrap) return;
+        const orbRect = orbWrap.getBoundingClientRect();
+        const targetX = orbRect.left + orbRect.width / 2;
+        const targetY = orbRect.top  + orbRect.height / 2;
+
+        const angle  = Math.random() * Math.PI * 2;
+        const radius = 200 + Math.random() * 250;
+        const startX = targetX + Math.cos(angle) * radius;
+        const startY = targetY + Math.sin(angle) * radius;
+
+        const p = document.createElement('span');
+        p.className = 'kameha-particle';
+        p.style.left = startX + 'px';
+        p.style.top  = startY + 'px';
+
+        const palette = ['#ffffff', '#d4f1ff', '#40c4ff', '#1976ff'];
+        const color   = palette[Math.floor(Math.random() * palette.length)];
+        p.style.background = color;
+        p.style.boxShadow  = `2px 2px 0 #06257a`;
+
+        const dx = targetX - startX;
+        const dy = targetY - startY;
+        p.style.opacity   = '0';
+        p.style.transition = 'none';
+        p.style.transform  = 'translate(0, 0)';
+
+        stageEl.appendChild(p);
+        requestAnimationFrame(() => {
+          p.style.transition = 'transform 0.7s steps(12), opacity 0.12s linear';
+          p.style.opacity    = '1';
+          p.style.transform  = `translate(${dx}px, ${dy}px) scale(0.3)`;
+        });
+        setTimeout(() => p.remove(), 800);
+      }
+
+      // ── Charge progress loop (drives --kameha-progress 0 → 1) ─
+      function updateProgress() {
+        if (!isCharging) return;
+        const elapsed  = performance.now() - chargeStart;
+        const progress = Math.min(elapsed / CHARGE_DURATION, 1);
+        if (stageEl) stageEl.style.setProperty('--kameha-progress', progress);
+        if (progress >= 1) { releaseBeam(); return; }
+        rafId = requestAnimationFrame(updateProgress);
+      }
+
+      // ── State transitions ─────────────────────────────────────
+      function startHold() {
+        if (isHolding || isCharging || isReleasing) return;
+        isHolding = true;
+        silentTimer = setTimeout(() => {
+          silentTimer = null;
+          if (!isHolding) return;
+          startCharging();
+        }, SILENT_DURATION);
+      }
+
+      function startCharging() {
+        if (isCharging || isReleasing) return;
+        isCharging = true;
+        chargeStart = performance.now();
+        stageEl = buildStage();
+        document.body.appendChild(stageEl);
+        particleInterval = setInterval(spawnParticle, 40);
+        rafId = requestAnimationFrame(updateProgress);
+      }
+
+      function cancelHold() {
+        if (isReleasing) return;          // release is uninterruptible
+        isHolding = false;
+        if (silentTimer) {                // released during silent phase
+          clearTimeout(silentTimer);
+          silentTimer = null;
+          return;
+        }
+        if (isCharging) {                 // released during visible charge
+          isCharging = false;
+          cancelAnimationFrame(rafId);
+          clearInterval(particleInterval);
+          if (stageEl) {
+            stageEl.style.transition = 'opacity 0.25s steps(5)';
+            stageEl.style.opacity = '0';
+            const el = stageEl;
+            setTimeout(() => el.remove(), 280);
+            stageEl = null;
+          }
+        }
+      }
+
+      function releaseBeam() {
+        isHolding   = false;
+        isCharging  = false;
+        isReleasing = true;
+        cancelAnimationFrame(rafId);
+        clearInterval(particleInterval);
+
+        // "HAAAA!" pixel-art shout
+        const ready = document.createElement('div');
+        ready.className = 'kameha-ready';
+        ready.textContent = 'HAAAAA!';
+        document.body.appendChild(ready);
+        setTimeout(() => ready.remove(), 600);
+
+        // Beam : 5 independent layers stacked vertically
+        const beamStage = document.createElement('div');
+        beamStage.className = 'kameha-beam-stage';
+        beamStage.innerHTML = `
+          <div class="kameha-beam-layer kameha-beam-outer"></div>
+          <div class="kameha-beam-layer kameha-beam-blue"></div>
+          <div class="kameha-beam-layer kameha-beam-cyan"></div>
+          <div class="kameha-beam-layer kameha-beam-lite"></div>
+          <div class="kameha-beam-layer kameha-beam-core"></div>
+        `;
+        document.body.appendChild(beamStage);
+
+        // Screen shake overlay (NOT on body — see header comment)
+        const shakeOverlay = document.createElement('div');
+        shakeOverlay.className = 'kameha-shake-overlay';
+        document.body.appendChild(shakeOverlay);
+
+        // 5 white rings traveling along the beam, staggered 100ms each
+        setTimeout(() => {
+          for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+              const ring = document.createElement('div');
+              ring.className = 'kameha-ring';
+              ring.style.setProperty('--ring-duration', (0.6 + Math.random() * 0.25) + 's');
+              document.body.appendChild(ring);
+              setTimeout(() => ring.remove(), 1000);
+            }, i * 100);
+          }
+        }, 250);
+
+        // Right-edge impact + 20 sparks + full white flash
+        setTimeout(() => {
+          const impact = document.createElement('div');
+          impact.className = 'kameha-impact';
+          impact.innerHTML = '<div class="kameha-impact-flash"></div>';
+          document.body.appendChild(impact);
+          setTimeout(() => impact.remove(), 800);
+
+          for (let i = 0; i < 20; i++) {
+            const spark = document.createElement('span');
+            spark.className = 'kameha-spark';
+            spark.style.right = '20px';
+            spark.style.top   = '50%';
+            const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.6;
+            const dist  = 150 + Math.random() * 400;
+            spark.style.setProperty('--sx', Math.cos(angle) * dist + 'px');
+            spark.style.setProperty('--sy', Math.sin(angle) * dist + 'px');
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 900);
+          }
+
+          const flash = document.createElement('div');
+          flash.className = 'kameha-fullflash';
+          document.body.appendChild(flash);
+          setTimeout(() => flash.remove(), 500);
+        }, 450);
+
+        // Cleanup
+        setTimeout(() => {
+          shakeOverlay.remove();
+          if (stageEl) { stageEl.remove(); stageEl = null; }
+          beamStage.remove();
+          isReleasing = false;
+          console.log('🎉 Kamehameha complete !');
+        }, 1800);
+      }
+
+      // ── Input handling ────────────────────────────────────────
+      function isTyping() {
+        const el = document.activeElement;
+        if (!el) return false;
+        return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable;
+      }
+
+      document.addEventListener('keydown', function (e) {
+        if (e.code !== 'Space' && e.key !== ' ') return;
+        if (isTyping()) return;
+        if (e.repeat) return;     // ignore autorepeat
+        e.preventDefault();        // avoid page scroll
+        startHold();
+      });
+
+      document.addEventListener('keyup', function (e) {
+        if (e.code !== 'Space' && e.key !== ' ') return;
+        if (isTyping()) return;
+        cancelHold();
+      });
+
+      // Safety : if the window loses focus mid-hold, abort cleanly
+      window.addEventListener('blur', cancelHold);
+    })();
+  </script>
+
+</body>
+</html>
