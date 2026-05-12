@@ -493,7 +493,7 @@
   transform: translate(0, -50%) scale(calc(0.75 + 0.35 * var(--kameha-progress, 0)));
   transform-origin: right center;
   transition: transform 0.1s linear;
-  z-index: 4;
+  z-index: 1; /* en fond : passe DERRIÈRE l'orb (z-index 3) */
   width: 320px;
   height: auto;
   filter:
