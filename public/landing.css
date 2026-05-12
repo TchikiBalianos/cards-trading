@@ -671,23 +671,33 @@ footer {
     top: var(--header-height);
     left: 0;
     right: 0;
-    width: 100%;        /* use 100% not 100vw — prevents scrollbar-related overflow */
+    width: 100%;
     max-width: 100%;
     flex-direction: column;
     align-items: stretch;
     background: rgba(15,15,20,0.99);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    /* backdrop-filter réduit (8px au lieu de 20px) : moins lourd à animer
+       sur iOS bas de gamme, transition plus rapide et fiable */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 12px 0;
     gap: 0;
-    max-height: calc(100vh - var(--header-height));
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    max-height: calc(100dvh - var(--header-height));
+    /* IMPORTANT — overflow hidden (pas auto) : empêche le menu de capturer
+       le scroll touch iOS pendant la fermeture, qui interférait avec le
+       click sur les ancres. -webkit-overflow-scrolling:touch RETIRÉ pour
+       la même raison. */
+    overflow: hidden;
     transform: translateX(-100%);
-    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    /* will-change : force une couche compositor → transition plus fluide
+       sur mobile (animation transform GPU-accelerated) */
+    will-change: transform;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
     box-shadow: 4px 0 20px rgba(0,0,0,0.5);
     border-right: 1px solid rgba(255,255,255,0.08);
     z-index: 1000;
+    /* contain layout : isole le reflow du menu du reste de la page */
+    contain: layout style;
 
     &.mobile-open {
       transform: translateX(0);

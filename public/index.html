@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
     <meta name="format-detection" content="telephone=no" />
 
     <title>Cards Trading | Marketplace TCG — Acheter &amp; Vendre vos Cartes</title>
@@ -976,77 +976,227 @@
   </body>
 </html>
 
-<!-- smooth scroll -->
+<!-- smooth scroll v2 — robust mobile-safe (5e tentative de fix)
+     Approche défense en profondeur :
+     1. Body scroll lock iOS-safe quand menu mobile ouvert (Jay Freestone pattern)
+     2. Capture phase + stopPropagation pour devancer iOS scroll natif sur hash
+     3. Double rAF après fermeture du menu avant calcul rect (layout settled)
+     4. Watchdog 800ms : si le scroll n'arrive pas à ±10px de la cible,
+        on recalcule la position (images lazy-loaded peuvent l'avoir bougée)
+        et on fait un hard scroll en correction
+     5. Fallback hard scroll si behavior:'smooth' non supporté
+     6. PAS de scroll-behavior:smooth CSS — uniquement géré en JS pour éviter
+        le conflit WebKit bug 238497 qui annule scrollTo programmatique
+-->
 <script>
-  /**
-   * Unified scroller — calcule manuellement la position cible pour éviter
-   * les bugs mobile de scrollIntoView({behavior:'smooth'}) (iOS Safari < 15.4)
-   * et de scroll-padding-top (parfois ignoré pendant une transition CSS active).
-   */
-  function smoothScrollTo(target, hash) {
-    if (!target) return;
-    var headerStyle = getComputedStyle(document.documentElement);
-    var headerHeight = parseInt(headerStyle.getPropertyValue('--header-height'), 10) || 60;
-    var rect = target.getBoundingClientRect();
-    var absoluteY = rect.top + window.pageYOffset - headerHeight - 8;
-    /* Clamp pour éviter scroll négatif */
-    absoluteY = Math.max(0, absoluteY);
+(function () {
+  'use strict';
 
-    try {
-      window.scrollTo({ top: absoluteY, behavior: 'smooth' });
-    } catch (e) {
-      /* Fallback iOS Safari très ancien — pas de smooth, mais ça scrolle */
-      window.scrollTo(0, absoluteY);
+  function dbg() {
+    if (window.OG_DEBUG && console) {
+      console.log.apply(console, ['[nav-scroll]'].concat([].slice.call(arguments)));
     }
-    if (hash) history.replaceState(null, '', '#' + hash);
   }
 
-  /**
-   * Anchor links — ferme le menu mobile puis scroll avec délai fixe
-   * (transitionend non fiable sur Safari iOS, on utilise un timeout matchant
-   * la durée CSS de slide-out : 0.35s + 30ms buffer).
-   */
-  document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var hash = link.getAttribute('href').split('#')[1];
-      if (!hash) return;
-      var target = document.getElementById(hash);
-      if (!target) return;
-      e.preventDefault();
+  function getHeaderHeight() {
+    var raw = getComputedStyle(document.documentElement)
+                .getPropertyValue('--header-height').trim();
+    var h = parseInt(raw, 10);
+    return isNaN(h) ? 60 : h;
+  }
 
-      var hamburger = document.getElementById('navHamburger');
-      var nav = document.getElementById('headerNav');
-      var isMenuOpen = hamburger && hamburger.classList.contains('open');
+  function computeTargetY(target) {
+    /* Toujours recalculer rect au tout dernier moment (après reflow) */
+    var rect = target.getBoundingClientRect();
+    /* window.scrollY plus fiable que pageYOffset sur iOS PWA */
+    var currentY = window.scrollY || window.pageYOffset || 0;
+    var headerH = getHeaderHeight();
+    var y = rect.top + currentY - headerH - 8;
+    return Math.max(0, Math.round(y));
+  }
 
-      if (isMenuOpen) {
-        /* Ferme le menu (slide-out) puis scroll après la transition CSS */
-        hamburger.classList.remove('open');
-        nav.classList.remove('mobile-open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        setTimeout(function () { smoothScrollTo(target, hash); }, 380);
-      } else {
-        smoothScrollTo(target, hash);
+  function hardScrollTo(y) {
+    /* Double-set pour iOS PWA standalone mode */
+    document.documentElement.scrollTop = y;
+    document.body.scrollTop = y;
+    window.scrollTo(0, y);
+  }
+
+  function smoothScrollTo(target, hash) {
+    if (!target) { dbg('no target'); return; }
+    var y = computeTargetY(target);
+    var startY = window.scrollY || 0;
+    dbg('start=' + startY + ' -> target=' + y + ' (hash=' + hash + ')');
+
+    var supportsSmooth = 'scrollBehavior' in document.documentElement.style;
+    if (supportsSmooth) {
+      try {
+        window.scrollTo({ top: y, left: 0, behavior: 'smooth' });
+      } catch (e) {
+        hardScrollTo(y);
       }
+    } else {
+      hardScrollTo(y);
+    }
+
+    /* Watchdog : si après 800ms le scroll n'est pas à ±10px de la cible,
+       on recalcule (lazy-loaded images peuvent avoir changé la position)
+       et on hard-scroll en correction. */
+    setTimeout(function () {
+      var actualY = window.scrollY || 0;
+      var recomputedY = computeTargetY(target);
+      var diff = Math.abs(actualY - recomputedY);
+      dbg('watchdog: actual=' + actualY + ' recomputed=' + recomputedY + ' diff=' + diff);
+      if (diff > 10) {
+        dbg('watchdog: correcting drift via hardScrollTo');
+        hardScrollTo(recomputedY);
+      }
+    }, 800);
+
+    if (hash) {
+      try { history.replaceState(null, '', '#' + hash); } catch (e) {}
+    }
+  }
+
+  /* === Body scroll lock iOS-safe (Jay Freestone pattern) === */
+  var savedScrollY = 0;
+  function lockBodyScroll() {
+    savedScrollY = window.scrollY || 0;
+    document.documentElement.style.setProperty('--body-top', '-' + savedScrollY + 'px');
+    document.body.classList.add('menu-open');
+    dbg('body locked at y=' + savedScrollY);
+  }
+  function unlockBodyScroll() {
+    document.body.classList.remove('menu-open');
+    document.documentElement.style.removeProperty('--body-top');
+    /* Restaurer position scroll instantanément (le body était fixed donc
+       visuellement il n'a pas bougé, mais le navigateur ne le sait plus) */
+    window.scrollTo(0, savedScrollY);
+    dbg('body unlocked, restored y=' + savedScrollY);
+  }
+
+  /* === Menu mobile centralisé === */
+  var hamburger = document.getElementById('navHamburger');
+  var nav = document.getElementById('headerNav');
+  var header = document.querySelector('header');
+
+  function isMobile() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  function openMenu() {
+    if (!hamburger || !nav) return;
+    hamburger.classList.add('open');
+    nav.classList.add('mobile-open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    if (isMobile()) lockBodyScroll();
+  }
+
+  function closeMenu() {
+    if (!hamburger || !nav) return;
+    var wasOpen = hamburger.classList.contains('open');
+    hamburger.classList.remove('open');
+    nav.classList.remove('mobile-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    if (wasOpen && isMobile()) unlockBodyScroll();
+    return wasOpen;
+  }
+
+  /* === Hamburger toggle === */
+  if (hamburger && nav) {
+    hamburger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (hamburger.classList.contains('open')) closeMenu();
+      else openMenu();
     });
+
+    document.addEventListener('click', function (e) {
+      if (!hamburger.classList.contains('open')) return;
+      if (!header.contains(e.target)) closeMenu();
+    });
+  }
+
+  /* === Anchor links — capture phase pour devancer iOS scroll natif === */
+  function handleAnchorClick(e) {
+    var link = e.currentTarget;
+    var href = link.getAttribute('href') || '';
+    var hashIdx = href.indexOf('#');
+    if (hashIdx === -1) return;
+    var hash = href.slice(hashIdx + 1).split('?')[0].split('/')[0];
+    if (!hash) return;
+    var target = document.getElementById(hash);
+    if (!target) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    var menuWasOpen = isMobile() && nav && nav.classList.contains('mobile-open');
+    dbg('anchor click: hash=' + hash + ' menuOpen=' + menuWasOpen);
+
+    if (menuWasOpen) {
+      closeMenu();
+      /* Double rAF : laisse le browser reflow le body (passé de fixed à
+         flow normal) AVANT de mesurer rect.top. Critique sur iOS Safari. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          smoothScrollTo(target, hash);
+        });
+      });
+    } else {
+      smoothScrollTo(target, hash);
+    }
+  }
+
+  /* Bind capture-phase pour devancer tout autre listener */
+  document.querySelectorAll('a[href*="#"]').forEach(function (link) {
+    var href = link.getAttribute('href') || '';
+    if (href.charAt(0) !== '#' && href.indexOf('index.html#') === -1) return;
+    link.addEventListener('click', handleAnchorClick, { capture: true, passive: false });
   });
 
-  /* Hero CTA buttons scroll */
+  /* === Hero CTA buttons === */
   var heroButtons = document.querySelectorAll('.hero-left .button-container button');
   if (heroButtons.length >= 2) {
-    heroButtons[1].addEventListener('click', function () {
-      smoothScrollTo(document.getElementById('beta'), 'beta');
-    });
     heroButtons[0].addEventListener('click', function () {
       smoothScrollTo(document.getElementById('avantages'), 'avantages');
     });
+    heroButtons[1].addEventListener('click', function () {
+      smoothScrollTo(document.getElementById('beta'), 'beta');
+    });
   }
+
+  /* === Initial load avec hash : scroll proprement après le 1er paint === */
+  if (window.location.hash) {
+    var initialTarget = document.getElementById(window.location.hash.slice(1));
+    if (initialTarget) {
+      window.scrollTo(0, 0); /* annule le scroll natif iOS */
+      window.addEventListener('load', function () {
+        requestAnimationFrame(function () {
+          smoothScrollTo(initialTarget, null);
+        });
+      });
+    }
+  }
+
+  /* Expose pour debug */
+  window.__navScroll = {
+    smoothScrollTo: smoothScrollTo,
+    openMenu: openMenu,
+    closeMenu: closeMenu,
+    computeTargetY: computeTargetY,
+    getHeaderHeight: getHeaderHeight
+  };
+})();
 </script>
 
-<!-- navbar: scroll-shrink + scroll-spy + hamburger -->
+<!-- navbar: scroll-shrink + scroll-spy + indicator
+     NOTE : hamburger toggle + outside click + nav-link handlers sont
+     gérés dans le script smooth-scroll v2 ci-dessus (unified flow).
+     Ce script gère uniquement : scroll-shrink header, scroll-spy
+     IntersectionObserver, et l'indicateur coulissant desktop. -->
 <script>
   (function () {
     const header = document.querySelector('header');
-    const hamburger = document.getElementById('navHamburger');
     const nav = document.getElementById('headerNav');
     const navLinks = nav ? nav.querySelectorAll('.nav-link') : [];
 
@@ -1054,28 +1204,6 @@
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
-
-    /* ── Hamburger toggle ── */
-    if (hamburger && nav) {
-      hamburger.addEventListener('click', () => {
-        const isOpen = hamburger.classList.toggle('open');
-        nav.classList.toggle('mobile-open', isOpen);
-        hamburger.setAttribute('aria-expanded', isOpen);
-      });
-
-      /* NOTE: nav-link click closure is handled by the smoothScrollTo block
-         in the previous <script>, which closes the menu first and waits for
-         the slide-out transition before scrolling — avoids race condition. */
-
-      /* Close on outside click */
-      document.addEventListener('click', e => {
-        if (!header.contains(e.target)) {
-          hamburger.classList.remove('open');
-          nav.classList.remove('mobile-open');
-          hamburger.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
 
     /* ── Sliding indicator (NAV-1) ── */
     function moveIndicator(link) {
