@@ -255,7 +255,13 @@
 
 /* ── SKIP LINK (accessibilité clavier) ─────────────────── */
 .skip-link {
-  position: absolute;
+  /* fixed (et non absolute) : le skip-link doit être calé sur le viewport.
+     En absolute il se positionnait par rapport au <body>, dont la boîte
+     démarre à y=60px — la margin-top:60px de .hero (qui dégage le header
+     fixe) se propage par margin collapsing jusqu'au body. Résultat :
+     top:-56px donnait 60-56 = +4px, donc un skip-link visible en
+     permanence par-dessus le logo, sans même avoir le focus. */
+  position: fixed;
   top: -56px;
   left: 16px;
   background: #2997ff;
