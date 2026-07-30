@@ -3,6 +3,10 @@
     {
       "path": "/api/refresh-instagram-token",
       "schedule": "0 3 1 * *"
+    },
+    {
+      "path": "/api/keep-alive",
+      "schedule": "0 4 * * *"
     }
   ],
   "headers": [
