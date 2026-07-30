@@ -676,37 +676,37 @@ footer {
     flex-direction: column;
     align-items: stretch;
     background: rgba(15,15,20,0.99);
-    /* backdrop-filter réduit (8px au lieu de 20px) : moins lourd à animer
-       sur iOS bas de gamme, transition plus rapide et fiable */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     padding: 12px 0;
     gap: 0;
     max-height: calc(100dvh - var(--header-height));
-    /* IMPORTANT — overflow hidden (pas auto) : empêche le menu de capturer
-       le scroll touch iOS pendant la fermeture, qui interférait avec le
-       click sur les ancres. -webkit-overflow-scrolling:touch RETIRÉ pour
-       la même raison. */
-    overflow: hidden;
+    overflow-y: auto;              /* ← était hidden, peut bloquer touch events sur iOS */
+    -webkit-overflow-scrolling: touch;
     transform: translateX(-100%);
-    /* will-change : force une couche compositor → transition plus fluide
-       sur mobile (animation transform GPU-accelerated) */
     will-change: transform;
     transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
     box-shadow: 4px 0 20px rgba(0,0,0,0.5);
     border-right: 1px solid rgba(255,255,255,0.08);
     z-index: 1000;
-    /* contain layout : isole le reflow du menu du reste de la page */
-    contain: layout style;
+    /* NAV-6 : bloquer les taps sur le panneau off-screen */
+    pointer-events: none;
 
     &.mobile-open {
       transform: translateX(0);
+      pointer-events: auto;       /* ← réactivé quand ouvert */
     }
 
     .nav-indicator {
       display: none;
     }
 
+    /*
+      NAV-6 — TRANSITION au lieu d'ANIMATION pour les liens.
+      Les transitions sont beaucoup plus fiables que les animations
+      CSS avec fill-mode:forwards + reflow trick sur WebKit mobile.
+      Le stagger est obtenu via transition-delay par nth-child.
+    */
     .nav-link {
       width: 100%;
       padding: 14px 20px;
@@ -714,6 +714,14 @@ footer {
       border-radius: 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       display: block;
+      /* État fermé : liens invisibles et décalés */
+      opacity: 0;
+      transform: translateX(-20px);
+      /* Transition rapide sans stagger à la fermeture */
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      pointer-events: none;
+      /* Éliminer le délai 300ms du double-tap zoom sur mobile */
+      touch-action: manipulation;
 
       &:hover {
         background: rgba(255,255,255,0.1);
@@ -728,20 +736,31 @@ footer {
       &::after {
         display: none;
       }
+
+      /* Badge orange Beta : repositionner inline après le texte (pas au bord droit) */
+      &[href="#beta"]::before {
+        position: static;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 8px;
+      }
     }
 
-    /* ── Stagger entrée liens mobile (NAV-5) ── */
+    /* ── NAV-6 : État ouvert — liens visibles avec stagger via transition-delay ── */
     &.mobile-open .nav-link {
-      opacity: 0;
-      transform: translateX(-20px);
-      animation: nav-slide-in 0.3s ease forwards;
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+      /* Transition plus lente avec stagger à l'ouverture */
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
 
-    &.mobile-open .nav-link:nth-child(1) { animation-delay: 0.05s; }
-    &.mobile-open .nav-link:nth-child(2) { animation-delay: 0.1s; }
-    &.mobile-open .nav-link:nth-child(3) { animation-delay: 0.15s; }
-    &.mobile-open .nav-link:nth-child(4) { animation-delay: 0.2s; }
-    &.mobile-open .nav-link:nth-child(5) { animation-delay: 0.25s; }
+    &.mobile-open .nav-link:nth-child(1) { transition-delay: 0.02s; }
+    &.mobile-open .nav-link:nth-child(2) { transition-delay: 0.05s; }
+    &.mobile-open .nav-link:nth-child(3) { transition-delay: 0.08s; }
+    &.mobile-open .nav-link:nth-child(4) { transition-delay: 0.11s; }
+    &.mobile-open .nav-link:nth-child(5) { transition-delay: 0.14s; }
+    &.mobile-open .nav-link:nth-child(6) { transition-delay: 0.17s; }
 
     /* Lien actif mobile : barre latérale bleue renforcée */
     &.mobile-open .nav-link.active {
@@ -750,13 +769,10 @@ footer {
     }
   }
 
-  @keyframes nav-slide-in {
-    to { opacity: 1; transform: translateX(0); }
-  }
-
   .nav-hamburger {
     display: flex;
     order: 2;
     margin-left: auto;
+    touch-action: manipulation;  /* NAV-6 : pas de délai double-tap */
   }
 }

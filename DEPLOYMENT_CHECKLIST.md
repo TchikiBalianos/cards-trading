@@ -90,7 +90,7 @@ Voici ce qui a été fait et ce qu'il reste à faire pour mettre en production.
 2. Remplir le formulaire complet
 3. Accepter RGPD
 4. Soumettre
-5. Vérifier que vous recevez l'email à julian.schmerkin@gmail.com
+5. Vérifier que vous recevez l'email à contact@cards-trading.com
 6. Vérifier la donnée dans Supabase Table Editor
 ```
 
@@ -118,7 +118,7 @@ Voici ce qui a été fait et ce qu'il reste à faire pour mettre en production.
 
 - [ ] **Testing**
   - [ ] Formulaire submit réussit
-  - [ ] Email reçu à julian.schmerkin@gmail.com
+  - [ ] Email reçu à contact@cards-trading.com
   - [ ] Donnée visible dans Supabase
   - [ ] Mobile (320px) fonctionne ✓
   - [ ] Tablet (768px) fonctionne ✓

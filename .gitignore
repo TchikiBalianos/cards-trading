@@ -8,5 +8,10 @@ node_modules/
 # Vercel
 .vercel
 
+# Secrets — ne JAMAIS committer (clés Resend / Supabase)
+.env
+.env.*
+!.env.local.example
+
 # OS
 .DS_Store

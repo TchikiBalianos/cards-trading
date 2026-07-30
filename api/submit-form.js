@@ -56,34 +56,12 @@ export default async function handler(req, res) {
       console.error('Supabase error:', supabaseError);
     }
 
-    // Send email notification (runs even if Supabase failed)
-    const emailContent = `
-Nouvelle inscription à la bêta Cards Trading
-
-**Informations personnelles:**
-- Nom: ${nom}
-- Prénom: ${prenom}
-- Email: ${email}
-
-**Profil:**
-- Âge: ${age || 'Non spécifié'}
-- Genre: ${genre || 'Non spécifié'}
-- TCG préférés: ${Array.isArray(tcgs) ? tcgs.join(', ') : tcgs || 'Non spécifié'}
-- Plateforme actuelle: ${platform || 'Non spécifié'}
-- Profil: ${profile || 'Non spécifié'}
-
-**Consentement RGPD:** ✅ Accepté
-
-Date d'inscription: ${new Date().toLocaleString('fr-FR')}
-IP: ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}
-
----
-Ne répondez pas à cet email. Ce message vient de votre formulaire d'inscription Cards Trading.
-    `;
-
-    const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'Cards Trading <onboarding@resend.dev>',
-      to: ['lesamiscrypto@gmail.com'],
+    // ─────────────────────────────────────────────────────────
+    // EMAIL 1 — Notification ADMIN à contact@cards-trading.com
+    // ─────────────────────────────────────────────────────────
+    const adminEmailPromise = resend.emails.send({
+      from: 'Cards Trading <contact@cards-trading.com>',
+      to: ['contact@cards-trading.com'],
       reply_to: email,
       subject: `✨ Nouvelle inscription beta - ${prenom} ${nom}`,
       html: `
@@ -153,16 +131,121 @@ Ne répondez pas à cet email. Ce message vient de votre formulaire d'inscriptio
       `,
     });
 
-    if (emailError) {
-      console.error('Resend error:', JSON.stringify(emailError));
+    // ─────────────────────────────────────────────────────────
+    // EMAIL 2 — Confirmation USER à l'adresse de l'inscrit
+    // ─────────────────────────────────────────────────────────
+    const tcgsList = Array.isArray(tcgs) ? tcgs.join(', ') : (tcgs || '');
+    const userEmailPromise = resend.emails.send({
+      from: 'Cards Trading <contact@cards-trading.com>',
+      to: [email],
+      reply_to: 'contact@cards-trading.com',
+      subject: `🎴 Bienvenue dans la bêta Cards Trading, ${prenom} !`,
+      html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenue chez Cards Trading</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background-color: #0f0f14; margin: 0; padding: 0; color: #e8e8e8; }
+    .wrapper { width: 100%; background: #0f0f14; padding: 30px 0; }
+    .container { max-width: 600px; margin: 0 auto; background: linear-gradient(180deg, #1a1a24 0%, #14141c 100%); border-radius: 12px; overflow: hidden; border: 1px solid rgba(41,151,255,0.15); }
+    .hero { background: linear-gradient(135deg, #2997ff 0%, #1a6dc4 100%); padding: 36px 24px; text-align: center; color: #fff; }
+    .hero h1 { margin: 0 0 8px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+    .hero p { margin: 0; font-size: 15px; opacity: 0.95; }
+    .body { padding: 28px 28px 12px; }
+    .body p { font-size: 15px; line-height: 1.6; color: #cfcfd6; margin: 0 0 16px; }
+    .body strong { color: #fff; }
+    .highlight { background: rgba(41,151,255,0.08); border-left: 3px solid #2997ff; padding: 16px 18px; border-radius: 6px; margin: 20px 0; }
+    .highlight p { margin: 0; color: #e8e8e8; }
+    .recap { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 16px 20px; margin: 20px 0; }
+    .recap-row { padding: 6px 0; font-size: 14px; }
+    .recap-label { color: #8a8a96; display: inline-block; min-width: 110px; }
+    .recap-value { color: #fff; }
+    .cta-wrap { text-align: center; margin: 24px 0 8px; }
+    .cta { display: inline-block; background: linear-gradient(135deg, #ff6b35 0%, #e85a2a 100%); color: #fff !important; text-decoration: none; padding: 13px 28px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+    .divider { height: 1px; background: rgba(255,255,255,0.08); margin: 24px 0; }
+    .footer { padding: 18px 28px 28px; text-align: center; font-size: 12px; color: #6b6b75; line-height: 1.5; }
+    .footer a { color: #8a8a96; text-decoration: none; }
+    .signature { color: #cfcfd6; font-style: italic; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="hero">
+        <h1>🎴 Bienvenue ${prenom} !</h1>
+        <p>Tu fais maintenant partie des premiers bêta-testeurs de Cards Trading.</p>
+      </div>
+
+      <div class="body">
+        <p>Salut <strong>${prenom}</strong>,</p>
+
+        <p>Merci pour ton inscription à la bêta de <strong>Cards-Trading</strong> — la nouvelle marketplace dédiée aux fans de TCG. Ton inscription a bien été enregistrée 🎉</p>
+
+        <div class="highlight">
+          <p><strong>📬 Et maintenant ?</strong><br>
+          On te recontactera par email dès que l'accès anticipé sera disponible. Les premiers inscrits auront la priorité — tu seras parmi les premiers à découvrir la plateforme.</p>
+        </div>
+
+        <p><strong>Récapitulatif de ton inscription :</strong></p>
+
+        <div class="recap">
+          <div class="recap-row"><span class="recap-label">Email :</span> <span class="recap-value">${email}</span></div>
+          ${tcgsList ? `<div class="recap-row"><span class="recap-label">TCG préférés :</span> <span class="recap-value">${tcgsList}</span></div>` : ''}
+          ${platform ? `<div class="recap-row"><span class="recap-label">Plateforme actuelle :</span> <span class="recap-value">${platform}</span></div>` : ''}
+          ${profile ? `<div class="recap-row"><span class="recap-label">Profil :</span> <span class="recap-value">${profile}</span></div>` : ''}
+        </div>
+
+        <div class="cta-wrap">
+          <a href="https://discord.gg/JBs3FnK9qP" class="cta">💬 Rejoindre le Discord</a>
+        </div>
+
+        <p style="text-align: center; font-size: 13px; color: #8a8a96; margin-top: 12px;">
+          Tu y trouveras les coulisses du projet, les sneak peeks et la communauté.
+        </p>
+
+        <div class="divider"></div>
+
+        <p class="signature">À très bientôt sur Cards Trading,<br>
+        — Julian &amp; Valérian, co-fondateurs</p>
+      </div>
+
+      <div class="footer">
+        <p>Cet email confirme ton inscription à la bêta. Tu peux nous écrire à <a href="mailto:contact@cards-trading.com">contact@cards-trading.com</a> pour toute question.</p>
+        <p style="margin-top: 8px;">© 2026 Cards Trading — Tous droits réservés</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+      `,
+    });
+
+    // Envoyer les deux emails en parallèle
+    const [adminResult, userResult] = await Promise.allSettled([adminEmailPromise, userEmailPromise]);
+
+    const adminOk = adminResult.status === 'fulfilled' && !adminResult.value.error;
+    const userOk  = userResult.status  === 'fulfilled' && !userResult.value.error;
+
+    if (!adminOk) {
+      console.error('Resend admin error:', adminResult.status === 'rejected' ? adminResult.reason : JSON.stringify(adminResult.value.error));
     } else {
-      console.log('Email sent, id:', emailData?.id);
+      console.log('Admin email sent, id:', adminResult.value.data?.id);
+    }
+
+    if (!userOk) {
+      console.error('Resend user error:', userResult.status === 'rejected' ? userResult.reason : JSON.stringify(userResult.value.error));
+    } else {
+      console.log('User confirmation email sent, id:', userResult.value.data?.id);
     }
 
     return res.status(200).json({
       success: true,
-      message: 'Inscription réussie! Vous recevrez bientôt un email de confirmation.',
-      emailSent: !emailError,
+      message: 'Inscription réussie! Un email de confirmation t\'a été envoyé.',
+      adminEmailSent: adminOk,
+      userEmailSent: userOk,
       dbSaved: !supabaseError,
     });
   } catch (error) {

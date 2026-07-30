@@ -97,7 +97,7 @@ Ouvrez [http://localhost:3000](http://localhost:3000)
 1. Remplissez le questionnaire
 2. Acceptez le RGPD
 3. Cliquez "Valider"
-4. Vérifiez que vous recevez un email à **julian.schmerkin@gmail.com**
+4. Vérifiez que vous recevez un email à **contact@cards-trading.com**
 5. Allez sur Supabase → **Table Editor** → `beta_submissions` pour voir la donnée
 
 ---

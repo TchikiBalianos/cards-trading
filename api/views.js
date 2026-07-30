@@ -1,15 +1,21 @@
 /**
  * Compteur « joueurs inscrits à la bêta » — incrémentation artificielle
  *
- * Approche 100 % déterministe : part de 51 le jour du lancement et
- * ajoute 5 à 8 inscrits par jour via un PRNG seedé sur le n° de jour.
- * Tous les visiteurs voient la même valeur — aucun état serveur requis.
+ * Approche 100 % déterministe : part de BASE_COUNT le jour BASE_EPOCH et
+ * ajoute 1 à 3 inscrits par jour via un PRNG seedé sur le n° de jour.
+ * Aucun état serveur — tous les visiteurs voient exactement la même valeur
+ * pour une même journée UTC.
+ *
+ * ⚠️ ALGORITHME DUPLIQUÉ dans public/index.html (fallback client-side).
+ *    Toute modification ici doit être répercutée là-bas — sinon un visiteur
+ *    dont l'appel API échoue verrait un nombre différent des autres.
  *
  * GET /api/views → { count: <nombre> }
  */
 
-const SEED = 51;
-const LAUNCH_EPOCH = Date.UTC(2026, 4, 7); // 7 mai 2026 00:00 UTC (mois 0-indexé)
+const BASE_COUNT = 263;
+const BASE_EPOCH = Date.UTC(2026, 6, 30); // 30 juillet 2026 00:00 UTC (mois 0-indexé)
+const DAY_MS = 86_400_000;
 
 /* mulberry32 — PRNG 32-bit rapide et reproductible */
 function mulberry32(seed) {
@@ -22,31 +28,43 @@ function mulberry32(seed) {
   };
 }
 
-function getCount() {
-  const now = Date.now();
-  const daysSinceLaunch = Math.max(
-    0,
-    Math.floor((now - LAUNCH_EPOCH) / 86_400_000)
-  );
-  let total = SEED;
-  for (let d = 0; d < daysSinceLaunch; d++) {
-    const rng = mulberry32(d * 31337 + 12345);
-    total += Math.floor(rng() * 4) + 5; // 5, 6, 7 ou 8
+function dailyIncrement(day) {
+  /* Les seeds successifs (d*31337+12345) sont linéairement corrélés :
+     le PREMIER output de mulberry32 l'est donc aussi, ce qui produisait
+     un motif visible (+3,+1,+3,+1…) et une distribution biaisée.
+     On avance le générateur de 2 crans pour casser cette corrélation. */
+  const rng = mulberry32(day * 31337 + 12345);
+  rng();
+  rng();
+  return Math.floor(rng() * 3) + 1; // 1, 2 ou 3
+}
+
+function getCount(nowMs) {
+  const daysSinceBase = Math.max(0, Math.floor((nowMs - BASE_EPOCH) / DAY_MS));
+  let total = BASE_COUNT;
+  for (let d = 0; d < daysSinceBase; d++) {
+    total += dailyIncrement(d);
   }
   return total;
 }
 
 export default function handler(req, res) {
-  /* Cache 1 h au CDN, stale-while-revalidate 10 min — la valeur ne
-     change qu'une fois par jour, pas besoin de la recalculer à chaque hit */
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=3600, stale-while-revalidate=600'
-  );
-
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  return res.status(200).json({ count: getCount() });
+  const now = Date.now();
+
+  /* Cache jusqu'au prochain minuit UTC : la valeur ne change qu'une fois
+     par jour, donc elle bascule au même instant pour tous les visiteurs
+     quel que soit le nœud CDN qui les sert. Plancher à 60 s pour éviter
+     un s-maxage=0 juste avant minuit. */
+  const msUntilMidnight = DAY_MS - (now % DAY_MS);
+  const sMaxAge = Math.max(60, Math.floor(msUntilMidnight / 1000));
+  res.setHeader(
+    'Cache-Control',
+    `public, s-maxage=${sMaxAge}, stale-while-revalidate=600`
+  );
+
+  return res.status(200).json({ count: getCount(now) });
 }
