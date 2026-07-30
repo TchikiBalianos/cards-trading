@@ -2,10 +2,28 @@ import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+
+/*
+  Client Supabase créé de façon défensive.
+
+  createClient() lève si l'URL est absente ou malformée. Au niveau module,
+  cette exception tuait TOUTE la fonction — y compris l'envoi des emails,
+  qui est notre filet de sécurité quand la base est indisponible. On isole
+  donc la création, et `supabase` vaut null si la config manque.
+*/
+let supabase = null;
+try {
+  if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
+    supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_ANON_KEY
+    );
+  } else {
+    console.error('[config] SUPABASE_URL ou SUPABASE_ANON_KEY manquante — persistance désactivée');
+  }
+} catch (e) {
+  console.error('[config] createClient a échoué — persistance désactivée:', e.message);
+}
 
 export default async function handler(req, res) {
   // Only allow POST requests
@@ -32,29 +50,51 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'RGPD consent required' });
     }
 
-    // Save to Supabase
-    const { data, error: supabaseError } = await supabase
-      .from('beta_submissions')
-      .insert([
-        {
-          nom,
-          prenom,
-          email,
-          age: age || null,
-          genre: genre || null,
-          tcgs: Array.isArray(tcgs) ? tcgs.join(',') : tcgs,
-          platform: platform || null,
-          profile: profile || null,
-          rgpd_accepted: true,
-          submitted_at: new Date().toISOString(),
-          ip_address: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-        },
-      ]);
+    /*
+      Persistance Supabase.
+
+      Non bloquante : l'email reste notre filet de sécurité. Mais contrairement
+      à avant, un échec ici est SIGNALÉ (sujet de l'email admin) et pris en
+      compte dans le statut renvoyé au visiteur — un échec silencieux avait
+      fait perdre 3 mois d'inscriptions sans que personne ne s'en aperçoive.
+    */
+    let supabaseError = null;
+    if (!supabase) {
+      supabaseError = { message: 'Client Supabase non configuré' };
+      console.error('Supabase indisponible — lead conservé uniquement par email');
+    } else {
+      try {
+        const { error } = await supabase
+          .from('beta_submissions')
+          .insert([
+            {
+              nom,
+              prenom,
+              email,
+              age: age || null,
+              genre: genre || null,
+              tcgs: Array.isArray(tcgs) ? tcgs.join(',') : tcgs,
+              platform: platform || null,
+              profile: profile || null,
+              rgpd_accepted: true,
+              submitted_at: new Date().toISOString(),
+              ip_address: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+            },
+          ]);
+        supabaseError = error;
+      } catch (e) {
+        // createClient peut réussir et l'appel réseau échouer (DNS, projet supprimé)
+        supabaseError = { message: e.message };
+      }
+    }
 
     if (supabaseError) {
-      // Log but don't block — email must still be sent
       console.error('Supabase error:', supabaseError);
     }
+
+    const dbSaved = !supabaseError;
+    /* Préfixe d'alerte visible dans la liste d'emails, sans avoir à ouvrir */
+    const alerte = dbSaved ? '' : '[BASE HS] ';
 
     // ─────────────────────────────────────────────────────────
     // EMAIL 1 — Notification ADMIN à contact@cards-trading.com
@@ -63,7 +103,7 @@ export default async function handler(req, res) {
       from: 'Cards Trading <contact@cards-trading.com>',
       to: ['contact@cards-trading.com'],
       reply_to: email,
-      subject: `✨ Nouvelle inscription beta - ${prenom} ${nom}`,
+      subject: `${alerte}✨ Nouvelle inscription beta - ${prenom} ${nom}`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -84,6 +124,12 @@ export default async function handler(req, res) {
 <body>
   <div class="container">
     <h2>✨ Nouvelle inscription à la bêta</h2>
+
+    ${dbSaved ? '' : `<div style="background:#fff3cd;border-left:4px solid #e65100;padding:14px 18px;border-radius:4px;margin-bottom:20px;color:#663c00">
+      <strong>⚠️ Enregistrement en base ÉCHOUÉ</strong><br>
+      Ce lead n'existe QUE dans cet email — conservez-le.<br>
+      <span style="font-size:12px">Motif : ${String(supabaseError && supabaseError.message || 'inconnu').slice(0, 200)}</span>
+    </div>`}
 
     <h3>Informations personnelles</h3>
     <div class="field">
@@ -241,12 +287,34 @@ export default async function handler(req, res) {
       console.log('User confirmation email sent, id:', userResult.value.data?.id);
     }
 
+    /*
+      Le lead n'est RETENU que si au moins un canal durable a fonctionné :
+      la base, ou la notification admin (qui contient toutes les données).
+      L'email de confirmation au visiteur ne compte pas — c'est du confort,
+      pas un enregistrement.
+
+      Si les deux ont échoué, ne PAS annoncer "Inscription réussie" : on
+      renvoie une erreur pour que le visiteur puisse réessayer. C'est
+      exactement ce qui manquait — un 200 systématique a masqué la perte
+      des inscriptions pendant trois mois.
+    */
+    const leadRetenu = dbSaved || adminOk;
+
+    if (!leadRetenu) {
+      console.error('PERTE DE LEAD — base ET email admin en échec:', JSON.stringify({ nom, prenom, email }));
+      return res.status(503).json({
+        error: "Notre système d'inscription est momentanément indisponible. Merci de réessayer dans quelques minutes.",
+        dbSaved: false,
+        adminEmailSent: false,
+      });
+    }
+
     return res.status(200).json({
       success: true,
       message: 'Inscription réussie! Un email de confirmation t\'a été envoyé.',
       adminEmailSent: adminOk,
       userEmailSent: userOk,
-      dbSaved: !supabaseError,
+      dbSaved,
     });
   } catch (error) {
     console.error('Unexpected error:', error);
