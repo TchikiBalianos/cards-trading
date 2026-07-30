@@ -1,5 +1,4 @@
 {
-  "public": true,
   "crons": [
     {
       "path": "/api/refresh-instagram-token",
