@@ -19,6 +19,9 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 let supabase = null;
 try {
@@ -32,6 +35,56 @@ try {
   console.error('[keep-alive] createClient a échoué:', e.message);
 }
 
+/*
+  Alerte email en cas de panne.
+
+  Sans ça, une base HS ne produit qu'une ligne de log que personne ne lit —
+  c'est précisément comme ça que 11 semaines d'inscriptions ont disparu
+  dans le silence. Le cron tournant chaque jour, une panne devient visible
+  dans la boîte sous 24 h au lieu de jamais.
+
+  N'envoie RIEN quand tout va bien : zéro email en fonctionnement normal.
+*/
+async function alerter(motif, detail) {
+  try {
+    const { error } = await resend.emails.send({
+      from: 'Cards Trading <contact@cards-trading.com>',
+      to: ['contact@cards-trading.com'],
+      subject: '🚨 ALERTE — base de données Cards Trading injoignable',
+      html: `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px">
+  <h2 style="color:#c62828;margin:0 0 16px">🚨 La base de données ne répond pas</h2>
+  <p style="font-size:15px;line-height:1.6;color:#333">
+    La vérification quotidienne a échoué. <strong>Les inscriptions au formulaire
+    ne sont probablement plus enregistrées.</strong>
+  </p>
+  <div style="background:#fff3cd;border-left:4px solid #e65100;padding:14px 18px;border-radius:4px;margin:20px 0;color:#663c00">
+    <strong>Motif :</strong> ${motif}<br>
+    <span style="font-size:13px">${String(detail || '').slice(0, 300)}</span>
+  </div>
+  <p style="font-size:15px;line-height:1.6;color:#333"><strong>Que faire :</strong></p>
+  <ol style="font-size:14px;line-height:1.8;color:#333">
+    <li>Ouvrir <a href="https://supabase.com/dashboard/project/frbwmzgaqmylilzciptg">le projet Supabase</a></li>
+    <li>S'il est en pause, cliquer <strong>Resume project</strong> — les données restent intactes</li>
+    <li>Vérifier ensuite que le formulaire réenregistre bien</li>
+  </ol>
+  <p style="font-size:12px;color:#888;margin-top:24px">
+    Alerte automatique émise par /api/keep-alive. Tant que la panne dure,
+    ce message revient une fois par jour.
+  </p>
+</div>`,
+    });
+    if (error) {
+      console.error('[keep-alive] alerte email NON envoyée:', JSON.stringify(error));
+    } else {
+      console.log('[keep-alive] alerte email envoyée');
+    }
+  } catch (e) {
+    /* Les deux canaux sont morts — il ne reste que les logs */
+    console.error('[keep-alive] alerte email impossible:', e.message);
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -43,6 +96,7 @@ export default async function handler(req, res) {
 
   if (!supabase) {
     console.error('[keep-alive] ÉCHEC — configuration Supabase absente');
+    await alerter('Configuration Supabase absente', 'SUPABASE_URL ou SUPABASE_ANON_KEY manquante dans Vercel');
     return res.status(500).json({ ok: false, reason: 'not_configured' });
   }
 
@@ -54,6 +108,7 @@ export default async function handler(req, res) {
 
     if (error) {
       console.error('[keep-alive] ÉCHEC — la base a répondu une erreur:', JSON.stringify(error));
+      await alerter('La base a répondu une erreur', error.message);
       return res.status(500).json({ ok: false, reason: 'query_error' });
     }
 
@@ -61,8 +116,9 @@ export default async function handler(req, res) {
     /* On ne renvoie pas le nombre d'inscrits : l'URL est publique. */
     return res.status(200).json({ ok: true });
   } catch (e) {
-    /* DNS/réseau : typiquement le projet est déjà en pause ou supprimé */
+    /* DNS/réseau : typiquement le projet est en pause ou supprimé */
     console.error('[keep-alive] ÉCHEC — base injoignable:', e.message);
+    await alerter('Base injoignable (DNS/réseau)', e.message);
     return res.status(500).json({ ok: false, reason: 'unreachable' });
   }
 }
