@@ -82,5 +82,11 @@ const socialImage = image || '/assets/img/og-cover.png';
         <a href="/mentions-legales.html">Mentions l&eacute;gales</a>
       </p>
     </footer>
+
+    <!-- Vercel Web Analytics — sans cookie, sans identifiant persistant.
+         Balise <script> plutôt que le composant React <Analytics /> : la
+         landing est du HTML statique dans public/, pas une page Astro, et
+         le même mécanisme doit couvrir les deux. -->
+    <script defer src="/_vercel/insights/script.js"></script>
   </body>
 </html>
