@@ -404,8 +404,20 @@ header {
   background: rgba(41, 151, 255, 0.15);
   border: 1px solid rgba(41, 151, 255, 0.3);
   border-radius: 20px;
+  /*
+    Invisible tant que le JS ne l'a pas positionné.
+
+    Sans ces deux valeurs, l'indicateur retombait sur width:auto — soit la
+    largeur de ses seules bordures, ~2px — avec opacity:1 et left:auto (=0).
+    Résultat : une barre verticale parasite collée à gauche du menu en haut
+    de page, tant qu'aucune section n'était observée par le scroll-spy.
+    moveIndicator() repasse opacity à 1 en le plaçant.
+  */
+  width: 0;
+  opacity: 0;
   transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+              width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease;
   pointer-events: none;
   z-index: 0;
   box-shadow: 0 0 12px rgba(41, 151, 255, 0.2);

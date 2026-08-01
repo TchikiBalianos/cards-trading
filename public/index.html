@@ -98,7 +98,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=8" />
+    <link rel="stylesheet" href="landing.css?v=9" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -1114,6 +1114,9 @@
       indicator.style.left = (linkRect.left - navRect.left) + 'px';
       indicator.style.width = linkRect.width + 'px';
       indicator.style.top = ((navRect.height - 32) / 2) + 'px';
+      /* L'indicateur est opacity:0 en CSS tant qu'il n'est pas placé —
+         sinon il apparaît comme une barre de 2px à gauche du menu. */
+      indicator.style.opacity = '1';
     }
 
     /* ── Scroll-spy: active nav link ── */
