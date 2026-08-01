@@ -780,5 +780,12 @@ footer {
     order: 2;
     margin-left: auto;
     touch-action: manipulation;  /* NAV-6 : pas de délai double-tap */
+
+    /* Cible tactile WCAG 2.5.5 (44x44 min). Le dimensionnement naturel
+       donnait 46x41 : padding 10 + 3 barres de 3px + 2 gaps de 6px = 41.
+       Un plancher explicite plutôt qu'un padding ajusté à la main — les
+       barres restent centrées par justify-content, rien ne bouge à l'œil. */
+    min-width: 44px;
+    min-height: 44px;
   }
 }
