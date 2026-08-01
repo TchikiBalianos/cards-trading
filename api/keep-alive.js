@@ -85,6 +85,84 @@ async function alerter(motif, detail) {
   }
 }
 
+/*
+  Rapport hebdomadaire de santé.
+
+  Greffé sur le cron quotidien plutôt que sur un cron dédié : le plan Hobby
+  plafonne à 2 cron jobs et les deux sont pris (keep-alive + instagram).
+
+  Envoyé le lundi. Sa simple ARRIVÉE prouve que la chaîne Resend fonctionne —
+  c'est le test des notifications autant que le rapport lui-même. Une semaine
+  sans rapport le lundi est en soi un signal.
+*/
+async function rapportHebdo(stats) {
+  const total = stats?.total ?? '?';
+  const semaine = stats?.last_7d ?? '?';
+  const derniere = stats?.derniere ? new Date(stats.derniere) : null;
+  const joursDepuis = derniere
+    ? Math.floor((Date.now() - derniere.getTime()) / 86400000)
+    : null;
+
+  /* Le trafic arrive par pics (lives WhatNot), donc 0 inscription sur une
+     semaine n'est pas anormal en soi. En revanche une dernière inscription
+     très ancienne mérite une vérification manuelle du formulaire. */
+  const suspect = joursDepuis !== null && joursDepuis > 30;
+
+  try {
+    const { error } = await resend.emails.send({
+      from: 'Cards Trading <contact@cards-trading.com>',
+      to: ['contact@cards-trading.com'],
+      subject: `📊 Cards Trading — ${semaine} inscription${semaine > 1 ? 's' : ''} cette semaine`,
+      html: `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px">
+  <h2 style="color:#2997ff;margin:0 0 4px">📊 Rapport hebdomadaire</h2>
+  <p style="color:#888;font-size:13px;margin:0 0 24px">Semaine du ${new Date().toLocaleDateString('fr-FR')}</p>
+
+  <div style="display:flex;gap:12px;margin-bottom:24px">
+    <div style="flex:1;background:#f5f8ff;border-radius:8px;padding:16px;text-align:center">
+      <div style="font-size:32px;font-weight:700;color:#2997ff">${semaine}</div>
+      <div style="font-size:13px;color:#666">cette semaine</div>
+    </div>
+    <div style="flex:1;background:#f7f7f7;border-radius:8px;padding:16px;text-align:center">
+      <div style="font-size:32px;font-weight:700;color:#333">${total}</div>
+      <div style="font-size:13px;color:#666">au total</div>
+    </div>
+  </div>
+
+  <p style="font-size:15px;color:#333;line-height:1.6">
+    <strong>Dernière inscription :</strong>
+    ${derniere ? derniere.toLocaleDateString('fr-FR') + ` (il y a ${joursDepuis} jour${joursDepuis > 1 ? 's' : ''})` : 'aucune'}
+  </p>
+
+  ${suspect ? `<div style="background:#fff3cd;border-left:4px solid #e65100;padding:14px 18px;border-radius:4px;margin:20px 0;color:#663c00">
+    <strong>⚠️ Aucune inscription depuis ${joursDepuis} jours.</strong><br>
+    Si tu as fait de la promo récemment, teste le formulaire : il se peut
+    qu'il n'enregistre plus.
+  </div>` : ''}
+
+  <div style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:14px 18px;border-radius:4px;margin:20px 0;color:#1b5e20">
+    <strong>✅ Base de données joignable</strong><br>
+    <span style="font-size:13px">Le projet Supabase n'est pas en pause. Vérifié chaque jour.</span>
+  </div>
+
+  <p style="font-size:12px;color:#888;margin-top:24px;line-height:1.5">
+    Ce message est envoyé chaque lundi. <strong>Le recevoir prouve aussi que
+    l'envoi d'emails fonctionne</strong> — si un lundi il n'arrive pas, c'est
+    que la chaîne de notification est cassée et que les alertes d'inscription
+    ne partent probablement plus non plus.
+  </p>
+</div>`,
+    });
+    if (error) {
+      console.error('[keep-alive] rapport hebdo NON envoyé:', JSON.stringify(error));
+    } else {
+      console.log('[keep-alive] rapport hebdo envoyé —', semaine, 'inscription(s) cette semaine');
+    }
+  } catch (e) {
+    console.error('[keep-alive] rapport hebdo impossible:', e.message);
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -113,6 +191,19 @@ export default async function handler(req, res) {
     }
 
     console.log(`[keep-alive] OK — base jointe en ${Date.now() - t0}ms`);
+
+    /* Rapport hebdomadaire le lundi (getUTCDay() === 1), ou à la demande
+       via ?rapport=1 pour tester sans attendre lundi. */
+    const forcer = req.query && req.query.rapport === '1';
+    if (forcer || new Date().getUTCDay() === 1) {
+      const { data: stats, error: rpcError } = await supabase.rpc('beta_stats');
+      if (rpcError) {
+        console.error('[keep-alive] beta_stats indisponible:', JSON.stringify(rpcError));
+      } else {
+        await rapportHebdo(stats);
+      }
+    }
+
     /* On ne renvoie pas le nombre d'inscrits : l'URL est publique. */
     return res.status(200).json({ ok: true });
   } catch (e) {

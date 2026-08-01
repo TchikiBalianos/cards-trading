@@ -1,0 +1,135 @@
+# Cards-Trading — Landing page
+
+Landing de la marketplace TCG **Cards-Trading.com**. Éditeur : **Thugz Labs**.
+
+---
+
+## Architecture — le piège principal
+
+Le projet mélange **deux mondes**, et s'y tromper fait perdre du temps :
+
+| Zone | Techno | Fichiers |
+|---|---|---|
+| **Landing** | HTML statique brut | `public/index.html`, `public/cgu.html`, `public/mentions-legales.html` |
+| **Blog** | Astro 6 + Content Collections | `src/pages/blog/`, `src/layouts/BlogLayout.astro` |
+| **API** | Fonctions serverless Vercel | `api/*.js` (ESM, `export default handler`) |
+
+**Conséquence** : toute solution « composant React/Astro » ne couvre que le blog.
+Pour qu'une chose s'applique partout (analytics, script global), il faut une
+balise `<script>` dupliquée dans les 3 HTML **et** dans `BlogLayout.astro`.
+
+Le build (`npm run build` → `astro build`) ne compile QUE le blog ; `public/`
+est copié tel quel. Un build vert ne prouve donc rien sur la landing.
+
+### CSS
+`public/landing.css` importe les autres via `@import` (dont `layout.css`).
+Cache-busting manuel : `landing.css?v=N` dans `index.html` — **incrémenter N
+à chaque modification CSS**, sinon Vercel/le navigateur sert l'ancienne version.
+
+---
+
+## Chaîne d'inscription — à ne jamais casser
+
+`public/index.html` (formulaire) → `POST /api/submit-form` → **Supabase** (table
+`beta_submissions`) **+ 2 emails Resend** (notification admin vers
+`contact@cards-trading.com`, confirmation vers l'inscrit).
+
+### Règle absolue
+Un lead est retenu si **la base OU l'email admin** a réussi. Si les deux
+échouent, l'API renvoie **503** — jamais un faux « Inscription réussie ».
+
+**Pourquoi** : entre le 13 mai et le 30 juillet 2026, un `return 200` inconditionnel
+a masqué une base en pause. ~11 semaines d'inscriptions perdues, sans aucun signal.
+Ne jamais réintroduire un chemin où un échec de persistance passe en succès.
+
+### Signalement
+- Base HS → préfixe `[BASE HS] ` dans le sujet de l'email admin + encart d'alerte
+- `/api/keep-alive` échoue → email d'alerte automatique sur `contact@`
+
+---
+
+## Supabase — danger permanent
+
+Projet `frbwmzgaqmylilzciptg` (région eu-west-1), **plan gratuit**.
+
+> Le plan gratuit **met le projet en pause après ~7 jours d'inactivité**.
+> En pause, le hostname ne résout plus (`ENOTFOUND`) et toutes les écritures
+> échouent. Les données restent intactes et le projet est restaurable depuis
+> le dashboard (bouton *Resume project*).
+
+`/api/keep-alive` (cron quotidien) existe uniquement pour empêcher ça.
+**Ne pas le supprimer ni espacer sa fréquence** : le seuil étant à 7 jours,
+un rythme hebdomadaire ne laisserait aucune marge.
+
+RLS : INSERT anonyme autorisé, SELECT réservé aux authentifiés. La clé anon
+ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agrégats.
+
+---
+
+## Vercel — contraintes du plan Hobby
+
+- **2 cron jobs maximum**, déclenchés **au plus une fois par jour**.
+  Les deux sont pris : `keep-alive` (quotidien) et `refresh-instagram-token`
+  (mensuel). Pour ajouter une tâche périodique, **greffer sur un cron existant**
+  plutôt qu'en créer un troisième.
+- `vercel.json` : la propriété `public` a été **retirée du schéma Vercel**.
+  La remettre casse le déploiement en ~1 seconde, avant tout build.
+- Le domaine apex redirige en 307 vers `www.` — utiliser `curl -L`.
+- Vercel consomme `s-maxage` et `stale-while-revalidate` et les retire de la
+  réponse envoyée au navigateur : voir seulement `Cache-Control: public` est normal.
+
+---
+
+## Vérification — non négociable
+
+Ce projet a une histoire de correctifs annoncés sans preuve. **Toujours vérifier
+en production avant d'affirmer que c'est réglé** :
+
+```bash
+# Le déploiement a-t-il vraiment réussi ? (un push ne suffit pas)
+gh api repos/TchikiBalianos/cards-trading/deployments --jq '.[0].ref[0:7]'
+gh api repos/TchikiBalianos/cards-trading/deployments/<id>/statuses --jq '.[0].state'
+
+# La chaîne d'inscription fonctionne-t-elle ?
+curl -sL -X POST https://cards-trading.com/api/submit-form \
+  -H "Content-Type: application/json" \
+  -d '{"nom":"TEST","prenom":"TEST","email":"test@example.com","rgpd":true}'
+# Attendu : {"success":true,...,"dbSaved":true}
+```
+
+### Limites de l'environnement de test
+- Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
+  compose pas de frames → **transitions et animations CSS ne s'exécutent pas**.
+  Ne jamais conclure « le scroll fonctionne » depuis ce navigateur ; mesurer
+  les valeurs CIBLES en neutralisant les transitions, et dire honnêtement que
+  le rendu animé reste à valider sur un vrai téléphone.
+- Le Chrome de l'utilisateur a des extensions qui **bloquent Vercel Analytics**
+  (`transferSize: 0`). Ses propres visites ne sont jamais comptées.
+
+---
+
+## Navigation mobile (v6)
+
+Historique lourd : 8 tentatives avant que ça tienne. Le principe actuel —
+**ne pas y toucher sans raison forte** :
+
+- **Zéro JS de scroll.** Le navigateur gère `<a href="#section">` nativement,
+  avec `scroll-behavior: smooth` + `scroll-margin-top` en CSS.
+- **Transitions CSS, pas animations.** Les `animation` + `forwards` + reflow
+  trick étaient la cause des « ça marche 3 fois puis ça s'arrête ».
+- `closeMenuDeferred(80ms)` : le navigateur traite le `href` avant toute
+  modification du DOM. Listener `hashchange` en filet de sécurité.
+- `pointer-events: none` sur le panneau fermé, `touch-action: manipulation`.
+
+Le skip-link est en `position: fixed` (pas `absolute`) : le `<body>` démarre à
+y=60px à cause du margin collapsing de `.hero`, ce qui rendait le lien visible
+en permanence par-dessus le logo.
+
+---
+
+## Ne jamais faire
+
+- Committer une clé (`.env*` est ignoré — vérifier avant tout `git add -A`)
+- Réintroduire `"public": true` dans `vercel.json`
+- Supprimer des lignes de `beta_submissions` sans demande explicite
+- Annoncer un correctif sans l'avoir vérifié en production
