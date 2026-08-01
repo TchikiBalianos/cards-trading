@@ -68,6 +68,5 @@ section[id] {
 @media (max-width: 768px) {
   :root {
     --header-height: 64px;
-    --scrollbar-width: 0px;
   }
 }

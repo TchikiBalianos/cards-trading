@@ -314,10 +314,15 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  /* S'arrête à la bordure gauche de la scrollbar — var définie par le
-     script inline dans <head> grâce à scrollbar-gutter:stable sur <html>.
-     Fallback 0px pour macOS/overlay scrollbar (scrollbar width = 0). */
-  width: calc(100% - var(--scrollbar-width, 0px));
+  /*
+    100% suffit — NE PAS retrancher la largeur de la scrollbar.
+
+    Pour un élément position:fixed, les pourcentages se résolvent sur le
+    bloc conteneur initial, qui EXCLUT déjà la scrollbar. L'ancien
+    calc(100% - var(--scrollbar-width)) la déduisait une seconde fois et
+    laissait une bande vide de ~15px à droite du header.
+  */
+  width: 100%;
   z-index: 1000;
   display: flex;
   align-items: center;

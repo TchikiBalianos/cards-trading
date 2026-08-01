@@ -98,7 +98,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=9" />
+    <link rel="stylesheet" href="landing.css?v=10" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -107,20 +107,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-  <script>
-    /* Mesure la largeur de la scrollbar native AVANT le 1er rendu.
-       Crée un div invisible avec overflow:scroll, mesure l'écart
-       offsetWidth − clientWidth, puis le supprime. Fonctionne sur
-       tous les OS / navigateurs sans toucher au layout réel. */
-    (function () {
-      var d = document.createElement('div');
-      d.style.cssText = 'position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll';
-      document.documentElement.appendChild(d);
-      var w = d.offsetWidth - d.clientWidth;
-      document.documentElement.removeChild(d);
-      if (w > 0) document.documentElement.style.setProperty('--scrollbar-width', w + 'px');
-    })();
-  </script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
