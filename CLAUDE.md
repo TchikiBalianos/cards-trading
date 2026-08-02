@@ -133,3 +133,30 @@ en permanence par-dessus le logo.
 - Réintroduire `"public": true` dans `vercel.json`
 - Supprimer des lignes de `beta_submissions` sans demande explicite
 - Annoncer un correctif sans l'avoir vérifié en production
+
+---
+
+## Blog — calendrier éditorial
+
+Rotation **déterministe**, calculée par `scripts/prochain-article.mjs` :
+
+```bash
+node scripts/prochain-article.mjs 8   # les 8 prochaines semaines
+```
+
+- **Mardi** — article obligatoire, alternant **Pokémon / One Piece**
+  → 2 Pokémon et 2 One Piece par mois
+- **Vendredi** — article optionnel, rotation sur Magic, Yu-Gi-Oh!, Lorcana,
+  Dragon Ball, Star Wars
+
+> La constante `REF` du script (lundi 27 juillet 2026) fixe l'origine de
+> l'alternance. **Ne jamais la modifier** : tout le calendrier, passé comme
+> futur, se décalerait.
+
+Deux tâches planifiées rédigent ces articles automatiquement
+(`blog-cards-trading-article-hebdo` et `-secondaire`). Elles écrivent
+toujours `draft: true` et poussent sur une **branche dédiée**, jamais sur
+`main` — la relecture et la fusion restent manuelles.
+
+Le schéma du frontmatter (`src/content.config.ts`) est strict : une
+catégorie hors de l'énumération casse le build.
