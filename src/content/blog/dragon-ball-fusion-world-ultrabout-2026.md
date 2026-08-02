@@ -138,7 +138,7 @@ Le marché Dragon Ball Fusion World est porté par trois dynamiques convergentes
 
 Les fourchettes mentionnées plus haut sont indicatives et varient sur les marketplaces (Cards-Trading.com, Cardmarket, TCGplayer, eBay). Pour les exemplaires gradés (PSA, BGS, CGC), comptez généralement une majoration significative selon le grade.
 
-![Cards-Trading.com — offre ciblée via wishlist pour vos cartes Dragon Ball Fusion World](/assets/img/wishlist.png)
+![Cards-Trading.com — offre ciblée via wishlist pour vos cartes Dragon Ball Fusion World](/assets/img/wishlist.webp)
 
 ## La communauté française : où jouer, où acheter
 
@@ -146,7 +146,7 @@ La communauté Fusion World française est l'une des plus actives d'Europe. Plus
 
 Pour les nouveaux venus, la meilleure porte d'entrée reste un starter deck officiel (généralement entre 15 et 20 EUR selon le revendeur), complété par l'achat de *singles* ciblés. C'est précisément ce qu'offre **Cards-Trading.com** : la possibilité d'acheter exactement les cartes nécessaires pour compléter un deck, sans passer par le hasard des boosters.
 
-![Cards-Trading.com — fiche carte détaillée avec historique de prix pour Dragon Ball TCG](/assets/img/feature1.png)
+![Cards-Trading.com — fiche carte détaillée avec historique de prix pour Dragon Ball TCG](/assets/img/feature1.webp)
 
 Les vendeurs vérifiés de la plateforme proposent l'inventaire Fusion World le plus complet du marché francophone.
 

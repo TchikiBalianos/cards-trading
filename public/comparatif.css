@@ -430,14 +430,14 @@
         box-shadow: 0 0 24px rgba(41, 151, 255, 0.35);
       }
 
-      h4 {
+      h3, h4 {
         font-size: 20px;
         margin: 0 0 14px 0;
         text-align: center;
         color: #fff;
       }
 
-      &.highlight h4 {
+      &.highlight h3, &.highlight h4 {
         color: #6ec6ff;
       }
 

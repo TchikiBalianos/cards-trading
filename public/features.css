@@ -1,5 +1,5 @@
 .features {
-  background: url(assets/img/bg.png) no-repeat;
+  background: url(assets/img/bg.webp) no-repeat;
   background-size: 116%;
   padding: 0 5vw 30px;
 
@@ -135,37 +135,7 @@
     }
   }
 
-  .features-dots {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 20px;
-    padding-bottom: 60px;
-    position: relative;
-    z-index: 10;
-
-    .dot {
-      background: rgba(255, 255, 255, 0.35);
-      border: 0;
-      border-radius: 50%;
-      cursor: pointer;
-      height: 12px;
-      padding: 0;
-      transition: background 0.3s ease, transform 0.3s ease;
-      width: 12px;
-
-      &.active {
-        background: #fff;
-        transform: scale(1.2);
-        animation: pulse-dot 2.5s ease-in-out infinite;
-      }
-
-      &:hover:not(.active) {
-        background: rgba(255,255,255,0.65);
-        transform: scale(1.1);
-      }
-    }
-  }
+  
 
   .features-inner {
     align-items: stretch;
@@ -244,10 +214,7 @@
       }
     }
 
-    .features-dots {
-      padding-bottom: 32px;
-      margin-top: 8px;
-    }
+    
   }
 }
 
@@ -305,8 +272,6 @@
       }
     }
 
-    .features-dots {
-      padding-bottom: 28px;
-    }
+    
   }
 }

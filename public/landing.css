@@ -524,7 +524,7 @@ footer {
   }
 
   .footer-col {
-    h4 {
+    h3, h4 {
       color: #f9fafb;
       font-size: 13px;
       font-weight: 700;
@@ -622,7 +622,7 @@ footer {
       .footer-col {
         text-align: left;
 
-        h4 {
+        h3, h4 {
           font-size: 10px;
           margin-bottom: 10px;
           letter-spacing: 0.06em;
@@ -677,7 +677,7 @@ footer {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   header {
     padding: 0 15px;
     z-index: 1001;
@@ -804,5 +804,90 @@ footer {
        barres restent centrées par justify-content, rien ne bouge à l'œil. */
     min-width: 44px;
     min-height: 44px;
+  }
+}
+
+/* ── ACCESSIBILITÉ : MOUVEMENT RÉDUIT ───────────────────
+   Le site déclare 46 animations, 63 transitions et 49 @keyframes.
+   Sans ce bloc, un utilisateur ayant activé « réduire les animations »
+   (troubles vestibulaires, migraines, ou simple préférence système)
+   les recevait toutes. Critère WCAG 2.3.3.
+
+   Les durées sont ramenées à ~0 plutôt que supprimées : les états
+   finaux restent appliqués, donc rien ne disparaît visuellement —
+   seul le mouvement est neutralisé.
+
+   Les animations pilotées en JS (particules du hero, carrousel de
+   logos, compteur) sont gérées séparément dans index.html : le CSS
+   ne peut rien contre requestAnimationFrame. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── CONTRÔLES DE CARROUSEL — composant partagé ─────────
+   Source unique pour TOUS les carrousels du site. Avant, la section
+   Fonctionnalités utilisait des pastilles et la section Vendeur des
+   flèches, avec des styles définis séparément. Un seul composant évite
+   que les deux redivergent à la prochaine modification.
+
+   Les boutons font 56px : au-delà du minimum tactile de 44px (WCAG 2.5.5). */
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 28px;
+  position: relative;
+  z-index: 10;
+
+  button {
+    width: 56px;
+    height: 56px;
+    border: 2px solid rgba(41, 151, 255, 0.55);
+    border-radius: 50%;
+    background: rgba(41, 151, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #fff;
+    font-size: 26px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.25s ease, border-color 0.25s ease,
+                box-shadow 0.25s ease, transform 0.2s ease;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: #2997ff;
+      border-color: #2997ff;
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.45);
+      transform: scale(1.08);
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+
+    /* Le focus clavier doit rester visible sur un fond bleu translucide */
+    &:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 3px;
+    }
   }
 }

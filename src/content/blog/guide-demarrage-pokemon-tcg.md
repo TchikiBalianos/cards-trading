@@ -149,7 +149,7 @@ Une fois le deck défini, achetez les cartes manquantes **à l'unité** sur des 
 
 Le marché du *single* est devenu en 2026 le réflexe de tout joueur compétitif sérieux. C'est précisément la raison pour laquelle **Cards-Trading.com** propose une marketplace 100 % dédiée aux cartes à l'unité, avec authentification vendeur et historique de transactions transparent.
 
-![Cards-Trading.com — fiche carte détaillée avec historique de prix et annonces pour le Pokémon TCG](/assets/img/feature1.png)
+![Cards-Trading.com — fiche carte détaillée avec historique de prix et annonces pour le Pokémon TCG](/assets/img/feature1.webp)
 
 ## Erreurs fatales du débutant
 
@@ -226,7 +226,7 @@ L'écosystème de ressources francophones et anglophones est aujourd'hui consid�
 
 Pour la partie marchande, **Cards-Trading.com** centralise une marketplace francophone, des outils de suivi de collection et un système de notation vendeur indispensable pour les transactions à 50 €+ qui deviennent fréquentes dès qu'on construit un deck compétitif.
 
-![Cards-Trading.com — wishlist mobile avec alertes de prix et suivi de collection TCG](/assets/img/feature3.png)
+![Cards-Trading.com — wishlist mobile avec alertes de prix et suivi de collection TCG](/assets/img/feature3.webp)
 
 ## Aller plus loin dans l'univers TCG
 

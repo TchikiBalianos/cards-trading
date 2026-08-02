@@ -125,7 +125,7 @@ Trois facteurs expliquent cette flambée :
 
 Pour un investisseur prudent, les sets OP05 à OP07 offrent encore des opportunités d'entrée à prix raisonnables, alors qu'OP01 à OP03 sont déjà sur des plateaux élevés. Les acheteurs sérieux passent désormais par des plateformes communautaires comme **Cards-Trading.com**, où l'authentification entre vendeurs vérifiés réduit les risques de contrefaçon — un fléau croissant sur les Manga Rare reproduites en Asie du Sud-Est.
 
-![Cards-Trading.com — filtres avancés pour trouver vos cartes One Piece Card Game parmi des milliers d'annonces](/assets/img/feature4.png)
+![Cards-Trading.com — filtres avancés pour trouver vos cartes One Piece Card Game parmi des milliers d'annonces](/assets/img/feature4.webp)
 
 ## Différences clé avec Pokémon et Magic
 

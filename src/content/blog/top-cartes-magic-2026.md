@@ -172,7 +172,7 @@ Le grading certifie l'authenticité et l'état, mais ne couvre pas la transactio
 
 C'est précisément l'angle développé par **Cards-Trading.com**. La plateforme proposera prochainement un système combinant :
 
-![Cards-Trading.com — fiche carte Magic avec courbe de prix et annonces de vendeurs vérifiés](/assets/img/feature2.png)
+![Cards-Trading.com — fiche carte Magic avec courbe de prix et annonces de vendeurs vérifiés](/assets/img/feature2.webp)
 
 - Vendeurs vérifiés (KYC pour les transactions au-delà d'un certain seuil).
 - Service d'authentification interne pour les cartes sous 500 EUR, partenariat avec PSA/BGS au-delà.

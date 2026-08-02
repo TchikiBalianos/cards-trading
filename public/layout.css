@@ -65,7 +65,7 @@ section[id] {
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   :root {
     --header-height: 64px;
   }
