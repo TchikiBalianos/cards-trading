@@ -96,8 +96,15 @@ async function alerter(motif, detail) {
   sans rapport le lundi est en soi un signal.
 */
 async function rapportHebdo(stats) {
-  const total = stats?.total ?? '?';
-  const semaine = stats?.last_7d ?? '?';
+  /* beta_stats() peut renvoyer null (RPC absente, droits retirés, base
+     repartie en pause). Dans ce cas on ne bricole pas un rapport avec des
+     « ? » : on le dit franchement, car ne pas connaître ses chiffres EST
+     l'information à remonter. */
+  const chiffresDispo =
+    stats && typeof stats.total === 'number' && typeof stats.last_7d === 'number';
+
+  const total = chiffresDispo ? stats.total : null;
+  const semaine = chiffresDispo ? stats.last_7d : null;
   const derniere = stats?.derniere ? new Date(stats.derniere) : null;
   const joursDepuis = derniere
     ? Math.floor((Date.now() - derniere.getTime()) / 86400000)
@@ -108,17 +115,23 @@ async function rapportHebdo(stats) {
      très ancienne mérite une vérification manuelle du formulaire. */
   const suspect = joursDepuis !== null && joursDepuis > 30;
 
+  /* « 0 inscription » au singulier : correct en français, zéro ne prend
+     la marque du pluriel qu'à partir de 2. */
+  const sujet = chiffresDispo
+    ? `📊 Cards Trading — ${semaine} inscription${semaine > 1 ? 's' : ''} cette semaine`
+    : '⚠️ Cards Trading — rapport hebdo incomplet (statistiques illisibles)';
+
   try {
     const { error } = await resend.emails.send({
       from: 'Cards Trading <contact@cards-trading.com>',
       to: ['contact@cards-trading.com'],
-      subject: `📊 Cards Trading — ${semaine} inscription${semaine > 1 ? 's' : ''} cette semaine`,
+      subject: sujet,
       html: `
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px">
   <h2 style="color:#2997ff;margin:0 0 4px">📊 Rapport hebdomadaire</h2>
   <p style="color:#888;font-size:13px;margin:0 0 24px">Semaine du ${new Date().toLocaleDateString('fr-FR')}</p>
 
-  <div style="display:flex;gap:12px;margin-bottom:24px">
+  ${chiffresDispo ? `<div style="display:flex;gap:12px;margin-bottom:24px">
     <div style="flex:1;background:#f5f8ff;border-radius:8px;padding:16px;text-align:center">
       <div style="font-size:32px;font-weight:700;color:#2997ff">${semaine}</div>
       <div style="font-size:13px;color:#666">cette semaine</div>
@@ -127,7 +140,12 @@ async function rapportHebdo(stats) {
       <div style="font-size:32px;font-weight:700;color:#333">${total}</div>
       <div style="font-size:13px;color:#666">au total</div>
     </div>
-  </div>
+  </div>` : `<div style="background:#fff3cd;border-left:4px solid #e65100;padding:14px 18px;border-radius:4px;margin-bottom:24px;color:#663c00">
+    <strong>⚠️ Compteurs illisibles</strong><br>
+    La base répond, mais la fonction <code>beta_stats()</code> n'a rien renvoyé.
+    Vérifie qu'elle existe et que le rôle <code>anon</code> a le droit de l'exécuter :<br>
+    <span style="font-size:13px">SQL Editor → <code>select public.beta_stats();</code></span>
+  </div>`}
 
   <p style="font-size:15px;color:#333;line-height:1.6">
     <strong>Dernière inscription :</strong>
