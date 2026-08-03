@@ -552,6 +552,14 @@ footer {
         color: #2997ff;
       }
     }
+
+    /* La colonne « TCG supportés » liste du texte, pas des liens : ses huit
+       entrées pointaient toutes vers index.html, c'est-à-dire la page
+       courante. Même rendu que les liens, sans l'interaction trompeuse. */
+    li {
+      color: #9ca3af;
+      font-size: 13px;
+    }
   }
 
   .footer-bottom {

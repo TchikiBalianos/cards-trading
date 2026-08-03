@@ -98,7 +98,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=11" />
+    <link rel="stylesheet" href="landing.css?v=12" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -116,7 +116,7 @@
       </div>
       <nav class="header-nav" id="headerNav" aria-label="Navigation principale">
         <a href="#avantages" class="nav-link">Avantages</a>
-        <a href="#beta" class="nav-link">Beta</a>
+        <a href="#beta" class="nav-link">Bêta</a>
         <a href="#features" class="nav-link">Fonctionnalités</a>
         <a href="#comparatif" class="nav-link">Comparaison</a>
         <a href="#vendeur-pro" class="nav-link">Vendeur Pro</a>
@@ -138,7 +138,7 @@
           <span>
             <h1>Achetez & Vendez<br>sur Cards-Trading</h1>
             <h2 class="baseline">La nouvelle marketplace dédiée à vos TCG préférés</h2>
-            <h3 class="subline">Pour les fans de cartes Pokémon, Magic, One Piece, Dragon Ball, Lorcana, Yu-Gi-Oh!, StarWars...</h3>
+            <h3 class="subline">Pour les fans de cartes Pokémon, Magic, One Piece, Dragon Ball, Lorcana, Yu-Gi-Oh!, Star Wars, Riftbound…</h3>
             <div class="button-container flex gap30">
               <button type="button" aria-label="En savoir plus sur Cards Trading">En savoir plus</button>
               <button type="button" aria-label="S'inscrire à la bêta Cards Trading">S'inscrire à la bêta</button>
@@ -223,7 +223,7 @@
         <div class="avantages-item flex column">
           <span class="item-num">02</span>
           <div class="item-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-          <div class="item-title">Seulement 3% de frais</div>
+          <div class="item-title">Seulement 3 % de frais</div>
           <div class="item-text">
             Achetez au meilleur prix, sans coûts cachés ni surprises au moment du paiement.
           </div>
@@ -251,7 +251,7 @@
         <div class="avantages-item flex column">
           <span class="item-num">02</span>
           <div class="item-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-          <div class="item-title">Seulement 3% de frais</div>
+          <div class="item-title">Seulement 3 % de frais</div>
           <div class="item-text">
             Vendez au meilleur prix, sans coûts cachés ni surprises au moment du paiement.
           </div>
@@ -345,7 +345,7 @@
               <div class="title">Quel est votre âge ?</div>
               <div class="options">
                 <div>
-                  <label><input type="radio" name="q1" /> - de 18 ans</label>
+                  <label><input type="radio" name="q1" /> Moins de 18 ans</label>
                   <label><input type="radio" name="q1" /> 18–24 ans</label>
                   <label><input type="radio" name="q1" /> 25–34 ans</label>
                   <label><input type="radio" name="q1" /> 35–44 ans</label>
@@ -493,7 +493,7 @@
               </ul>
             </div>
             <div class="item">
-              <h3>Smart wishlist</h3>
+              <h3>Smart Wishlist</h3>
               <ul>
                 <li class="flex gap30">
                   <i class="fa-solid fa-bell"></i>
@@ -743,7 +743,7 @@
       <div class="container flex gap30">
         <!-- LEFT -->
         <div class="content col-left">
-          <h2 class="reveal-h2">Outils Vendeur Pro pour votre Boutique TCG</h2>
+          <h2 class="reveal-h2">Outils Vendeur Pro pour votre boutique TCG</h2>
           <div class="seller-args">
             <div class="item">
               <h3>Pilotez votre activité</h3>
@@ -904,7 +904,7 @@
             <h3>Plateforme</h3>
             <ul>
               <li><a href="#avantages">Avantages</a></li>
-              <li><a href="#beta">Inscription Beta</a></li>
+              <li><a href="#beta">Inscription Bêta</a></li>
               <li><a href="#features">Fonctionnalités</a></li>
               <li><a href="#comparatif">Comparatif</a></li>
               <li><a href="#vendeur-pro">Vendeur Pro</a></li>
@@ -914,14 +914,14 @@
           <div class="footer-col">
             <h3>TCG supportés</h3>
             <ul>
-              <li><a href="index.html">Pokémon</a></li>
-              <li><a href="index.html">One Piece</a></li>
-              <li><a href="index.html">Magic: The Gathering</a></li>
-              <li><a href="index.html">Yu-Gi-Oh!</a></li>
-              <li><a href="index.html">Lorcana</a></li>
-              <li><a href="index.html">Dragon Ball</a></li>
-              <li><a href="index.html">Riftbound</a></li>
-              <li><a href="index.html">Star Wars</a></li>
+              <li>Pokémon</li>
+              <li>One Piece</li>
+              <li>Magic: The Gathering</li>
+              <li>Yu-Gi-Oh!</li>
+              <li>Lorcana</li>
+              <li>Dragon Ball</li>
+              <li>Riftbound</li>
+              <li>Star Wars</li>
             </ul>
           </div>
 
@@ -1472,7 +1472,7 @@
     if (xpProgressEl) xpProgressEl.setAttribute("aria-valuenow", String(pct));
   }
 
-  function showRequiredMessage(button, message = "reponse requise") {
+  function showRequiredMessage(button, message = "Réponse requise") {
     const defaultText = button.dataset.defaultText || "Valider";
 
     button.textContent = message;
@@ -1514,12 +1514,12 @@
       );
 
       if (!allFieldsFilled) {
-        showRequiredMessage(button, "champs requis");
+        showRequiredMessage(button, "Champs requis");
         return false;
       }
 
       if (email && !email.checkValidity()) {
-        showRequiredMessage(button, "email invalide");
+        showRequiredMessage(button, "Email invalide");
         return false;
       }
 
@@ -1530,7 +1530,7 @@
     const rgpdCheckbox = card.querySelector('input[name="rgpd"]');
     if (rgpdCheckbox) {
       if (!rgpdCheckbox.checked) {
-        showRequiredMessage(button, "consentement requis");
+        showRequiredMessage(button, "Consentement requis");
         return false;
       }
       return true;

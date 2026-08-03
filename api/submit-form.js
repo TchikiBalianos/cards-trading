@@ -103,7 +103,7 @@ export default async function handler(req, res) {
       from: 'Cards Trading <contact@cards-trading.com>',
       to: ['contact@cards-trading.com'],
       reply_to: email,
-      subject: `${alerte}✨ Nouvelle inscription beta - ${prenom} ${nom}`,
+      subject: `${alerte}✨ Nouvelle inscription bêta — ${prenom} ${nom}`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -133,32 +133,32 @@ export default async function handler(req, res) {
 
     <h3>Informations personnelles</h3>
     <div class="field">
-      <span class="label">Nom:</span> <span class="value">${nom}</span>
+      <span class="label">Nom :</span> <span class="value">${nom}</span>
     </div>
     <div class="field">
-      <span class="label">Prénom:</span> <span class="value">${prenom}</span>
+      <span class="label">Prénom :</span> <span class="value">${prenom}</span>
     </div>
     <div class="field">
-      <span class="label">Email:</span> <span class="value"><a href="mailto:${email}">${email}</a></span>
+      <span class="label">Email :</span> <span class="value"><a href="mailto:${email}">${email}</a></span>
     </div>
 
     <hr>
 
     <h3>Profil utilisateur</h3>
     <div class="field">
-      <span class="label">Âge:</span> <span class="value">${age || 'Non spécifié'}</span>
+      <span class="label">Âge :</span> <span class="value">${age || 'Non spécifié'}</span>
     </div>
     <div class="field">
-      <span class="label">Genre:</span> <span class="value">${genre || 'Non spécifié'}</span>
+      <span class="label">Genre :</span> <span class="value">${genre || 'Non spécifié'}</span>
     </div>
     <div class="field">
-      <span class="label">TCG préférés:</span> <span class="value">${Array.isArray(tcgs) ? tcgs.join(', ') : tcgs || 'Non spécifié'}</span>
+      <span class="label">TCG préférés :</span> <span class="value">${Array.isArray(tcgs) ? tcgs.join(', ') : tcgs || 'Non spécifié'}</span>
     </div>
     <div class="field">
-      <span class="label">Plateforme actuelle:</span> <span class="value">${platform || 'Non spécifié'}</span>
+      <span class="label">Plateforme actuelle :</span> <span class="value">${platform || 'Non spécifié'}</span>
     </div>
     <div class="field">
-      <span class="label">Profil:</span> <span class="value">${profile || 'Non spécifié'}</span>
+      <span class="label">Profil :</span> <span class="value">${profile || 'Non spécifié'}</span>
     </div>
 
     <hr>
@@ -168,8 +168,8 @@ export default async function handler(req, res) {
     </div>
 
     <div class="footer">
-      <p>Date d'inscription: ${new Date().toLocaleString('fr-FR')}</p>
-      <p>IP: ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}</p>
+      <p>Date d'inscription : ${new Date().toLocaleString('fr-FR')}</p>
+      <p>IP : ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}</p>
     </div>
   </div>
 </body>
@@ -311,7 +311,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: 'Inscription réussie! Un email de confirmation t\'a été envoyé.',
+      message: 'Inscription réussie ! Un email de confirmation t\'a été envoyé.',
       adminEmailSent: adminOk,
       userEmailSent: userOk,
       dbSaved,
