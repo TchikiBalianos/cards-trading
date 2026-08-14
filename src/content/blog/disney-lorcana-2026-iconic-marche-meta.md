@@ -6,7 +6,7 @@ category: "lorcana"
 tags: ["lorcana", "disney", "iconic", "marche", "competitif", "rotation"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-lorcana.png"
-draft: true
+draft: false
 ---
 
 ## Lorcana en 2026 : la maturité, trois ans après
