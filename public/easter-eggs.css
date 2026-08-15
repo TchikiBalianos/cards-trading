@@ -252,7 +252,7 @@
 }
 
 .og-form-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .og-form-error {
@@ -350,7 +350,7 @@
 /* Note discrète */
 .og-note {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
   margin-top: 12px;
   line-height: 1.5;
@@ -1208,7 +1208,7 @@
 .ach-stat-value.is-loading {
   background: none;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 24px;
   animation: ach-loading-pulse 1.2s ease-in-out infinite;
 }
@@ -1234,7 +1234,7 @@
 .ach-hint {
   margin-top: 16px;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.6);
   font-style: italic;
   line-height: 1.6;
 }

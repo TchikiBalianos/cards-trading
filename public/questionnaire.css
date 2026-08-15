@@ -458,3 +458,50 @@
     }
   }
 }
+
+/* ── CHAMPS D'IDENTITÉ — libellés et erreurs ────────────
+   Les trois champs n'avaient ni <label>, ni name, ni autocomplete : lecteurs
+   d'écran sans repère, et aucun remplissage automatique sur mobile pour trois
+   saisies au pouce dont une adresse email. */
+.champs-identite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.champs-identite label {
+  width: 85%;
+  margin: 10px auto 2px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  /* 0.8 → 12,13:1 sur fond sombre, largement au-dessus du seuil AA */
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.01em;
+}
+
+/* Message d'erreur : persistant jusqu'à correction, et annoncé aux
+   lecteurs d'écran via role="alert". Réserve sa place pour éviter que
+   l'apparition ne décale le bouton sous le doigt. */
+.champ-erreur {
+  min-height: 20px;
+  margin: 8px auto 0;
+  width: 85%;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff8a7a;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.champ-erreur.visible {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .champs-identite label,
+  .champ-erreur {
+    width: 90%;
+  }
+}

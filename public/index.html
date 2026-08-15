@@ -98,7 +98,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=12" />
+    <link rel="stylesheet" href="landing.css?v=13" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -373,12 +373,25 @@
             <div class="question-card">
               <div class="title">Vos informations</div>
               <div class="options">
-                <div>
-                  <input type="text" placeholder="Nom" />
-                  <input type="text" placeholder="Prénom" />
-                  <input type="email" placeholder="Email" />
+                <div class="champs-identite">
+                  <label for="champ-prenom">Prénom</label>
+                  <input type="text" id="champ-prenom" name="prenom"
+                         autocomplete="given-name" autocapitalize="words"
+                         enterkeyhint="next" required />
+
+                  <label for="champ-nom">Nom</label>
+                  <input type="text" id="champ-nom" name="nom"
+                         autocomplete="family-name" autocapitalize="words"
+                         enterkeyhint="next" required />
+
+                  <label for="champ-email">Email</label>
+                  <input type="email" id="champ-email" name="email"
+                         autocomplete="email" inputmode="email"
+                         autocapitalize="none" spellcheck="false"
+                         enterkeyhint="done" required />
                 </div>
               </div>
+              <p class="champ-erreur" id="erreur-identite" role="alert" aria-live="polite"></p>
               <button class="next-btn">Valider</button>
             </div>
 
@@ -1472,16 +1485,39 @@
     if (xpProgressEl) xpProgressEl.setAttribute("aria-valuenow", String(pct));
   }
 
+  /*
+    Message d'erreur dans un élément dédié, PAS dans le bouton.
+
+    Avant, le libellé du bouton était remplacé pendant 1,5 s : sur mobile,
+    l'utilisateur qui regarde son clavier ne voyait jamais le message, recliquait,
+    et croyait le bouton cassé. Détruire l'affordance du bouton pour afficher une
+    erreur est doublement pénalisant.
+
+    L'élément porte role="alert" + aria-live="polite" : il est annoncé aux
+    lecteurs d'écran, ce qui n'était pas le cas non plus.
+  */
   function showRequiredMessage(button, message = "Réponse requise") {
-    const defaultText = button.dataset.defaultText || "Valider";
+    const card = button.closest(".question-card");
+    if (!card) return;
 
-    button.textContent = message;
+    let zone = card.querySelector(".champ-erreur");
+    if (!zone) {
+      zone = document.createElement("p");
+      zone.className = "champ-erreur";
+      zone.setAttribute("role", "alert");
+      zone.setAttribute("aria-live", "polite");
+      button.parentNode.insertBefore(zone, button);
+    }
 
-    clearTimeout(button.requiredTimeout);
+    zone.textContent = message;
+    zone.classList.add("visible");
 
-    button.requiredTimeout = setTimeout(() => {
-      button.textContent = defaultText;
-    }, 1500);
+    /* L'erreur disparaît quand l'utilisateur corrige, pas après un délai. */
+    if (!card.dataset.erreurCablee) {
+      card.dataset.erreurCablee = "1";
+      card.addEventListener("input", () => zone.classList.remove("visible"));
+      card.addEventListener("change", () => zone.classList.remove("visible"));
+    }
   }
 
   function isCardValid(card, button) {
@@ -1509,17 +1545,23 @@
     }
 
     if (texts.length) {
-      const allFieldsFilled = Array.from(texts).every(
-        (input) => input.value.trim() !== ""
-      );
+      /* Nommer le champ manquant plutôt qu'un « Champs requis » global :
+         sur une carte à trois champs, l'utilisateur ne savait pas lequel. */
+      const vide = Array.from(texts).find((input) => input.value.trim() === "");
 
-      if (!allFieldsFilled) {
-        showRequiredMessage(button, "Champs requis");
+      if (vide) {
+        const libelle =
+          (vide.labels && vide.labels[0] && vide.labels[0].textContent.trim()) ||
+          vide.name ||
+          "Ce champ";
+        showRequiredMessage(button, `Il manque ton ${libelle.toLowerCase()}`);
+        vide.focus();
         return false;
       }
 
       if (email && !email.checkValidity()) {
-        showRequiredMessage(button, "Email invalide");
+        showRequiredMessage(button, "Cette adresse email semble incomplète");
+        email.focus();
         return false;
       }
 
@@ -1549,9 +1591,11 @@
       tcgs: Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(input => input.parentElement.textContent.trim()),
       platform: document.querySelector('input[name="q4"]:checked')?.parentElement?.textContent?.trim() || null,
       profile: document.querySelector('input[name="q5"]:checked')?.parentElement?.textContent?.trim() || null,
-      nom: document.querySelector('input[placeholder="Nom"]')?.value || null,
-      prenom: document.querySelector('input[placeholder="Prénom"]')?.value || null,
-      email: document.querySelector('input[placeholder="Email"]')?.value || null,
+      /* Collecte par name, pas par placeholder : renommer un libellé ne doit
+         pas casser silencieusement la remontée des leads. */
+      nom: document.querySelector('#champ-nom')?.value?.trim() || null,
+      prenom: document.querySelector('#champ-prenom')?.value?.trim() || null,
+      email: document.querySelector('#champ-email')?.value?.trim() || null,
       rgpd: document.querySelector('input[name="rgpd"]')?.checked || false,
     };
 
