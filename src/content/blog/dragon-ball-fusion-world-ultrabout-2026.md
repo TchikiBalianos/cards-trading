@@ -150,6 +150,28 @@ Pour les nouveaux venus, la meilleure porte d'entrée reste un starter deck offi
 
 Les vendeurs vérifiés de la plateforme proposent l'inventaire Fusion World le plus complet du marché francophone.
 
+## Questions fréquentes
+
+### Quelle est la différence entre DBS Masters et Fusion World ?
+
+Ce sont deux jeux distincts, avec des cartes incompatibles. Masters est le renommage du DBSCG historique (2017), technique et profond, avec des parties de 25 à 40 minutes. Fusion World (février 2024) est une refonte accessible, avec des parties de 10 à 15 minutes, devenue le jeu de cartes Dragon Ball le plus joué au monde.
+
+### Qu'est-ce que l'awakening dans Dragon Ball Fusion World ?
+
+C'est la transformation à mi-partie, signature mécanique du jeu. Quand un joueur descend à 4 Life Cards ou moins, son Leader peut se retourner pour révéler sa forme transformée (Goku Ultra Instinct, Vegeta Super Saiyan Blue Evolved…), avec des stats augmentées et un nouveau pouvoir.
+
+### Combien de temps dure une partie de Fusion World ?
+
+Entre 10 et 15 minutes en moyenne, contre 25 à 40 minutes pour Masters. C'est l'un des facteurs qui explique le succès de Fusion World auprès du grand public et sa croissance rapide en Europe.
+
+### Quel budget pour un deck compétitif Fusion World ?
+
+Un starter deck officiel coûte généralement entre 15 et 20 EUR et constitue la meilleure porte d'entrée. Pour un deck compétitif complet, l'achat de singles ciblés sur une marketplace reste la voie la plus économique plutôt que l'ouverture de boosters au hasard.
+
+### Où jouer à Dragon Ball Fusion World en France ?
+
+La communauté française est l'une des plus actives d'Europe, avec des tournois locaux chaque semaine dans les grandes villes (Paris, Lyon, Marseille, Toulouse, Lille, Bordeaux, Strasbourg) et plusieurs serveurs Discord majeurs comptant des milliers de membres.
+
 ## Les autres TCG à suivre en 2026
 
 Dragon Ball n'est pas le seul TCG en pleine effervescence. Si vous aimez les jeux de cartes à collectionner, ces guides vous intéresseront :

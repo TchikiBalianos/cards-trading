@@ -181,6 +181,28 @@ C'est précisément l'angle développé par **Cards-Trading.com**. La plateforme
 
 L'objectif : sécuriser le marché secondaire francophone et offrir aux collectionneurs européens une alternative locale aux plateformes américaines, avec les standards de confiance que le marché exige désormais.
 
+## Questions fréquentes
+
+### Quelle est la carte Magic la plus chère au monde ?
+
+The One Ring, exemplaire sérialisé unique (1/1) de l'extension *LOTR: Tales of Middle-earth*, acquis par Post Malone pour un montant rapporté autour de 2 millions de dollars. Le Black Lotus Alpha reste la référence la plus emblématique, avec des ventes ayant dépassé 500 000 USD et un exemplaire CGC 10 annoncé à 3 millions USD.
+
+### Qu'est-ce que la Reserved List ?
+
+C'est une liste mise en place par Wizards of the Coast le 4 mars 1996, qui garantit qu'aucune carte y figurant ne sera jamais réimprimée en édition fonctionnellement identique. Elle protège la valeur de la Power Nine, des dual lands originales et de nombreuses raretés pré-Mercadian Masques.
+
+### Pourquoi certaines cartes Magic perdent-elles de la valeur après une réimpression ?
+
+Parce qu'un reprint augmente l'offre disponible et dilue la rareté. Force of Will, Ragavan ou Tarmogoyf ont toutes vu leur prix corrigé à la baisse après réimpression, contrairement aux cartes protégées par la Reserved List, dont la rareté reste garantie contractuellement.
+
+### Faut-il faire grader ses cartes Magic de valeur ?
+
+Au-delà de 1 000 EUR de valeur estimée, le grading par un organisme reconnu (PSA, BGS, CGC) est devenu une norme implicite : l'écart de prix entre un exemplaire joué et un exemplaire gradé haut grade peut atteindre un facteur dix, voire plus.
+
+### La Power Nine est-elle un bon investissement en 2026 ?
+
+C'est un segment historiquement porteur, mais illiquide et sujet à une forte volatilité sur les pièces les plus rares. Mieux vaut privilégier la qualité (état, grading, documentation) sur un petit nombre de pièces plutôt qu'une dispersion sur de nombreuses cartes mineures.
+
 ## Explorez d'autres univers TCG
 
 Magic: The Gathering reste la référence du marché haut de gamme, mais l'écosystème TCG offre bien d'autres opportunités pour les collectionneurs et joueurs. Retrouvez nos analyses sur les autres licences :

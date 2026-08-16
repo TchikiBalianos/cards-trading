@@ -114,6 +114,28 @@ Que l'on vise la collection, le jeu, ou les deux, quelques principes s'imposent.
 - **Anticipez la rotation.** Avant d'investir dans un deck Core, vérifiez la position des sets dans le cycle. Un deck bâti sur des extensions proches de la sortie de format perdra vite de sa pertinence — sauf à basculer vers l'Infinity.
 - **Ne courez pas après chaque Iconic.** Deux par set, sur des personnages inégalement iconiques : la valeur se concentre sur les figures centrales. Mieux vaut une pièce forte que trois pièces mineures dispersées.
 
+## Questions fréquentes
+
+### Qu'est-ce qu'une carte Iconic dans Disney Lorcana ?
+
+C'est la rareté la plus haute du jeu, introduite avec l'extension Fabled (Set 9) en septembre 2025 — plus rare encore que l'Enchanted, avec typiquement deux cartes Iconic seulement par extension. Les cartes Iconic ont supplanté les Enchanted au sommet des prix du marché secondaire en 2026.
+
+### Quelle est la différence entre Core Constructed et Infinity Constructed ?
+
+Core Constructed est le format compétitif principal et rotatif : les extensions y restent légales environ 15 mois à deux ans avant d'en sortir par blocs (Sets 9 à 13 légaux mi-2026). Infinity Constructed est un format non-rotatif où toutes les cartes jamais imprimées restent légales, sous réserve d'une ban list propre.
+
+### Quelle est la carte Lorcana la plus chère en 2026 ?
+
+Buzz Lightyear, Jungle Ranger (Iconic), autour de 3 600 $ au moment de la rédaction. Neuf des dix cartes les plus chères du jeu sont des Iconic ; seule Winnie the Pooh, Hunny Wizard (Enchanted) résiste dans ce classement.
+
+### Quand sort la prochaine extension Disney Lorcana ?
+
+Set 14, Hyperia City, avec une avant-première le 16 octobre 2026 et une sortie générale le 23 octobre 2026, dans la continuité du rythme de quatre extensions principales par an.
+
+### Faut-il faire grader ses cartes Lorcana ?
+
+Sur les pièces à plusieurs centaines d'euros, oui : la certification par PSA, BGS ou CGC est devenue une norme implicite, l'écart de prix entre un exemplaire joué et un exemplaire gradé haut grade étant exponentiel plutôt que linéaire.
+
 ## Explorez d'autres univers TCG
 
 Lorcana s'inscrit dans un écosystème TCG plus large, où chaque licence a ses propres dynamiques de marché et de jeu. Retrouvez nos autres analyses :

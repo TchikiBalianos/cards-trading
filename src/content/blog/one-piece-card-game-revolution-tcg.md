@@ -163,6 +163,28 @@ Si vous voulez vous lancer aujourd'hui dans OPCG, voici un parcours optimisé :
 
 > Ne tombez pas dans le piège du *chase* : apprenez le jeu d'abord, achetez les Manga Rare ensuite. C'est la recommandation que répètent les vétérans du circuit aux nouveaux capitaines.
 
+## Questions fréquentes
+
+### Qu'est-ce qu'une carte Manga Rare dans One Piece Card Game ?
+
+C'est une illustration directement extraite du manga, en noir et blanc avec un effet doré, imprimée en quantités infimes (parfois moins de 1 sur 200 boosters). C'est le Saint Graal des collectionneurs OPCG, et certaines Special Cards gradées PSA 10 dépassent désormais les 1 500 EUR à la revente.
+
+### Comment fonctionne le système de DON dans One Piece Card Game ?
+
+Chaque joueur dispose de 10 DON dans un deck séparé de sa main. Deux DON sont ajoutés à la zone de coût à chaque tour (un seul au premier tour du joueur 1), jusqu'au maximum de 10. Les DON servent à booster un personnage (+1000 Power chacun), invoquer des cartes ou activer des effets.
+
+### Quel budget pour débuter en One Piece Card Game en 2026 ?
+
+Un Starter Deck (15-20 EUR) constitue le meilleur point d'entrée : équilibré, jouable immédiatement, avec des références comme ST-01 (Straw Hat Crew) ou ST-21 (EX Gear 5). Évitez les boosters OP01/OP02, devenus des produits spéculatifs à 300-500 EUR la boîte.
+
+### OPCG est-il plus populaire que Pokémon ou Magic ?
+
+Non, mais il s'en approche : selon les bilans TCGPlayer 2025, OPCG s'est classé 3e TCG mondial derrière Magic: The Gathering et Pokémon, dépassant ponctuellement Yu-Gi-Oh! sur certains mois.
+
+### Combien de temps dure une partie de One Piece Card Game ?
+
+Entre 12 et 25 minutes en moyenne, ce qui en fait l'un des TCG les plus rapides du marché — un rythme qui rend les tournois particulièrement dynamiques.
+
 ## Découvrez les autres TCG du moment
 
 One Piece Card Game s'inscrit dans un paysage TCG particulièrement riche en 2026. Explorez nos guides sur les autres licences majeures :

@@ -228,6 +228,28 @@ Pour la partie marchande, **Cards-Trading.com** centralise une marketplace franc
 
 ![Cards-Trading.com — wishlist mobile avec alertes de prix et suivi de collection TCG](/assets/img/feature3.webp)
 
+## Questions fréquentes
+
+### Combien coûte un budget de départ raisonnable pour le Pokémon TCG ?
+
+Comptez 15-25 € pour un deck préconstruit qui permet de jouer immédiatement, puis 45-55 € pour un Elite Trainer Box si vous voulez explorer une extension. Pour un deck compétitif complet en singles ciblés, le budget tourne plutôt autour de 200-280 €, avec une probabilité de liste complète bien supérieure à l'achat de boosters au hasard.
+
+### Vaut-il mieux acheter des boosters scellés ou des cartes à l'unité (singles) ?
+
+Les singles ciblés, sans hésitation, si l'objectif est de jouer. Avec 200 € en boosters scellés, la probabilité d'obtenir une liste compétitive complète est inférieure à 10 %, contre plus de 95 % en achetant directement les cartes manquantes à l'unité sur une marketplace comme Cards-Trading.com.
+
+### Quelle est la différence entre les formats Standard et Expanded ?
+
+Le format Standard ne contient que les cartes des séries récentes, actuellement les marques H, I, J et au-delà depuis la rotation du 10 avril 2026 : c'est le format de la grande majorité des tournois Play! Pokémon. L'Expanded englobe toutes les cartes depuis la série Black & White (2011), autorisant plus de combos mais avec moins de tournois officiels.
+
+### Quel est le deck le plus fort pour débuter en 2026 ?
+
+Dragapult ex reste le deck-roi du format post-rotation, mais il demande une difficulté avancée. Pour un débutant, Mega Lucario ex est souvent recommandé : agressif, plus simple à piloter, et l'un des grands gagnants de la rotation d'avril 2026.
+
+### Pourquoi mettre ses cartes sous sleeve dès le premier jour ?
+
+Une carte non protégée peut perdre 30 à 50 % de sa valeur en quelques sessions de jeu. Les sleeves coûtent 7-10 € pour 100 unités : c'est l'investissement de protection le plus rentable qui existe dans le hobby.
+
 ## Aller plus loin dans l'univers TCG
 
 Le Pokémon TCG n'est qu'une porte d'entrée dans un écosystème de jeux de cartes à collectionner de plus en plus riche. Si vous souhaitez explorer d'autres horizons, découvrez nos guides complémentaires :
