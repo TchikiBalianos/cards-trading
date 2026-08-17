@@ -6,23 +6,16 @@
  * insertions du formulaire ont échoué en silence, et des inscriptions ont
  * été perdues jusqu'au 30 juillet.
  *
- * Ce endpoint appelle la RPC beta_stats(), ce qui force une EXÉCUTION de
- * fonction côté Postgres. Vercel le déclenche une fois par jour (vercel.json).
+ * Ce endpoint effectue une requête triviale sur la base. Vercel le déclenche
+ * une fois par jour (voir vercel.json) — 7 occasions de réveiller le projet
+ * avant que le seuil de pause soit atteint, donc de la marge si une
+ * exécution échoue.
  *
  * GET /api/keep-alive → { ok: true }
  *
- * Pourquoi une RPC et pas un simple SELECT : RLS réserve le SELECT sur
- * beta_submissions aux authentifiés. Avec la clé anon, un
- * `.select('id', { head: true })` est intégralement filtré et ne renvoie
- * aucune ligne — l'activité la plus ténue qui soit. Le projet a reçu un
- * avertissement de mise en pause malgré ce ping quotidien (août 2026).
- * beta_stats() est SECURITY DEFINER : son appel exécute réellement du SQL
- * agrégé sur la table.
- *
- * ⚠️ Les crons du plan Hobby sont « best effort », avec une fenêtre de
- * déclenchement d'une heure et aucune garantie d'exécution. Ce endpoint ne
- * doit donc PAS être l'unique rempart : prévoir un pinger externe qui
- * l'appelle plusieurs fois par jour.
+ * Note RLS : la clé anon n'a pas de politique SELECT sur beta_submissions,
+ * la requête renvoie donc un résultat vide. Peu importe — ce qui compte est
+ * l'aller-retour effectif jusqu'à Postgres, qui suffit à marquer l'activité.
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -203,39 +196,38 @@ export default async function handler(req, res) {
     return res.status(500).json({ ok: false, reason: 'not_configured' });
   }
 
-    const t0 = Date.now();
-    try {
-      /*
-        Le ping utilise la RPC beta_stats(), PAS un select filtré.
+  const t0 = Date.now();
+  try {
+    const { error } = await supabase
+      .from('beta_submissions')
+      .select('id', { count: 'exact', head: true });
 
-        L'ancienne version faisait :
-          .from('beta_submissions').select('id', { count: 'exact', head: true })
-        Or RLS réserve le SELECT aux authentifiés : avec la clé anon la requête
-        était intégralement filtrée et renvoyait zéro ligne. C'est l'activité la
-        plus ténue possible — et le projet a quand même reçu un avertissement de
-        mise en pause.
+    if (error) {
+      console.error('[keep-alive] ÉCHEC — la base a répondu une erreur:', JSON.stringify(error));
+      await alerter('La base a répondu une erreur', error.message);
+      return res.status(500).json({ ok: false, reason: 'query_error' });
+    }
 
-        beta_stats() est une fonction SECURITY DEFINER : l'appeler force une
-        véritable EXÉCUTION côté Postgres, avec des agrégats calculés sur la
-        table. Activité sans ambiguïté, et on récupère les compteurs au passage.
-      */
-      const { data: stats, error } = await supabase.rpc('beta_stats');
+    console.log(`[keep-alive] OK — base jointe en ${Date.now() - t0}ms`);
 
-      if (error) {
-        console.error('[keep-alive] ÉCHEC — la base a répondu une erreur:', JSON.stringify(error));
-        await alerter('La base a répondu une erreur', error.message);
-        return res.status(500).json({ ok: false, reason: 'query_error' });
-      }
-
-      console.log(
-        `[keep-alive] OK — beta_stats exécutée en ${Date.now() - t0}ms` +
-        (stats && typeof stats.total === 'number' ? ` (${stats.total} inscrits)` : '')
-      );
-
-      /* Rapport hebdomadaire le lundi, ou à la demande via ?rapport=1.
-         Les stats sont déjà chargées par le ping : pas de second aller-retour. */
-      const forcer = req.query && req.query.rapport === '1';
-      if (forcer || new Date().getUTCDay() === 1) {
+    /* Rapport hebdomadaire le lundi (getUTCDay() === 1), ou à la demande
+       via ?rapport=1 pour tester sans attendre lundi. */
+    const forcer = req.query && req.query.rapport === '1';
+    if (forcer || new Date().getUTCDay() === 1) {
+      const { data: stats, error: rpcError } = await supabase.rpc('beta_stats');
+      if (rpcError) {
+        console.error('[keep-alive] beta_stats indisponible:', JSON.stringify(rpcError));
+      } else {
         await rapportHebdo(stats);
       }
+    }
+
+    /* On ne renvoie pas le nombre d'inscrits : l'URL est publique. */
+    return res.status(200).json({ ok: true });
+  } catch (e) {
+    /* DNS/réseau : typiquement le projet est en pause ou supprimé */
+    console.error('[keep-alive] ÉCHEC — base injoignable:', e.message);
+    await alerter('Base injoignable (DNS/réseau)', e.message);
+    return res.status(500).json({ ok: false, reason: 'unreachable' });
+  }
 }
