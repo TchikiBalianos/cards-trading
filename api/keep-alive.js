@@ -198,9 +198,13 @@ export default async function handler(req, res) {
 
   const t0 = Date.now();
   try {
-    const { error } = await supabase
-      .from('beta_submissions')
-      .select('id', { count: 'exact', head: true });
+    /* RPC plutôt que SELECT : RLS réserve le SELECT aux authentifiés, donc
+       avec la clé anon un `.select()` est intégralement filtré et ne renvoie
+       aucune ligne — l'activité la plus ténue possible. Le projet a reçu un
+       avertissement de mise en pause malgré ce ping quotidien (août 2026).
+       beta_stats() est SECURITY DEFINER : l'appeler exécute réellement du SQL
+       agrégé côté Postgres, et fournit les compteurs au passage. */
+    const { data: stats, error } = await supabase.rpc('beta_stats');
 
     if (error) {
       console.error('[keep-alive] ÉCHEC — la base a répondu une erreur:', JSON.stringify(error));
@@ -208,18 +212,17 @@ export default async function handler(req, res) {
       return res.status(500).json({ ok: false, reason: 'query_error' });
     }
 
-    console.log(`[keep-alive] OK — base jointe en ${Date.now() - t0}ms`);
+    console.log(
+      `[keep-alive] OK — beta_stats exécutée en ${Date.now() - t0}ms` +
+      (stats && typeof stats.total === 'number' ? ` (${stats.total} inscrits)` : '')
+    );
 
     /* Rapport hebdomadaire le lundi (getUTCDay() === 1), ou à la demande
        via ?rapport=1 pour tester sans attendre lundi. */
     const forcer = req.query && req.query.rapport === '1';
     if (forcer || new Date().getUTCDay() === 1) {
-      const { data: stats, error: rpcError } = await supabase.rpc('beta_stats');
-      if (rpcError) {
-        console.error('[keep-alive] beta_stats indisponible:', JSON.stringify(rpcError));
-      } else {
-        await rapportHebdo(stats);
-      }
+      /* stats déjà chargées par le ping : pas de second aller-retour */
+      await rapportHebdo(stats);
     }
 
     /* On ne renvoie pas le nombre d'inscrits : l'URL est publique. */
