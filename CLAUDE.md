@@ -57,9 +57,27 @@ Projet `frbwmzgaqmylilzciptg` (région eu-west-1), **plan gratuit**.
 > échouent. Les données restent intactes et le projet est restaurable depuis
 > le dashboard (bouton *Resume project*).
 
-`/api/keep-alive` (cron quotidien) existe uniquement pour empêcher ça.
-**Ne pas le supprimer ni espacer sa fréquence** : le seuil étant à 7 jours,
-un rythme hebdomadaire ne laisserait aucune marge.
+`/api/keep-alive` existe uniquement pour empêcher ça. Il est appelé par
+**deux planificateurs redondants**, et c'est volontaire :
+
+| Source | Fréquence | Historique consultable |
+|---|---|---|
+| Cron Vercel (`vercel.json`) | 1×/jour, 04:00 UTC | non — logs Hobby limités à 1 h |
+| GitHub Actions (`.github/workflows/keep-alive.yml`) | toutes les 6 h | oui, onglet Actions |
+
+**Pourquoi deux** : en août 2026, Supabase a averti d'une mise en pause alors
+que le cron Vercel était actif. Les crons du plan Hobby sont « best effort »
+(fenêtre d'1 h, aucune garantie) et la rétention de logs d'1 h empêche même de
+vérifier a posteriori s'ils sont partis. GitHub Actions donne la fréquence ET
+la traçabilité. Le repo étant public, les minutes sont illimitées.
+
+⚠️ Le ping doit appeler la **RPC `beta_stats()`**, pas un `SELECT` sur
+`beta_submissions` : RLS filtre intégralement le SELECT pour la clé anon, ce
+qui ne renvoie aucune ligne et ne suffisait pas à marquer l'activité.
+
+⚠️ GitHub désactive les workflows planifiés d'un repo **public** après 60 jours
+sans commit. Le rythme de publication du blog suffit à l'éviter, mais en cas de
+longue pause du projet, penser à réactiver le workflow.
 
 RLS : INSERT anonyme autorisé, SELECT réservé aux authentifiés. La clé anon
 ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agrégats.
