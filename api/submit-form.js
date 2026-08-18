@@ -25,6 +25,68 @@ try {
   console.error('[config] createClient a échoué — persistance désactivée:', e.message);
 }
 
+/*
+  Validation d'email — protège la réputation d'expéditeur.
+
+  Une adresse mal tapée part quand même, rebondit, et Resend enregistre le
+  bounce. Sur un domaine jeune, quelques rebonds suffisent à faire basculer
+  TOUS les emails en spam — y compris les notifications admin dont dépend la
+  détection des leads.
+
+  L'ancienne regex /^[^\s@]+@[^\s@]+\.[^\s@]+$/ acceptait « a@b.c »,
+  « jean@gmail.con », « jean@hotmial.fr » : autant de rebonds garantis.
+
+  ⚠️ DUPLIQUÉ dans public/index.html pour le retour immédiat côté client.
+     Toute modification ici doit y être répercutée.
+*/
+const DOMAINES_COURANTS = [
+  'gmail.com', 'hotmail.com', 'hotmail.fr', 'outlook.com', 'outlook.fr',
+  'yahoo.com', 'yahoo.fr', 'orange.fr', 'wanadoo.fr', 'free.fr', 'sfr.fr',
+  'laposte.net', 'live.fr', 'icloud.com', 'bbox.fr', 'aol.com', 'protonmail.com'
+];
+
+/* Damerau-Levenshtein : compte l'INVERSION de deux lettres adjacentes comme
+   une seule faute. Indispensable — « gmial.com » est une transposition, que
+   la distance de Levenshtein classique compte à 2 et laisserait passer. */
+function distanceDL(a, b) {
+  const m = a.length, n = b.length;
+  if (Math.abs(m - n) > 1) return 2;
+  const d = Array.from({ length: m + 1 }, (_, i) =>
+    Array.from({ length: n + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cout = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cout);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+      }
+    }
+  }
+  return d[m][n];
+}
+
+function validerEmail(email) {
+  const valeur = String(email || '').trim().toLowerCase();
+  const strict = /^[^\s@]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/;
+  if (!strict.test(valeur) || valeur.includes('..')) {
+    return { ok: false, message: "Cette adresse email n'est pas valide." };
+  }
+  const partie = valeur.split('@');
+  const domaine = partie[1];
+  if (!DOMAINES_COURANTS.includes(domaine)) {
+    for (const connu of DOMAINES_COURANTS) {
+      if (distanceDL(domaine, connu) <= 1) {
+        return {
+          ok: false,
+          message: 'Voulais-tu dire ' + partie[0] + '@' + connu + ' ?',
+          suggestion: partie[0] + '@' + connu
+        };
+      }
+    }
+  }
+  return { ok: true, email: valeur };
+}
+
 export default async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
@@ -39,10 +101,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
+    // Validation d'email — protège la réputation d'expéditeur
+    const verdict = validerEmail(email);
+    if (!verdict.ok) {
+      return res.status(400).json({ error: verdict.message, suggestion: verdict.suggestion });
     }
 
     // RGPD must be true

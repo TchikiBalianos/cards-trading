@@ -98,7 +98,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=14" />
+    <link rel="stylesheet" href="landing.css?v=15" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -1496,6 +1496,66 @@
     L'élément porte role="alert" + aria-live="polite" : il est annoncé aux
     lecteurs d'écran, ce qui n'était pas le cas non plus.
   */
+  /*
+    Validation d'email — protège la réputation d'expéditeur.
+
+    Une adresse mal tapée part quand même, rebondit, et Resend enregistre le
+    bounce. Sur un domaine jeune, quelques rebonds suffisent à faire basculer
+    TOUS les emails en spam — y compris les notifications admin.
+
+    Contrôle ici pour un retour IMMÉDIAT, et re-contrôle côté serveur dans
+    api/submit-form.js (on ne fait jamais confiance au client).
+
+    ⚠️ DUPLIQUÉ dans api/submit-form.js — garder les deux synchronisés.
+  */
+  const DOMAINES_COURANTS = [
+    'gmail.com', 'hotmail.com', 'hotmail.fr', 'outlook.com', 'outlook.fr',
+    'yahoo.com', 'yahoo.fr', 'orange.fr', 'wanadoo.fr', 'free.fr', 'sfr.fr',
+    'laposte.net', 'live.fr', 'icloud.com', 'bbox.fr', 'aol.com', 'protonmail.com'
+  ];
+
+  /* Damerau-Levenshtein : l'inversion de deux lettres adjacentes compte pour
+     UNE faute. « gmial.com » est une transposition, que la distance de
+     Levenshtein classique compte à 2 et laisserait passer. */
+  function distanceDL(a, b) {
+    const m = a.length, n = b.length;
+    if (Math.abs(m - n) > 1) return 2;
+    const d = Array.from({ length: m + 1 }, (_, i) =>
+      Array.from({ length: n + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        const cout = a[i - 1] === b[j - 1] ? 0 : 1;
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cout);
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+          d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+        }
+      }
+    }
+    return d[m][n];
+  }
+
+  function validerEmail(email) {
+    const valeur = String(email || '').trim().toLowerCase();
+    const strict = /^[^\s@]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/;
+    if (!strict.test(valeur) || valeur.includes('..')) {
+      return { ok: false, message: "Cette adresse email n'est pas valide." };
+    }
+    const partie = valeur.split('@');
+    const domaine = partie[1];
+    if (!DOMAINES_COURANTS.includes(domaine)) {
+      for (const connu of DOMAINES_COURANTS) {
+        if (distanceDL(domaine, connu) <= 1) {
+          return {
+            ok: false,
+            message: 'Voulais-tu dire ' + partie[0] + '@' + connu + ' ?',
+            suggestion: partie[0] + '@' + connu
+          };
+        }
+      }
+    }
+    return { ok: true, email: valeur };
+  }
+
   function showRequiredMessage(button, message = "Réponse requise") {
     const card = button.closest(".question-card");
     if (!card) return;
@@ -1559,10 +1619,13 @@
         return false;
       }
 
-      if (email && !email.checkValidity()) {
-        showRequiredMessage(button, "Cette adresse email semble incomplète");
-        email.focus();
-        return false;
+      if (email) {
+        const verdict = validerEmail(email.value);
+        if (!verdict.ok) {
+          showRequiredMessage(button, verdict.message);
+          email.focus();
+          return false;
+        }
       }
 
       return true;
