@@ -28,7 +28,16 @@ Le rythme de sortie d'un set principal tous les 3-4 mois ne s'est pas démenti. 
 
 ## OP-16 : le clou du Marineford avant l'anniversaire
 
-OP-16 mérite un détour, car c'est le set qui a redéfini le méta juste avant OP-17. Avec 126+1 types de cartes, il introduit six nouveaux Leaders et une première pour le jeu : **trois Manga Rare dans un seul set**, consacrées aux trois Amiraux de la Marine — Kuzan/Aokiji, Sakazuki/Akainu et Borsalino/Kizaru. Parmi les Leaders confirmés : **Buggy** (Bleu), **Sengoku** (Violet, synergie Amiraux), **Marshall D. Teach / Barbe Noire** (Noir/Jaune) et **Yamato** (Noir, trait Pays de Wano).
+OP-16 mérite un détour, car c'est le set qui a redéfini le méta juste avant OP-17. Avec 126+1 types de cartes, il introduit six nouveaux Leaders et une première pour le jeu : **trois Manga Rare dans un seul set**, consacrées aux trois Amiraux de la Marine — Kuzan/Aokiji, Sakazuki/Akainu et Borsalino/Kizaru.
+
+| Leader | Couleur |
+|--------|---------|
+| Yamato | Noir |
+| Ace | Rouge |
+| Luffy | Vert/Bleu |
+| Buggy | Bleu |
+| Sengoku | Violet |
+| Marshall D. Teach (Barbe Noire) | Jaune/Noir |
 
 ## Le méta de l'été 2026, avant l'arrivée d'OP-17
 
@@ -55,7 +64,7 @@ Six Leaders sont annoncés, un par couleur :
 | Charlotte Linlin (Big Mom) | Jaune |
 | Rocks D. Xebec | Bleu |
 
-Les cartes les plus recherchées seront sans surprise les Manga Rare des quatre Empereurs (Shanks, Barbe Blanche, Kaido, Big Mom), dans la lignée de ce que les Manga Rare Zoro (OP06) ou Roger (OP09) ont représenté pour les collectionneurs — voir notre [guide sur les cartes iconiques d'OPCG](/blog/one-piece-card-game-revolution-tcg) pour le contexte. Côté prix, le Japon annonce un tarif de **240 ¥ par booster de 6 cartes**, soit 5 760 ¥ pour un display de 24 boosters ; le tarif français n'était pas encore officiellement communiqué au moment de la rédaction de cet article — les distributeurs comme Asmodee France (référence OP17BOFR) ouvrent leurs précommandes sous réserve des quantités allouées.
+Les cartes les plus recherchées seront sans surprise les Manga Rare des quatre Empereurs (Shanks, Barbe Blanche, Kaido, Big Mom), dans la lignée de ce que les Manga Rare Zoro (OP06) ou Roger (OP09) ont représenté pour les collectionneurs — voir notre [guide sur les cartes iconiques d'OPCG](/blog/one-piece-card-game-revolution-tcg) pour le contexte. Côté prix, le Japon annonce un tarif de **240 ¥ par booster de 6 cartes**, soit 5 760 ¥ pour un display de 24 boosters. En France, le display de 24 boosters est annoncé à **159 €** chez les distributeurs comme Asmodee France (référence OP17BOFR), qui ouvrent leurs précommandes sous réserve des quantités allouées.
 
 ![Cards-Trading.com — filtres avancés pour trouver vos cartes One Piece Card Game parmi des milliers d'annonces](/assets/img/feature4.webp)
 
