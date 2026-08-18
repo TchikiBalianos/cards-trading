@@ -6,7 +6,7 @@ category: "one-piece"
 tags: ["one-piece", "opcg", "op17", "actualite", "meta"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-onepiece.png"
-draft: true
+draft: false
 ---
 
 ## Un anniversaire qui change les règles du calendrier
