@@ -1,60 +1,95 @@
 name: Keep-alive Supabase
 
-# Pourquoi ce workflow alors qu'un cron Vercel existe déjà :
+# Deux bases Supabase à maintenir éveillées, et elles sont distinctes :
 #
-# Les crons du plan Hobby sont « best effort » — fenêtre de déclenchement d'une
-# heure, aucune garantie d'exécution — et la rétention des logs y est plafonnée
-# à 1 heure, ce qui rend impossible de vérifier a posteriori s'ils sont partis.
-# Supabase a envoyé un avertissement de mise en pause alors que le cron Vercel
-# était pourtant actif (août 2026).
+#   frbwmzgaqmylilzciptg  « Cards-Trading »      → landing page (beta_submissions)
+#   uxewpdnkjsdfizaoerpo  « cards-trading-app »  → marketplace (listings, escrow…)
 #
-# GitHub Actions apporte deux choses que Vercel Hobby ne donne pas :
-#   - une fréquence libre (ici toutes les 6 h, contre 1×/jour maximum sur Hobby)
-#   - un HISTORIQUE D'EXÉCUTION consultable dans l'onglet Actions
+# Le plan gratuit met un projet en pause après ~7 jours sans activité API.
+# Vérifié le 18/08/2026 : une requête NON authentifiée (401) n'apparaît même
+# pas dans edge_logs — elle ne compte donc PAS comme activité. Il faut une
+# requête authentifiée qui exécute réellement du SQL.
 #
-# Le cron Vercel reste en place : les deux sont redondants, c'est voulu.
+# Les crons Vercel du plan Hobby sont « best effort » (fenêtre d'1 h, aucune
+# garantie) et leurs logs ne sont retenus qu'1 h, ce qui empêche de vérifier
+# a posteriori s'ils sont partis. GitHub Actions donne la fréquence ET la
+# traçabilité. Le repo étant public, les minutes sont illimitées.
 
 on:
   schedule:
-    # Toutes les 6 heures. Volontairement décalé de 17 min : les crons GitHub
-    # sont retardés aux heures rondes, quand toute la planète programme ses jobs.
+    # Toutes les 6 h. Décalé de 17 min : les crons GitHub sont retardés aux
+    # heures rondes, quand toute la planète programme ses jobs.
     - cron: '17 */6 * * *'
-  workflow_dispatch:        # permet de le lancer à la main depuis l'onglet Actions
+  workflow_dispatch:
 
-# Empêche deux exécutions simultanées si une précédente traîne
 concurrency:
   group: keep-alive
   cancel-in-progress: false
 
 jobs:
-  ping:
+  landing:
+    name: Base landing (via /api/keep-alive)
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
     steps:
-      - name: Réveiller la base Supabase
+      - name: Réveiller la base de la landing
         run: |
           URL="https://www.cards-trading.com/api/keep-alive"
-
-          # 3 tentatives espacées : une indisponibilité passagère de Vercel ne
-          # doit pas faire échouer le job, seul un échec persistant compte.
           for tentative in 1 2 3; do
             echo "--- Tentative $tentative ---"
             reponse=$(curl -sS -m 45 -w '\n%{http_code}' "$URL?src=gha&t=$(date +%s)" || true)
             corps=$(echo "$reponse" | sed '$d')
             code=$(echo "$reponse" | tail -n1)
-
             echo "HTTP  : $code"
             echo "Corps : $corps"
-
             if [ "$code" = "200" ] && echo "$corps" | grep -q '"ok":true'; then
-              echo "✅ Base réveillée."
+              echo "✅ Base landing réveillée."
               exit 0
             fi
-
             [ $tentative -lt 3 ] && sleep 30
           done
-
-          echo "::error::Le keep-alive a échoué 3 fois. La base est peut-être en pause."
+          echo "::error::keep-alive landing en échec après 3 tentatives."
           echo "Vérifier : https://supabase.com/dashboard/project/frbwmzgaqmylilzciptg"
+          exit 1
+
+  marketplace:
+    name: Base marketplace (RPC ping directe)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Réveiller la base de la marketplace
+        env:
+          # Clé publishable (anon) du projet uxewpdnkjsdfizaoerpo.
+          # En secret et non en clair : le repo est PUBLIC. Cette clé est
+          # conçue pour être publique et protégée par RLS, mais l'exposer
+          # inviterait au sondage et à la consommation de quota.
+          CLE: ${{ secrets.SUPABASE_APP_ANON_KEY }}
+        run: |
+          if [ -z "$CLE" ]; then
+            echo "::error::Secret SUPABASE_APP_ANON_KEY absent."
+            echo "À créer dans Settings → Secrets and variables → Actions."
+            echo "Valeur : la clé publishable (anon) du projet cards-trading-app."
+            exit 1
+          fi
+
+          URL="https://uxewpdnkjsdfizaoerpo.supabase.co/rest/v1/rpc/ping"
+          for tentative in 1 2 3; do
+            echo "--- Tentative $tentative ---"
+            reponse=$(curl -sS -m 45 -X POST "$URL" \
+              -H "apikey: $CLE" \
+              -H "Authorization: Bearer $CLE" \
+              -H "Content-Type: application/json" \
+              -d '{}' -w '\n%{http_code}' || true)
+            corps=$(echo "$reponse" | sed '$d')
+            code=$(echo "$reponse" | tail -n1)
+            echo "HTTP  : $code"
+            echo "Corps : $corps"
+            if [ "$code" = "200" ] && echo "$corps" | grep -q '"ok":true'; then
+              echo "✅ Base marketplace réveillée."
+              exit 0
+            fi
+            [ $tentative -lt 3 ] && sleep 30
+          done
+          echo "::error::keep-alive marketplace en échec après 3 tentatives."
+          echo "Vérifier : https://supabase.com/dashboard/project/uxewpdnkjsdfizaoerpo"
           exit 1
