@@ -94,7 +94,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { age, genre, tcgs, platform, profile, nom, prenom, email, rgpd } = req.body;
+    const { age, genre, tcgs, platform, profile, nom, prenom, email, rgpd, source } = req.body;
+
+    /*
+      Provenance de l'inscription.
+
+      Champ libre envoyé par le client, donc borné et nettoyé avant d'aller
+      en base. Volontairement JAMAIS bloquant : une source absente, vide ou
+      farfelue retombe sur « direct » et n'empêche pas l'inscription. La
+      chaîne d'inscription prime sur la mesure, toujours.
+    */
+    const provenance =
+      String(source || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9._:-]/g, '')
+        .slice(0, 60) || 'direct';
 
     // Validate required fields
     if (!nom || !prenom || !email || !rgpd) {
@@ -139,6 +154,7 @@ export default async function handler(req, res) {
               platform: platform || null,
               profile: profile || null,
               rgpd_accepted: true,
+              source: provenance,
               submitted_at: new Date().toISOString(),
               ip_address: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
             },
@@ -221,6 +237,9 @@ export default async function handler(req, res) {
     </div>
     <div class="field">
       <span class="label">Profil :</span> <span class="value">${profile || 'Non spécifié'}</span>
+    </div>
+    <div class="field">
+      <span class="label">Provenance :</span> <span class="value">${provenance}</span>
     </div>
 
     <hr>

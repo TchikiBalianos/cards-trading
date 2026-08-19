@@ -1506,6 +1506,43 @@
     lecteurs d'écran, ce qui n'était pas le cas non plus.
   */
   /*
+    Provenance du visiteur — d'où vient l'inscription.
+
+    Priorité : utm_source explicite > domaine référent > « direct ».
+
+    Capturée AU CHARGEMENT et mémorisée en sessionStorage, pas au moment de
+    l'envoi : un visiteur qui arrive depuis Discord puis navigue dans le site
+    perdrait sinon son utm_source (l'URL change) et son référent (qui devient
+    cards-trading.com). Il garde ainsi sa provenance d'origine jusqu'au bout
+    du questionnaire.
+
+    Ne doit JAMAIS empêcher une inscription : tout échec retombe sur « direct ».
+  */
+  function provenanceVisiteur() {
+    try {
+      const memo = sessionStorage.getItem('ct_source');
+      if (memo) return memo;
+
+      let src = new URLSearchParams(location.search).get('utm_source') || '';
+
+      if (!src && document.referrer) {
+        try {
+          const hote = new URL(document.referrer).hostname.replace(/^www./, '');
+          src = hote === location.hostname ? '' : hote;
+        } catch (_) { /* référent illisible */ }
+      }
+
+      src = (src || 'direct').toLowerCase().replace(/[^a-z0-9._:-]/g, '').slice(0, 60) || 'direct';
+      sessionStorage.setItem('ct_source', src);
+      return src;
+    } catch (_) {
+      /* sessionStorage bloqué (navigation privée stricte) : on n'insiste pas. */
+      return 'direct';
+    }
+  }
+  provenanceVisiteur(); // mémorise dès l'arrivée
+
+  /*
     Validation d'email — protège la réputation d'expéditeur.
 
     Une adresse mal tapée part quand même, rebondit, et Resend enregistre le
@@ -1669,6 +1706,7 @@
       prenom: document.querySelector('#champ-prenom')?.value?.trim() || null,
       email: document.querySelector('#champ-email')?.value?.trim() || null,
       rgpd: document.querySelector('input[name="rgpd"]')?.checked || false,
+      source: provenanceVisiteur(),
     };
 
     // Show loading state
