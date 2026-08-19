@@ -88,11 +88,27 @@ plutôt que de découvrir les rebonds a posteriori dans le dashboard. Le
 validateur Damerau-Levenshtein côté formulaire couvre déjà les fautes de
 frappe les plus courantes.
 
-### 6. Revue de direction artistique
+### 6. Revue de direction artistique — traitée
 
-Audit de cohésion visuelle (ratios, rythme vertical, échelle typographique,
-espacements, palette) lancé le 19 août. **Reporter ici les points retenus**
-quand les conclusions seront arbitrées.
+Audit mené le 19 août sur 5 largeurs (1440 / 1280 / 1024 / 768 / 390).
+**Les 12 points relevés ont été appliqués**, sauf deux écarts assumés,
+documentés en commentaire dans le CSS :
+
+- **`.social-grid` garde son `max-width: 900px`.** La variante proposée
+  (`min(900px, 82%)`) a été mesurée : elle *rétrécit* la grille entre
+  1024 et 1220 px, où le retrait passait de 54 px à 134 px. Un cap en px
+  sur une grille de trois cartes est un choix de lisibilité.
+- **Les alphas de dégradé (bleus 0,08 / 0,12) ne sont pas fusionnés.** Ce
+  sont des points d'arrêt dont l'écart avec leur voisin porte l'effet ;
+  les aplatir se verrait. Seuls les doublons hors dégradé l'ont été.
+- **`#888` conservé** : c'est le tiret « — » du comparatif, terne à
+  dessein face au ✓ vert et au ✕ rouge. Rôle distinct, pas un doublon.
+
+Point de vigilance introduit : le titre de `features` passe de 37 à 45 px
+en desktop et occupe désormais 3 lignes dans sa colonne (168 px de haut,
+sans débordement — la colonne absorbe). C'est le prix de l'échelle
+unique. Si le rendu déplaît, raccourcir le libellé plutôt que de
+réintroduire une taille dérogatoire.
 
 ---
 
@@ -106,3 +122,10 @@ quand les conclusions seront arbitrées.
 - **19 août** — cache-busting propagé aux 9 `@import`. Les CSS importés
   étaient servis 7 jours depuis le cache, ce qui masquait les correctifs.
   Voir `CLAUDE.md`, section CSS.
+- **19 août** — audit DA appliqué en trois lots : correctifs ciblés
+  (CTA du hero à égalité et au-dessus du seuil tactile, liens de footer
+  passés de 15 px à 44 px, police Arial involontaire éliminée sur 38
+  éléments, séparateur manquant, gouttière de `features`), puis échelle
+  typographique `--h2-section` et échelle d'espacement `--space-*`, puis
+  unification des rayons, lueurs et gris. Écart entre les six titres de
+  section : **11 px avant, 0,0 px après**, à toutes les largeurs.
