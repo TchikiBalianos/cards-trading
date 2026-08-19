@@ -26,6 +26,45 @@ est copié tel quel. Un build vert ne prouve donc rien sur la landing.
 Cache-busting manuel : `landing.css?v=N` dans `index.html` — **incrémenter N
 à chaque modification CSS**, sinon Vercel/le navigateur sert l'ancienne version.
 
+### Effet de bord : attributs `width`/`height` sur les `<img>`
+
+Ces attributs ne sont pas inertes. Le navigateur les applique **comme du CSS
+de spécificité 0** (« presentational hints »). Partout où une règle fixe
+seulement la largeur — `.logo img`, `.footer-logo`, les cartes de slider —
+l'attribut `height` reste actif et **écrase le ratio**.
+
+En août 2026, les avoir ajoutés sur 31 images a écrasé le logo (287×68
+affiché en 90×68, soit 69 % de déformation), `goku.png` et les visuels de
+slider. Invisible en desktop large, flagrant sur téléphone.
+
+Le garde-fou est en fin de `public/landing.css` :
+
+```css
+img { height: auto; }
+```
+
+Spécificité (0,0,1) : bat l'attribut, cède à toute règle portée par une
+classe — les hauteurs voulues (`features.css`, `hero.css`) sont préservées.
+Placée **après les `@import`**, donc gagnante sur les égalités.
+
+⚠️ Ne pas supprimer les attributs pour autant : ils servent à déduire
+`aspect-ratio` et à réserver la place avant chargement (gain CLS).
+`height: auto` est justement la moitié prévue de ce mécanisme, pas son ennemi.
+
+**Contrôle après toute modification touchant les images** — compare le ratio
+affiché au ratio naturel, en excluant `object-fit: contain/cover` qui met le
+contenu en boîte à lettres sans le déformer (sinon ~7 faux positifs) :
+
+```js
+[...document.images].filter(i => {
+  const cs = getComputedStyle(i), r = i.getBoundingClientRect();
+  if (!i.naturalWidth || cs.objectFit === 'contain' || cs.objectFit === 'cover') return false;
+  return Math.abs(r.width / r.height - i.naturalWidth / i.naturalHeight) > 0.05 * (i.naturalWidth / i.naturalHeight);
+}).map(i => i.src.split('/').pop())
+```
+
+Attendu : `[]`.
+
 ---
 
 ## Chaîne d'inscription — à ne jamais casser

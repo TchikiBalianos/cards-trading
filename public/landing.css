@@ -899,3 +899,23 @@ footer {
     }
   }
 }
+
+/* ── RATIO DES IMAGES — ne pas retirer ────────────────────
+   Les attributs HTML width/height sont des « presentational hints » :
+   ils s'appliquent comme du CSS de spécificité 0. Là où une règle fixe
+   seulement la largeur (.logo img, .footer-logo, les cartes de slider…),
+   l'attribut height reste actif et écrase le ratio — le logo 287×68 se
+   retrouvait affiché en 90×68, soit 69 % d'écrasement.
+
+   `img { height: auto }` (spécificité 0,0,1) bat l'attribut mais cède à
+   toute règle portée par une classe, donc les hauteurs voulues
+   (features.css, hero.css…) sont préservées.
+
+   Les attributs restent indispensables : le navigateur en déduit
+   `aspect-ratio` et réserve la place avant le chargement. `height: auto`
+   ne casse pas ce mécanisme, c'est même la combinaison prévue pour lui.
+   Règle placée en fin de fichier, donc après les @import : elle gagne
+   les égalités de spécificité. */
+img {
+  height: auto;
+}

@@ -38,12 +38,28 @@
       color: #fff;
       box-shadow: 2px 2px 59px -14px rgba(255, 255, 255, 0.3);
 
-      /* Largeurs des 5 colonnes — Cardmarket, Vinted, eBay parfaitement égales */
-      thead th:nth-child(1) { width: 28%; }            /* label de ligne */
-      thead th:nth-child(2) { width: 22%; }            /* Cards-Trading (mise en avant) */
+      /* Largeurs des 5 colonnes — Cardmarket, Vinted, eBay parfaitement égales.
+         « Cards-Trading » est le seul libellé d'en-tête contenant un trait
+         d'union, donc le seul à offrir au navigateur un point de coupure :
+         sous 22 % la colonne tombait à 140 px alors qu'il faut 144 px pour
+         tenir sur une ligne, et le titre passait sur deux lignes entre
+         980 px et 1270 px de viewport — soit la plupart des portables. */
+      thead th:nth-child(1) { width: 26%; }            /* label de ligne */
+      thead th:nth-child(2) { width: 26%; }            /* Cards-Trading (mise en avant) */
       thead th:nth-child(3),
       thead th:nth-child(4),
-      thead th:nth-child(5) { width: 16.666%; }        /* concurrents équilibrés */
+      thead th:nth-child(5) { width: 16%; }            /* concurrents équilibrés */
+
+      /* En-tête légèrement resserré : garantit « Cards-Trading » sur une
+         seule ligne jusqu'à 980 px, largeur où le tableau cède la place
+         aux cartes empilées. Ne s'applique qu'au thead — les libellés de
+         ligne (th[scope=row]) gardent leur confort de lecture. */
+      thead th {
+        font-size: 15px;
+        padding-left: 8px;
+        padding-right: 8px;
+        white-space: nowrap;
+      }
 
       thead {
         background: linear-gradient(
