@@ -23,8 +23,13 @@
   }
 
   .item {
-    margin-bottom: 24px;
-    padding: 12px 16px;
+    /* Le vide entre deux blocs cumulait padding-bottom 12 + margin 24 +
+       padding-top 12 = 48px, soit deux lignes de texte de blanc pour
+       separer un paragraphe de deux lignes. Ramene a 26px : la colonne
+       de textes s'aligne alors sur la hauteur du carrousel d'en face.
+       Le padding reste suffisant pour que la pastille de survol respire. */
+    margin-bottom: 6px;
+    padding: 10px 16px;
     border-radius: 12px;
     transition: background 0.25s ease, transform 0.25s ease;
     cursor: default;
