@@ -1,12 +1,12 @@
-@import url(animations.css?v=18);
-@import url(avantages.css?v=18);
-@import url(comparatif.css?v=18);
-@import url(features.css?v=18);
-@import url(hero.css?v=18);
-@import url(layout.css?v=18);
-@import url(questionnaire.css?v=18);
-@import url(seller-tools.css?v=18);
-@import url(social.css?v=18);
+@import url(animations.css?v=19);
+@import url(avantages.css?v=19);
+@import url(comparatif.css?v=19);
+@import url(features.css?v=19);
+@import url(hero.css?v=19);
+@import url(layout.css?v=19);
+@import url(questionnaire.css?v=19);
+@import url(seller-tools.css?v=19);
+@import url(social.css?v=19);
 
 /* ── REVEAL H2 — IntersectionObserver custom (remplace AOS) */
 .reveal-h2 {
@@ -50,7 +50,7 @@
      même quand social-proof-fade-in est en fill-mode: forwards */
   transition: translate 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
   background: linear-gradient(135deg, rgba(41, 151, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 100px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -358,7 +358,7 @@ header {
   gap: 8px;
 
   .nav-link {
-    color: rgba(255,255,255,0.72);
+    color: rgba(255,255,255,0.7);
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;

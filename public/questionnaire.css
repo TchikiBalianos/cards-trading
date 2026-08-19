@@ -235,7 +235,7 @@
           color: #fff;
           cursor: pointer;
           transition: all 0.2s ease;
-          box-shadow: 0 4px 15px rgba(41, 151, 255, 0.3);
+          box-shadow: 0 4px 15px rgba(41, 151, 255, 0.35);
 
           &:hover {
             background: #3da5ff;

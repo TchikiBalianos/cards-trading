@@ -138,6 +138,10 @@
   
 
   .features-inner {
+    /* Le gap vivait dans la classe utilitaire `gap100` posee en HTML,
+       que deux media queries surchargeaient a coups de !important : le
+       nom annoncait 100px pour une valeur reelle de 20 ou 16px. */
+    gap: 100px;
     align-items: stretch;
     height: 100%;
     width: 100%;
@@ -156,7 +160,7 @@
 
     .features-inner {
       flex-direction: column;
-      gap: 20px !important;
+      gap: 20px;
 
       .col-left {
         width: 100%;
@@ -228,12 +232,12 @@
     }
 
     .features-inner {
-      gap: 16px !important;
+      gap: 16px;
 
       .col-left {
         .feature-left {
           .item {
-            border-radius: 14px;
+            border-radius: 12px;
 
             i {
               display: none !important;
