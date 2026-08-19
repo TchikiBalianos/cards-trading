@@ -3,11 +3,11 @@
   background-size: cover;
   position: relative;
   overflow: hidden;
-  padding: 70px 5vw;
+  padding: var(--space-l) 5vw;
 
   h2 {
     color: #fff;
-    font-size: 45px;
+    font-size: var(--h2-section);
     padding: 0 0 50px 0;
   }
 
@@ -315,10 +315,9 @@
 
 @media (max-width: 600px) {
   .comparatif {
-    padding: 40px 5vw !important;
+    padding: var(--space-l) 5vw !important;
 
     h2 {
-      font-size: 28px !important;
       padding-bottom: 24px;
     }
 

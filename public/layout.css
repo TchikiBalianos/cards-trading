@@ -1,5 +1,27 @@
 :root {
   --header-height: 60px;
+
+  /* ── ÉCHELLE TYPOGRAPHIQUE ────────────────────────────────
+     Un seul cran pour tous les titres de section. Avant, six
+     déclarations fixes cohabitaient (45, 45, 45, 45, 37, 38px) avec
+     des surcharges de media query incomplètes : entre 768 et 980px,
+     `questionnaire` et `comparatif` n'avaient pas de règle et restaient
+     à 45px pendant que leurs voisines descendaient à 34-36px, soit
+     +32 % entre deux titres de même rang.
+
+     La courbe passe par 45px à 1440, 42 à 1280, 37 à 1024, 33 à 768
+     et 26 à 390 — elle remplace les surcharges au lieu de s'y ajouter. */
+  --h2-section: clamp(26px, 1.8vw + 19px, 45px);
+
+  /* ── ÉCHELLE D'ESPACEMENT ─────────────────────────────────
+     Quatre crans fluides. Avant : six valeurs de padding vertical
+     (0, 30, 40, 60, 70, 90px) sans progression reconnaissable, et une
+     seule section en fluide — d'où un écart avec ses voisines qui
+     passait de 1px à 32px selon la largeur. */
+  --space-s: clamp(20px, 2.2vw, 32px);
+  --space-m: clamp(30px, 3.4vw, 48px);
+  --space-l: clamp(40px, 5vw, 72px);
+  --space-xl: clamp(52px, 6.3vw, 90px);
 }
 
 /*

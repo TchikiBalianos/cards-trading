@@ -2,11 +2,11 @@
   background: url(assets/img/back-grade2.svg) no-repeat;
   background-size: cover;
   color: #c6c6c6;
-  padding: 5vw;
+  padding: var(--space-l) 5vw;
 
   h2 {
     color: #fff;
-    font-size: 45px;
+    font-size: var(--h2-section);
     margin-bottom: 20px;
     text-align: center;
   }
@@ -188,7 +188,6 @@
 @media (max-width: 980px) {
   .avantages {
     h2 {
-      font-size: 36px;
     }
   }
 
@@ -201,11 +200,10 @@
 
 @media (max-width: 600px) {
   .avantages {
-    padding: 30px 20px;
+    padding: var(--space-l) 5vw;
 
     h2 {
       padding-top: 20px;
-      font-size: 28px;
     }
 
     .subline {

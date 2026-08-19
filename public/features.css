@@ -1,7 +1,7 @@
 .features {
   background: url(assets/img/bg.webp) no-repeat;
   background-size: 116%;
-  padding: 0 5vw 30px;
+  padding: 0 5vw var(--space-s);
 
   .col-left {
     align-items: start;
@@ -145,7 +145,7 @@
 
   h2 {
     color: #fff;
-    font-size: 37px;
+    font-size: var(--h2-section);
   }
 }
 
@@ -220,10 +220,9 @@
 
 @media (max-width: 600px) {
   .features {
-    padding: 0 5vw 20px; /* 5vw partout : features decrochait de 4px */
+    padding: 0 5vw var(--space-s);
 
     h2 {
-      font-size: 24px !important;
       padding-top: 40px;
       line-height: 1.3;
     }

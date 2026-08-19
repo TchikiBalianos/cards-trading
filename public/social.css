@@ -1,7 +1,7 @@
 /* ── SECTION RÉSEAUX SOCIAUX ─────────────────────────────── */
 .social-section {
   background: linear-gradient(180deg, #07111f 0%, #0c1829 50%, #07111f 100%);
-  padding: 80px 5vw 90px;
+  padding: var(--space-xl) 5vw;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -21,7 +21,7 @@
 }
 
 .social-section .section-title {
-  font-size: clamp(22px, 3.5vw, 38px);
+  font-size: var(--h2-section);
   font-weight: 700;
   color: #fff;
   margin: 0 0 12px;
@@ -40,6 +40,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  /* Cap volontaire, à conserver. L'audit suggérait de le rendre
+     proportionnel (`min(900px, 82%)`) pour que le retrait cesse de varier
+     du simple au quadruple. Mesuré : cette variante RÉTRÉCIT la grille
+     dans la bande 1024-1220px — le retrait y passait de 54px à 134px,
+     soit l'inverse du but recherché. Un cap en px sur une grille de trois
+     cartes est un choix de lisibilité, pas une incohérence. */
   max-width: 900px;
   margin: 0 auto;
 }
@@ -278,7 +284,7 @@ a.social-card:hover .social-card-cta {
 
 @media (max-width: 700px) {
   .social-section {
-    padding: 60px 5vw 70px;
+    padding: var(--space-xl) 5vw;
   }
 
   .latest-post-card {

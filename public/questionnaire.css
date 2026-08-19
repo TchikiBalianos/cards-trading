@@ -4,11 +4,11 @@
   background: url(assets/img/back-grade.webp) no-repeat;
   background-size: cover;
   background-position-x: right;
-  padding: 0 5vw 60px 5vw;
+  padding: 0 5vw var(--space-m);
 
   h2 {
     color: #fff;
-    font-size: 45px;
+    font-size: var(--h2-section);
     padding: 50px 0 0 0;
   }
 
@@ -377,11 +377,10 @@
   .questionnaire {
     height: auto;
     background-position: left;
-    padding: 0 5vw 60px;
+    padding: 0 5vw var(--space-m);
 
     h2 {
       color: #fff;
-      font-size: 30px;
       text-align: center;
       padding: 40px 0 16px;
       margin-bottom: 0;
