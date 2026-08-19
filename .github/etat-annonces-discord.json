@@ -1,0 +1,11 @@
+{
+  "_lisezmoi": "Slugs deja annonces sur Discord. Amorce le 19/08/2026 avec l historique, pour ne pas annoncer d anciens articles comme nouveaux. Ecrit par scripts/annonce-discord.mjs.",
+  "annonces": [
+    "top-cartes-magic-2026",
+    "guide-demarrage-pokemon-tcg",
+    "dragon-ball-fusion-world-ultrabout-2026",
+    "one-piece-card-game-revolution-tcg",
+    "disney-lorcana-2026-iconic-marche-meta",
+    "pokemon-record-16-millions-mega-evolution-2026"
+  ]
+}

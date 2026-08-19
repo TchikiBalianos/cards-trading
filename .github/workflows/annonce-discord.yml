@@ -1,0 +1,68 @@
+# Annonce les nouveaux articles de blog sur Discord.
+#
+# Pourquoi GitHub Actions et pas un cron Vercel : le plan Hobby plafonne à
+# 2 crons et les deux sont pris (keep-alive + refresh-instagram-token). Le
+# dépôt étant public, les minutes Actions sont illimitées.
+#
+# Pourquoi pas Buffer : Buffer ne gère pas Discord. Un webhook Discord est
+# une simple URL — ni OAuth, ni validation d'application, ni abonnement.
+# Buffer reste pertinent pour Instagram, où la publication programmatique
+# demande un compte Business et une permission dédiée.
+#
+# Cadence : mardi et vendredi, calée sur le calendrier éditorial du blog
+# (mardi obligatoire, vendredi optionnel — voir scripts/prochain-article.mjs).
+# Le script poste AU PLUS UN article par exécution et ne poste rien s'il n'y
+# a pas de nouveauté : mieux vaut un salon calme qu'un salon bruyant.
+
+name: Annonce Discord
+
+on:
+  schedule:
+    # 09:17 UTC = 11:17 à Paris en été. Décalé de 17 min : les crons GitHub
+    # sont retardés aux heures rondes, quand tout le monde programme.
+    - cron: '17 9 * * 2,5'
+  workflow_dispatch:
+
+# Nécessaire pour recommitter l'état des annonces
+permissions:
+  contents: write
+
+jobs:
+  annoncer:
+    name: Nouvel article vers Discord
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Publier l'article en attente
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "::error::Secret DISCORD_WEBHOOK_URL absent."
+            echo "Discord → salon → Modifier le salon → Intégrations →"
+            echo "Webhooks → Nouveau webhook → Copier l'URL."
+            echo "Puis GitHub → Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          node scripts/annonce-discord.mjs
+
+      - name: Mémoriser ce qui a été annoncé
+        run: |
+          if git diff --quiet -- .github/etat-annonces-discord.json; then
+            echo "Aucune annonce ce coup-ci, rien à committer."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/etat-annonces-discord.json
+          git commit -m "chore(discord): memorise l'article annonce [skip ci]"
+          # Rebase avant de pousser : un commit humain a pu arriver entre-temps
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
