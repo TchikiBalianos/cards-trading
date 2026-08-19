@@ -42,7 +42,7 @@ jobs:
             code=$(echo "$reponse" | tail -n1)
             echo "HTTP  : $code"
             echo "Corps : $corps"
-            if [ "$code" = "200" ] && echo "$corps" | grep -q '"ok":true'; then
+            if [ "$code" = "200" ] && echo "$corps" | grep -qE '"ok"[[:space:]]*:[[:space:]]*true'; then
               echo "✅ Base landing réveillée."
               exit 0
             fi
@@ -84,7 +84,7 @@ jobs:
             code=$(echo "$reponse" | tail -n1)
             echo "HTTP  : $code"
             echo "Corps : $corps"
-            if [ "$code" = "200" ] && echo "$corps" | grep -q '"ok":true'; then
+            if [ "$code" = "200" ] && echo "$corps" | grep -qE '"ok"[[:space:]]*:[[:space:]]*true'; then
               echo "✅ Base marketplace réveillée."
               exit 0
             fi

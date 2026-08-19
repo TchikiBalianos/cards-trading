@@ -248,6 +248,21 @@ curl -sL -X POST https://cards-trading.com/api/submit-form \
 # Attendu : {"success":true,...,"dbSaved":true}
 ```
 
+⚠️ **Les titres `.reveal-h2` sont décalés de 32px dans ce navigateur.**
+Ils portent `opacity: 0; transform: translateY(32px)`, levés par un
+IntersectionObserver au défilement — qui ne se déclenche jamais ici.
+`getBoundingClientRect()` incluant les transformations, toute mesure de
+position d'un `h2` est fausse de 32px, et un élément suivant paraît
+« au-dessus » de lui. Neutraliser avant de conclure :
+
+```js
+const m = new DOMMatrix(getComputedStyle(h2).transform);
+const basReel = h2.getBoundingClientRect().bottom - m.f;
+```
+
+Sans ça, on conclut par exemple qu'un `margin-bottom` « n'a aucun effet »
+alors qu'il fonctionne parfaitement — erreur commise le 19 août 2026.
+
 ### Limites de l'environnement de test
 - Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
   compose pas de frames → **transitions et animations CSS ne s'exécutent pas**.

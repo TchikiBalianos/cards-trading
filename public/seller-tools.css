@@ -13,8 +13,16 @@
     color: #fff;
     font-size: var(--h2-section);
     line-height: 1;
-    padding: 50px 0;
-    margin-bottom: 40px;
+    /* Espace sous le titre : 100px -> 34px, mesure du bas du texte du
+       titre au haut du texte du premier item.
+         avant : padding-bottom 50 + margin-bottom 40 + 10 (padding de
+                 l'item) = 100px, le double du reste de la page
+         apres : padding-bottom 24 + 0 + 10 = 34px
+
+       Le padding haut reste a 50px : la section n'a aucun padding
+       vertical propre, c'est lui qui la decolle de la precedente. */
+    padding: 50px 0 24px;
+    margin-bottom: 0;
   }
 
   .seller-args {
