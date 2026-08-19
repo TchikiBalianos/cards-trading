@@ -29,11 +29,26 @@ bruyamment plutôt que de faire semblant de pinger.
 Supabase en pause après ~7 jours d'inactivité, écritures qui échouent en
 silence.
 
+> ⚠️ **Le croisement qui piège** : la clé vient du projet Supabase
+> **`cards-trading-app`**, mais le secret doit être créé dans le dépôt
+> GitHub **`cards-trading`** — celui qui héberge le workflow. Les secrets
+> Actions sont portés par le dépôt, jamais partagés entre dépôts, et il
+> n'y a pas de secret d'organisation (compte personnel).
+>
+> Le poser dans `cards-trading-app` ne sert à rien : le workflow ne s'y
+> trouve pas. Erreur commise le 19 août 2026.
+>
+> Et c'est bien `cards-trading` qu'il faut, malgré son nom : ce dépôt est
+> **public**, donc ses minutes Actions sont illimitées. `cards-trading-app`
+> est privé et consommerait le quota.
+
 À faire :
-1. Dashboard Supabase → projet `uxewpdnkjsdfizaoerpo` → *Project Settings*
-   → *API* → copier la clé **anon / public**.
-2. GitHub → repo `cards-trading` → *Settings* → *Secrets and variables* →
-   *Actions* → *New repository secret*.
+1. Dashboard Supabase → projet **`cards-trading-app`**
+   (`uxewpdnkjsdfizaoerpo`) → *Project Settings* → *API Keys* → copier la
+   clé **anon / publishable**.
+2. GitHub → dépôt **`cards-trading`** (pas `-app`) → *Settings* →
+   *Secrets and variables* → *Actions* → *New repository secret*.
+   URL directe : `github.com/TchikiBalianos/cards-trading/settings/secrets/actions`
 3. Nom exact : `SUPABASE_APP_ANON_KEY`. Coller la clé.
 4. Relancer le workflow et vérifier que les deux jobs passent :
 
