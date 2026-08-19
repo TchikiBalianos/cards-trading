@@ -220,7 +220,7 @@
 
 @media (max-width: 600px) {
   .features {
-    padding: 0 4vw 20px;
+    padding: 0 5vw 20px; /* 5vw partout : features decrochait de 4px */
 
     h2 {
       font-size: 24px !important;

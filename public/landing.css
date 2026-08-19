@@ -636,12 +636,26 @@ footer {
           letter-spacing: 0.06em;
         }
 
+        /* Les colonnes de liens n'ont plus besoin du gap : la cible tactile
+           ci-dessous fournit déjà l'espacement. La colonne « TCG supportés »
+           ne contient que du texte (des <li> sans <a>), elle garde le sien. */
         ul {
           gap: 8px;
         }
 
+        ul:has(a) {
+          gap: 0;
+        }
+
         a {
           font-size: 12px;
+          /* Les liens du footer étaient hauts de 15px, espacés de 8px : un
+             tiers du seuil tactile recommandé, avec un risque d'erreur de
+             tap élevé. inline-flex + min-height agrandit la zone cliquable
+             sans changer la taille du texte. Sept liens concernés. */
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
         }
       }
     }

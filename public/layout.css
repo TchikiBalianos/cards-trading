@@ -44,6 +44,16 @@ body {
   overflow-x: clip;
 }
 
+/* Les contrôles de formulaire n'héritent PAS de font-family : sans cette
+   règle ils retombent sur la feuille de l'agent utilisateur (Arial 13.33px
+   sous Chrome). 38 éléments étaient concernés — tous les libellés de
+   boutons, dont les deux CTA du hero et les sept « Valider » du
+   questionnaire, plus les trois champs de saisie — soit une troisième
+   police involontaire sur la page. */
+button, input, textarea, select {
+  font-family: inherit;
+}
+
 section {
   height: 100%;
   position: relative;

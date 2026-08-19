@@ -107,7 +107,13 @@
   /* Primary CTA — gradient bleu */
   button:first-child {
     background: linear-gradient(135deg, #2997ff 0%, #0a6fd8 100%);
-    border: none;
+    /* Bordure transparente, et non `none` : le CTA secondaire porte une
+       bordure de 1.5px, qui le rendait 2px plus haut que le primaire. Les
+       deux boutons étant centrés côte à côte, l'écart se voyait en haut ET
+       en bas. Au passage le primaire repasse au-dessus des 44px de cible
+       tactile — il était mesuré à 43px, sous le seuil, alors que c'est le
+       bouton principal de la page. */
+    border: 1.5px solid transparent;
     border-radius: 50px;
     color: #fff;
     font-size: 15px;
@@ -140,7 +146,9 @@
     border-radius: 50px;
     color: #fff;
     font-size: 15px;
-    font-weight: 500;
+    /* Même graisse que le CTA primaire : deux boutons de même rang côte à
+       côte n'ont pas de raison de diverger (600 contre 500). */
+    font-weight: 600;
     letter-spacing: 0.03em;
     padding: 13px 28px;
     cursor: pointer;
