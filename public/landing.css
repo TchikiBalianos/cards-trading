@@ -1,12 +1,12 @@
-@import url(animations.css?v=19);
-@import url(avantages.css?v=19);
-@import url(comparatif.css?v=19);
-@import url(features.css?v=19);
-@import url(hero.css?v=19);
-@import url(layout.css?v=19);
-@import url(questionnaire.css?v=19);
-@import url(seller-tools.css?v=19);
-@import url(social.css?v=19);
+@import url(animations.css?v=20);
+@import url(avantages.css?v=20);
+@import url(comparatif.css?v=20);
+@import url(features.css?v=20);
+@import url(hero.css?v=20);
+@import url(layout.css?v=20);
+@import url(questionnaire.css?v=20);
+@import url(seller-tools.css?v=20);
+@import url(social.css?v=20);
 
 /* ── REVEAL H2 — IntersectionObserver custom (remplace AOS) */
 .reveal-h2 {
@@ -306,10 +306,20 @@ a:focus-visible {
 
 /* ── STICKY HEADER ─────────────────────────────────────── */
 header {
-  background: rgba(30, 30, 30, 0.85);
+  /* Le gris neutre rgba(30,30,30,.85) appartenait à la même famille que
+     la barre d'outils de Chrome en thème sombre (~#35363A) : sur un
+     portable, le header se lisait comme un prolongement du navigateur
+     et non comme le haut du site.
+
+     Le bleu nuit règle ça sans dégradé : l'interface de Chrome est
+     strictement neutre, une teinte bleutée s'en détache donc d'office,
+     et elle raccroche le header à la palette de marque (#07111f de fond,
+     #2997ff d'accent). Le filet supérieur passe du blanc au bleu de
+     marque pour marquer franchement la frontière. */
+  background: rgba(10, 25, 47, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 1px 0 rgba(41, 151, 255, 0.3), 0 4px 24px rgba(0, 0, 0, 0.45);
   height: var(--header-height);
   position: fixed;
   top: 0;
@@ -703,7 +713,7 @@ footer {
   header {
     padding: 0 15px;
     z-index: 1001;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    box-shadow: 0 1px 0 rgba(41, 151, 255, 0.3), 0 2px 8px rgba(0, 0, 0, 0.5);
 
     .logo {
       width: 140px;

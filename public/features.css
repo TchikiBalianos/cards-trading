@@ -122,7 +122,21 @@
 
           &:nth-child(3) {
             img {
+              /* feature3.webp est le seul visuel PORTRAIT du carrousel
+                 (848×981, ratio 0.86) là où les trois autres sont en
+                 paysage (1200×801). `height: 80%` seul ne suffit pas :
+                 l'attribut HTML width="848" continue de s'appliquer et
+                 `max-width: 100%` étire l'image sur toute la largeur de
+                 la colonne, d'où un affichage en 591×526 — ratio 1.12
+                 contre 0.86, soit 30 % d'écrasement.
+
+                 `width: auto` laisse la hauteur piloter et la largeur
+                 suivre le ratio. Cette règle étant portée par une classe,
+                 elle bat le garde-fou `img { height: auto }` de
+                 landing.css — c'est voulu, mais il faut alors fournir
+                 l'autre moitié de la contrainte soi-même. */
               height: 80%;
+              width: auto;
             }
           }
 

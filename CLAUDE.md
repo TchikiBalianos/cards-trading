@@ -75,16 +75,48 @@ Placée **après les `@import`**, donc gagnante sur les égalités.
 `aspect-ratio` et à réserver la place avant chargement (gain CLS).
 `height: auto` est justement la moitié prévue de ce mécanisme, pas son ennemi.
 
-**Contrôle après toute modification touchant les images** — compare le ratio
-affiché au ratio naturel, en excluant `object-fit: contain/cover` qui met le
-contenu en boîte à lettres sans le déformer (sinon ~7 faux positifs) :
+⚠️ **Une règle portée par une classe bat ce garde-fou — c'est voulu, mais
+elle doit alors fournir l'autre moitié de la contrainte.** `features.css`
+imposait `height: 80%` à `feature3.webp`, seul visuel portrait du carrousel
+(848×981) : l'attribut HTML `width` continuait de s'appliquer et
+`max-width: 100%` étirait l'image sur toute la colonne, d'où 30 %
+d'écrasement. Dès qu'on fixe une hauteur en CSS sur une image, il faut
+ajouter `width: auto` (ou `object-fit: contain`).
+
+**Contrôle après toute modification touchant les images.** Trois pièges à
+neutraliser, chacun découvert à ses dépens :
+
+- `object-fit: contain/cover` met le contenu en boîte à lettres sans le
+  déformer → ~7 faux positifs sur les logos de TCG si on ne les exclut pas ;
+- `getBoundingClientRect()` inclut les transformations 3D — le `rotateY` des
+  cartes de carrousel simule ~7 % de déformation. Utiliser
+  `offsetWidth`/`offsetHeight` ;
+- **les images `loading="lazy"` hors écran ont `naturalWidth === 0`** et
+  passent donc au travers d'un filtre naïf. C'est exactement comme ça que
+  l'écrasement de `feature3.webp` est resté invisible à trois passes de
+  vérification. Il faut charger leur taille native à part.
 
 ```js
-[...document.images].filter(i => {
-  const cs = getComputedStyle(i), r = i.getBoundingClientRect();
-  if (!i.naturalWidth || cs.objectFit === 'contain' || cs.objectFit === 'cover') return false;
-  return Math.abs(r.width / r.height - i.naturalWidth / i.naturalHeight) > 0.05 * (i.naturalWidth / i.naturalHeight);
-}).map(i => i.src.split('/').pop())
+(async () => {
+  const suspects = [];
+  for (const i of document.images) {
+    const cs = getComputedStyle(i);
+    if (cs.objectFit === 'contain' || cs.objectFit === 'cover') continue;
+    if (!i.offsetWidth || !i.offsetHeight) continue;
+    // contourne le lazy-loading : naturalWidth vaut 0 tant que l'image est hors écran
+    const [nw, nh] = await new Promise(ok => {
+      const im = new Image();
+      im.onload = () => ok([im.naturalWidth, im.naturalHeight]);
+      im.onerror = () => ok([0, 0]);
+      im.src = i.src;
+    });
+    if (!nw || !nh) continue;
+    const rn = nw / nh;
+    if (Math.abs(i.offsetWidth / i.offsetHeight - rn) > 0.03 * rn)
+      suspects.push(i.src.split('/').pop() + ' ' + i.offsetWidth + 'x' + i.offsetHeight + ' (natif ' + nw + 'x' + nh + ')');
+  }
+  return suspects;
+})()
 ```
 
 Attendu : `[]`.
