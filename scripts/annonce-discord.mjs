@@ -54,6 +54,34 @@ const ETIQUETTES = {
 };
 
 /*
+  Routage par salon : chaque TCG a son salon Discord, donc son webhook.
+
+  Les catégories transverses (guide, actualité, stratégie) et celles sans
+  salon dédié retombent sur DISCORD_WEBHOOK_DEFAUT. Une catégorie non
+  routée et sans défaut n'est PAS une erreur silencieuse : le script le
+  dit et sort en échec, pour qu'on le voie passer.
+*/
+const SALONS = {
+  pokemon: 'DISCORD_WEBHOOK_POKEMON',
+  'one-piece': 'DISCORD_WEBHOOK_ONE_PIECE',
+  magic: 'DISCORD_WEBHOOK_MAGIC',
+  'dragon-ball': 'DISCORD_WEBHOOK_DRAGON_BALL',
+  lorcana: 'DISCORD_WEBHOOK_LORCANA',
+  yugioh: 'DISCORD_WEBHOOK_YUGIOH',
+};
+
+function webhookPour(categorie) {
+  const nomVariable = SALONS[categorie];
+  const dedie = nomVariable ? process.env[nomVariable] : null;
+  if (dedie) return { url: dedie, via: nomVariable };
+
+  const defaut = process.env.DISCORD_WEBHOOK_DEFAUT || process.env.DISCORD_WEBHOOK_URL;
+  if (defaut) return { url: defaut, via: 'DISCORD_WEBHOOK_DEFAUT' };
+
+  return null;
+}
+
+/*
   Frontmatter lu à la main plutôt qu'avec un parseur YAML : le schéma est
   fixe (voir src/content.config.ts) et une dépendance de plus sur un
   workflow qui tourne sans surveillance, c'est une panne de plus possible.
@@ -119,19 +147,24 @@ async function poster(article) {
       `<${SITE}/?utm_source=discord#beta>`,
   };
 
+  const salon = webhookPour(fm.category);
+
   if (SEC) {
-    console.log('[dry-run] aurait posté :\n' + JSON.stringify(charge, null, 2));
+    console.log(
+      `[dry-run] salon : ${salon ? salon.via : 'AUCUN — ni dédié ni défaut'}\n` +
+        JSON.stringify(charge, null, 2)
+    );
     return true;
   }
 
-  const webhook = process.env.DISCORD_WEBHOOK_URL;
-  if (!webhook) {
-    console.error('::error::DISCORD_WEBHOOK_URL absent.');
-    console.error('À créer dans Settings → Secrets and variables → Actions.');
+  if (!salon) {
+    console.error(`::error::Aucun webhook pour la catégorie « ${fm.category} ».`);
+    console.error(`Créer ${SALONS[fm.category] || 'DISCORD_WEBHOOK_DEFAUT'} dans les secrets Actions.`);
     process.exit(1);
   }
+  console.log(`Salon visé : ${salon.via}`);
 
-  const rep = await fetch(webhook, {
+  const rep = await fetch(salon.url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(charge),

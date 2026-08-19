@@ -96,14 +96,36 @@ en largeur fixe : il déborde légèrement de sa cellule. Purement cosmétique,
 invisible au-dessus de 1100 px. Piste : passer les en-têtes concurrents en
 `font-size` fluide, ou raccourcir le libellé.
 
-### 5. Webhook de bounce Resend
+### 5. Durcir la gestion des secrets quand le projet grossira
+
+Décision assumée le 19 août 2026 : les URL de webhook Discord ont été
+transmises en clair dans une conversation, l'enjeu étant jugé faible à ce
+stade. Elles sont bien stockées en secrets GitHub, **jamais committées** —
+le dépôt `cards-trading` est public, un webhook dans l'historique git
+serait exploitable par n'importe qui, définitivement.
+
+À reprendre quand l'audience ou l'équipe grandira :
+
+- faire **tourner** les webhooks Discord (les recréer, les anciens
+  deviennent inertes) ;
+- même chose pour la clé anon Supabase de la marketplace ;
+- vérifier qu'aucun secret n'a fui dans l'historique
+  (`git log -p | grep -i "discord.com/api/webhooks"`) ;
+- envisager un dépôt privé pour la partie automatisation, ou
+  l'*environnement* GitHub avec revue obligatoire.
+
+Un webhook Discord compromis permet de poster n'importe quoi dans le
+salon sous l'identité du serveur — nuisance de réputation, pas fuite de
+données.
+
+### 6. Webhook de bounce Resend
 
 Optionnel. Permettrait de détecter les adresses invalides côté serveur
 plutôt que de découvrir les rebonds a posteriori dans le dashboard. Le
 validateur Damerau-Levenshtein côté formulaire couvre déjà les fautes de
 frappe les plus courantes.
 
-### 6. Revue de direction artistique — traitée
+### 7. Revue de direction artistique — traitée
 
 Audit mené le 19 août sur 5 largeurs (1440 / 1280 / 1024 / 768 / 390).
 **Les 12 points relevés ont été appliqués**, sauf deux écarts assumés,

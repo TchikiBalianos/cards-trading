@@ -40,15 +40,26 @@ jobs:
         with:
           node-version: '20'
 
+      # Un webhook par salon TCG. Le script choisit selon la catégorie de
+      # l'article et retombe sur DISCORD_WEBHOOK_DEFAUT pour les catégories
+      # transverses (guide, actualité, stratégie, star-wars).
       - name: Publier l'article en attente
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_POKEMON: ${{ secrets.DISCORD_WEBHOOK_POKEMON }}
+          DISCORD_WEBHOOK_ONE_PIECE: ${{ secrets.DISCORD_WEBHOOK_ONE_PIECE }}
+          DISCORD_WEBHOOK_MAGIC: ${{ secrets.DISCORD_WEBHOOK_MAGIC }}
+          DISCORD_WEBHOOK_DRAGON_BALL: ${{ secrets.DISCORD_WEBHOOK_DRAGON_BALL }}
+          DISCORD_WEBHOOK_LORCANA: ${{ secrets.DISCORD_WEBHOOK_LORCANA }}
+          DISCORD_WEBHOOK_YUGIOH: ${{ secrets.DISCORD_WEBHOOK_YUGIOH }}
+          DISCORD_WEBHOOK_DEFAUT: ${{ secrets.DISCORD_WEBHOOK_DEFAUT }}
         run: |
-          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-            echo "::error::Secret DISCORD_WEBHOOK_URL absent."
+          if [ -z "$DISCORD_WEBHOOK_POKEMON$DISCORD_WEBHOOK_ONE_PIECE$DISCORD_WEBHOOK_MAGIC$DISCORD_WEBHOOK_DRAGON_BALL$DISCORD_WEBHOOK_LORCANA$DISCORD_WEBHOOK_YUGIOH$DISCORD_WEBHOOK_DEFAUT" ]; then
+            echo "::error::Aucun webhook Discord configuré."
             echo "Discord → salon → Modifier le salon → Intégrations →"
             echo "Webhooks → Nouveau webhook → Copier l'URL."
-            echo "Puis GitHub → Settings → Secrets and variables → Actions."
+            echo "Puis GitHub → Settings → Secrets and variables → Actions,"
+            echo "un secret par salon : DISCORD_WEBHOOK_POKEMON, _ONE_PIECE,"
+            echo "_MAGIC, _DRAGON_BALL, _LORCANA, _YUGIOH, et _DEFAUT."
             exit 1
           fi
           node scripts/annonce-discord.mjs
