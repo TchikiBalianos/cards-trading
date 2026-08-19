@@ -50,6 +50,44 @@ Vérification : `curl -sI "https://cards-trading.com/comparatif.css"` doit
 répondre, et la valeur mesurée dans le navigateur doit correspondre au
 fichier — sinon c'est du cache, pas un bug de CSS.
 
+### Remplacer une image : changer l'URL, pas seulement le fichier
+
+Les images de `public/assets/` sont servies en
+`Cache-Control: public, max-age=31536000, immutable` — **un an, sans
+revalidation**. `immutable` dit explicitement au navigateur de ne jamais
+revérifier : réécrire le fichier sous le même nom ne touchera donc
+personne l'ayant déjà chargé.
+
+Toute image remplacée doit changer d'URL, par un suffixe dans le `src` :
+
+```html
+<img src="assets/img/logo-social-discord.png?v=2" ... />
+```
+
+C'est plus strict que pour le CSS (7 jours, revalidable). Constaté le
+19 août 2026 en remplaçant le logo Discord quinze minutes après l'avoir
+déployé.
+
+### Décliner un logo de réseau social
+
+Règle de la DA : **pastille à la couleur du réseau + le « C » de
+Cards-Trading en bleu de marque**, jamais la marque du réseau. La source
+canonique est `public/assets/img/logo-icon.png` (512×512, fond
+transparent). Les vignettes font 200×200, pastille de rayon 95 centrée,
+et le « C » mesure 138px de haut, centre optique à (99, 105) :
+
+```js
+const marque = await sharp('public/assets/img/logo-icon.png')
+  .extract({ left: 23, top: 53, width: 360, height: 407 })  // cadre la marque
+  .resize({ height: 138 })
+  .toBuffer({ resolveWithObject: true });
+await sharp(Buffer.from(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+     <circle cx="100" cy="100" r="95" fill="COULEUR_DU_RESEAU"/></svg>`))
+  .composite([{ input: marque.data, left: 38, top: 36 }])
+  .png().toFile('public/assets/img/logo-social-NOM.png');
+```
+
 ### Effet de bord : attributs `width`/`height` sur les `<img>`
 
 Ces attributs ne sont pas inertes. Le navigateur les applique **comme du CSS
