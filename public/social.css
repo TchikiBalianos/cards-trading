@@ -50,6 +50,19 @@
   margin: 0 auto;
 }
 
+/* Avec 7 cartes sur 3 colonnes, la dernière se retrouve seule sur sa ligne
+   et collée à gauche. On la recentre. La condition `nth-child(3n + 1)`
+   n'est vraie que si elle démarre bien une ligne, donc la règle se
+   désactive d'elle-même dès qu'on ajoute ou retire une carte.
+
+   Bornée à 701px : en dessous la grille passe à deux colonnes et
+   `3n + 1` n'y désigne plus une carte isolée. */
+@media (min-width: 701px) {
+  .social-grid > *:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+  }
+}
+
 /* ── CARTE RÉSEAU ───────────────────────────────────────── */
 .social-card {
   position: relative;

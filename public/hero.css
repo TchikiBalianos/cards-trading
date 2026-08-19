@@ -23,7 +23,7 @@
   .hero-wrapper {
     position: relative;
     z-index: 1;
-    padding: 60px 5vw 200px; /* extra bottom padding for carousel */
+    padding: 40px 5vw 190px; /* extra bottom padding for carousel */
     align-items: stretch;
     height: 100%;
   }
@@ -50,7 +50,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: clamp(15px, 4vh, 40px); /* Proportional spacing between all elements */
+    /* Resserre : a 930px de haut, 4vh donnait 37px entre chaque
+       element, soit 150px de vide cumule dans un hero de 870px. */
+    gap: clamp(12px, 2.4vh, 26px);
     padding-left: 50px;
     padding-right: 40px;
     width: 100%;
@@ -60,7 +62,7 @@
   h1 {
     color: #fff;
     font-size: clamp(16px, 5vw, 45px);
-    line-height: 55px;
+    line-height: 1.15;
     margin: 0;
     opacity: 0;
     transform: translateY(30px);
@@ -68,7 +70,7 @@
   }
 
   .baseline {
-    font-size: clamp(16px, 3vw, 40px);
+    font-size: clamp(16px, 2.4vw, 34px);
     margin: 0;
     padding: 0; /* neutralise le h2 { padding: 50px 0 0 } global @980px */
     background: linear-gradient(90deg, #2997ff, #8b5cf6, #06b6d4, #2997ff);
@@ -84,7 +86,7 @@
   }
 
   .subline {
-    font-size: clamp(13px, 1.4vw, 22px);
+    font-size: clamp(13px, 1.2vw, 20px);
     font-weight: 400; /* h3 est bold par défaut — on garde le style léger */
     color: #fff;
     margin: 0;
@@ -98,7 +100,11 @@
   .button-container {
     padding-top: clamp(8px, 1.5vh, 15px);
     gap: 14px;
-    margin-top: auto; /* Push buttons towards the bottom while staying in viewport */
+    /* Plus de `margin-top: auto` : en flex colonne il absorbait tout
+       l espace libre et plaquait boutons + pilule en bas, pendant que le
+       titre restait en haut. Le bloc etait ecartele au lieu d etre centre,
+       d ou l impression de mauvais cadrage. Il se centre maintenant d un
+       seul tenant avec le reste (justify-content: center du parent). */
     opacity: 0;
     transform: translateY(30px);
     animation: hero-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
