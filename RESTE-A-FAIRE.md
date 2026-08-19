@@ -1,0 +1,108 @@
+# Reste à faire — Cards-Trading
+
+État au **19 août 2026**. Les règles durables vivent dans `CLAUDE.md` ;
+ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle
+est traitée.
+
+---
+
+## 🔴 Urgent — action de Julian requise
+
+### 1. Secret GitHub `SUPABASE_APP_ANON_KEY` absent
+
+**La base Supabase de la marketplace n'est actuellement pingée par personne.**
+
+Le workflow `.github/workflows/keep-alive.yml` a deux jobs. Vérifié le
+19 août :
+
+| Job | État |
+|---|---|
+| `Base landing (via /api/keep-alive)` | ✅ success |
+| `Base marketplace (RPC ping directe)` | ❌ failure |
+
+`gh api repos/TchikiBalianos/cards-trading/actions/secrets` renvoie une
+liste **vide** : le secret n'a jamais été créé. Le job échoue donc à chaque
+exécution depuis le 18 août 18:15, et c'est **volontaire** — il échoue
+bruyamment plutôt que de faire semblant de pinger.
+
+**Le risque est exactement celui de l'incident des 11 semaines** : projet
+Supabase en pause après ~7 jours d'inactivité, écritures qui échouent en
+silence.
+
+À faire :
+1. Dashboard Supabase → projet `uxewpdnkjsdfizaoerpo` → *Project Settings*
+   → *API* → copier la clé **anon / public**.
+2. GitHub → repo `cards-trading` → *Settings* → *Secrets and variables* →
+   *Actions* → *New repository secret*.
+3. Nom exact : `SUPABASE_APP_ANON_KEY`. Coller la clé.
+4. Relancer le workflow et vérifier que les deux jobs passent :
+
+```bash
+gh workflow run keep-alive.yml && sleep 45 && gh run list --workflow=keep-alive.yml --limit 1
+```
+
+> Ne jamais coller cette clé dans le code ni dans un commit.
+
+---
+
+## 🟠 À valider — hors de portée de l'environnement de test
+
+### 2. Défilement et animations sur un vrai téléphone
+
+Le navigateur d'audit **ne défile pas** (`window.scrollTo` sans effet) et
+**ne compose pas de frames** : aucune transition ni animation CSS ne
+s'exécute, et `computer{action:"screenshot"}` échoue systématiquement.
+
+Tout ce qui a été affirmé sur la navigation mobile repose donc sur des
+valeurs **cibles** mesurées transitions neutralisées, pas sur un rendu animé
+observé. À valider sur le Solanaphone :
+
+- les 7 ancres du menu hamburger, sur plusieurs cycles d'affilée ;
+- la fluidité de la fermeture du panneau ;
+- les carrousels (flèches, pas de saut visuel) ;
+- le rendu des images après le correctif de ratio du 19 août.
+
+---
+
+## 🟡 Améliorations identifiées, non appliquées
+
+### 3. Consolidation des tokens du design system
+
+Tables prêtes dans `scratchpad/audit-3-volets.md`. **Délibérément non
+appliqué** : le gain est cosmétique et le risque de régression élevé sur
+une feuille de style qui pilote la landing entière. À faire à froid, une
+section à la fois, avec mesure avant/après.
+
+### 4. Débordement de « Cardmarket » sous 1100 px
+
+Préexistant, **amélioré mais pas éliminé** le 19 août (24 px → 15 px à
+980 px de viewport). « Cardmarket » est un mot insécable dans une colonne
+en largeur fixe : il déborde légèrement de sa cellule. Purement cosmétique,
+invisible au-dessus de 1100 px. Piste : passer les en-têtes concurrents en
+`font-size` fluide, ou raccourcir le libellé.
+
+### 5. Webhook de bounce Resend
+
+Optionnel. Permettrait de détecter les adresses invalides côté serveur
+plutôt que de découvrir les rebonds a posteriori dans le dashboard. Le
+validateur Damerau-Levenshtein côté formulaire couvre déjà les fautes de
+frappe les plus courantes.
+
+### 6. Revue de direction artistique
+
+Audit de cohésion visuelle (ratios, rythme vertical, échelle typographique,
+espacements, palette) lancé le 19 août. **Reporter ici les points retenus**
+quand les conclusions seront arbitrées.
+
+---
+
+## ✅ Traité récemment — ne pas refaire
+
+- **19 août** — ratio des images restauré (`img { height: auto }` en fin de
+  `landing.css`). Vérifié en production : 0 image déformée sur 52.
+- **19 août** — « Cards-Trading » du comparatif tenait sur deux lignes entre
+  980 et 1270 px de viewport. Colonne 22 % → 26 %, en-tête à 15 px. Vérifié
+  de 980 à 1440 px : une seule ligne partout.
+- **19 août** — cache-busting propagé aux 9 `@import`. Les CSS importés
+  étaient servis 7 jours depuis le cache, ce qui masquait les correctifs.
+  Voir `CLAUDE.md`, section CSS.
