@@ -26,6 +26,30 @@ est copié tel quel. Un build vert ne prouve donc rien sur la landing.
 Cache-busting manuel : `landing.css?v=N` dans `index.html` — **incrémenter N
 à chaque modification CSS**, sinon Vercel/le navigateur sert l'ancienne version.
 
+⚠️ **Le numéro de version doit être répercuté sur les `@import`**, pas
+seulement sur `landing.css`. Vercel sert les CSS de `public/` avec
+`Cache-Control: public, max-age=604800` — **7 jours**. Tant que les
+`@import` pointaient vers des URL nues (`url(comparatif.css)`), bumper
+`landing.css?v=N` rechargeait le fichier parent mais les 9 enfants
+restaient servis depuis le cache : toute correction faite dans
+`comparatif.css`, `hero.css`, `features.css`… était invisible une semaine
+durant pour un visiteur déjà venu. Découvert le 19 août 2026, après avoir
+constaté en production une colonne à l'ancienne largeur alors que le
+fichier servi par `curl` était bien le nouveau.
+
+Les deux endroits doivent donc rester synchronisés sur le même N :
+
+```bash
+# depuis public/ — remplacer 17 par le nouveau numéro
+sed -i -E 's|\.css\?v=[0-9]+\)|.css?v=17)|' landing.css
+sed -i -E 's|landing\.css\?v=[0-9]+|landing.css?v=17|' index.html
+grep -c "v=17" landing.css   # attendu : 9
+```
+
+Vérification : `curl -sI "https://cards-trading.com/comparatif.css"` doit
+répondre, et la valeur mesurée dans le navigateur doit correspondre au
+fichier — sinon c'est du cache, pas un bug de CSS.
+
 ### Effet de bord : attributs `width`/`height` sur les `<img>`
 
 Ces attributs ne sont pas inertes. Le navigateur les applique **comme du CSS
