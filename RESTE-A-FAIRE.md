@@ -52,7 +52,47 @@ avant d'y pousser de la promo régulière.
 
 Limites du plan gratuit à surveiller : 10 posts programmés, 3 tags.
 
-### 2. Défilement et animations sur un vrai téléphone
+**Ce qu'il manque pour automatiser** : une clé d'API Buffer. Le MCP est
+authentifié par la session Claude et n'est donc pas utilisable depuis un
+job GitHub. Buffer n'accepte plus de nouvelles applications OAuth, mais
+la nouvelle API GraphQL propose des **clés personnelles** — 1 autorisée
+sur le plan gratuit, à créer sur `publish.buffer.com/settings/api`,
+authentification par jeton Bearer.
+
+### 2. Format récurrent piloté par les données — BLOQUÉ par la fraîcheur
+
+Objectif : un 3ᵉ post hebdomadaire automatisé (« top des hausses »,
+carte du jour) pour compléter le relais d'articles, qui ne fournit que
+1 à 2 posts par semaine.
+
+**Vérifié le 20 août 2026, et ça ne marche pas en l'état :**
+
+- `api.pokemontcg.io` fonctionne sans clé et expose bien les champs
+  nécessaires (`avg1`, `avg7`, `avg30`, `trendPrice`), ce qui permettrait
+  de calculer une variation **sans stocker d'historique** ;
+- **mais les prix sont gelés** : sur 40 cartes échantillonnées, les 39
+  qui ont un prix portent toutes la même date, `2026/07/01` — 50 jours
+  de retard. Un « top des hausses de la semaine » annoncerait des
+  mouvements vieux de deux mois ;
+- l'endpoint `/sets` répond 500/502 et la requête par plage de dates
+  renvoie 400 : l'API est en outre instable ;
+- `apitcg.com` couvre bien plusieurs TCG (One Piece, Magic, Digimon,
+  Riftbound…) mais se présente comme une base de **cartes**, sans
+  mention de prix.
+
+**Conclusion** : le format « variation de prix » n'est pas tenable avec
+les sources actuelles. Ne pas le construire — il produirait du contenu
+faux publiquement.
+
+Pistes de repli, fiables celles-là : calendrier des sorties de sets,
+carte à l'honneur (visuel + anecdote), rétrospective d'un set. Les
+images de cartes et les métadonnées sont stables, seuls les prix ne le
+sont pas.
+
+Une source de prix fraîche (API Cardmarket, qui demande un compte
+professionnel et OAuth) reste la seule voie pour le format initial.
+
+### 3. Défilement et animations sur un vrai téléphone
 
 Le navigateur d'audit **ne défile pas** (`window.scrollTo` sans effet) et
 **ne compose pas de frames** : aucune transition ni animation CSS ne
