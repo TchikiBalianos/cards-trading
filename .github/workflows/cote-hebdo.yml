@@ -47,6 +47,33 @@ jobs:
       - name: Installer les dépendances
         run: npm ci --omit=dev --ignore-scripts=false
 
+      # Relevé One Piece : archive la cote du jour pour se constituer un
+      # historique maison. Aucune source ne publie l'évolution des prix
+      # One Piece — c'est en relevant nous-mêmes que la variation devient
+      # calculable, à partir du deuxième passage.
+      #
+      # ⚠️ Volontairement HORS des conditions de publication : il doit
+      # tourner même les semaines calmes. Un relevé manqué est un trou
+      # définitif dans l'historique, impossible à rattraper.
+      - name: Relever les cotes One Piece
+        id: releve
+        continue-on-error: true
+        run: node scripts/releve-cotes.mjs --tcg=one-piece
+
+      - name: Archiver le relevé
+        if: steps.releve.outcome == 'success'
+        run: |
+          if git diff --quiet -- data/cotes/; then
+            echo "Relevé déjà présent, rien à committer."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cotes/
+          git commit -m "chore(cotes): releve hebdomadaire One Piece [skip ci]"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+
       # Semaine paire → international, impaire → japonais.
       - name: Choisir le marché
         id: marche

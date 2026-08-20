@@ -1,0 +1,1306 @@
+{
+  "tcg": "one-piece",
+  "cartes": {
+    "OP13-118": {
+      "nom": "Monkey.D.Luffy (118) (Red Super Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 8489.98
+      }
+    },
+    "OP13-120": {
+      "nom": "Sabo (120) (Red Super Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 4749.98
+      }
+    },
+    "OP13-065": {
+      "nom": "Shanks (065) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 8.49
+      }
+    },
+    "OP13-016": {
+      "nom": "Monkey.D.Garp (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 23.83
+      }
+    },
+    "OP13-113": {
+      "nom": "Lilith (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 8.21
+      }
+    },
+    "OP13-066": {
+      "nom": "Silvers Rayleigh (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 3.78
+      }
+    },
+    "OP13-023": {
+      "nom": "Uta (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 5.28
+      }
+    },
+    "OP13-054": {
+      "nom": "Yamato (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 14.81
+      }
+    },
+    "OP13-027": {
+      "nom": "Sanji (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 17.21
+      }
+    },
+    "OP13-002": {
+      "nom": "Portgas.D.Ace (002) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 21.78
+      }
+    },
+    "OP13-083": {
+      "nom": "St. Jaygarcia Saturn (Parallel)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 406.35
+      }
+    },
+    "OP13-079": {
+      "nom": "Imu (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 19.11
+      }
+    },
+    "OP13-110": {
+      "nom": "Stussy (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 15.84
+      }
+    },
+    "OP13-114": {
+      "nom": "S-Snake (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 3.44
+      }
+    },
+    "OP13-089": {
+      "nom": "St. Topman Warcury (Parallel)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 386
+      }
+    },
+    "OP13-007": {
+      "nom": "Ace & Sabo & Luffy (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 28.08
+      }
+    },
+    "OP13-003": {
+      "nom": "Gol.D.Roger (003) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 23
+      }
+    },
+    "OP13-042": {
+      "nom": "Edward.Newgate (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 216.18
+      }
+    },
+    "OP13-080": {
+      "nom": "St. Ethanbaron V. Nusjuro (Parallel)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 410.99
+      }
+    },
+    "OP13-091": {
+      "nom": "St. Marcus Mars (Parallel)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 492.23
+      }
+    },
+    "OP13-119": {
+      "nom": "Portgas.D.Ace (119) (Red Super Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 4420.37
+      }
+    },
+    "OP13-004": {
+      "nom": "Sabo (004) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 38.34
+      }
+    },
+    "OP13-051": {
+      "nom": "Boa Hancock (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 16.4
+      }
+    },
+    "OP13-084": {
+      "nom": "St. Shepherd Ju Peter (Parallel)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 371.47
+      }
+    },
+    "OP11-058": {
+      "nom": "Monkey.D.Luffy - OP11-058 (TR)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 54.86
+      }
+    },
+    "OP13-100": {
+      "nom": "Jewelry Bonney (100) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 12.53
+      }
+    },
+    "OP13-001": {
+      "nom": "Monkey.D.Luffy (001) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 67.03
+      }
+    },
+    "OP13-108": {
+      "nom": "Jewelry Bonney (108) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 15.69
+      }
+    },
+    "OP13-064": {
+      "nom": "Gol.D.Roger (064) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 13.85
+      }
+    },
+    "OP13-076": {
+      "nom": "Divine Departure (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 82.4
+      }
+    },
+    "OP13-028": {
+      "nom": "Shanks (028) (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 10.1
+      }
+    },
+    "OP09-119": {
+      "nom": "Monkey.D.Luffy - OP09-119 (SP)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 378.73
+      }
+    },
+    "OP10-030": {
+      "nom": "Smoker - OP10-030 (SP)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 91.58
+      }
+    },
+    "OP07-111": {
+      "nom": "Lilith - OP07-111 (SP)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 63.22
+      }
+    },
+    "OP09-009": {
+      "nom": "Benn.Beckman (SP)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 59.71
+      }
+    },
+    "OP09-118": {
+      "nom": "Gol.D.Roger - OP09-118 (SP) (Wanted Poster)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 188
+      }
+    },
+    "EB02-028": {
+      "nom": "Portgas.D.Ace - EB02-028 (SP)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 127.23
+      }
+    },
+    "OP07-118": {
+      "nom": "Sabo - OP07-118 (SP)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 70.37
+      }
+    },
+    "OP09-004": {
+      "nom": "Shanks - OP09-004 (SP) (Silver)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 1070.71
+      }
+    },
+    "OP13-082": {
+      "nom": "Five Elders (Alternate Art)",
+      "set": "Carrying On His Will",
+      "historique": {
+        "2026-08-20": 20.69
+      }
+    },
+    "OP14-096": {
+      "nom": "Ground Death (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 135.07
+      }
+    },
+    "OP14-112": {
+      "nom": "Boa Hancock - OP14-112 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 535.39
+      }
+    },
+    "OP14-104": {
+      "nom": "Gecko Moria - OP14-104 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 34.31
+      }
+    },
+    "OP14-031": {
+      "nom": "Nami (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 77.24
+      }
+    },
+    "OP14-033": {
+      "nom": "Perona - OP14-033 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 44.86
+      }
+    },
+    "OP14-120": {
+      "nom": "Crocodile - OP14-120 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 32.69
+      }
+    },
+    "OP14-042": {
+      "nom": "Arlong (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 3.75
+      }
+    },
+    "OP14-090": {
+      "nom": "Mr.1 (Daz.Bonez) (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 4.41
+      }
+    },
+    "OP14-091": {
+      "nom": "Mr.2.Bon.Kurei (Bentham) (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 14.62
+      }
+    },
+    "OP14-049": {
+      "nom": "Jinbe - OP14-049 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 9.39
+      }
+    },
+    "OP14-001": {
+      "nom": "Trafalgar Law - OP14-001 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 19.96
+      }
+    },
+    "OP14-084": {
+      "nom": "Ms. All Sunday (SP)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 640.09
+      }
+    },
+    "EB04-018": {
+      "nom": "Megalo (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 17.09
+      }
+    },
+    "OP14-111": {
+      "nom": "Perona - OP14-111 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 28.75
+      }
+    },
+    "OP14-061": {
+      "nom": "Vergo (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 3.93
+      }
+    },
+    "OP14-027": {
+      "nom": "Shanks (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 25.62
+      }
+    },
+    "OP14-079": {
+      "nom": "Crocodile - OP14-079 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 26.89
+      }
+    },
+    "OP14-060": {
+      "nom": "Donquixote Doflamingo - OP14-060 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 24.41
+      }
+    },
+    "OP14-020": {
+      "nom": "Dracule Mihawk - OP14-020 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 67.25
+      }
+    },
+    "OP14-069": {
+      "nom": "Donquixote Doflamingo - OP14-069 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 9.88
+      }
+    },
+    "OP14-040": {
+      "nom": "Jinbe - OP14-040 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 10.01
+      }
+    },
+    "EB04-022": {
+      "nom": "Issho - EB04-022 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 8.81
+      }
+    },
+    "OP14-119": {
+      "nom": "Dracule Mihawk - OP14-119",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 7.63
+      }
+    },
+    "EB04-012": {
+      "nom": "Kikunojo - EB04-012 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 5.23
+      }
+    },
+    "EB04-036": {
+      "nom": "Foxy (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 7.41
+      }
+    },
+    "EB04-013": {
+      "nom": "Carrot (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 8.25
+      }
+    },
+    "OP14-009": {
+      "nom": "Trafalgar Law - OP14-009 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 14.9
+      }
+    },
+    "EB04-031": {
+      "nom": "King (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 29.49
+      }
+    },
+    "EB04-025": {
+      "nom": "Nefeltari Vivi (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 33.35
+      }
+    },
+    "OP14-013": {
+      "nom": "Monkey.D.Luffy - OP14-013 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 13.99
+      }
+    },
+    "OP12-108": {
+      "nom": "Donquixote Rosinante - OP12-108",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 38.52
+      }
+    },
+    "OP14-015": {
+      "nom": "Roronoa Zoro - OP14-015 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 10.76
+      }
+    },
+    "OP14-118": {
+      "nom": "You'll Frighten Me... (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 200.08
+      }
+    },
+    "EB04-038": {
+      "nom": "Rosinante & Law (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 35.59
+      }
+    },
+    "OP10-065": {
+      "nom": "Sugar - OP10-065 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 91.93
+      }
+    },
+    "EB04-039": {
+      "nom": "Eustass\"Captain\"Kid - EB04-039 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 90.5
+      }
+    },
+    "OP06-093": {
+      "nom": "Perona - OP06-093 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 153.19
+      }
+    },
+    "PRB02-006": {
+      "nom": "Roronoa Zoro - PRB02-006 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 893.52
+      }
+    },
+    "EB01-023": {
+      "nom": "Edward Weevil - EB01-023 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 48.33
+      }
+    },
+    "OP12-030": {
+      "nom": "Dracule Mihawk - OP12-030 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 142.04
+      }
+    },
+    "EB01-003": {
+      "nom": "Kid & Killer - EB01-003 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 82.68
+      }
+    },
+    "OP07-046": {
+      "nom": "Sengoku - OP07-046 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 64.74
+      }
+    },
+    "OP09-051": {
+      "nom": "Buggy - OP09-051 (SP)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 821.67
+      }
+    },
+    "OP14-041": {
+      "nom": "Boa Hancock - OP14-041 (Alternate Art)",
+      "set": "The Azure Sea's Seven",
+      "historique": {
+        "2026-08-20": 96.88
+      }
+    },
+    "EB03-053": {
+      "nom": "Nami (053) (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 1314.26
+      }
+    },
+    "EB03-055": {
+      "nom": "Nico Robin (055) (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 1459.33
+      }
+    },
+    "EB02-026": {
+      "nom": "Nefeltari Vivi - EB02-026",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 9
+      }
+    },
+    "OP09-034": {
+      "nom": "Perona - OP09-034",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 5.22
+      }
+    },
+    "ST18-002": {
+      "nom": "O-Nami - ST18-002",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 9.39
+      }
+    },
+    "OP05-006": {
+      "nom": "Koala - OP05-006",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 2.28
+      }
+    },
+    "EB03-062": {
+      "nom": "Trafalgar Law",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 8.32
+      }
+    },
+    "EB03-008": {
+      "nom": "Hibari (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 8.09
+      }
+    },
+    "EB03-042": {
+      "nom": "Koala (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 184.86
+      }
+    },
+    "EB03-025": {
+      "nom": "Hina (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 2.93
+      }
+    },
+    "EB03-013": {
+      "nom": "Carrot (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 5.6
+      }
+    },
+    "EB03-034": {
+      "nom": "Charlotte Linlin (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 14.44
+      }
+    },
+    "EB03-024": {
+      "nom": "Nefeltari Vivi (024) (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 473.33
+      }
+    },
+    "EB03-018": {
+      "nom": "Tashigi (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 163.8
+      }
+    },
+    "EB03-045": {
+      "nom": "Perona (045) (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 368.71
+      }
+    },
+    "EB03-041": {
+      "nom": "Kujyaku (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 6.25
+      }
+    },
+    "EB03-057": {
+      "nom": "Yamato (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 14.4
+      }
+    },
+    "EB03-061": {
+      "nom": "Uta (061)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 4.95
+      }
+    },
+    "EB03-026": {
+      "nom": "Boa Hancock (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 1407.41
+      }
+    },
+    "EB03-031": {
+      "nom": "Vinsmoke Reiju (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 243.21
+      }
+    },
+    "EB03-003": {
+      "nom": "Uta (003) (SP)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 351.84
+      }
+    },
+    "EB03-001": {
+      "nom": "Nefeltari Vivi (001) (Alternate Art)",
+      "set": "Extra Booster: One Piece Heroines Edition",
+      "historique": {
+        "2026-08-20": 7.43
+      }
+    },
+    "OP15-113": {
+      "nom": "Roronoa Zoro (OP15-113) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 24.9
+      }
+    },
+    "EB04-058": {
+      "nom": "Borsalino (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 68.25
+      }
+    },
+    "OP15-032": {
+      "nom": "Brook (OP15-032) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 40.23
+      }
+    },
+    "EB04-007": {
+      "nom": "Roronoa Zoro (EB04-007) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 95.06
+      }
+    },
+    "OP15-086": {
+      "nom": "Nami (OP15-086) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 140.27
+      }
+    },
+    "OP15-078": {
+      "nom": "Mamaragan (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 43.64
+      }
+    },
+    "OP15-088": {
+      "nom": "Pirates Docking Six",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 4.04
+      }
+    },
+    "OP15-118": {
+      "nom": "Enel (OP15-118) (Manga)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 1051.34
+      }
+    },
+    "OP15-119": {
+      "nom": "Monkey.D.Luffy (OP15-119) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 58.65
+      }
+    },
+    "EB04-061": {
+      "nom": "Monkey.D.Luffy (EB04-061) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 69.75
+      }
+    },
+    "OP15-108": {
+      "nom": "Nami (OP15-108) (Dash Pack)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 5.46
+      }
+    },
+    "OP15-008": {
+      "nom": "Krieg (OP15-008) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 6.45
+      }
+    },
+    "OP15-007": {
+      "nom": "Gin (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 2.93
+      }
+    },
+    "OP15-003": {
+      "nom": "Alvida (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 5.9
+      }
+    },
+    "OP15-046": {
+      "nom": "Sabo (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 9.3
+      }
+    },
+    "OP15-109": {
+      "nom": "Nico Robin (OP15-109) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 19.38
+      }
+    },
+    "EB04-044": {
+      "nom": "Koby (EB04-044) (Manga)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 628.94
+      }
+    },
+    "OP15-061": {
+      "nom": "Ohm (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 5.72
+      }
+    },
+    "OP15-025": {
+      "nom": "Kuro (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 5.01
+      }
+    },
+    "OP15-060": {
+      "nom": "Enel (OP15-060) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 4.98
+      }
+    },
+    "OP15-001": {
+      "nom": "Krieg (OP15-001) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 12.92
+      }
+    },
+    "OP15-092": {
+      "nom": "Monkey.D.Luffy (OP15-092) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 34.46
+      }
+    },
+    "OP15-047": {
+      "nom": "Sanji (OP15-047) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 6.42
+      }
+    },
+    "OP15-053": {
+      "nom": "Rebecca (OP15-053) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 28.51
+      }
+    },
+    "EB04-003": {
+      "nom": "Smoker & Tashigi (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 121.52
+      }
+    },
+    "EB04-002": {
+      "nom": "Jewelry Bonney (EB04-002) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 26.46
+      }
+    },
+    "OP15-058": {
+      "nom": "Enel (OP15-058) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 28.16
+      }
+    },
+    "OP15-114": {
+      "nom": "Wyper (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 9.16
+      }
+    },
+    "OP15-116": {
+      "nom": "Gum-Gum Golden Rifle (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 60.77
+      }
+    },
+    "EB04-043": {
+      "nom": "Kaku (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 3.16
+      }
+    },
+    "OP15-002": {
+      "nom": "Lucy (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 30.99
+      }
+    },
+    "OP15-077": {
+      "nom": "Lightning Dragon (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 84.06
+      }
+    },
+    "OP15-098": {
+      "nom": "Monkey.D.Luffy (OP15-098) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 89.47
+      }
+    },
+    "OP13-037": {
+      "nom": "Roronoa Zoro (OP13-037)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 244.78
+      }
+    },
+    "OP15-039": {
+      "nom": "Rebecca (OP15-039) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 16.8
+      }
+    },
+    "EB04-048": {
+      "nom": "Rob Lucci (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 6.52
+      }
+    },
+    "EB04-052": {
+      "nom": "Sanji (EB04-052) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 7.59
+      }
+    },
+    "P-105": {
+      "nom": "Sabo (P-105) (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 95.28
+      }
+    },
+    "PRB02-014": {
+      "nom": "Sabo (PRB02-014) (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 222.83
+      }
+    },
+    "EB02-052": {
+      "nom": "Enel (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 135.23
+      }
+    },
+    "OP11-106": {
+      "nom": "Zeus (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 449.34
+      }
+    },
+    "OP13-031": {
+      "nom": "Trafalgar Law (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 295.83
+      }
+    },
+    "OP12-014": {
+      "nom": "Boa Hancock (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 560.9
+      }
+    },
+    "ST26-005": {
+      "nom": "Monkey.D.Luffy (SP)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 627.98
+      }
+    },
+    "OP15-022": {
+      "nom": "Brook (OP15-022) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 69.67
+      }
+    },
+    "EB04-001": {
+      "nom": "Jewelry Bonney (EB04-001) (Alternate Art)",
+      "set": "Adventure on Kami's Island",
+      "historique": {
+        "2026-08-20": 43.89
+      }
+    },
+    "OP16-042": {
+      "nom": "Prisoner of Impel Down",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 2.06
+      }
+    },
+    "OP16-056": {
+      "nom": "Mr.3(Galdino) (056) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 27.8
+      }
+    },
+    "OP16-118": {
+      "nom": "Portgas.D.Ace (118) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 37.29
+      }
+    },
+    "OP16-119": {
+      "nom": "Marshall.D.Teach (119) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 39.25
+      }
+    },
+    "OP16-015": {
+      "nom": "Monkey.D.Luffy",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 2.02
+      }
+    },
+    "OP16-073": {
+      "nom": "Borsalino (Manga)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 1043.28
+      }
+    },
+    "OP16-063": {
+      "nom": "Kuzan (Manga)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 1154.14
+      }
+    },
+    "OP16-021": {
+      "nom": "Moby Dick (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 23.26
+      }
+    },
+    "OP16-055": {
+      "nom": "Mr.2.Bon.Kurei(Bentham) (055) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 7.25
+      }
+    },
+    "OP16-014": {
+      "nom": "Marco (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 14.28
+      }
+    },
+    "OP16-082": {
+      "nom": "Kin'emon (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 12.05
+      }
+    },
+    "OP16-034": {
+      "nom": "Monkey.D.Luffy (034) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 8.39
+      }
+    },
+    "OP16-085": {
+      "nom": "Kouzuki Momonosuke (085) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 13.06
+      }
+    },
+    "OP16-003": {
+      "nom": "Edward.Newgate (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 37.39
+      }
+    },
+    "OP16-032": {
+      "nom": "Boa Hancock (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 41.05
+      }
+    },
+    "OP16-011": {
+      "nom": "Vista (TR)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 29.99
+      }
+    },
+    "OP16-098": {
+      "nom": "Yamato (098) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 35.83
+      }
+    },
+    "OP16-108": {
+      "nom": "Shiryu (Full Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 8.83
+      }
+    },
+    "OP16-116": {
+      "nom": "Zehahahahaha! (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 77.7
+      }
+    },
+    "OP16-048": {
+      "nom": "Buggy (048) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 6.83
+      }
+    },
+    "OP16-026": {
+      "nom": "Emporio.Ivankov (026) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 3.88
+      }
+    },
+    "OP16-065": {
+      "nom": "Sakazuk",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 2.72
+      }
+    },
+    "OP16-060": {
+      "nom": "Sengoku (060) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 13.74
+      }
+    },
+    "OP16-079": {
+      "nom": "Yamato (079) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 60.04
+      }
+    },
+    "OP16-041": {
+      "nom": "Buggy (041) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 18.57
+      }
+    },
+    "OP16-001": {
+      "nom": "Portgas.D.Ace (001) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 68.81
+      }
+    },
+    "OP14-029": {
+      "nom": "Tashigi (SP)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 90.1
+      }
+    },
+    "EB04-054": {
+      "nom": "Bartholomew Kuma (SP)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 83.65
+      }
+    },
+    "OP11-067": {
+      "nom": "Charlotte Katakuri (SP)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 116.28
+      }
+    },
+    "ST15-005": {
+      "nom": "Portgas.D.Ace (SP)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 185.14
+      }
+    },
+    "OP10-045": {
+      "nom": "Cavendish (SP)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 58
+      }
+    },
+    "OP16-022": {
+      "nom": "Monkey.D.Luffy (022) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 60.31
+      }
+    },
+    "OP16-080": {
+      "nom": "Marshall.D.Teach (080) (Alternate Art)",
+      "set": "The Time of Battle",
+      "historique": {
+        "2026-08-20": 23.7
+      }
+    }
+  },
+  "releves": [
+    {
+      "date": "2026-08-20",
+      "cartes": 185
+    }
+  ]
+}
