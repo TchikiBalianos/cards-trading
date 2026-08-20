@@ -75,6 +75,7 @@ function examiner(carte, cm) {
   return {
     ok: true,
     nom: carte.name,
+    dexId: Array.isArray(carte.dexId) ? carte.dexId[0] : null,
     id: carte.id,
     actuel: Math.round(actuel * 100) / 100,
     reference: Math.round(reference * 100) / 100,
@@ -131,6 +132,38 @@ retenues.sort((a, b) => b.variation - a.variation);
 const podium = retenues.slice(0, 3);
 
 /*
+  Nom français de l'espèce, via PokéAPI (gratuit, sans clé).
+
+  Indispensable sur le marché japonais : « エリカのモンジャラ » ne dit
+  rien à un lecteur français. TCGdex sait filtrer par dexId mais renvoie
+  des CARTES, pas le nom canonique de l'espèce — on obtenait « Brindibou
+  et Noadkoko d'Alola GX » au lieu de « Noadkoko ».
+
+  Résolu seulement pour le podium : trois appels, pas quatre cents. Un
+  échec laisse le nom d'origine plutôt que de faire échouer le script —
+  un nom en japonais vaut mieux que pas de publication.
+*/
+async function nomFrancais(dexId) {
+  if (!dexId) return null;
+  try {
+    const r = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${dexId}/`);
+    if (!r.ok) return null;
+    const j = await r.json();
+    return j.names?.find((n) => n.language?.name === 'fr')?.name || null;
+  } catch {
+    return null;
+  }
+}
+
+for (const c of podium) {
+  const fr = await nomFrancais(c.dexId);
+  /* On garde le nom d'origine à côté : sur une carte japonaise il situe
+     la version, sur une carte française il est déjà identique. */
+  c.nomFr = fr;
+  c.affichage = fr && fr !== c.nom ? `${fr} — ${c.nom}` : c.nom;
+}
+
+/*
   Aucun résultat n'est un échec ACCEPTABLE, pas une erreur : un marché
   calme est un marché calme. On sort en 0 sans rien publier — mieux vaut
   le silence qu'un classement inventé.
@@ -146,7 +179,7 @@ if (EN_JSON) {
   } else {
     console.log('\nTop des hausses :');
     for (const [i, c] of podium.entries()) {
-      console.log(`  ${i + 1}. ${c.nom} (${c.set}) — ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €)`);
+      console.log(`  ${i + 1}. ${c.affichage} (${c.set}) — ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €)`);
     }
   }
 }
