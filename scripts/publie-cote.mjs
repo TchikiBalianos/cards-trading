@@ -56,7 +56,17 @@ const FOND = '#07111f';
 
 const brut = execFileSync(
   process.execPath,
-  [join(RACINE, 'scripts', 'cote-hebdo.mjs'), `--marche=${MARCHE}`, '--json'],
+  [
+    /* One Piece a sa propre source : optcgapi expose un historique de
+       13 jours, la ou TCGdex ne couvre que Pokemon. Les deux scripts
+       produisent le MEME contrat JSON, d'ou l'aiguillage ici plutot
+       qu'un branchement dans toute la suite. */
+    MARCHE === 'op'
+      ? join(RACINE, 'scripts', 'cote-one-piece.mjs')
+      : join(RACINE, 'scripts', 'cote-hebdo.mjs'),
+    ...(MARCHE === 'op' ? [] : [`--marche=${MARCHE}`]),
+    '--json',
+  ],
   { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }
 );
 const donnees = JSON.parse(brut);
@@ -66,7 +76,11 @@ if (!donnees.podium || donnees.podium.length === 0) {
   process.exit(0);
 }
 
-const titreMarche = MARCHE === 'jp' ? 'Cartes japonaises' : 'Cartes Pokémon';
+const titreMarche =
+  MARCHE === 'jp' ? 'Cartes japonaises' : MARCHE === 'op' ? 'One Piece Card Game' : 'Cartes Pokémon';
+const mentionSource =
+  MARCHE === 'op' ? 'Évolution sur 13 jours' : 'Cote Cardmarket en euros, sur 30 jours';
+const motsCles = MARCHE === 'op' ? '#onepiececardgame #opcg' : '#pokemontcg #cartespokemon';
 const semaine = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
 console.log(`${donnees.podium.length} carte(s) au podium sur ${donnees.examinees} examinées.`);
 
@@ -83,7 +97,8 @@ const court = (t, n) => (t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t)
 
 /* Virgule décimale et espace insécable avant le symbole : « 96,54 € ».
    Un « 96.54 € » à l'anglaise sur un compte français fait amateur. */
-const euros = (n) => n.toFixed(2).replace('.', ',') + ' €';
+const DEVISE = MARCHE === 'op' ? '$' : '€';
+const euros = (n) => n.toFixed(2).replace('.', ',') + ' ' + DEVISE;
 
 async function vignetteCote() {
   const L = 1080, H = 1080, marge = 90;
@@ -117,7 +132,7 @@ async function vignetteCote() {
         fill="${BLEU}">${echapper(titreMarche)} · semaine du ${echapper(semaine)}</text>
 ${lignes}
   <text x="${marge}" y="972" font-family="Arial, Helvetica, sans-serif" font-size="26"
-        fill="#ffffff" fill-opacity="0.5">Cote Cardmarket en euros · cards-trading.com</text>
+        fill="#ffffff" fill-opacity="0.5">${echapper(mentionSource)} · cards-trading.com</text>
 </svg>`;
 
   const marque = await sharp(MARQUE)
@@ -161,13 +176,13 @@ const classement = donnees.podium
 
 const lien = `${SITE}/?utm_source=`;
 const accroche = `📈 Top des hausses de la semaine — ${titreMarche.toLowerCase()}`;
-const socle = `${accroche}\n\n${classement}\n\nCote Cardmarket en euros, sur 30 jours.`;
+const socle = `${accroche}\n\n${classement}\n\n${mentionSource}.`;
 
 const textes = {
   discord: `${socle}\n\nLa bêta Cards-Trading ouvre bientôt : <${lien}discord#beta>`,
   twitter: `${accroche}\n\n${classement}\n\n${lien}x\n\n#pokemontcg #cartespokemon`,
-  instagram: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n#pokemontcg #cartespokemon #tcg #cartesacollectionner`,
-  tiktok: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n#pokemontcg #cartespokemon #tcg #cartesacollectionner`,
+  instagram: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
+  tiktok: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
 };
 
 if (SEC) {

@@ -26,7 +26,7 @@ on:
       marche:
         description: "Marché : int (international) ou jp (cartes japonaises)"
         type: choice
-        options: [auto, int, jp]
+        options: [auto, int, jp, op]
         default: auto
 
 permissions:
@@ -74,14 +74,24 @@ jobs:
           git pull --rebase --autostash origin main
           git push origin HEAD:main
 
-      # Semaine paire → international, impaire → japonais.
+      # Rotation sur trois marchés, une semaine chacun :
+      #   int → Pokémon international, cote Cardmarket en euros
+      #   jp  → cartes japonaises, cote Cardmarket en euros également
+      #   op  → One Piece, historique 13 jours d'optcgapi, en dollars
+      #
+      # Trois semaines de cycle : chaque marché revient une fois par mois
+      # environ, assez pour installer un rendez-vous sans lasser.
       - name: Choisir le marché
         id: marche
         run: |
           CHOIX="${{ inputs.marche }}"
           if [ -z "$CHOIX" ] || [ "$CHOIX" = "auto" ]; then
             SEMAINE=$(date -u +%V)
-            if [ $((10#$SEMAINE % 2)) -eq 0 ]; then CHOIX=int; else CHOIX=jp; fi
+            case $((10#$SEMAINE % 3)) in
+              0) CHOIX=int ;;
+              1) CHOIX=jp ;;
+              *) CHOIX=op ;;
+            esac
           fi
           echo "valeur=$CHOIX" >> "$GITHUB_OUTPUT"
           echo "Marché retenu : $CHOIX"
