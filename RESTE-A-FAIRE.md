@@ -8,25 +8,30 @@ est traitée.
 
 ## 🟠 À valider — hors de portée de l'environnement de test
 
-### 1. Connexion de Buffer pour Instagram et X
+### 1. Visuels d'article pour rendre Instagram publiable
 
-Le flux `https://cards-trading.com/rss.xml` est en ligne et sert de source :
-Buffer, Zapier et Make savent en tirer une file de publication. Reste à
-connecter les comptes, ce qui passe par une autorisation OAuth côté Buffer
-et ne peut donc pas être fait à distance.
+Buffer est connecté (MCP actif), 3 canaux sur 3 du plan gratuit :
 
-Points de vigilance relevés :
+| Canal | Service | Publication automatisable ? |
+|---|---|---|
+| CardsTradingCom | X | ✅ texte seul accepté |
+| cardstradingcom | Instagram *business* | ❌ **exige une image ou vidéo** |
+| tchikibalianos | TikTok (compte perso) | ❌ **exige une vidéo** |
 
-- plan gratuit Buffer : 3 canaux, 10 posts en file par canal — X et
-  Instagram y tiennent ;
-- Instagram exige un compte **Business ou Creator** relié à une page
-  Facebook. Si le compte est encore personnel, il faudra le basculer ;
-- la publication sur X via outils tiers a connu des restrictions d'API ;
-  Buffer la maintient, mais à confirmer au moment de connecter le canal ;
-- aucun MCP Buffer trouvé dans le registre au 20 août 2026.
+Instagram et TikTok refusent les posts sans média. Les articles n'ont pour
+`heroImage` qu'un logo de TCG — publier ça tel quel serait indigent.
 
-Les liens du flux portent `?utm_source=rss` : tout ce qui partira par
-Buffer sera distingué dans la colonne `source` de `beta_submissions`.
+**Piste retenue** : générer une vignette de marque 1080×1080 par article
+(titre + catégorie + logo sur fond `#07111f`), déposée dans
+`public/assets/social/<slug>.png` et donc servie par une URL publique que
+Buffer sait consommer. `sharp` est déjà une dépendance du projet et a servi
+à décliner les logos sociaux.
+
+TikTok reste hors de portée sans production vidéo. C'est de surcroît un
+compte **personnel**, à convertir en compte Cards-Trading avant d'y pousser
+de la promo régulière.
+
+Limites du plan gratuit à surveiller : 10 posts programmés, 3 tags.
 
 ### 2. Défilement et animations sur un vrai téléphone
 
