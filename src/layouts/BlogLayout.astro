@@ -88,5 +88,36 @@ const socialImage = image || '/assets/img/og-cover.png';
          landing est du HTML statique dans public/, pas une page Astro, et
          le même mécanisme doit couvrir les deux. -->
     <script defer src="/_vercel/insights/script.js"></script>
+
+    <!--
+      Mémorisation de la provenance, jumelle de celle de public/index.html.
+
+      Le blog est une porte d'entrée à part entière : quelqu'un qui arrive
+      de X sur un article puis clique vers la landing perdrait son
+      utm_source en route. sessionStorage étant partagé sur toute l'origine,
+      la landing retrouve ici la valeur d'origine et l'enregistre dans
+      beta_submissions.source.
+
+      ⚠️ Doit rester synchronisée avec provenanceVisiteur() de index.html :
+      même clé `ct_source`, même filtrage, même repli sur « direct ».
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          if (sessionStorage.getItem('ct_source')) return;
+          var src = new URLSearchParams(location.search).get('utm_source') || '';
+          if (!src && document.referrer) {
+            try {
+              var hote = new URL(document.referrer).hostname.replace(/^www\./, '');
+              src = hote === location.hostname ? '' : hote;
+            } catch (e) { /* référent illisible */ }
+          }
+          src = (src || 'direct').toLowerCase().replace(/[^a-z0-9._:-]/g, '').slice(0, 60) || 'direct';
+          sessionStorage.setItem('ct_source', src);
+        } catch (e) {
+          /* sessionStorage bloqué : la mesure ne doit jamais gêner la lecture. */
+        }
+      })();
+    </script>
   </body>
 </html>

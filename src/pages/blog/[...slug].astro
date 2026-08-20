@@ -95,5 +95,72 @@ const jsonLd = JSON.stringify({
     <div class="prose">
       <Content />
     </div>
+
+    {/*
+      Appel à l'inscription en fin d'article.
+
+      Le blog n'en avait aucun : on y envoyait du trafic social vers des
+      pages sans porte de sortie vers la waitlist. C'est le maillon qui
+      manquait au tunnel réseaux sociaux → article → inscription.
+
+      Le lien ne porte pas d'utm : la provenance d'origine (x, instagram,
+      discord…) est déjà mémorisée par le script du BlogLayout et retrouvée
+      côté landing. Ajouter `utm_source=blog` ici écraserait le vrai canal
+      d'acquisition par un intermédiaire.
+    */}
+    <aside class="blog-cta">
+      <h2>La bêta Cards-Trading ouvre bientôt</h2>
+      <p>
+        Scannez votre carte, elle est en vente. Le paiement reste bloqué
+        jusqu'à réception. 0 % de commission pendant toute la bêta.
+      </p>
+      <a class="blog-cta-bouton" href="/#beta">Rejoindre la liste d'attente</a>
+    </aside>
   </article>
 </BlogLayout>
+
+<style>
+  .blog-cta {
+    margin: 56px auto 0;
+    max-width: 720px;
+    padding: 32px 28px;
+    border-radius: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(41, 151, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border: 1px solid rgba(41, 151, 255, 0.3);
+  }
+
+  .blog-cta h2 {
+    margin: 0 0 10px;
+    font-size: clamp(20px, 2.6vw, 26px);
+    color: #fff;
+  }
+
+  .blog-cta p {
+    margin: 0 0 22px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .blog-cta-bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Au-dessus des 44px de cible tactile, comme les CTA de la landing */
+    min-height: 46px;
+    padding: 0 28px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #2997ff 0%, #0a6fd8 100%);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(41, 151, 255, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .blog-cta-bouton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(41, 151, 255, 0.65);
+  }
+</style>
