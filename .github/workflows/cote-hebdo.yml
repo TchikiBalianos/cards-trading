@@ -7,8 +7,8 @@
 #
 # Le jeudi, entre l'article du mardi et celui du vendredi.
 #
-# Alternance des marchés d'une semaine sur l'autre : international puis
-# japonais. Deux tops par mois pour chacun, sans lasser sur un seul angle.
+# Rotation sur trois marchés, un par semaine : Pokémon international,
+# cartes japonaises, One Piece. Chacun revient environ une fois par mois.
 #
 # ⚠️ Découpage en deux phases : Buffer récupère la vignette par URL
 # publique, donc l'image doit être committée ET déployée par Vercel avant
@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       marche:
-        description: "Marché : int (international) ou jp (cartes japonaises)"
+        description: "Marché : int (Pokémon), jp (cartes japonaises) ou op (One Piece)"
         type: choice
         options: [auto, int, jp, op]
         default: auto
@@ -137,6 +137,7 @@ jobs:
         if: steps.preparer.outputs.a_publier == 'oui'
         env:
           DISCORD_WEBHOOK_POKEMON: ${{ secrets.DISCORD_WEBHOOK_POKEMON }}
+          DISCORD_WEBHOOK_ONE_PIECE: ${{ secrets.DISCORD_WEBHOOK_ONE_PIECE }}
           DISCORD_WEBHOOK_DEFAUT: ${{ secrets.DISCORD_WEBHOOK_DEFAUT }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=publier

@@ -200,7 +200,12 @@ const echecs = [];
 
 /* Discord : le salon Pokémon si le classement est pokémon, sinon le
    salon général. */
-const webhook = process.env.DISCORD_WEBHOOK_POKEMON || process.env.DISCORD_WEBHOOK_DEFAUT;
+/* Le salon suit le TCG : un top One Piece dans le salon Pokemon serait
+   hors sujet pour ses lecteurs. Repli sur le salon general si le salon
+   dedie n'est pas configure. */
+const webhook =
+  (MARCHE === 'op' ? process.env.DISCORD_WEBHOOK_ONE_PIECE : process.env.DISCORD_WEBHOOK_POKEMON) ||
+  process.env.DISCORD_WEBHOOK_DEFAUT;
 if (webhook) {
   try {
     const r = await fetch(webhook, {
