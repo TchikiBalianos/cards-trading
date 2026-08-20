@@ -8,25 +8,30 @@ est traitée.
 
 ## 🟠 À valider — hors de portée de l'environnement de test
 
-### 1. Automatiser la publication Buffer (X, Instagram, TikTok)
+### 1. Surveiller les premiers posts automatiques
 
-Buffer est connecté (MCP actif), 3 canaux sur 3 du plan gratuit. Capacités
-**vérifiées empiriquement via l'API**, pas supposées d'après la doc :
+La chaîne complète est en place et vérifiée :
 
-| Canal | Média requis | Vérifié |
+| Canal | Média requis | État |
 |---|---|---|
-| CardsTradingCom (X) | aucun, texte seul | brouillon créé ✅ |
-| cardstradingcom (Instagram *business*) | image ou vidéo | brouillon avec vignette ✅ |
-| tchikibalianos (TikTok) | image, **carrousel** ou vidéo | 1 et 3 images acceptées ✅ |
+| X | texte seul | relayé automatiquement ✅ |
+| Instagram *business* | image | vignette 1080×1080 ✅ |
+| TikTok | image ou carrousel | vignette 1080×1080 ✅ |
+| Discord | — | routé par TCG ✅ |
 
-> TikTok accepte donc bien les posts photo **et** les carrousels multi-images
-> sur le **plan gratuit**. Réserve honnête : l'API Buffer a accepté les
-> brouillons, ce qui est une forte présomption mais pas une preuve de
-> publication — seul un post réellement parti la donnera.
+`annonce-buffer.yml` tourne mardi et vendredi à 12 h 23 (Paris),
+`annonce-discord.yml` à 11 h 17. API GraphQL Buffer
+(`https://api.buffer.com/graphql`, clé personnelle en secret), endpoint et
+mutation vérifiés par introspection.
 
-Les vignettes 1080×1080 existent pour les 7 articles
-(`scripts/vignettes-sociales.mjs`). Reste à câbler la publication
-automatique, sur le modèle de `annonce-discord.yml`.
+**Reste à observer**, ce que seul le temps dira :
+
+- qu'un post parte réellement sur les trois réseaux — l'API a accepté les
+  mises en file, ce qui est une forte présomption mais pas une preuve ;
+- que la vignette générée passe la validation d'Instagram et de TikTok
+  au moment de la publication, pas seulement à la mise en file ;
+- que la colonne `source` de `beta_submissions` se remplisse avec
+  `x`, `instagram`, `discord` — c'est elle qui dira quel canal convertit.
 
 **Génération d'images par IA — vérifié le 20 août 2026 :**
 
@@ -37,27 +42,18 @@ automatique, sur le modèle de `annonce-discord.yml`.
 | Nano Banana Pro | `gemini-3-pro-image` | « Not available » |
 | GPT Image 2 | `gpt-image-2-2026-04-21` | non documenté |
 
-Le gratuit concerne les interfaces AI Studio / ChatGPT, pas l'API — or
-c'est l'API qu'il faut depuis un job. Coût réel négligeable cela dit :
-GPT Image 2 est à 30 $/1M tokens de sortie, soit ~3 à 5 centimes l'image,
-quelques euros par an au rythme prévu. Le sujet est la clé API en secret,
-pas la dépense.
+Le gratuit concerne AI Studio et ChatGPT, pas l'API — or c'est l'API qu'il
+faut depuis un job. Coût négligeable cela dit : ~3 à 5 centimes l'image,
+quelques euros par an. Le sujet est la clé, pas la dépense.
 
-⚠️ L'IA doit rester une **surcouche**, jamais un remplacement de la
-vignette déterministe : quota épuisé ou refus de modération laisseraient
-la chaîne sans image, donc muette.
+⚠️ L'IA doit rester une **surcouche** : quota épuisé ou refus de
+modération laisseraient la chaîne sans image, donc muette. La vignette
+déterministe reste le repli.
 
-TikTok reste un compte **personnel**, à convertir en compte Cards-Trading
-avant d'y pousser de la promo régulière.
+TikTok est un compte **personnel**, à convertir avant d'y pousser de la
+promo régulière.
 
-Limites du plan gratuit à surveiller : 10 posts programmés, 3 tags.
-
-**Ce qu'il manque pour automatiser** : une clé d'API Buffer. Le MCP est
-authentifié par la session Claude et n'est donc pas utilisable depuis un
-job GitHub. Buffer n'accepte plus de nouvelles applications OAuth, mais
-la nouvelle API GraphQL propose des **clés personnelles** — 1 autorisée
-sur le plan gratuit, à créer sur `publish.buffer.com/settings/api`,
-authentification par jeton Bearer.
+Limites du plan gratuit Buffer : 10 posts programmés, 3 canaux, 1 clé API.
 
 ### 2. Format récurrent piloté par les données — BLOQUÉ par la fraîcheur
 
