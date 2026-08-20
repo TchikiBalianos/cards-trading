@@ -8,55 +8,32 @@ est traitée.
 
 ## 🔴 Urgent — action de Julian requise
 
-### 1. Secret GitHub `SUPABASE_APP_ANON_KEY` absent
+### 1. Webhooks Discord à créer
 
-**La base Supabase de la marketplace n'est actuellement pingée par personne.**
+Le workflow `annonce-discord.yml` route chaque article vers le salon de son
+TCG. Il faut **un webhook par salon**, en secret GitHub sur le dépôt
+`cards-trading` :
 
-Le workflow `.github/workflows/keep-alive.yml` a deux jobs. Vérifié le
-19 août :
-
-| Job | État |
+| Salon Discord | Secret attendu |
 |---|---|
-| `Base landing (via /api/keep-alive)` | ✅ success |
-| `Base marketplace (RPC ping directe)` | ❌ failure |
+| POKÉMON TCG | `DISCORD_WEBHOOK_POKEMON` |
+| ONE PIECE CARD GAME | `DISCORD_WEBHOOK_ONE_PIECE` |
+| Magic The Gathering | `DISCORD_WEBHOOK_MAGIC` |
+| DRAGON BALL SUPER | `DISCORD_WEBHOOK_DRAGON_BALL` |
+| DISNEY LORCANA | `DISCORD_WEBHOOK_LORCANA` |
+| Yu-Gi-Oh! | `DISCORD_WEBHOOK_YUGIOH` |
+| un salon général | `DISCORD_WEBHOOK_DEFAUT` |
 
-`gh api repos/TchikiBalianos/cards-trading/actions/secrets` renvoie une
-liste **vide** : le secret n'a jamais été créé. Le job échoue donc à chaque
-exécution depuis le 18 août 18:15, et c'est **volontaire** — il échoue
-bruyamment plutôt que de faire semblant de pinger.
+Le dernier sert de filet pour les catégories sans salon dédié : `guide`,
+`actualite`, `strategie`, `star-wars`. Sans lui, un article de ces
+catégories fait échouer le job — volontairement, plutôt que de disparaître
+en silence.
 
-**Le risque est exactement celui de l'incident des 11 semaines** : projet
-Supabase en pause après ~7 jours d'inactivité, écritures qui échouent en
-silence.
+Création : Discord → salon → *Modifier le salon* → *Intégrations* →
+*Webhooks* → *Nouveau webhook* → copier son URL.
 
-> ⚠️ **Le croisement qui piège** : la clé vient du projet Supabase
-> **`cards-trading-app`**, mais le secret doit être créé dans le dépôt
-> GitHub **`cards-trading`** — celui qui héberge le workflow. Les secrets
-> Actions sont portés par le dépôt, jamais partagés entre dépôts, et il
-> n'y a pas de secret d'organisation (compte personnel).
->
-> Le poser dans `cards-trading-app` ne sert à rien : le workflow ne s'y
-> trouve pas. Erreur commise le 19 août 2026.
->
-> Et c'est bien `cards-trading` qu'il faut, malgré son nom : ce dépôt est
-> **public**, donc ses minutes Actions sont illimitées. `cards-trading-app`
-> est privé et consommerait le quota.
-
-À faire :
-1. Dashboard Supabase → projet **`cards-trading-app`**
-   (`uxewpdnkjsdfizaoerpo`) → *Project Settings* → *API Keys* → copier la
-   clé **anon / publishable**.
-2. GitHub → dépôt **`cards-trading`** (pas `-app`) → *Settings* →
-   *Secrets and variables* → *Actions* → *New repository secret*.
-   URL directe : `github.com/TchikiBalianos/cards-trading/settings/secrets/actions`
-3. Nom exact : `SUPABASE_APP_ANON_KEY`. Coller la clé.
-4. Relancer le workflow et vérifier que les deux jobs passent :
-
-```bash
-gh workflow run keep-alive.yml && sleep 45 && gh run list --workflow=keep-alive.yml --limit 1
-```
-
-> Ne jamais coller cette clé dans le code ni dans un commit.
+> ⚠️ Ces URL ne doivent **jamais** être committées : le dépôt est public,
+> et l'historique git est définitif. Voir le point 5.
 
 ---
 
