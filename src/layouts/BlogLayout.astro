@@ -9,7 +9,19 @@ interface Props {
 
 const { title, description, image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImage = image || '/assets/img/og-cover.png';
+
+/*
+  og:image et twitter:image DOIVENT être des URL absolues.
+
+  Un chemin relatif est servi tel quel dans la balise, et X comme Facebook
+  sont incapables de le résoudre : l'aperçu du lien s'affiche alors avec
+  une icône de document générique, sans visuel. Constaté le 20 août 2026
+  sur le premier post X — la balise était bien présente, mais en relatif.
+
+  `new URL(..., Astro.site)` laisse passer une URL déjà absolue et
+  préfixe le domaine sinon.
+*/
+const socialImage = new URL(image || '/assets/img/og-cover.png', Astro.site).href;
 ---
 
 <!doctype html>

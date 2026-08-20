@@ -61,10 +61,19 @@ const jsonLd = JSON.stringify({
 });
 ---
 
+{/*
+  Aperçu social : la vignette 1200×630 générée par
+  scripts/vignettes-sociales.mjs, PAS le heroImage.
+
+  Le heroImage n'est qu'un logo de TCG : partagé sur X ou Facebook il
+  donnait une carte de lien sans titre lisible. Le format paysage est
+  celui qu'attend `summary_large_image` ; un carré y serait rogné au
+  centre et couperait le texte.
+*/}
 <BlogLayout
   title={post.data.title}
   description={post.data.description}
-  image={post.data.heroImage}
+  image={`/assets/social/${post.id}-og.png`}
 >
   <script type="application/ld+json" set:html={jsonLd} />
   <article class="blog-article">

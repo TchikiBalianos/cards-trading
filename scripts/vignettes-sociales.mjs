@@ -100,27 +100,61 @@ function decouper(texte, taillePolice, largeurMax, facteur = 0.54) {
   return lignes;
 }
 
-async function vignette(slug, fm) {
+/*
+  Deux formats, un seul dessin.
+
+  - carré 1080×1080 pour Instagram et TikTok ;
+  - paysage 1200×630 pour og:image, format attendu par X et Facebook.
+    Un carré y serait rogné au centre, coupant le titre.
+
+  Les positions sont proportionnelles à la toile plutôt que codées en dur,
+  sans quoi la version paysage déborderait par le bas.
+*/
+/* Séparateur des lignes de <text> dans le SVG. Sorti en constante et
+   construit sans échappement : imbriqué dans un gabarit littéral, un
+   saut de ligne échappé se lit mal et se casse au moindre outil qui
+   retouche le fichier. */
+const SAUT = String.fromCharCode(10) + '  ';
+
+const FORMATS = [
+  { suffixe: '', largeur: 1080, hauteur: 1080, maxLignesTitre: 5, maxLignesChapo: 3 },
+  { suffixe: '-og', largeur: 1200, hauteur: 630, maxLignesTitre: 3, maxLignesChapo: 2 },
+];
+
+async function vignette(slug, fm, format) {
+  const { largeur: L, hauteur: H, suffixe, maxLignesTitre, maxLignesChapo } = format;
   const categorie = ETIQUETTES[fm.category] || fm.category || '';
+
+  const marge = Math.round(L * 0.083);
+  const utile = L - marge * 2;
 
   /* Le titre pilote la taille : un titre long descend d'un cran plutôt
      que de déborder ou de partir sur six lignes. */
-  let taille = 62;
-  let lignes = decouper(fm.title, taille, 860);
-  if (lignes.length > 4) { taille = 52; lignes = decouper(fm.title, taille, 880); }
-  if (lignes.length > 5) { taille = 44; lignes = decouper(fm.title, taille, 900); }
-  lignes = lignes.slice(0, 6);
+  const paliers = [0.058, 0.048, 0.041, 0.035].map((r) => Math.round(H * r));
+  let taille = paliers[0];
+  let lignes = decouper(fm.title, taille, utile);
+  for (const p of paliers.slice(1)) {
+    if (lignes.length <= maxLignesTitre) break;
+    taille = p;
+    lignes = decouper(fm.title, taille, utile);
+  }
+  lignes = lignes.slice(0, maxLignesTitre);
 
   const interligne = Math.round(taille * 1.25);
-  const hautTitre = 360;
+  const hautTitre = Math.round(H * 0.34) + taille;
 
   /* Le chapô occupe le bas, resté vide dans la première version : le bloc
-     de titre s'arrêtait vers 600px et plus rien jusqu'au filet. */
+     de titre s'arrêtait bien avant le filet. */
   const basTitre = hautTitre + (lignes.length - 1) * interligne;
-  const chapo = decouper(fm.description || '', 30, 880, 0.5).slice(0, 3);
-  const hautChapo = basTitre + 64;
+  const tailleChapo = Math.round(H * 0.028);
+  const chapo = decouper(fm.description || '', tailleChapo, utile, 0.5).slice(0, maxLignesChapo);
+  const hautChapo = basTitre + Math.round(H * 0.06);
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${COTE}" height="${COTE}">
+  const largeurPastille = Math.round(18 + categorie.length * (taille * 0.32));
+  const hautPastille = Math.round(H * 0.21);
+  const hautPied = Math.round(H * 0.86);
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
   <defs>
     <radialGradient id="halo" cx="78%" cy="18%" r="62%">
       <stop offset="0%" stop-color="${BLEU}" stop-opacity="0.34"/>
@@ -132,36 +166,32 @@ async function vignette(slug, fm) {
     </linearGradient>
   </defs>
 
-  <rect width="${COTE}" height="${COTE}" fill="${FOND}"/>
-  <rect width="${COTE}" height="${COTE}" fill="url(#halo)"/>
+  <rect width="${L}" height="${H}" fill="${FOND}"/>
+  <rect width="${L}" height="${H}" fill="url(#halo)"/>
 
-  <text x="212" y="132" font-family="Arial, Helvetica, sans-serif" font-size="40"
+  <text x="${marge + Math.round(H * 0.113)}" y="${Math.round(H * 0.122)}"
+        font-family="Arial, Helvetica, sans-serif" font-size="${Math.round(H * 0.037)}"
         font-weight="700" fill="#ffffff" letter-spacing="1">Cards-Trading</text>
 
-  <rect x="90" y="228" width="${18 + categorie.length * 20}" height="54" rx="27"
-        fill="${BLEU}" fill-opacity="0.18" stroke="${BLEU}" stroke-opacity="0.55"/>
-  <text x="${90 + (18 + categorie.length * 20) / 2}" y="264" text-anchor="middle"
-        font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700"
-        fill="${BLEU}" letter-spacing="1">${echapper(categorie.toUpperCase())}</text>
+  <rect x="${marge}" y="${hautPastille}" width="${largeurPastille}" height="${Math.round(H * 0.05)}"
+        rx="${Math.round(H * 0.025)}" fill="${BLEU}" fill-opacity="0.18"
+        stroke="${BLEU}" stroke-opacity="0.55"/>
+  <text x="${marge + largeurPastille / 2}" y="${hautPastille + Math.round(H * 0.033)}"
+        text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="${Math.round(H * 0.024)}" font-weight="700" fill="${BLEU}"
+        letter-spacing="1">${echapper(categorie.toUpperCase())}</text>
 
-  ${lignes
-    .map(
-      (l, i) =>
-        `<text x="90" y="${hautTitre + i * interligne}" font-family="Arial, Helvetica, sans-serif"
-        font-size="${taille}" font-weight="700" fill="#ffffff">${echapper(l)}</text>`
-    )
-    .join('\n  ')}
+  ${lignes.map((l, i) => `<text x="${marge}" y="${hautTitre + i * interligne}"
+        font-family="Arial, Helvetica, sans-serif" font-size="${taille}"
+        font-weight="700" fill="#ffffff">${echapper(l)}</text>`).join(SAUT)}
 
-  ${chapo
-    .map(
-      (l, i) =>
-        `<text x="90" y="${hautChapo + i * 44}" font-family="Arial, Helvetica, sans-serif"
-        font-size="30" fill="#ffffff" fill-opacity="0.66">${echapper(l)}</text>`
-    )
-    .join('\n  ')}
+  ${chapo.map((l, i) => `<text x="${marge}" y="${hautChapo + i * Math.round(tailleChapo * 1.45)}"
+        font-family="Arial, Helvetica, sans-serif" font-size="${tailleChapo}"
+        fill="#ffffff" fill-opacity="0.66">${echapper(l)}</text>`).join(SAUT)}
 
-  <rect x="90" y="905" width="420" height="4" rx="2" fill="url(#filet)"/>
-  <text x="90" y="972" font-family="Arial, Helvetica, sans-serif" font-size="30"
+  <rect x="${marge}" y="${hautPied}" width="${Math.round(L * 0.35)}" height="4" rx="2" fill="url(#filet)"/>
+  <text x="${marge}" y="${hautPied + Math.round(H * 0.062)}"
+        font-family="Arial, Helvetica, sans-serif" font-size="${Math.round(H * 0.028)}"
         fill="#ffffff" fill-opacity="0.62">cards-trading.com</text>
 </svg>`;
 
@@ -170,13 +200,13 @@ async function vignette(slug, fm) {
      « C » détaché à droite. Mêmes coordonnées que dans CLAUDE.md. */
   const marque = await sharp(MARQUE)
     .extract({ left: 23, top: 53, width: 360, height: 407 })
-    .resize({ height: 92 })
+    .resize({ height: Math.round(H * 0.085) })
     .toBuffer();
 
   await sharp(Buffer.from(svg))
-    .composite([{ input: marque, left: 90, top: 62 }])
+    .composite([{ input: marque, left: marge, top: Math.round(H * 0.057) }])
     .png({ compressionLevel: 9 })
-    .toFile(join(SORTIE, `${slug}.png`));
+    .toFile(join(SORTIE, `${slug}${suffixe}.png`));
 }
 
 /* ── Exécution ─────────────────────────────────────────── */
@@ -190,11 +220,13 @@ const articles = readdirSync(DOSSIER_BLOG)
 
 let faites = 0;
 for (const a of articles) {
-  const cible = join(SORTIE, `${a.slug}.png`);
-  if (!FORCER && existsSync(cible)) continue;
-  await vignette(a.slug, a.fm);
-  console.log(`✅ ${a.slug}.png`);
-  faites++;
+  for (const format of FORMATS) {
+    const cible = join(SORTIE, `${a.slug}${format.suffixe}.png`);
+    if (!FORCER && existsSync(cible)) continue;
+    await vignette(a.slug, a.fm, format);
+    console.log(`✅ ${a.slug}${format.suffixe}.png (${format.largeur}×${format.hauteur})`);
+    faites++;
+  }
 }
 
 console.log(
