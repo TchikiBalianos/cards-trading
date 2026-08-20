@@ -1,0 +1,12 @@
+{
+  "_lisezmoi": "Slugs deja relayes vers Buffer (X, Instagram, TikTok). Amorce le 20/08/2026 avec les 7 articles existants : les 6 anciens ne doivent pas partir comme neufs, et one-piece-op17 a ete mis en file manuellement le meme jour. Ecrit par scripts/annonce-buffer.mjs.",
+  "annonces": [
+    "disney-lorcana-2026-iconic-marche-meta",
+    "dragon-ball-fusion-world-ultrabout-2026",
+    "guide-demarrage-pokemon-tcg",
+    "one-piece-card-game-revolution-tcg",
+    "one-piece-op17-guerriers-puissants-monde-2026",
+    "pokemon-record-16-millions-mega-evolution-2026",
+    "top-cartes-magic-2026"
+  ]
+}

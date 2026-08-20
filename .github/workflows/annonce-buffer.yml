@@ -1,0 +1,76 @@
+# Relaie les nouveaux articles de blog vers Buffer (X, Instagram, TikTok).
+#
+# Jumeau de `annonce-discord.yml`, avec un état SÉPARÉ : les deux canaux ont
+# leurs propres pannes, et un échec Buffer ne doit pas rejouer une annonce
+# Discord déjà partie.
+#
+# Décalé d'une heure sur Discord : le salon Discord s'adresse à une
+# communauté déjà acquise, les réseaux à une audience froide. Rien n'oblige
+# les deux à partir à la même minute, et l'étalement évite de saturer la
+# file Buffer (10 posts programmés sur le plan gratuit).
+#
+# Le MCP Buffer n'est pas utilisable ici : il est authentifié par la session
+# Claude. On passe par l'API GraphQL avec une clé personnelle.
+
+name: Annonce Buffer
+
+on:
+  schedule:
+    # Mardi et vendredi, 10:23 UTC = 12:23 à Paris en été.
+    - cron: '23 10 * * 2,5'
+  workflow_dispatch:
+    inputs:
+      brouillon:
+        description: "Créer des brouillons au lieu de mettre en file"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  relayer:
+    name: Nouvel article vers X, Instagram et TikTok
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Relayer l'article en attente
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          if [ -z "$BUFFER_API_KEY" ]; then
+            echo "::error::Secret BUFFER_API_KEY absent."
+            echo "À créer sur publish.buffer.com/settings/api (1 clé sur le"
+            echo "plan gratuit), puis dans Settings → Secrets and variables →"
+            echo "Actions du dépôt cards-trading."
+            exit 1
+          fi
+          if [ "${{ inputs.brouillon }}" = "true" ]; then
+            node scripts/annonce-buffer.mjs --draft
+          else
+            node scripts/annonce-buffer.mjs
+          fi
+
+      - name: Mémoriser ce qui a été relayé
+        # `always()` : si un seul réseau a échoué, le script sort en erreur
+        # mais les autres posts SONT partis. Ne pas committer l'état ici
+        # ferait repartir ces posts-là à la prochaine exécution.
+        if: always()
+        run: |
+          if git diff --quiet -- .github/etat-annonces-buffer.json; then
+            echo "Aucun relais ce coup-ci, rien à committer."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/etat-annonces-buffer.json
+          git commit -m "chore(buffer): memorise l'article relaye [skip ci]"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
