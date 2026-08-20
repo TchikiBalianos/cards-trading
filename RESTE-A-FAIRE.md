@@ -6,38 +6,27 @@ est traitée.
 
 ---
 
-## 🔴 Urgent — action de Julian requise
-
-### 1. Webhooks Discord à créer
-
-Le workflow `annonce-discord.yml` route chaque article vers le salon de son
-TCG. Il faut **un webhook par salon**, en secret GitHub sur le dépôt
-`cards-trading` :
-
-| Salon Discord | Secret attendu |
-|---|---|
-| POKÉMON TCG | `DISCORD_WEBHOOK_POKEMON` |
-| ONE PIECE CARD GAME | `DISCORD_WEBHOOK_ONE_PIECE` |
-| Magic The Gathering | `DISCORD_WEBHOOK_MAGIC` |
-| DRAGON BALL SUPER | `DISCORD_WEBHOOK_DRAGON_BALL` |
-| DISNEY LORCANA | `DISCORD_WEBHOOK_LORCANA` |
-| Yu-Gi-Oh! | `DISCORD_WEBHOOK_YUGIOH` |
-| un salon général | `DISCORD_WEBHOOK_DEFAUT` |
-
-Le dernier sert de filet pour les catégories sans salon dédié : `guide`,
-`actualite`, `strategie`, `star-wars`. Sans lui, un article de ces
-catégories fait échouer le job — volontairement, plutôt que de disparaître
-en silence.
-
-Création : Discord → salon → *Modifier le salon* → *Intégrations* →
-*Webhooks* → *Nouveau webhook* → copier son URL.
-
-> ⚠️ Ces URL ne doivent **jamais** être committées : le dépôt est public,
-> et l'historique git est définitif. Voir le point 5.
-
----
-
 ## 🟠 À valider — hors de portée de l'environnement de test
+
+### 1. Connexion de Buffer pour Instagram et X
+
+Le flux `https://cards-trading.com/rss.xml` est en ligne et sert de source :
+Buffer, Zapier et Make savent en tirer une file de publication. Reste à
+connecter les comptes, ce qui passe par une autorisation OAuth côté Buffer
+et ne peut donc pas être fait à distance.
+
+Points de vigilance relevés :
+
+- plan gratuit Buffer : 3 canaux, 10 posts en file par canal — X et
+  Instagram y tiennent ;
+- Instagram exige un compte **Business ou Creator** relié à une page
+  Facebook. Si le compte est encore personnel, il faudra le basculer ;
+- la publication sur X via outils tiers a connu des restrictions d'API ;
+  Buffer la maintient, mais à confirmer au moment de connecter le canal ;
+- aucun MCP Buffer trouvé dans le registre au 20 août 2026.
+
+Les liens du flux portent `?utm_source=rss` : tout ce qui partira par
+Buffer sera distingué dans la colonne `source` de `beta_submissions`.
 
 ### 2. Défilement et animations sur un vrai téléphone
 
@@ -127,6 +116,25 @@ réintroduire une taille dérogatoire.
 ---
 
 ## ✅ Traité récemment — ne pas refaire
+
+- **20 août** — annonce Discord automatisée, routée par TCG. Les 7 webhooks
+  sont en secrets GitHub (jamais committés) et **validés un par un** par un
+  `GET` sur l'URL du webhook, qui renvoie le nom du salon visé sans rien y
+  poster : Pokémon News, OnePiece News, Magic News, Dragon Ball News,
+  Lorcana News, Yu-Gi-Oh! News, Actus TCG. Les 10 catégories du schéma sont
+  couvertes, les 4 transverses par le filet `DEFAUT`. Premier post réel
+  vérifié, et relance immédiate sans doublon.
+- **20 août** — flux RSS sur `/rss.xml`, 7 articles, liens en
+  `?utm_source=rss`.
+- **19 août** — keep-alive vert sur les DEUX bases. Le secret
+  `SUPABASE_APP_ANON_KEY` avait d'abord été posé sur le dépôt
+  `cards-trading-app` au lieu de `cards-trading` — les secrets Actions sont
+  portés par le dépôt. Une fois au bon endroit, le job échouait encore : le
+  test de succès cherchait `"ok":true` sans espaces alors que PostgREST
+  renvoie `"ok" : true`. Corrigé, les deux jobs passent.
+- **19 août** — provenance des inscriptions capturée
+  (`beta_submissions.source` : `utm_source` > référent > `direct`). Chaîne
+  testée de bout en bout en production, ligne de test supprimée.
 
 - **19 août** — ratio des images restauré (`img { height: auto }` en fin de
   `landing.css`). Vérifié en production : 0 image déformée sur 52.
