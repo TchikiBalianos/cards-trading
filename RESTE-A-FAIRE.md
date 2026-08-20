@@ -8,28 +8,47 @@ est traitée.
 
 ## 🟠 À valider — hors de portée de l'environnement de test
 
-### 1. Visuels d'article pour rendre Instagram publiable
+### 1. Automatiser la publication Buffer (X, Instagram, TikTok)
 
-Buffer est connecté (MCP actif), 3 canaux sur 3 du plan gratuit :
+Buffer est connecté (MCP actif), 3 canaux sur 3 du plan gratuit. Capacités
+**vérifiées empiriquement via l'API**, pas supposées d'après la doc :
 
-| Canal | Service | Publication automatisable ? |
+| Canal | Média requis | Vérifié |
 |---|---|---|
-| CardsTradingCom | X | ✅ texte seul accepté |
-| cardstradingcom | Instagram *business* | ❌ **exige une image ou vidéo** |
-| tchikibalianos | TikTok (compte perso) | ❌ **exige une vidéo** |
+| CardsTradingCom (X) | aucun, texte seul | brouillon créé ✅ |
+| cardstradingcom (Instagram *business*) | image ou vidéo | brouillon avec vignette ✅ |
+| tchikibalianos (TikTok) | image, **carrousel** ou vidéo | 1 et 3 images acceptées ✅ |
 
-Instagram et TikTok refusent les posts sans média. Les articles n'ont pour
-`heroImage` qu'un logo de TCG — publier ça tel quel serait indigent.
+> TikTok accepte donc bien les posts photo **et** les carrousels multi-images
+> sur le **plan gratuit**. Réserve honnête : l'API Buffer a accepté les
+> brouillons, ce qui est une forte présomption mais pas une preuve de
+> publication — seul un post réellement parti la donnera.
 
-**Piste retenue** : générer une vignette de marque 1080×1080 par article
-(titre + catégorie + logo sur fond `#07111f`), déposée dans
-`public/assets/social/<slug>.png` et donc servie par une URL publique que
-Buffer sait consommer. `sharp` est déjà une dépendance du projet et a servi
-à décliner les logos sociaux.
+Les vignettes 1080×1080 existent pour les 7 articles
+(`scripts/vignettes-sociales.mjs`). Reste à câbler la publication
+automatique, sur le modèle de `annonce-discord.yml`.
 
-TikTok reste hors de portée sans production vidéo. C'est de surcroît un
-compte **personnel**, à convertir en compte Cards-Trading avant d'y pousser
-de la promo régulière.
+**Génération d'images par IA — vérifié le 20 août 2026 :**
+
+| Modèle | ID exact | Palier gratuit API |
+|---|---|---|
+| Nano Banana 2 | `gemini-3.1-flash-image` | « Not available » |
+| Nano Banana 2 Lite | `gemini-3.1-flash-lite-image` | « Not available » |
+| Nano Banana Pro | `gemini-3-pro-image` | « Not available » |
+| GPT Image 2 | `gpt-image-2-2026-04-21` | non documenté |
+
+Le gratuit concerne les interfaces AI Studio / ChatGPT, pas l'API — or
+c'est l'API qu'il faut depuis un job. Coût réel négligeable cela dit :
+GPT Image 2 est à 30 $/1M tokens de sortie, soit ~3 à 5 centimes l'image,
+quelques euros par an au rythme prévu. Le sujet est la clé API en secret,
+pas la dépense.
+
+⚠️ L'IA doit rester une **surcouche**, jamais un remplacement de la
+vignette déterministe : quota épuisé ou refus de modération laisseraient
+la chaîne sans image, donc muette.
+
+TikTok reste un compte **personnel**, à convertir en compte Cards-Trading
+avant d'y pousser de la promo régulière.
 
 Limites du plan gratuit à surveiller : 10 posts programmés, 3 tags.
 
