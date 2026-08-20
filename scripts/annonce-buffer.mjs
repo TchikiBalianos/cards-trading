@@ -40,18 +40,35 @@ const ETIQUETTES = {
   strategie: 'Stratégie',
 };
 
-/* Mots-clés par TCG. Volontairement courts et spécifiques : une liste
-   générique dilue la portée au lieu de l'étendre. */
+/*
+  Mots-clés par TCG, du plus spécifique au plus large.
+
+  Les recommandations 2026 convergent : 1 à 2 sur X (au-delà de 3
+  l'engagement chute), 3 à 5 sur Instagram et TikTok. La précision compte
+  plus que le volume — les bons 4 battent les mauvais 25, et les
+  génériques (#fyp, #pourtoi) n'apportent rien de mesurable.
+
+  On pioche donc dans cette liste ordonnée selon le réseau, au lieu de
+  déverser la même grappe partout.
+*/
 const MOTSCLES = {
-  pokemon: '#pokemontcg #pokemon #cartespokemon',
-  'one-piece': '#onepiececardgame #opcg #onepiece',
-  magic: '#magicthegathering #mtg #mtgfr',
-  yugioh: '#yugioh #ygo #cartesyugioh',
-  lorcana: '#disneylorcana #lorcana',
-  'dragon-ball': '#dragonballsuper #dbsfw #dragonball',
-  'star-wars': '#starwarsunlimited #swu',
+  pokemon: ['#pokemontcg', '#cartespokemon'],
+  'one-piece': ['#onepiececardgame', '#opcg'],
+  magic: ['#magicthegathering', '#mtgfr'],
+  yugioh: ['#yugioh', '#cartesyugioh'],
+  lorcana: ['#disneylorcana', '#lorcana'],
+  'dragon-ball': ['#dragonballsuper', '#dbsfw'],
+  'star-wars': ['#starwarsunlimited', '#swu'],
 };
-const COMMUNS = '#tcg #cartesacollectionner #cardstrading';
+const COMMUNS = ['#tcg', '#cartesacollectionner'];
+
+/* Signature courte. Ne PAS y parler de scan : la promesse produit se joue
+   sur la landing, pas dans une légende. */
+const SIGNATURE = 'Cards-Trading.com, la marketplace 100 % TCG';
+
+function motsCles(categorie, combien) {
+  return [...(MOTSCLES[categorie] || []), ...COMMUNS].slice(0, combien).join(' ');
+}
 
 function lireFrontmatter(chemin) {
   const m = readFileSync(chemin, 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---/);
@@ -118,30 +135,33 @@ async function canaux() {
   return par;
 }
 
-/* X compte tout lien pour 23 caractères, quelle que soit sa longueur. */
+/* X compte tout lien pour 23 caractères, quelle que soit sa longueur.
+   2 mots-clés : un post qui en porte 1 ou 2 devance nettement un post
+   qui n'en porte aucun, mais 3 font chuter l'engagement. */
 function texteX(fm, url) {
+  const cles = motsCles(fm.category, 2);
   const LIEN = 23;
-  const reste = 280 - LIEN - 4;
+  const reste = 280 - LIEN - cles.length - 6;
   let tete = fm.title;
   if (tete.length > reste) tete = tete.slice(0, reste - 1).trimEnd() + '…';
-  return `${tete}\n\n${url}`;
+  return `${tete}\n\n${url}\n\n${cles}`;
 }
 
-function texteInstagram(fm, categorie) {
-  const cles = [MOTSCLES[fm.category], COMMUNS].filter(Boolean).join(' ');
+/* Légende resserrée : le titre, le chapô, l'appel, la signature. Rien de
+   plus — une légende à rallonge se fait couper par « ... plus » et le
+   lecteur ne déplie pas. */
+function texteInstagram(fm) {
   return (
     `${fm.title}\n\n${fm.description || ''}\n\n` +
-    `L'article complet est sur le blog — lien en bio 🔗\n\n—\n` +
-    `Cards-Trading, la marketplace 100 % TCG : scannez votre carte, elle est ` +
-    `en vente. Le paiement reste bloqué jusqu'à réception.\n\n${cles}`
+    `L'article complet est sur le blog — lien en bio 🔗\n\n` +
+    `${SIGNATURE}\n\n${motsCles(fm.category, 4)}`
   );
 }
 
 function texteTikTok(fm) {
-  const cles = [MOTSCLES[fm.category], '#tcg'].filter(Boolean).join(' ');
   let t = fm.description || fm.title;
-  if (t.length > 150) t = t.slice(0, 149).trimEnd() + '…';
-  return `${t} — cards-trading.com ${cles}`;
+  if (t.length > 130) t = t.slice(0, 129).trimEnd() + '…';
+  return `${t}\n\n${SIGNATURE}\n\n${motsCles(fm.category, 4)}`;
 }
 
 async function publier(canalId, texte, vignette, metadata) {
@@ -178,13 +198,12 @@ const article = attente[0];
 const { slug, fm } = article;
 const url = `${SITE}/blog/${slug}/?utm_source=`;
 const vignette = `${SITE}/assets/social/${slug}.png`;
-const categorie = ETIQUETTES[fm.category] || fm.category || 'Article';
 
 console.log(`${attente.length} article(s) en attente — on relaie « ${fm.title} ».`);
 
 if (SEC) {
   console.log('\n[dry-run] X :\n' + texteX(fm, url + 'x'));
-  console.log('\n[dry-run] Instagram :\n' + texteInstagram(fm, categorie));
+  console.log('\n[dry-run] Instagram :\n' + texteInstagram(fm));
   console.log('\n[dry-run] TikTok :\n' + texteTikTok(fm));
   console.log('\n[dry-run] vignette : ' + vignette);
   process.exit(0);
@@ -193,7 +212,7 @@ if (SEC) {
 const dispo = await canaux();
 const envois = [
   ['twitter', () => publier(dispo.twitter, texteX(fm, url + 'x'), null, null)],
-  ['instagram', () => publier(dispo.instagram, texteInstagram(fm, categorie), vignette,
+  ['instagram', () => publier(dispo.instagram, texteInstagram(fm), vignette,
       { instagram: { type: 'post', shouldShareToFeed: true } })],
   ['tiktok', () => publier(dispo.tiktok, texteTikTok(fm), vignette,
       { tiktok: { title: fm.title.slice(0, 90) } })],
