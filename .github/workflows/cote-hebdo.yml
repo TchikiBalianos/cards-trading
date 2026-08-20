@@ -1,0 +1,105 @@
+# Publie le « top des hausses » hebdomadaire sur Discord et Buffer.
+#
+# Troisième créneau de la semaine, complémentaire du relais d'articles :
+# celui-ci ne dépend pas du calendrier éditorial et tourne même les semaines
+# sans publication de blog. C'est lui qui comble l'écart entre 1-2 posts
+# hebdomadaires et les 2-3 visés.
+#
+# Le jeudi, entre l'article du mardi et celui du vendredi.
+#
+# Alternance des marchés d'une semaine sur l'autre : international puis
+# japonais. Deux tops par mois pour chacun, sans lasser sur un seul angle.
+#
+# ⚠️ Découpage en deux phases : Buffer récupère la vignette par URL
+# publique, donc l'image doit être committée ET déployée par Vercel avant
+# qu'on puisse la référencer. Publier tout de suite enverrait une URL en
+# 404.
+
+name: Cote hebdomadaire
+
+on:
+  schedule:
+    # Jeudi 09:41 UTC = 11:41 à Paris en été.
+    - cron: '41 9 * * 4'
+  workflow_dispatch:
+    inputs:
+      marche:
+        description: "Marché : int (international) ou jp (cartes japonaises)"
+        type: choice
+        options: [auto, int, jp]
+        default: auto
+
+permissions:
+  contents: write
+
+jobs:
+  publier:
+    name: Top des hausses
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances
+        run: npm ci --omit=dev --ignore-scripts=false
+
+      # Semaine paire → international, impaire → japonais.
+      - name: Choisir le marché
+        id: marche
+        run: |
+          CHOIX="${{ inputs.marche }}"
+          if [ -z "$CHOIX" ] || [ "$CHOIX" = "auto" ]; then
+            SEMAINE=$(date -u +%V)
+            if [ $((10#$SEMAINE % 2)) -eq 0 ]; then CHOIX=int; else CHOIX=jp; fi
+          fi
+          echo "valeur=$CHOIX" >> "$GITHUB_OUTPUT"
+          echo "Marché retenu : $CHOIX"
+
+      - name: Calculer le classement et générer la vignette
+        id: preparer
+        run: |
+          node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=preparer
+          if [ -f .cote-cache.json ]; then
+            echo "a_publier=oui" >> "$GITHUB_OUTPUT"
+          else
+            echo "a_publier=non" >> "$GITHUB_OUTPUT"
+            echo "Marché calme, rien à publier."
+          fi
+
+      - name: Déployer la vignette
+        if: steps.preparer.outputs.a_publier == 'oui'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/social/
+          git commit -m "chore(cote): vignette du top des hausses [skip ci]"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+
+      # Vercel met ~1 min à publier. On vérifie l'URL au lieu de parier
+      # sur un délai fixe : un `sleep 90` échouerait un jour de lenteur.
+      - name: Attendre que la vignette soit servie
+        if: steps.preparer.outputs.a_publier == 'oui'
+        run: |
+          FICHIER=$(node -e "console.log(require('./.cote-cache.json').fichier)")
+          URL="https://cards-trading.com/assets/social/$FICHIER"
+          echo "Attente de $URL"
+          for i in $(seq 1 30); do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+            if [ "$CODE" = "200" ]; then echo "Servie après $((i*10))s."; exit 0; fi
+            sleep 10
+          done
+          echo "::error::La vignette n'est toujours pas servie après 5 min."
+          exit 1
+
+      - name: Publier
+        if: steps.preparer.outputs.a_publier == 'oui'
+        env:
+          DISCORD_WEBHOOK_POKEMON: ${{ secrets.DISCORD_WEBHOOK_POKEMON }}
+          DISCORD_WEBHOOK_DEFAUT: ${{ secrets.DISCORD_WEBHOOK_DEFAUT }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=publier
