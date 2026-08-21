@@ -7,8 +7,8 @@
 #
 # Le jeudi, entre l'article du mardi et celui du vendredi.
 #
-# Rotation sur trois marchés, un par semaine : Pokémon international,
-# cartes japonaises, One Piece. Chacun revient environ une fois par mois.
+# Rotation sur deux marchés, une semaine chacun : cartes internationales
+# et cartes japonaises — les deux cotées en euros sur Cardmarket.
 #
 # ⚠️ Découpage en deux phases : Buffer récupère la vignette par URL
 # publique, donc l'image doit être committée ET déployée par Vercel avant
@@ -24,9 +24,9 @@ on:
   workflow_dispatch:
     inputs:
       marche:
-        description: "Marché : int (Pokémon), jp (cartes japonaises) ou op (One Piece)"
+        description: "Marché : int (cartes internationales) ou jp (cartes japonaises)"
         type: choice
-        options: [auto, int, jp, op]
+        options: [auto, int, jp]
         default: auto
 
 permissions:
@@ -74,24 +74,26 @@ jobs:
           git pull --rebase --autostash origin main
           git push origin HEAD:main
 
-      # Rotation sur trois marchés, une semaine chacun :
-      #   int → Pokémon international, cote Cardmarket en euros
+      # Rotation sur deux marchés, une semaine chacun :
+      #   int → cartes internationales, cote Cardmarket en euros
       #   jp  → cartes japonaises, cote Cardmarket en euros également
-      #   op  → One Piece, historique 13 jours d'optcgapi, en dollars
       #
-      # Trois semaines de cycle : chaque marché revient une fois par mois
-      # environ, assez pour installer un rendez-vous sans lasser.
+      # One Piece est SORTI de la rotation. Exigence : tendances en euros
+      # sur le marché européen. Or les trois sources One Piece testées
+      # (optcgapi, apitcg, tcgcsv) cotent toutes en DOLLARS sur le marché
+      # américain — vérifié, apitcg n'expose que « tcgplayer » sur les
+      # trois TCG testés, aucun marché européen. TCGdex est le seul à
+      # coter en euros, et il ne couvre que Pokémon.
+      #
+      # Le relevé One Piece continue de tourner : il coûte peu et servira
+      # le jour où une source Cardmarket apparaîtra.
       - name: Choisir le marché
         id: marche
         run: |
           CHOIX="${{ inputs.marche }}"
           if [ -z "$CHOIX" ] || [ "$CHOIX" = "auto" ]; then
             SEMAINE=$(date -u +%V)
-            case $((10#$SEMAINE % 3)) in
-              0) CHOIX=int ;;
-              1) CHOIX=jp ;;
-              *) CHOIX=op ;;
-            esac
+            if [ $((10#$SEMAINE % 2)) -eq 0 ]; then CHOIX=int; else CHOIX=jp; fi
           fi
           echo "valeur=$CHOIX" >> "$GITHUB_OUTPUT"
           echo "Marché retenu : $CHOIX"

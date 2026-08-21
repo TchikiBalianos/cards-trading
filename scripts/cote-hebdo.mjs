@@ -160,7 +160,11 @@ for (const c of podium) {
   /* On garde le nom d'origine à côté : sur une carte japonaise il situe
      la version, sur une carte française il est déjà identique. */
   c.nomFr = fr;
-  c.affichage = fr && fr !== c.nom ? `${fr} — ${c.nom}` : c.nom;
+  /* Le nom d'espèce n'est ajouté que si le nom de la carte n'est PAS
+     en alphabet latin. Sur « Méga-Méganium-ex », préfixer « Méganium »
+     est redondant ; sur « エリカのモンジャラ », c'est indispensable. */
+  const enLatin = [...c.nom].every((ch) => ch.codePointAt(0) < 0x0370);
+  c.affichage = fr && !enLatin ? `${fr} — ${c.nom}` : c.nom;
 }
 
 /*
