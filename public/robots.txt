@@ -1,0 +1,14 @@
+# Cards-Trading.com
+# Le site est entièrement destiné à être indexé : c'est le canal
+# d'acquisition passive. Aucune zone à cacher.
+
+User-agent: *
+Allow: /
+
+# Les paramètres de provenance créent des URL en double aux yeux d'un
+# moteur : /?utm_source=x et / sont la même page. La balise canonique le
+# dit déjà, ceci évite en plus de gaspiller le budget d'exploration.
+Disallow: /*?utm_source=
+Disallow: /*?v=
+
+Sitemap: https://cards-trading.com/sitemap-index.xml
