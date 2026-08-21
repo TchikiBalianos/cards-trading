@@ -94,7 +94,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { age, genre, tcgs, platform, profile, nom, prenom, email, rgpd, source } = req.body;
+    const { age, genre, tcgs, platform, profile, nom, prenom, email, rgpd, source, newsletter } = req.body;
 
     /*
       Provenance de l'inscription.
@@ -154,6 +154,10 @@ export default async function handler(req, res) {
               platform: platform || null,
               profile: profile || null,
               rgpd_accepted: true,
+              /* Opt-in EXPLICITE, jamais deduit : la case RGPD dit
+                 « Aucun marketing », elle ne vaut pas consentement
+                 editorial. Tout ce qui n'est pas un vrai true est un non. */
+              newsletter: newsletter === true,
               source: provenance,
               submitted_at: new Date().toISOString(),
               ip_address: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
@@ -168,6 +172,34 @@ export default async function handler(req, res) {
 
     if (supabaseError) {
       console.error('Supabase error:', supabaseError);
+    }
+
+    /*
+      Ajout à la liste de diffusion — UNIQUEMENT sur opt-in explicite.
+
+      Volontairement APRÈS la persistance et volontairement NON bloquant :
+      un échec ici ne doit jamais faire perdre un lead. La ligne en base
+      fait foi, la liste Resend n'en est qu'une copie de travail qu'on peut
+      resynchroniser à tout moment depuis beta_submissions.
+
+      RESEND_SEGMENT_ID en variable d'environnement : un identifiant de
+      liste codé en dur casserait silencieusement si la liste était
+      recréée.
+    */
+    if (newsletter === true && process.env.RESEND_SEGMENT_ID) {
+      try {
+        const { error } = await resend.contacts.create({
+          email: verdict.email,
+          firstName: prenom || undefined,
+          lastName: nom || undefined,
+          unsubscribed: false,
+          audienceId: process.env.RESEND_SEGMENT_ID,
+        });
+        if (error) console.error('Newsletter — ajout refusé :', JSON.stringify(error));
+        else console.log('Newsletter — contact ajouté :', verdict.email);
+      } catch (e) {
+        console.error('Newsletter — ajout impossible :', e.message);
+      }
     }
 
     const dbSaved = !supabaseError;

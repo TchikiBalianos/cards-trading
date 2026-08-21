@@ -1,12 +1,12 @@
-@import url(animations.css?v=23);
-@import url(avantages.css?v=23);
-@import url(comparatif.css?v=23);
-@import url(features.css?v=23);
-@import url(hero.css?v=23);
-@import url(layout.css?v=23);
-@import url(questionnaire.css?v=23);
-@import url(seller-tools.css?v=23);
-@import url(social.css?v=23);
+@import url(animations.css?v=24);
+@import url(avantages.css?v=24);
+@import url(comparatif.css?v=24);
+@import url(features.css?v=24);
+@import url(hero.css?v=24);
+@import url(layout.css?v=24);
+@import url(questionnaire.css?v=24);
+@import url(seller-tools.css?v=24);
+@import url(social.css?v=24);
 
 /* ── REVEAL H2 — IntersectionObserver custom (remplace AOS) */
 .reveal-h2 {

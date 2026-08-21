@@ -98,7 +98,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=23" />
+    <link rel="stylesheet" href="landing.css?v=24" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -403,6 +403,23 @@
                     <input type="checkbox" name="rgpd" style="margin-top: 5px;" />
                     <span>
                       J'accepte que mes données soient traitées conformément à la <a href="mentions-legales.html" target="_blank" style="color: #2997ff; text-decoration: underline;">politique RGPD</a> et les <a href="cgu.html" target="_blank" style="color: #2997ff; text-decoration: underline;">CGU</a> de Cards Trading. Aucun marketing. Aucune vente de données.
+                    </span>
+                  </label>
+                </div>
+
+                <!--
+                  Consentement SÉPARÉ et FACULTATIF à la newsletter.
+
+                  La case RGPD ci-dessus dit « Aucun marketing » : elle ne
+                  peut donc pas servir de base à un envoi éditorial. Une
+                  seconde case, non cochée par défaut, crée cette base pour
+                  qui la veut — et son absence n'empêche jamais l'inscription.
+                -->
+                <div style="margin-top: 14px;">
+                  <label style="margin-left: 0 !important; display: flex; align-items: flex-start; gap: 15px;">
+                    <input type="checkbox" name="newsletter" style="margin-top: 5px;" />
+                    <span style="opacity: 0.85;">
+                      Je souhaite aussi recevoir l'actualité TCG et les tendances de cote, une à deux fois par mois. Facultatif, désinscription en un clic.
                     </span>
                   </label>
                 </div>
@@ -1706,6 +1723,7 @@
       prenom: document.querySelector('#champ-prenom')?.value?.trim() || null,
       email: document.querySelector('#champ-email')?.value?.trim() || null,
       rgpd: document.querySelector('input[name="rgpd"]')?.checked || false,
+      newsletter: document.querySelector('input[name="newsletter"]')?.checked || false,
       source: provenanceVisiteur(),
     };
 
