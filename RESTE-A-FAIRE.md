@@ -61,30 +61,39 @@ One Piece (185 cartes). Il permettra des variations maison — en dollars,
 mais sur des fenêtres longues. À rebrancher dans le format si vous décidez
 qu'une cote en dollars vaut mieux que pas de cote du tout.
 
-### 4. Visuels générés par IA — bloqué par la facturation Google
+### 4. Visuels générés par IA — service gratuit trouvé, gain à arbitrer
 
-La vignette déterministe fonctionne et reste le **repli garanti**. Un visuel
-IA viendrait en surcouche, jamais en remplacement : quota épuisé ou refus de
-modération laisseraient sinon la chaîne muette.
+**Pollinations.ai** répond au besoin, vérifié le 20 août :
 
-Clé Gemini de Julian en secret `GEMINI_API_KEY`. **Testée le 20 août :**
-
-| Test | Résultat |
+| Critère | Réalité mesurée |
 |---|---|
-| Liste des modèles | ✅ HTTP 200 |
-| Texte (`gemini-3.6-flash`) | ✅ répond |
-| Image (`gemini-3.1-flash-image`) | ❌ HTTP 429, quota épuisé |
-| Image Lite | ❌ HTTP 429 |
+| Clé d'API | aucune |
+| Palier anonyme | 1 requête / 15 s (largement suffisant) |
+| Licence | MIT, usage commercial permis |
+| Appel réel | HTTP 200 en 1,6 s, image exploitable |
+| Coût | 0 € |
 
-La clé est valide et le palier gratuit marche pour le texte. La génération
-d'images est à **zéro quota**, conforme à la page tarifaire Google qui
-affiche « Not available » en colonne *Free Tier* pour les quatre modèles
-d'image.
+Limites : dimensions **approximatives** (1200×630 demandé → 1059×556, à
+recadrer avec `sharp`), un seul modèle sur le palier anonyme, sortie JPEG,
+et un filigrane possible que `nologo=true` a évité sur les essais.
 
-**Action requise côté Julian** : activer la facturation sur le projet Google
-Cloud lié à la clé. Le coût resterait de l'ordre de quelques euros par an
-au rythme prévu (~3 à 5 centimes l'image, 1 à 2 images par semaine). Une
-fois fait, le script d'appel est à écrire — une demi-journée.
+**Intégration prouvée** : fond IA + texte vectoriel composé par-dessus.
+C'est le bon découpage — l'IA sait faire une ambiance, pas une typographie
+ni une marque. Un essai sans cette séparation a produit une forme
+pseudo-logo malgré la consigne « no logo ».
+
+⚠️ **Mais le gain est marginal sur la vignette de cote** : pour que le texte
+blanc reste lisible quel que soit le fond généré, il faut l'assombrir de
+45 %. À ce niveau, la différence avec le dégradé déterministe se voit à
+peine. Ne pas l'appliquer là.
+
+**Où ça vaudrait le coup** : les vignettes d'ARTICLE, où un fond thématique
+par TCG (dresseurs Pokémon, navire One Piece, arène Magic) apporterait une
+vraie variété — là où la vignette actuelle est identique d'un article à
+l'autre au titre près.
+
+La clé Gemini reste en secret `GEMINI_API_KEY` : elle marchera si la
+facturation Google est activée, mais elle n'est plus nécessaire.
 
 ### 5. Débordement de « Cardmarket » sous 1100 px
 
