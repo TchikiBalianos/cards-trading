@@ -44,51 +44,59 @@ images après le correctif de ratio.
 
 ## 🟡 Améliorations identifiées, non appliquées
 
-### 3. Cote One Piece en euros
+### 3. Cote One Piece en euros — abandonnée en l'état
 
-One Piece est **hors de la rotation du top des hausses**, et c'est assumé.
+One Piece reste **hors de la rotation du top des hausses**, et c'est
+définitif tant qu'aucune source gratuite ne cote en euros.
+
 Vérifié le 20 août : `optcgapi`, `apitcg` et `tcgcsv` sont tous adossés à
-TCGplayer, donc en **dollars sur le marché américain**. `apitcg` n'expose
-que `tcgplayer` sur les trois TCG testés, malgré ses 5 mois d'historique.
-TCGdex est le seul à coter en euros via Cardmarket, et ne couvre que
-Pokémon.
+TCGplayer, donc en **dollars sur le marché américain**. TCGdex est le seul
+à coter en euros via Cardmarket, et ne couvre que Pokémon.
 
-Une vraie cote One Piece en euros suppose un accès **Cardmarket**, qui
-exige un compte professionnel et OAuth. Chantier à part entière.
+**L'accès Cardmarket est écarté** : il exige un compte professionnel, que
+Julian ne souhaite pas ouvrir. Décision prise le 20 août, ne pas y revenir.
 
-En attendant, `scripts/releve-cotes.mjs` archive chaque semaine la cote
-One Piece (185 cartes). Au bout de quelques semaines il permettra des
-variations maison — en dollars, mais sur des fenêtres longues.
+Reste le repli : `scripts/releve-cotes.mjs` archive chaque semaine la cote
+One Piece (185 cartes). Il permettra des variations maison — en dollars,
+mais sur des fenêtres longues. À rebrancher dans le format si vous décidez
+qu'une cote en dollars vaut mieux que pas de cote du tout.
 
-### 4. Visuels générés par IA
+### 4. Visuels générés par IA — bloqué par la facturation Google
 
-La vignette déterministe fonctionne et reste le **repli garanti**. Un
-visuel IA donnerait mieux, en surcouche jamais en remplacement : quota
-épuisé ou refus de modération laisseraient sinon la chaîne muette.
+La vignette déterministe fonctionne et reste le **repli garanti**. Un visuel
+IA viendrait en surcouche, jamais en remplacement : quota épuisé ou refus de
+modération laisseraient sinon la chaîne muette.
 
-Modèles vérifiés le 20 août : `gemini-3.1-flash-image` (Nano Banana 2) et
-`gpt-image-2-2026-04-21`. **Aucun palier gratuit côté API** — le gratuit
-concerne AI Studio et ChatGPT. Coût négligeable cela dit : ~3 à 5 centimes
-l'image, quelques euros par an. Il faut une clé en secret.
+Clé Gemini de Julian en secret `GEMINI_API_KEY`. **Testée le 20 août :**
 
-### 5. Consolidation des tokens du design system
+| Test | Résultat |
+|---|---|
+| Liste des modèles | ✅ HTTP 200 |
+| Texte (`gemini-3.6-flash`) | ✅ répond |
+| Image (`gemini-3.1-flash-image`) | ❌ HTTP 429, quota épuisé |
+| Image Lite | ❌ HTTP 429 |
 
-Tables prêtes dans `scratchpad/audit-3-volets.md`. **Délibérément non
-appliqué** : gain cosmétique, risque de régression élevé sur une feuille
-qui pilote toute la landing. À faire à froid, section par section, avec
-mesure avant/après.
+La clé est valide et le palier gratuit marche pour le texte. La génération
+d'images est à **zéro quota**, conforme à la page tarifaire Google qui
+affiche « Not available » en colonne *Free Tier* pour les quatre modèles
+d'image.
 
-### 6. Débordement de « Cardmarket » sous 1100 px
+**Action requise côté Julian** : activer la facturation sur le projet Google
+Cloud lié à la clé. Le coût resterait de l'ordre de quelques euros par an
+au rythme prévu (~3 à 5 centimes l'image, 1 à 2 images par semaine). Une
+fois fait, le script d'appel est à écrire — une demi-journée.
+
+### 5. Débordement de « Cardmarket » sous 1100 px
 
 Préexistant, **amélioré mais pas éliminé** (24 px → 15 px à 980 px).
 Mot insécable dans une colonne fixe. Invisible au-dessus de 1100 px.
 
-### 7. Compte TikTok personnel
+### 6. Compte TikTok personnel
 
 `tchikibalianos` est un compte **personnel**. À convertir en compte
 Cards-Trading avant d'y pousser de la promo régulière.
 
-### 8. Durcir la gestion des secrets
+### 7. Durcir la gestion des secrets
 
 Décision assumée : les webhooks Discord et les clés d'API ont transité en
 clair dans une conversation, l'enjeu étant jugé faible à ce stade. Ils
@@ -98,7 +106,7 @@ l'historique git est définitif. Vérifié : aucune fuite.
 À reprendre quand l'audience ou l'équipe grandira : faire tourner les
 webhooks et les clés, et envisager un dépôt privé pour l'automatisation.
 
-### 9. Webhook de bounce Resend
+### 8. Webhook de bounce Resend
 
 Optionnel. Détecterait les adresses invalides côté serveur plutôt qu'a
 posteriori dans le dashboard. Le validateur Damerau-Levenshtein couvre
