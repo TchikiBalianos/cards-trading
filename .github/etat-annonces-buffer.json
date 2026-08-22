@@ -1,8 +1,9 @@
 {
-  "_lisezmoi": "Slugs deja relayes vers Buffer (X, Instagram, TikTok). Amorce le 20/08/2026 avec les 7 articles existants : les 6 anciens ne doivent pas partir comme neufs, et one-piece-op17 a ete mis en file manuellement le meme jour. Ecrit par scripts/annonce-buffer.mjs.",
+  "_lisezmoi": "Slugs deja relayes vers Buffer (X, Instagram, TikTok). Amorce le 20/08/2026 avec les 7 articles existants : les 6 anciens ne doivent pas partir comme neufs, et one-piece-op17 a ete mis en file manuellement le meme jour. Idem pour dragon-ball-story-booster-01-st01-2026, dont les trois brouillons ont ete crees a la main le 22/08/2026 avec des textes rediges, differents de ceux que genere le script. Ecrit par scripts/annonce-buffer.mjs.",
   "annonces": [
     "disney-lorcana-2026-iconic-marche-meta",
     "dragon-ball-fusion-world-ultrabout-2026",
+    "dragon-ball-story-booster-01-st01-2026",
     "guide-demarrage-pokemon-tcg",
     "one-piece-card-game-revolution-tcg",
     "one-piece-op17-guerriers-puissants-monde-2026",
