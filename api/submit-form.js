@@ -87,6 +87,39 @@ function validerEmail(email) {
   return { ok: true, email: valeur };
 }
 
+/*
+  Identifiant de la liste de diffusion, résolu À L'EXÉCUTION.
+
+  Ce n'est pas un secret — c'est un identifiant de liste, inexploitable
+  sans la clé d'API. Il pourrait donc être écrit en dur, mais il faudrait
+  le corriger à la main si la liste était recréée, et l'oubli serait
+  silencieux.
+
+  On le demande donc à Resend, en privilégiant `RESEND_SEGMENT_ID` si la
+  variable existe. Le résultat est gardé en mémoire du processus : une
+  fonction serverless en sert plusieurs requêtes, inutile de redemander à
+  chaque inscription.
+*/
+let listeMemorisee = null;
+
+async function listeDiffusion() {
+  if (process.env.RESEND_SEGMENT_ID) return process.env.RESEND_SEGMENT_ID;
+  if (listeMemorisee) return listeMemorisee;
+
+  const { data, error } = await resend.audiences.list();
+  if (error) throw new Error(`liste introuvable : ${JSON.stringify(error)}`);
+
+  const listes = data?.data || [];
+  if (listes.length === 0) throw new Error('aucune liste de diffusion sur ce compte Resend');
+
+  /* « General » si elle existe, sinon la première : un compte qui n'en a
+     qu'une ne doit pas exiger de configuration. */
+  const choisie = listes.find((l) => l.name === 'General') || listes[0];
+  listeMemorisee = choisie.id;
+  console.log('Newsletter — liste résolue :', choisie.name, listeMemorisee);
+  return listeMemorisee;
+}
+
 export default async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
@@ -186,14 +219,14 @@ export default async function handler(req, res) {
       liste codé en dur casserait silencieusement si la liste était
       recréée.
     */
-    if (newsletter === true && process.env.RESEND_SEGMENT_ID) {
+    if (newsletter === true) {
       try {
         const { error } = await resend.contacts.create({
           email: verdict.email,
           firstName: prenom || undefined,
           lastName: nom || undefined,
           unsubscribed: false,
-          audienceId: process.env.RESEND_SEGMENT_ID,
+          audienceId: await listeDiffusion(),
         });
         if (error) console.error('Newsletter — ajout refusé :', JSON.stringify(error));
         else console.log('Newsletter — contact ajouté :', verdict.email);
