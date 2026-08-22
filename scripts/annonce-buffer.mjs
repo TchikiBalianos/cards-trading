@@ -57,17 +57,27 @@ const MOTSCLES = {
   magic: ['#magicthegathering', '#mtgfr'],
   yugioh: ['#yugioh', '#cartesyugioh'],
   lorcana: ['#disneylorcana', '#lorcana'],
-  'dragon-ball': ['#dragonballsuper', '#dbsfw'],
+  'dragon-ball': ['#DragonBall', '#FusionWorld', '#TCG'],
   'star-wars': ['#starwarsunlimited', '#swu'],
 };
 const COMMUNS = ['#tcg', '#cartesacollectionner'];
+
+/*
+  Une licence peut porter sa grappe complète, arrêtée à la main : on ne lui
+  ajoute alors PAS les communs, sinon le 4e slot d'Instagram réintroduit un
+  mot-clé écarté. Dragon Ball est dans ce cas depuis le 22 août 2026, sur
+  demande : #DragonBall #FusionWorld #TCG, et rien d'autre.
+*/
+const GRAPPE_FERMEE = new Set(['dragon-ball']);
 
 /* Signature courte. Ne PAS y parler de scan : la promesse produit se joue
    sur la landing, pas dans une légende. */
 const SIGNATURE = 'Cards-Trading.com, la marketplace 100 % TCG';
 
 function motsCles(categorie, combien) {
-  return [...(MOTSCLES[categorie] || []), ...COMMUNS].slice(0, combien).join(' ');
+  const propres = MOTSCLES[categorie] || [];
+  const liste = GRAPPE_FERMEE.has(categorie) ? propres : [...propres, ...COMMUNS];
+  return liste.slice(0, combien).join(' ');
 }
 
 function lireFrontmatter(chemin) {
