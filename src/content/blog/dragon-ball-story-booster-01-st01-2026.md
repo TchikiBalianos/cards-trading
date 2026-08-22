@@ -6,7 +6,7 @@ category: "dragon-ball"
 tags: ["dragon-ball", "fusion-world", "st01", "collection", "marché"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-dbz.png"
-draft: true
+draft: false
 ---
 
 ## Un booster qui ne cherche pas à changer le méta
@@ -95,9 +95,11 @@ Seule la **communication** est traduite : c'est de là que viennent « Booster s
 
 L'erreur de calcul la plus courante. Le paquet japonais contient **6 cartes pour 330 yens**, l'anglais **12 cartes pour 5,99 dollars** conseillés. Deux produits différents sous le même nom : tout comparatif au paquet qui ne corrige pas cet écart est faux.
 
-### Vérifiez la composition du display avant de commander
+### Connaissez le prix normal du display avant de commander
 
-Les listings européens ne s'accordent pas sur la version anglaise : certains annoncent **20 boosters**, d'autres **24**. À 5,99 dollars le paquet, cela place la valeur conseillée du display entre 120 et 145 dollars environ. Des revendeurs affichaient pourtant la box à **299,90 euros** en précommande. L'écart peut se justifier par une distribution limitée, mais il doit être un choix conscient : demandez le nombre exact de boosters avant de commander.
+Le display anglais contient **20 boosters de 12 cartes**, chacun accompagné d'un code pour la version numérique, au prix public conseillé de **119,99 dollars**. Un distributeur européen le référençait à **120 euros**, ce qui est le tarif cohérent.
+
+Or certaines fiches françaises affichaient la même box à **299,90 euros** en précommande, soit deux fois et demie ce montant, et une autre l'annonçait à 24 boosters au lieu de 20. À ce niveau d'écart, vérifiez systématiquement deux choses avant de valider : le nombre de boosters annoncé, et le prix rapporté au paquet. Le produit était déjà en rupture chez plusieurs revendeurs le jour de sa sortie, ce qui explique la tension sans justifier tous les tarifs.
 
 ### Si vous voulez une carte précise, achetez la carte
 
@@ -121,7 +123,7 @@ Le 21 août 2026 en version anglaise, la seule commercialisée en Europe. La ver
 
 ### Combien de cartes contient un paquet ST01 ?
 
-12 dans la version anglaise, au prix conseillé de 5,99 dollars, contre 6 pour 330 yens en japonais. C'est l'écart standard entre les deux versions du jeu, pas une particularité de ce set.
+12 dans la version anglaise, au prix conseillé de 5,99 dollars, contre 6 pour 330 yens en japonais. C'est l'écart standard entre les deux versions du jeu, pas une particularité de ce set. Le display anglais en contient 20, pour 119,99 dollars conseillés.
 
 ### Y a-t-il des cartes Fusion World en français ?
 
