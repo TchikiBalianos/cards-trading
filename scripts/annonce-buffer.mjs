@@ -163,7 +163,7 @@ function texteX(fm, url) {
 function texteInstagram(fm) {
   return (
     `${fm.title}\n\n${fm.description || ''}\n\n` +
-    `L'article complet est sur le blog — lien en bio 🔗\n\n` +
+    `L'article complet est sur notre blog, lien du site en bio 🔗\n\n` +
     `${SIGNATURE}\n\n${motsCles(fm.category, 4)}`
   );
 }
