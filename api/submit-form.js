@@ -146,18 +146,13 @@ export default async function handler(req, res) {
 
     // Validate required fields
     if (!nom || !prenom || !email || !rgpd) {
-      return res.status(400).json({ error: 'Missing required fields' });
+      return res.status(400).json({ error: 'Des informations sont manquantes ou incomplètes.' });
     }
 
     // Validation d'email — protège la réputation d'expéditeur
     const verdict = validerEmail(email);
     if (!verdict.ok) {
       return res.status(400).json({ error: verdict.message, suggestion: verdict.suggestion });
-    }
-
-    // RGPD must be true
-    if (!rgpd) {
-      return res.status(400).json({ error: 'RGPD consent required' });
     }
 
     /*
@@ -464,6 +459,6 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('Unexpected error:', error);
-    return res.status(500).json({ error: 'Internal server error', detail: error.message });
+    return res.status(500).json({ error: "Une erreur inattendue est survenue. Réessaie dans un instant.", detail: error.message });
   }
 }

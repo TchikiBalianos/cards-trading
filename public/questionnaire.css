@@ -202,7 +202,15 @@
         pointer-events: none;
         transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
         color: #fff;
-        height: 100%;     /* remplit exactement les 480px du slider */
+        /* min-height, PAS height. Avec height:100%, adjustQuizHeight() (index.html)
+           lit offsetHeight pour dimensionner .quiz-slider — mais offsetHeight d'un
+           élément forcé à 100% du parent vaut TOUJOURS la hauteur du parent : la
+           mesure était circulaire, donc inerte. Une carte plus haute que 480px
+           (ajout de 3 <label> le 15 août 2026) débordait alors en silence sous
+           overflow:hidden, avec son bouton "Valider" hors champ, invisible et
+           inatteignable. min-height garde le remplissage visuel des cartes courtes
+           tout en laissant offsetHeight refléter la vraie hauteur de contenu. */
+        min-height: 100%;
         padding-bottom: 20px;
         border: 1px solid rgba(255, 255, 255, 0.15);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);

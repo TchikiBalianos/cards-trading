@@ -1803,6 +1803,20 @@
     }
 
     if (checkboxes.length) {
+      /* La carte RGPD porte 2 cases (rgpd + newsletter, facultative) : un
+         .some() générique laisse passer newsletter cochée seule, RGPD
+         décochée — c'est-à-dire l'inscription la moins consentie de toutes,
+         validée en silence. Quand la carte porte une case "rgpd", c'est
+         SPÉCIFIQUEMENT elle qui doit être cochée ; les autres cases
+         (ex. la sélection de TCG en q3) restent en "au moins une". */
+      const rgpd = card.querySelector('input[name="rgpd"]');
+      if (rgpd) {
+        if (!rgpd.checked) {
+          showRequiredMessage(button, "Consentement requis pour continuer");
+          return false;
+        }
+        return true;
+      }
       if (!Array.from(checkboxes).some((input) => input.checked)) {
         showRequiredMessage(button);
         return false;
@@ -1834,16 +1848,6 @@
         }
       }
 
-      return true;
-    }
-
-    // RGPD checkbox specifically
-    const rgpdCheckbox = card.querySelector('input[name="rgpd"]');
-    if (rgpdCheckbox) {
-      if (!rgpdCheckbox.checked) {
-        showRequiredMessage(button, "Consentement requis");
-        return false;
-      }
       return true;
     }
 
@@ -1895,24 +1899,27 @@
         currentIndex++;
         currentQuestionEl.textContent = currentIndex + 1;
         updateXPBar(currentIndex);
+        setTimeout(adjustQuizHeight, 50);
 
         setTimeout(() => {
           cards[currentIndex - 1].classList.remove("exit-left");
         }, 450);
       } else {
-        submitBtn.textContent = result.error || "Erreur lors de l'envoi";
-        setTimeout(() => {
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-        }, 2000);
+        /* Dans la zone .champ-erreur, pas dans le bouton : c'est exactement
+           l'anti-pattern documenté plus haut pour la validation (le libellé
+           s'efface avant que l'utilisateur, les yeux sur son clavier
+           mobile, ait pu le lire) — et ici le message peut faire near
+           100 caractères (ex. panne base+email), donc encore moins lisible
+           écrasé sur un bouton de 50px. */
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        showRequiredMessage(submitBtn, result.error || "Erreur lors de l'envoi. Réessaie dans un instant.");
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      submitBtn.textContent = "Erreur réseau";
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }, 2000);
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      showRequiredMessage(submitBtn, "Erreur réseau. Vérifie ta connexion et réessaie.");
     }
   }
 
