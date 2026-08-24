@@ -9,6 +9,16 @@ workflows tournent.
 
 ---
 
+## Observer la FAQ dans les moteurs conversationnels
+
+Le balisage `FAQPage` est en ligne depuis le 24 aout 2026, verifie servi
+et valide. Reste a constater s il est repris : poser a Perplexity et a
+ChatGPT une question couverte par la FAQ (« combien coute la vente d une
+carte sur Cards-Trading ») et regarder si la reponse cite le site.
+
+Le delai est de plusieurs semaines, ces moteurs ne reindexent pas a la
+demande. Aucune action a prevoir si la reponse ne vient pas tout de suite.
+
 ## 🟠 À observer — le seul vrai point ouvert
 
 ### 1. Le premier passage réel de chaque automatisation
