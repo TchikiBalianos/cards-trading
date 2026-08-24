@@ -37,7 +37,11 @@ const jsonLd = JSON.stringify({
   "@type": "BlogPosting",
   "headline": post.data.title,
   "description": post.data.description,
-  "image": post.data.heroImage || "/assets/img/og-cover.png",
+  /* URL ABSOLUE : schema.org attend une adresse résoluble, et un
+     chemin relatif y est aussi inexploitable que dans og:image — même
+     bug, corrigé au même endroit. On pointe la vignette sociale, pas le
+     logo de TCG : c'est elle qui illustre vraiment l'article. */
+  "image": new URL(`/assets/social/${post.id}-og.png`, Astro.site).href,
   "author": {
     "@type": "Organization",
     "name": post.data.author,

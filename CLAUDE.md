@@ -263,6 +263,43 @@ const basReel = h2.getBoundingClientRect().bottom - m.f;
 Sans ça, on conclut par exemple qu'un `margin-bottom` « n'a aucun effet »
 alors qu'il fonctionne parfaitement — erreur commise le 19 août 2026.
 
+⚠️ **`scrollWidth > clientWidth` n'est PAS une preuve de débordement.**
+L'emprise *peinte* d'un élément transformé compte dans le débordement
+défilable de son conteneur, même si rien ne dépasse à l'écran. Le chevron
+de la FAQ (`::after` de 9px + 2px de bordure, tourné à 45°) peint sur
+15,6px : chaque `<summary>` signalait donc 2px de débordement alors que
+le chevron reste à 21px du bord de sa carte, absorbé par le `padding`.
+
+Six « défauts » détectés, zéro réel. Même famille que les faux positifs
+d'`object-fit` et de `rotateY` déjà consignés plus haut. Le seul signal
+qui tranche est celui du document :
+
+```js
+document.documentElement.scrollWidth > innerWidth   // là, c'est vrai
+```
+
+Pour un élément précis, comparer les bords réels plutôt que les largeurs :
+`element.getBoundingClientRect().right > parent.getBoundingClientRect().right`.
+
+### Balisage FAQPage — le visible et le JSON-LD doivent concorder
+
+Un `FAQPage` dont les questions-réponses ne figurent pas *visiblement*
+sur la page est traité comme du balisage trompeur, et la sanction porte
+sur la page entière. Le risque n'est pas de mal l'écrire au départ : c'est
+de corriger une réponse dans le HTML et d'oublier le JSON-LD.
+
+```bash
+node scripts/verifie-faq.mjs   # 0 si les deux concordent, 1 sinon
+```
+
+Le contrôle normalise `&nbsp;`, les entités et les apostrophes typographiques
+avant de comparer, sans quoi chaque « 3 % » signale une fausse divergence.
+
+⚠️ Pour éprouver un contrôle de ce genre, viser une chaîne tenant sur **une
+seule ligne** : `sed` travaille ligne par ligne et ne remplacera jamais un
+texte que le formatage a coupé en deux. Un test qui ne modifie rien laisse
+croire que le garde-fou est aveugle.
+
 ### Limites de l'environnement de test
 - Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
   compose pas de frames → **transitions et animations CSS ne s'exécutent pas**.

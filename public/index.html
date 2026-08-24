@@ -74,6 +74,11 @@
           },
           "description": "Marketplace française spécialisée dans l'achat et la vente de cartes TCG (Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball).",
           "foundingDate": "2026",
+          "sameAs": [
+            "https://x.com/CardsTradingCom",
+            "https://www.instagram.com/CardsTradingCom/",
+            "https://discord.gg/f4eYUWK"
+          ],
           "parentOrganization": {
             "@type": "Organization",
             "name": "Thugz Labs"
@@ -87,6 +92,64 @@
           "description": "La marketplace TCG pour acheter et vendre vos cartes en toute sécurité.",
           "publisher": { "@id": "https://cards-trading.com/#organization" },
           "inLanguage": "fr-FR"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://cards-trading.com/#faq",
+          "inLanguage": "fr-FR",
+          "isPartOf": {
+            "@id": "https://cards-trading.com/#website"
+          },
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Combien coûte la vente d'une carte sur Cards-Trading ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La commission est de 3 % côté vendeur et 3 % côté acheteur. Il n'y a ni frais de mise en vente, ni abonnement. Pendant toute la durée de la bêta, la commission est de 0 %."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Comment le paiement est-il sécurisé ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le paiement de l'acheteur est bloqué jusqu'à la réception de la carte. Le vendeur n'est payé qu'une fois la livraison confirmée, ce qui protège les deux parties d'un envoi qui n'arriverait jamais ou d'un paiement qui ne viendrait pas."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quels jeux de cartes sont acceptés ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Pokémon, One Piece Card Game, Magic : The Gathering, Yu-Gi-Oh!, Disney Lorcana, Dragon Ball Super, Riftbound et Star Wars Unlimited. Les cartes en français, en anglais et en japonais sont acceptées."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Comment mettre une carte en vente ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Vous scannez la carte depuis l'application : elle est reconnue et mise en vente. Pas de formulaire à remplir, pas de photo à cadrer, pas de description à rédiger."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quand la bêta ouvre-t-elle, et comment y accéder ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "L'ouverture est prévue prochainement. L'inscription à la liste d'attente est gratuite et sans engagement : les inscrits sont prévenus par e-mail dès que leur accès est disponible."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Cards-Trading est-il différent de Cardmarket ou de Vinted ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Cards-Trading est une place de marché dédiée uniquement aux cartes à collectionner, pensée pour le mobile, avec un paiement bloqué jusqu'à réception et une mise en vente par scan. Les plateformes généralistes ne proposent ni la reconnaissance de carte, ni la spécialisation TCG."
+              }
+            }
+          ]
         }
       ]
     }
@@ -98,7 +161,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lexend:wght@100..900&family=Tilt+Warp&family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="landing.css?v=24" />
+    <link rel="stylesheet" href="landing.css?v=25" />
     <link rel="stylesheet" href="easter-eggs.css?v=14" />
     <link
       rel="stylesheet"
@@ -853,6 +916,85 @@
     </div>
     <div class="separator"></div>
 
+    <!--
+      FAQ visible ET balisée en JSON-LD (voir le bloc FAQPage plus bas).
+
+      Le balisage FAQPage exige que les questions-réponses soient VISIBLES
+      sur la page : un balisage sans contenu correspondant est trompeur et
+      sanctionné par les moteurs. Les deux doivent donc rester synchronisés.
+
+      Double usage assumé : les moteurs conversationnels (Perplexity,
+      ChatGPT, Google AI) citent des réponses factuelles et attribuées —
+      c'est par ce canal qu'est arrivée la première inscription mesurée.
+      Et côté visiteur, ces questions sont exactement les objections qui
+      précèdent une inscription.
+    -->
+    <section class="faq" id="faq">
+      <h2 class="reveal-h2">Questions fréquentes</h2>
+
+      <div class="faq-liste">
+        <details class="faq-item">
+          <summary>Combien coûte la vente d'une carte sur Cards-Trading&nbsp;?</summary>
+          <p>
+            La commission est de 3&nbsp;% côté vendeur et 3&nbsp;% côté acheteur.
+            Il n'y a ni frais de mise en vente, ni abonnement. Pendant toute la
+            durée de la bêta, la commission est de 0&nbsp;%.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Comment le paiement est-il sécurisé&nbsp;?</summary>
+          <p>
+            Le paiement de l'acheteur est bloqué jusqu'à la réception de la
+            carte. Le vendeur n'est payé qu'une fois la livraison confirmée, ce
+            qui protège les deux parties d'un envoi qui n'arriverait jamais ou
+            d'un paiement qui ne viendrait pas.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Quels jeux de cartes sont acceptés&nbsp;?</summary>
+          <p>
+            Pokémon, One Piece Card Game, Magic&nbsp;: The Gathering,
+            Yu-Gi-Oh!, Disney Lorcana, Dragon Ball Super, Riftbound et
+            Star Wars Unlimited. Les cartes en français, en anglais et en
+            japonais sont acceptées.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Comment mettre une carte en vente&nbsp;?</summary>
+          <p>
+            Vous scannez la carte depuis l'application&nbsp;: elle est
+            reconnue et mise en vente. Pas de formulaire à remplir, pas de
+            photo à cadrer, pas de description à rédiger.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Quand la bêta ouvre-t-elle, et comment y accéder&nbsp;?</summary>
+          <p>
+            L'ouverture est prévue prochainement. L'inscription à la liste
+            d'attente est gratuite et sans engagement&nbsp;: les inscrits sont
+            prévenus par e-mail dès que leur accès est disponible.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Cards-Trading est-il différent de Cardmarket ou de Vinted&nbsp;?</summary>
+          <p>
+            Cards-Trading est une place de marché dédiée uniquement aux cartes
+            à collectionner, pensée pour le mobile, avec un paiement bloqué
+            jusqu'à réception et une mise en vente par scan. Les plateformes
+            généralistes ne proposent ni la reconnaissance de carte, ni la
+            spécialisation TCG.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <div class="separator"></div>
+
     <section class="social-section" id="reseaux">
       <h2 class="section-title reveal-h2">Rejoignez la communauté</h2>
       <p class="section-subtitle">Suivez Cards Trading sur les réseaux pour ne rien rater</p>
@@ -947,6 +1089,7 @@
               <li><a href="#features">Fonctionnalités</a></li>
               <li><a href="#comparatif">Comparatif</a></li>
               <li><a href="#vendeur-pro">Vendeur Pro</a></li>
+              <li><a href="#faq">Questions fréquentes</a></li>
             </ul>
           </div>
 

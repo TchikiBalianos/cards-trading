@@ -375,3 +375,96 @@ a.social-card:hover .social-card-cta {
     right: 8px;
   }
 }
+
+/* ── FAQ ───────────────────────────────────────────────────
+   Contenu VISIBLE dont le balisage FAQPage est le miroir : les deux
+   doivent rester synchronisés, un balisage sans contenu correspondant
+   est trompeur et sanctionné par les moteurs.
+
+   <details>/<summary> plutôt qu'un accordéon en JavaScript : le
+   comportement est natif, accessible au clavier, et le contenu reste
+   présent dans le HTML même replié — donc lisible par un robot. */
+.faq {
+  /* Aplat, PAS le dégradé de la section réseaux qui suit.
+
+     Les deux portaient le même linear-gradient : collés l'un à
+     l'autre, ils donnaient deux renflements lumineux successifs, ce qui
+     se lit comme une erreur plutôt que comme un rythme. En terminant sur
+     la teinte exacte par laquelle démarre .social-section (#07111f),
+     la jonction devient invisible et il ne reste qu'un seul renflement,
+     celui des réseaux. */
+  background: #07111f;
+  padding: var(--space-xl) 5vw;
+}
+
+.faq h2 {
+  color: #fff;
+  font-size: var(--h2-section);
+  text-align: center;
+  margin-bottom: var(--space-m);
+}
+
+.faq-liste {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(41, 151, 255, 0.22);
+  border-radius: 12px;
+  padding: 0 20px;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.faq-item[open] {
+  background: rgba(41, 151, 255, 0.07);
+  border-color: rgba(41, 151, 255, 0.45);
+}
+
+.faq-item summary {
+  cursor: pointer;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  /* Au-dessus du seuil tactile de 44px, comme les autres cibles. */
+  padding: 18px 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+/* Chevron en CSS pur : pas d'icône à charger, et il tourne à l'ouverture. */
+.faq-item summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #2997ff;
+  border-bottom: 2px solid #2997ff;
+  transform: rotate(45deg);
+  transition: transform 0.25s ease;
+}
+
+.faq-item[open] summary::after { transform: rotate(-135deg); }
+
+.faq-item summary:focus-visible {
+  outline: 2px solid #2997ff;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 0 20px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.65;
+  font-size: 15px;
+}
