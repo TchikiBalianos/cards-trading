@@ -25,19 +25,14 @@ Le garde-fou anti-doublon ajouté aux deux tâches planifiées (voir
 `~/.claude/scheduled-tasks/blog-cards-trading-article-hebdo/SKILL.md`)
 a passé son premier vrai test ce matin : la tâche du mardi 9h a détecté
 que l'article Bandai (catégorie `actualite`) ne couvrait PAS le créneau
-Pokémon obligatoire, et a rédigé
-`blog/pokemon-worlds-2026-san-francisco-meta-standard` sans rien dupliquer.
-Un second passage (fact-check) a corrigé un prix et des noms d'attaques
-à 11h37 le même jour.
+Pokémon obligatoire, et a rédigé un article sur les Championnats du Monde
+sans rien dupliquer. Un second passage (fact-check) a corrigé un prix et
+des noms d'attaques à 11h37 le même jour.
 
-**À review avant vendredi 28 août** — l'article traite des Championnats
-du Monde qui commencent ce jour-là, sa valeur retombe vite après :
-```
-git fetch origin blog/pokemon-worlds-2026-san-francisco-meta-standard
-git show origin/blog/pokemon-worlds-2026-san-francisco-meta-standard:src/content/blog/pokemon-worlds-2026-san-francisco-meta-standard.md
-```
-2034 mots, `draft: true`, FAQ présente, image vérifiée. Reste la relecture
-humaine avant de retirer `draft: true` et fusionner.
+**Publié le 25 août**, après relecture complète par recherche web (15
+faits vérifiés indépendamment — dates, règles, decklist du NAIC, prix
+Cardmarket, traductions FR — aucune erreur trouvée) : voir le détail dans
+le message du commit `a7bf7d8`.
 
 ## 🟠 À observer — ce qui reste vraiment ouvert
 
