@@ -1,6 +1,6 @@
 ---
 title: "Championnats du Monde Pokémon 2026 : le format, les decks favoris et ce que ça change pour vos cartes"
-description: "Worlds 2026 à San Francisco du 28 au 30 août : format Standard post-rotation, decks favoris, couche Méga-Évolution et effets concrets sur le marché des singles."
+description: "Worlds 2026 à San Francisco du 28 au 30 août : format Standard post-rotation, decks favoris, couche Méga-Évolution et effets concrets sur le marché des cartes."
 pubDate: 2026-08-25
 category: "pokemon"
 tags: ["pokemon", "worlds", "competitif", "meta", "standard"]
@@ -11,13 +11,13 @@ draft: false
 
 Les **Championnats du Monde Pokémon 2026** se tiennent du **vendredi 28 au dimanche 30 août** à San Francisco. Les rondes se jouent au **Moscone Center**, la grande finale au **Chase Center** le dimanche. C'est le point d'arrivée d'une saison entière de Championship Points, et le premier Worlds disputé dans le format né de la rotation d'avril.
 
-Pour un joueur français, l'intérêt dépasse le spectacle : ce que les compétiteurs vont poser sur les tables ce week-end fixe la référence de la méta jusqu'à la fin de l'année, et déplace mécaniquement les prix des singles concernés. Voici de quoi regarder l'événement en sachant ce qui se joue.
+Pour un joueur français, l'intérêt dépasse le spectacle : ce que les compétiteurs vont poser sur les tables ce week-end fixe la référence de la méta jusqu'à la fin de l'année, et déplace mécaniquement les prix des cartes concernées. Voici de quoi regarder l'événement en sachant ce qui se joue.
 
 ## Un format qui n'a que cinq mois
 
 La rotation 2026 est entrée en vigueur le **26 mars sur JCC Pokémon Live** et le **10 avril pour les événements Play! Pokémon en présentiel**. Elle a retiré du Standard toutes les cartes portant la **marque de bloc « G »**, c'est-à-dire l'intégralité de *Écarlate et Violet*, *Évolutions à Paldea*, *Flammes Obsidiennes*, *Pokémon 151* et *Faille Paradoxe*.
 
-Restent légales les marques **H**, **I** et **J**, le plancher du format étant fixé à *Forces Temporelles* (Temporal Forces). Rappel utile quand on achète des singles d'occasion : **la légalité se lit sur la marque imprimée en bas de la carte, pas sur l'extension**. Une même carte réimprimée dans un set plus récent peut être jouable alors que son exemplaire d'origine ne l'est plus.
+Restent légales les marques **H**, **I** et **J**, le plancher du format étant fixé à *Forces Temporelles* (Temporal Forces). Rappel utile quand on achète des cartes d'occasion : **la légalité se lit sur la marque imprimée en bas de la carte, pas sur l'extension**. Une même carte réimprimée dans un set plus récent peut être jouable alors que son exemplaire d'origine ne l'est plus.
 
 Concrètement, ce format n'a été éprouvé que sur quelques mois de saison, avec deux extensions majeures venues s'y greffer en cours de route : **Chaos Ascendant** (ME04, 22 mai 2026) puis **Nuit Noire** (ME05, 17 juillet 2026). Cette dernière est arrivée à six semaines des Mondiaux, ce qui est court pour qu'un métagame se stabilise.
 
@@ -57,7 +57,7 @@ Type Psy, accompagné de **Mélofée-ex de Lilie** et de nouveaux outils de rég
 
 ## Ce que la saison a déjà montré
 
-Deux repères valent d'être gardés en tête pendant la diffusion.
+Deux choses à garder en tête pendant le tournoi.
 
 Le premier : **Mélofée-ex de Lilie** a remporté les Internationaux d'Amérique du Nord à La Nouvelle-Orléans en juin 2026, entre les mains de James Kowalski. Le deck exploite le stade **Tréfonds de la Zone Zéro** avec un Pokémon Téra pour étendre son banc à huit Pokémon au lieu de cinq, son attaque **Rondo Pleine Lune** montant de 20 dégâts par Pokémon de banc en jeu. Il n'apparaît pourtant qu'en neuvième position des points d'archétype du dernier mois : un deck peut gagner un International sans dominer la saison.
 
@@ -68,7 +68,7 @@ Le second : la diversité du reste du tableau. Derrière Lanssorien-ex et Zoroar
 L'effet est assez régulier d'une année sur l'autre.
 
 - **Les cartes du deck vainqueur montent dans les 48 heures.** L'effet est le plus violent sur les pièces peu réimprimées, en particulier les cartes Dresseur et les stades, qui ne bénéficient pas du même volume d'impression que les Pokémon vedettes.
-- **La hausse est souvent temporaire.** Les singles compétitifs suivent un cycle : pic post-tournoi, tassement quand l'offre se réajuste, puis nouveau palier. Acheter le lundi matin est rarement le meilleur moment.
+- **La hausse est souvent temporaire.** Les cartes compétitives suivent un cycle : pic post-tournoi, tassement quand l'offre se réajuste, puis nouveau palier. Acheter le lundi matin est rarement le meilleur moment.
 - **Les cartes déjà installées bougent peu.** Un archétype attendu comme Lanssorien-ex a déjà son prix intégré par le marché. Ce sont les surprises qui créent les écarts.
 - **La valeur compétitive et la valeur de collection ne se recoupent pas.** La carte réellement jouée, **Lanssorien-ex #130** de *Mascarade Crépusculaire* (EV06), affichait fin août 2026 un **prix moyen de 1,39 € sur 30 jours** sur Cardmarket, avec des exemplaires en état proche du neuf **à partir de 0,25 €**. Le deck le plus dominant du format ne coûte donc presque rien en cartes de base : la valeur se concentre sur les versions à illustration alternative du même Pokémon, qui n'apportent aucun avantage sur une table de tournoi.
 
@@ -100,7 +100,7 @@ Lanssorien-ex (Dragapult ex) domine largement les résultats de tournois recens�
 
 ### Faut-il acheter les cartes du deck gagnant juste après la finale ?
 
-C'est généralement le pire moment. Les singles du deck vainqueur montent dans les 48 heures qui suivent, puis se tassent quand l'offre se réajuste. Les cartes Dresseur et les stades, moins réimprimés que les Pokémon vedettes, sont les plus exposés à ce pic.
+C'est généralement le pire moment. Les cartes du deck vainqueur montent dans les 48 heures qui suivent, puis se tassent quand l'offre se réajuste. Les cartes Dresseur et les stades, moins réimprimés que les Pokémon vedettes, sont les plus exposés à ce pic.
 
 ### Combien coûte un deck compétitif Pokémon en 2026 ?
 
@@ -115,7 +115,7 @@ Moins qu'on ne l'imagine si l'on s'en tient aux versions jouables. Lanssorien-ex
 
 ## Ce qu'il faut retenir
 
-Worlds 2026 arrive dans un format jeune, dominé par un archétype unique mais entouré d'une dizaine d'outsiders crédibles, et traversé par une mécanique Méga-Évolution que personne n'a encore vraiment domptée au plus haut niveau. Trois scénarios sont ouverts : Lanssorien-ex confirme, un contre désigné le fait tomber, ou Méga-Minotaupe-ex valide enfin le pari des trois Récompenses. Le résultat orientera les achats de singles jusqu'à la sortie de *Règne Delta* le 6 novembre.
+Worlds 2026 arrive dans un format jeune, dominé par un archétype unique mais entouré d'une dizaine d'outsiders crédibles, et traversé par une mécanique Méga-Évolution que personne n'a encore vraiment domptée au plus haut niveau. Trois scénarios sont ouverts : Lanssorien-ex confirme, un contre désigné le fait tomber, ou Méga-Minotaupe-ex valide enfin le pari des trois Récompenses. Le résultat orientera les achats de cartes jusqu'à la sortie de *Règne Delta* le 6 novembre.
 
 Quel que soit le vainqueur, la suite se joue sur le marché de l'occasion, là où les joueurs s'échangent les quelques cartes qui manquent à leur liste. C'est exactement ce que **Cards-Trading.com** construit : une marketplace francophone à vendeurs vérifiés.
 
