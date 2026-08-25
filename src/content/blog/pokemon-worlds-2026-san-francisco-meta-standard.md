@@ -35,6 +35,8 @@ The Pokémon Company a publié son *power ranking* avant l'événement. Croisé 
 
 ### Lanssorien-ex (Dragapult ex), l'épouvantail
 
+![Lanssorien-ex (Dragapult ex) Twilight Masquerade #130 — la carte centrale du deck dominant du format Standard 2026](https://images.pokemontcg.io/sv6/130_hires.png)
+
 C'est le deck de la saison, et de loin : il pèse à lui seul près de la moitié des points d'archétype comptabilisés par Limitless sur le dernier mois. Trois variantes coexistent : une version « pure », une avec **Noctunoir** (Dusknoir) pour placer des marqueurs de dégâts, une avec **Braségali-ex** (Blaziken ex). Son attaque répartit les dégâts sur le banc, ce qui lui permet de préparer plusieurs K.O. en même temps sans jamais s'exposer à la pénalité des trois Récompenses.
 
 Un archétype à ce niveau de domination attire toujours les réponses : le deck le plus joué est aussi le plus anticipé.
