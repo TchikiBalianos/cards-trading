@@ -1,6 +1,6 @@
 # Reste à faire — Cards-Trading
 
-État au **20 août 2026**. Les règles durables vivent dans `CLAUDE.md` ;
+État au **25 août 2026**. Les règles durables vivent dans `CLAUDE.md` ;
 ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès
 qu'elle est traitée.
 
@@ -19,16 +19,41 @@ carte sur Cards-Trading ») et regarder si la reponse cite le site.
 Le delai est de plusieurs semaines, ces moteurs ne reindexent pas a la
 demande. Aucune action a prevoir si la reponse ne vient pas tout de suite.
 
-## 🟠 À observer — le seul vrai point ouvert
+## 🟢 Le 25 août : la routine article a tourné pour de vrai
+
+Le garde-fou anti-doublon ajouté aux deux tâches planifiées (voir
+`~/.claude/scheduled-tasks/blog-cards-trading-article-hebdo/SKILL.md`)
+a passé son premier vrai test ce matin : la tâche du mardi 9h a détecté
+que l'article Bandai (catégorie `actualite`) ne couvrait PAS le créneau
+Pokémon obligatoire, et a rédigé
+`blog/pokemon-worlds-2026-san-francisco-meta-standard` sans rien dupliquer.
+Un second passage (fact-check) a corrigé un prix et des noms d'attaques
+à 11h37 le même jour.
+
+**À review avant vendredi 28 août** — l'article traite des Championnats
+du Monde qui commencent ce jour-là, sa valeur retombe vite après :
+```
+git fetch origin blog/pokemon-worlds-2026-san-francisco-meta-standard
+git show origin/blog/pokemon-worlds-2026-san-francisco-meta-standard:src/content/blog/pokemon-worlds-2026-san-francisco-meta-standard.md
+```
+2034 mots, `draft: true`, FAQ présente, image vérifiée. Reste la relecture
+humaine avant de retirer `draft: true` et fusionner.
+
+## 🟠 À observer — ce qui reste vraiment ouvert
 
 ### 1. Le premier passage réel de chaque automatisation
 
-Tout a été vérifié à blanc, mais trois choses n'ont **jamais tourné en
-conditions réelles** :
+**Discord est désormais vérifié en conditions réelles** : le run de ce
+matin (25 août, 09h53 UTC) a bien posté un article publié — le Dragon
+Ball Story Booster 01 — sur le vrai webhook. La file traite un article
+par exécution, du plus ancien au plus récent ; Bandai (24 août) partira
+au prochain passage, vendredi.
+
+Restent deux choses jamais vues en conditions réelles :
 
 | À observer | Quand | Ce qui peut casser |
 |---|---|---|
-| Publication d'un post Buffer | au prochain article | l'API a accepté la mise en file, pas la publication |
+| Publication d'un post Buffer | aujourd'hui, ~12h23 | l'API a accepté la mise en file, pas la publication |
 | Validation du média par Instagram et TikTok | idem | la vignette peut être refusée au moment de publier |
 | Enchaînement de `cote-hebdo` | jeudi | commit → déploiement Vercel → publication, jamais joué bout en bout |
 
@@ -36,6 +61,8 @@ Le point le plus fragile est le troisième : le workflow committe la
 vignette, **attend que l'URL réponde 200**, puis publie. La vérification
 remplace un délai fixe, mais l'enchaînement complet reste à voir.
 
+Vérifié le 25 août : la chaîne d'inscription fonctionne de bout en bout
+(base + email admin + opt-in newsletter, testé en conditions réelles).
 Vérifier aussi que la colonne `source` de `beta_submissions` se remplit
 avec `x`, `instagram`, `discord`. C'est elle qui dira quel canal convertit
 — et pour l'instant elle n'a enregistré aucune inscription réelle.
@@ -138,7 +165,7 @@ déjà les fautes de frappe courantes.
 | Automatisation | Rythme | État |
 |---|---|---|
 | `keep-alive` | 6 h | ✅ les deux bases Supabase |
-| `annonce-discord` | mardi, vendredi | ✅ routé par TCG, 7 webhooks validés |
+| `annonce-discord` | mardi, vendredi | ✅ routé par TCG, 7 webhooks validés, premier post réel le 25/08 |
 | `annonce-buffer` | mardi, vendredi | ✅ X, Instagram, TikTok |
 | `cote-hebdo` | jeudi | ⏳ jamais tourné en réel |
 
