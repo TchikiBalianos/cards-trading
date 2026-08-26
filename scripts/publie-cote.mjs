@@ -193,6 +193,36 @@ if (SEC) {
   process.exit(0);
 }
 
+/*
+  Archive le podium pour la newsletter du samedi.
+
+  Sans ça, le classement calculé ici ne survit que le temps du run
+  (.cote-cache.json est gitignore) — le samedi n'aurait rien à relire.
+  Placé APRÈS le dry-run (on ne veut pas polluer l'historique d'un essai)
+  et indépendamment du succès Discord/Buffer : le digest du samedi doit
+  pouvoir afficher les tendances même si les réseaux sociaux ont eu un
+  raté ce jeudi-là. Uniquement le marché EUR — 'op' (One Piece, dollars)
+  est hors de ce que lit la newsletter.
+*/
+if (MARCHE !== 'op') {
+  const FICHIER_PODIUMS = join(RACINE, 'data', 'cotes', 'podiums-hebdo.json');
+  let historique = [];
+  try {
+    historique = JSON.parse(readFileSync(FICHIER_PODIUMS, 'utf8'));
+    if (!Array.isArray(historique)) historique = [];
+  } catch {
+    /* Fichier absent au premier passage : on part d'un historique vide. */
+  }
+  historique.push({
+    date: new Date().toISOString().slice(0, 10),
+    marche: MARCHE,
+    podium: donnees.podium,
+  });
+  mkdirSync(dirname(FICHIER_PODIUMS), { recursive: true });
+  writeFileSync(FICHIER_PODIUMS, JSON.stringify(historique, null, 2) + '\n');
+  console.log(`Podium archivé dans ${FICHIER_PODIUMS} (${historique.length} entrée(s) au total).`);
+}
+
 /* ── 4. Envoi ──────────────────────────────────────────── */
 
 let partis = 0;

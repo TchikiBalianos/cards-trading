@@ -35,6 +35,41 @@ const HAUSSE_MAX_PLAUSIBLE = 300;
 /* En dessous, ce n'est pas une hausse, c'est du bruit de marché. */
 const HAUSSE_MIN_INTERESSANTE = 12;
 
+/*
+  Recoupement contre TCGplayer (marché américain, USD) — présent dans la
+  MÊME réponse TCGdex que Cardmarket, donc sans appel ni dépendance
+  supplémentaire. Deux marchés indépendants (vendeurs et acheteurs
+  différents) qui divergent trop pour la même carte trahissent plus
+  souvent une carte mal identifiée ou un flux de prix aberrant qu'un
+  vrai écart de marché.
+
+  Un recoupement direct contre la page Cardmarket elle-même a été essayé
+  et écarté : Cloudflare y bloque toute requête HTTP simple (403,
+  Cf-Mitigated: challenge, vérifié le 26 août 2026 — même avec un
+  user-agent de navigateur). TCGplayer est déjà dans la réponse, donc
+  gratuit à vérifier.
+
+  Taux de change FIXE et approximatif : on cherche un ordre de grandeur
+  plausible, pas une conversion précise. Une carte sans cotation
+  TCGplayer (fréquent sur les promos) n'est pas rejetée pour autant —
+  l'absence de second avis n'est pas un signal, contrairement à un
+  désaccord entre les deux.
+*/
+const TAUX_USD_EUR = 0.92;
+const RATIO_MARCHES_MAX = 3;
+
+/* Le nom de la variante (holofoil, normal, reverseHolofoil…) change selon
+   les cartes ; on prend la première qui a un prix plutôt que de viser un
+   nom précis. */
+function prixTcgplayerEur(tp) {
+  if (!tp) return null;
+  for (const cle of Object.keys(tp)) {
+    const prix = tp[cle]?.marketPrice;
+    if (typeof prix === 'number' && prix > 0) return prix * TAUX_USD_EUR;
+  }
+  return null;
+}
+
 const args = process.argv.slice(2);
 const MARCHE = (args.find((a) => a.startsWith('--marche=')) || '').split('=')[1] || 'int';
 const EN_JSON = args.includes('--json');
@@ -55,7 +90,7 @@ function joursDepuis(iso) {
   retourne le motif de rejet plutôt qu'un simple faux : quand rien ne
   sort, il faut pouvoir dire pourquoi.
 */
-function examiner(carte, cm) {
+function examiner(carte, cm, tp) {
   if (!cm) return { ok: false, motif: 'aucun prix Cardmarket' };
   if (cm.unit !== 'EUR') return { ok: false, motif: `devise inattendue (${cm.unit})` };
 
@@ -72,6 +107,18 @@ function examiner(carte, cm) {
   if (variation > HAUSSE_MAX_PLAUSIBLE) return { ok: false, motif: `hausse aberrante (${Math.round(variation)} %)` };
   if (variation < HAUSSE_MIN_INTERESSANTE) return { ok: false, motif: 'variation négligeable' };
 
+  const tcgplayerEur = prixTcgplayerEur(tp);
+  const recoupe = tcgplayerEur !== null;
+  if (recoupe) {
+    const ratio = actuel / tcgplayerEur;
+    if (ratio > RATIO_MARCHES_MAX || ratio < 1 / RATIO_MARCHES_MAX) {
+      return {
+        ok: false,
+        motif: `incohérent avec TCGplayer (${actuel} € contre ~${tcgplayerEur.toFixed(2)} € converti)`,
+      };
+    }
+  }
+
   return {
     ok: true,
     nom: carte.name,
@@ -82,6 +129,7 @@ function examiner(carte, cm) {
     variation: Math.round(variation),
     image: carte.image ? `${carte.image}/high.png` : null,
     maj: cm.updated,
+    recoupeTcgplayer: recoupe,
   };
 }
 
@@ -122,7 +170,7 @@ for (const s of recents) {
       continue;
     }
     examinees++;
-    const verdict = examiner(carte, carte.pricing?.cardmarket);
+    const verdict = examiner(carte, carte.pricing?.cardmarket, carte.pricing?.tcgplayer);
     if (verdict.ok) retenues.push({ ...verdict, set: s.name });
     else rejets[verdict.motif.replace(/\(.*\)/, '').trim()] = (rejets[verdict.motif.replace(/\(.*\)/, '').trim()] || 0) + 1;
   }

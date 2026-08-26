@@ -52,9 +52,9 @@ Samedi 13h37 Paris
   └─ .github/workflows/newsletter-hebdo.yml
        └─ scripts/newsletter-hebdo.mjs
             ├─ lit src/content/blog/*.md (articles publiés, 7 derniers jours)
-            ├─ lit data/cotes/podiums-hebdo.json (podium du jeudi, si présent)
-            │    └─ recoupe chaque carte contre sa page Cardmarket publique
-            │       avant de l'inclure (voir "Double check des prix")
+            ├─ lit data/cotes/podiums-hebdo.json (podium du jeudi, déjà
+            │    recoupé contre TCGplayer en amont — voir "Double check
+            │    des prix")
             ├─ compose le HTML (table-based, styles inline, identité de
             │  marque existante — voir gabarit validé)
             ├─ resend.create-broadcast (segment "General", brouillon)
@@ -75,26 +75,35 @@ chemin existant.
 
 ## Double check des prix (ajouté le 26 août, à la demande de Julian)
 
-Avant d'inclure une carte du podium dans la newsletter, le script
-recoupe le prix calculé par TCGdex contre le prix affiché sur la **page
-produit Cardmarket publique** de cette carte (pas de compte requis, une
-simple requête HTTP).
+**Version 1 (abandonnée) :** recoupement contre la page produit
+Cardmarket publique. Testé en réel le 26 août : Cardmarket est protégé
+par Cloudflare et renvoie 403 (`Cf-Mitigated: challenge`) sur toute
+requête HTTP simple, même avec un user-agent de navigateur réaliste.
+Aucun scraping possible sans un navigateur complet, hors de proportion
+pour ce besoin.
 
-- Écart ≤ 15 % : la carte reste dans le digest.
-- Écart > 15 % : la carte est retirée du podium de la newsletter (pas
-  d'erreur bloquante, juste moins de cartes affichées cette semaine-là).
+**Version 2 (retenue), implémentée directement dans `cote-hebdo.mjs` :**
+TCGdex renvoie, dans la même réponse déjà utilisée, les prix TCGplayer
+(marché américain, USD) en plus de Cardmarket (EUR) — vérifié sur des
+cartes réelles. Le script convertit le prix TCGplayer en euros (taux
+fixe approximatif, 0,92, une conversion précise n'est pas nécessaire
+pour un contrôle de plausibilité) et rejette la carte si le ratio entre
+les deux marchés dépasse 3x dans un sens ou dans l'autre.
 
-Pourquoi cette méthode plutôt qu'une source vraiment indépendante
-(CardTrader ou équivalent) : les alternatives explorées (PokéWallet,
-Pokemon-API.com, CardMarket-api.com) republient toutes la même donnée
-Cardmarket que TCGdex — les comparer ne prouverait rien de plus.
-CardTrader aurait une donnée réellement indépendante, mais son API de
-pricing large exige une demande à leur équipe, même friction que le
-compte pro Cardmarket déjà écarté pour One Piece.
+Avantages sur la V1 : zéro nouvelle dépendance, zéro risque de blocage
+(API déjà en production), et deux marchés réellement distincts (vendeurs
+et acheteurs différents) plutôt qu'un simple second lecteur de la même
+donnée Cardmarket — contrairement aux alternatives explorées (PokéWallet,
+Pokemon-API.com, CardMarket-api.com), qui republient toutes la même
+source. Une carte sans cotation TCGplayer (fréquent sur les promos)
+n'est PAS rejetée : l'absence de second avis n'est pas un signal,
+contrairement à un désaccord entre les deux marchés.
 
-Le recoupement contre la page publique attrape ce qui a historiquement
-posé problème sur ce projet : mauvaise carte identifiée, cache TCGdex
-périmé — pas "Cardmarket a un prix faux".
+Comme ce garde-fou vit dans `cote-hebdo.mjs` (pas dans le script de la
+newsletter), il profite aussi aux posts Discord/Buffer du jeudi, pas
+seulement au digest du samedi. Validé sur un run réel le 26 août : a
+effectivement écarté une carte (Méga-Camérupt-ex, 4,70 € Cardmarket
+contre ~1,44 € converti TCGplayer, ratio 3,25).
 
 ## Contenu de l'email
 
