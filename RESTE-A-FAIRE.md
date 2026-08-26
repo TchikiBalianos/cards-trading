@@ -1,11 +1,25 @@
 # Reste à faire — Cards-Trading
 
-État au **25 août 2026**. Les règles durables vivent dans `CLAUDE.md` ;
+État au **26 août 2026**. Les règles durables vivent dans `CLAUDE.md` ;
 ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès
 qu'elle est traitée.
 
-**Rien ne bloque aujourd'hui.** Tous les secrets sont en place, les quatre
-workflows tournent.
+---
+
+## 🔴 Bloquant — secret manquant pour la newsletter
+
+`RESEND_API_KEY` n'est **pas** dans les secrets GitHub Actions de ce
+dépôt (vérifié : `gh secret list` ne le montre pas). Sans lui,
+`newsletter-hebdo.yml` échouera silencieusement samedi.
+
+C'est la même clé que celle déjà en variable d'environnement Vercel pour
+`api/submit-form.js`/`api/keep-alive.js` — à copier telle quelle dans
+GitHub : Settings → Secrets and variables → Actions → New repository
+secret, nom `RESEND_API_KEY`.
+
+Une fois le secret ajouté, un `workflow_dispatch` manuel testera la
+création d'un vrai brouillon en conditions réelles (jamais d'envoi
+automatique, voir `scripts/newsletter-hebdo.mjs`).
 
 ---
 
@@ -162,8 +176,10 @@ déjà les fautes de frappe courantes.
 | `keep-alive` | 6 h | ✅ les deux bases Supabase |
 | `annonce-discord` | mardi, vendredi | ✅ routé par TCG, 7 webhooks validés, premier post réel le 25/08 |
 | `annonce-buffer` | mardi, vendredi | ✅ X, Instagram, TikTok |
-| `cote-hebdo` | jeudi | ⏳ jamais tourné en réel |
+| `cote-hebdo` | jeudi | ⏳ jamais tourné en réel — premier passage le 27/08, avec le recoupement TCGplayer et l'archivage du podium |
+| `newsletter-hebdo` | samedi 13h37 | ⏳ secret manquant (voir plus haut), jamais tourné |
 
 Plus : provenance des inscriptions (`beta_submissions.source`), CTA en fin
 d'article, aperçu de lien social corrigé (URL absolue + vignette 1200×630),
-flux RSS, vignettes 1080×1080 par article.
+flux RSS, vignettes 1080×1080 par article, design de la newsletter
+(`docs/plans/2026-08-26-newsletter-design.md`).
