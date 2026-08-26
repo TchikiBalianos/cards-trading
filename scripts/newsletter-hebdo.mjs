@@ -103,6 +103,18 @@ function podiumDeLaSemaine() {
 
 const euros = (n) => n.toFixed(2).replace('.', ',') + ' €';
 
+/* Toujours la plage complète (« du X au Y »), jamais la seule date de
+   début isolée : un objet d'email affichant juste « semaine du 19 août »
+   un 26 août se lit comme si le message datait du 19, alors qu'il couvre
+   la semaine ENTIÈRE jusqu'à aujourd'hui. Calculée une seule fois et
+   partagée entre l'objet et le corps pour qu'ils ne puissent pas
+   diverger. */
+function periodeSemaine() {
+  const debut = new Date(Date.now() - SEPT_JOURS_MS);
+  const fin = new Date();
+  return `${debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })} au ${fin.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`;
+}
+
 /* ── 3. Composition HTML ───────────────────────────────
    Table-based, styles inline : contrainte de compatibilité email
    (Outlook notamment), pas de <style> ni de mise en page en <div>. */
@@ -178,8 +190,7 @@ function sectionPrix(podiumEntry) {
 }
 
 function composerHtml(articles, podiumEntry) {
-  const dateDebut = new Date(Date.now() - SEPT_JOURS_MS);
-  const periode = `${dateDebut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })} au ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`;
+  const periode = periodeSemaine();
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -330,8 +341,7 @@ if (articles.length === 0 && !podiumEntry) {
 
 console.log(`${articles.length} article(s) de la semaine, podium ${podiumEntry ? `présent (${podiumEntry.podium.length} carte(s), marché ${podiumEntry.marche})` : 'absent'}.`);
 
-const dateDebut = new Date(Date.now() - SEPT_JOURS_MS);
-const sujet = `Le récap Cards Trading — semaine du ${dateDebut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`;
+const sujet = `Le récap Cards Trading — semaine du ${periodeSemaine()}`;
 const previewText = articles[0]?.fm.title || 'Les nouveautés de la semaine sur Cards Trading';
 const html = composerHtml(articles, podiumEntry);
 const texte = composerTexte(articles, podiumEntry);
