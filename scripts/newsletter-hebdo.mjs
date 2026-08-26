@@ -301,7 +301,36 @@ async function segmentDiffusion() {
   return choisi.id;
 }
 
-/* ── 5. Création du brouillon (jamais d'envoi) ─────────── */
+/* ── 5. Garde-fou : remplacer un brouillon précédent ────
+   Sans ça, un brouillon jamais envoyé (oublié, ou périmé comme celui du
+   26 août qui portait encore l'ancien objet tronqué) reste indéfiniment
+   dans Resend et un nouveau vient s'y ajouter chaque semaine — plusieurs
+   versions qui se contredisent, sans savoir laquelle est la bonne.
+
+   Filtré sur le PRÉFIXE DE NOM exact posé par ce script : on ne touche
+   jamais un broadcast que Julian aurait créé ou nommé lui-même à la
+   main. Et uniquement les brouillons non envoyés — Resend refuse de
+   toute façon de supprimer un broadcast déjà parti. */
+const PREFIXE_NOM = 'Digest hebdo — ';
+
+async function brouillonsPrecedents() {
+  const r = await fetch(`${API_RESEND}/broadcasts?limit=50`, {
+    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+  });
+  const j = await r.json().catch(() => null);
+  if (!r.ok || !j) throw new Error(`liste des broadcasts introuvable : HTTP ${r.status} — ${JSON.stringify(j)}`);
+  return (j.data || []).filter((b) => b.status === 'draft' && b.name?.startsWith(PREFIXE_NOM));
+}
+
+async function supprimerBrouillon(id) {
+  const r = await fetch(`${API_RESEND}/broadcasts/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+  });
+  if (!r.ok) throw new Error(`suppression du brouillon ${id} échouée : HTTP ${r.status}`);
+}
+
+/* ── 6. Création du brouillon (jamais d'envoi) ─────────── */
 
 async function creerBrouillon({ segmentId, sujet, html, texte, previewText }) {
   const r = await fetch(`${API_RESEND}/broadcasts`, {
@@ -311,7 +340,7 @@ async function creerBrouillon({ segmentId, sujet, html, texte, previewText }) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      name: `Digest hebdo — ${new Date().toISOString().slice(0, 10)}`,
+      name: `${PREFIXE_NOM}${new Date().toISOString().slice(0, 10)}`,
       segment_id: segmentId,
       from: 'Cards Trading <contact@cards-trading.com>',
       subject: sujet,
@@ -365,6 +394,13 @@ if (!process.env.RESEND_API_KEY) {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const segmentId = await segmentDiffusion();
+
+const anciens = await brouillonsPrecedents();
+for (const b of anciens) {
+  await supprimerBrouillon(b.id);
+  console.log(`Brouillon précédent remplacé : ${b.name} (${b.id})`);
+}
+
 const broadcastId = await creerBrouillon({ segmentId, sujet, html, texte, previewText });
 const urlBrouillon = `https://resend.com/broadcasts/${broadcastId}`;
 console.log(`✅ Brouillon créé : ${urlBrouillon}`);
@@ -387,6 +423,9 @@ try {
     ${articles.length} article(s)${podiumEntry ? ` et les tendances de prix du ${podiumEntry.date}` : ', sans tendances de prix cette semaine'}.
     Rien n'est envoyé tant que vous ne cliquez pas sur « Send » dans le dashboard.
   </p>
+  ${anciens.length ? `<p style="font-size:13px;line-height:1.5;color:#888">
+    ${anciens.length} brouillon(s) précédent(s) jamais envoyé(s) ont été remplacés par celui-ci.
+  </p>` : ''}
   <p style="margin:24px 0">
     <a href="${urlBrouillon}" style="background:#2997ff;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:bold">Relire le brouillon</a>
   </p>
