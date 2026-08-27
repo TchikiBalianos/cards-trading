@@ -63,7 +63,7 @@ jobs:
       - name: Archiver le relevé
         if: steps.releve.outcome == 'success'
         run: |
-          if git diff --quiet -- data/cotes/; then
+          if [ -z "$(git status --porcelain -- data/cotes/)" ]; then
             echo "Relevé déjà présent, rien à committer."
             exit 0
           fi
@@ -117,7 +117,7 @@ jobs:
       - name: Déployer la vignette
         if: steps.preparer.outputs.a_publier == 'oui'
         run: |
-          if git diff --quiet -- public/assets/social/; then
+          if [ -z "$(git status --porcelain -- public/assets/social/)" ]; then
             echo "Vignette déjà committée, rien à déployer."
             exit 0
           fi
@@ -169,7 +169,7 @@ jobs:
       - name: Archiver le podium pour la newsletter
         if: always() && steps.preparer.outputs.a_publier == 'oui'
         run: |
-          if git diff --quiet -- data/cotes/podiums-hebdo.json; then
+          if [ -z "$(git status --porcelain -- data/cotes/podiums-hebdo.json)" ]; then
             echo "Rien à archiver (fichier déjà à jour ou marché 'op')."
             exit 0
           fi
