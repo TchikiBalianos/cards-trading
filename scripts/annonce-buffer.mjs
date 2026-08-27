@@ -199,10 +199,30 @@ async function publier(canalId, texte, vignette, metadata) {
     ...(metadata ? { metadata } : {}),
   };
   const d = await graphql(
-    `mutation ($input: CreatePostInput!) { createPost(input: $input) { id status dueAt } }`,
+    `mutation ($input: CreatePostInput!) {
+       createPost(input: $input) {
+         __typename
+         ... on PostActionSuccess { post { id status dueAt } }
+         ... on RestProxyError { message code }
+         ... on InvalidInputError { message }
+         ... on LimitReachedError { message }
+         ... on UnauthorizedError { message }
+         ... on NotFoundError { message }
+         ... on UnexpectedError { message }
+       }
+     }`,
     { input }
   );
-  return d.createPost;
+  /*
+    Depuis août 2026, createPost renvoie une UNION : un refus du réseau
+    arrive en donnée valide, pas dans `errors`. Sans ce contrôle, un post
+    rejeté passerait pour un succès et sortirait de la file.
+  */
+  const r = d.createPost;
+  if (r.__typename !== 'PostActionSuccess') {
+    throw new Error(`${r.__typename}${r.code ? " " + r.code : ""} : ${r.message}`);
+  }
+  return r.post;
 }
 
 /* ── Exécution ─────────────────────────────────────────── */
