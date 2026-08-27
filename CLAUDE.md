@@ -231,6 +231,70 @@ ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agré
 
 ---
 
+---
+
+## Buffer : l'API change sous les pieds
+
+Le relais d'articles vers X, Instagram et TikTok passe par
+`scripts/annonce-buffer.mjs`, lancé par `.github/workflows/annonce-buffer.yml`
+les mardis et vendredis. Entre le 23 et le 25 août 2026, **deux évolutions
+simultanées** de l'API GraphQL l'ont cassé net, sans préavis ni changement
+de version. Le premier symptôme fait accuser la clé : ce n'est pas elle.
+
+### `channels` : seule la requête racine passe
+
+`account { organizations { channels } }` répond **FORBIDDEN** à une clé
+personnelle. La requête racine renvoie exactement les mêmes champs :
+
+```graphql
+query ($input: ChannelsInput!) {
+  channels(input: $input) { id service isDisconnected }
+}
+```
+
+Le message « Not authorized to access this resource » oriente vers un
+problème de périmètre. Il n'en est rien : vérifié le 27 août 2026 avec une
+clé neuve portant les 9 permissions proposées, sans effet. Il n'existe
+aucun scope `channels:*` à cocher, la liste s'arrête à `account`, `posts`,
+`ideas`, `insights` et `engagements`.
+
+⚠️ Ne pas figer les identifiants de canaux dans le dépôt pour contourner :
+reconnecter un compte dans Buffer lui en attribue un nouveau, et le relais
+partirait alors silencieusement vers le vide.
+
+### `createPost` : un refus arrive en réponse **valide**
+
+Le type de retour est devenu `PostActionPayload`, une **union** dont seul
+`PostActionSuccess` porte le post. Les six autres membres sont des erreurs
+(`InvalidInputError`, `LimitReachedError`, `RestProxyError`,
+`UnauthorizedError`, `NotFoundError`, `UnexpectedError`), toutes porteuses
+d'un `message`.
+
+C'est le piège de fond, et il survivra à cet incident : **un rejet du réseau
+ne remplit plus `errors`**. La réponse est un HTTP 200 sans la moindre
+erreur GraphQL. Un code qui teste `if (j.errors)` conclut au succès, sort
+l'article de la file, et le post n'existe nulle part. Même famille que le
+`return 200` inconditionnel de mai 2026 sur `/api/submit-form`.
+
+Le `__typename` est donc obligatoire, et son contrôle aussi :
+
+```js
+if (r.__typename !== 'PostActionSuccess') throw new Error(r.message);
+```
+
+### Éprouver sans rien publier
+
+Le workflow accepte un mode brouillon, qui crée les posts sans les mettre
+en file :
+
+```bash
+gh workflow run annonce-buffer.yml --repo TchikiBalianos/cards-trading -f brouillon=true
+```
+
+Un brouillon ne consomme pas l'article : `.github/etat-annonces-buffer.json`
+n'est écrit que si un post part réellement. Sans quoi un simple test
+retirerait l'article de la file et il ne serait jamais annoncé.
+
 ## Vérification — non négociable
 
 Ce projet a une histoire de correctifs annoncés sans preuve. **Toujours vérifier

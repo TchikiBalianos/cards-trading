@@ -179,10 +179,16 @@ function texteInstagram(fm) {
   );
 }
 
+/* TikTok accepte 2200 caractères de description. Le budget se calcule sur
+   le texte complet, signature et mots-clés compris, et seule la description
+   est rognée. La borne à 130 d'avant coupait en plein milieu d'une
+   phrase dès que le chapô dépassait deux lignes. */
 function texteTikTok(fm) {
+  const suffixe = `\n\n${SIGNATURE}\n\n${motsCles(fm.category, 4)}`;
+  const reste = 2200 - suffixe.length;
   let t = fm.description || fm.title;
-  if (t.length > 130) t = t.slice(0, 129).trimEnd() + '…';
-  return `${t}\n\n${SIGNATURE}\n\n${motsCles(fm.category, 4)}`;
+  if (t.length > reste) t = t.slice(0, reste - 1).trimEnd() + '…';
+  return `${t}${suffixe}`;
 }
 
 async function publier(canalId, texte, vignette, metadata) {
