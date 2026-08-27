@@ -294,9 +294,21 @@ if (cle) {
     return j.data;
   };
 
-  const d = await graphql('{ account { organizations { channels { id service isDisconnected } } } }');
+  /*
+    La liste passe par la requête RACINE `channels`, et non par
+    `account.organizations[].channels` : ce chemin-là répond FORBIDDEN à
+    une clé personnelle, quel que soit son périmètre. Même correctif que
+    dans annonce-buffer.mjs (27 août 2026) — les deux scripts ont leur
+    propre copie du code Buffer, et celle-ci avait été oubliée.
+  */
+  const d = await graphql('{ account { organizations { id } } }');
+  const org = d.account.organizations[0];
+  const liste = await graphql(
+    'query ($input: ChannelsInput!) { channels(input: $input) { id service isDisconnected } }',
+    { input: { organizationId: org.id } }
+  );
   const canaux = {};
-  for (const c of d.account.organizations[0].channels || []) {
+  for (const c of liste.channels || []) {
     if (!c.isDisconnected) canaux[c.service] = c.id;
   }
 
@@ -309,8 +321,26 @@ if (cle) {
   for (const [service, texte, image, metadata] of envois) {
     if (!canaux[service]) { console.log(`—  ${service} : non connecté.`); continue; }
     try {
-      const p = await graphql(
-        'mutation ($input: CreatePostInput!) { createPost(input: $input) { id status dueAt } }',
+      /*
+        `createPost` renvoie une UNION depuis août 2026 : un refus du
+        réseau (quota, entrée invalide, rejet) arrive en donnée VALIDE,
+        pas dans `errors`. Sans contrôle du __typename, un post rejeté
+        passerait pour un succès. Même correctif que dans
+        annonce-buffer.mjs, oublié ici.
+      */
+      const d2 = await graphql(
+        `mutation ($input: CreatePostInput!) {
+           createPost(input: $input) {
+             __typename
+             ... on PostActionSuccess { post { id status dueAt } }
+             ... on RestProxyError { message code }
+             ... on InvalidInputError { message }
+             ... on LimitReachedError { message }
+             ... on UnauthorizedError { message }
+             ... on NotFoundError { message }
+             ... on UnexpectedError { message }
+           }
+         }`,
         {
           input: {
             channelId: canaux[service],
@@ -323,7 +353,11 @@ if (cle) {
           },
         }
       );
-      console.log(`✅ ${service} : ${p.createPost.status}${p.createPost.dueAt ? ' pour le ' + p.createPost.dueAt : ''}`);
+      const r = d2.createPost;
+      if (r.__typename !== 'PostActionSuccess') {
+        throw new Error(`${r.__typename}${r.code ? ' ' + r.code : ''} : ${r.message}`);
+      }
+      console.log(`✅ ${service} : ${r.post.status}${r.post.dueAt ? ' pour le ' + r.post.dueAt : ''}`);
       partis++;
     } catch (e) {
       console.error(`❌ ${service} : ${e.message}`);
