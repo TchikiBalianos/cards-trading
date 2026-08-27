@@ -15,6 +15,8 @@
  *   node scripts/cote-hebdo.mjs --json          # sortie brute
  */
 
+import { readFileSync } from 'node:fs';
+
 const API = 'https://api.tcgdex.net/v2';
 
 /* ── Garde-fous ────────────────────────────────────────────
@@ -161,6 +163,12 @@ function examiner(carte, cm, tp) {
     image: carte.image ? `${carte.image}/high.png` : null,
     maj: cm.updated,
     recoupeTcgplayer: recoupe,
+    /* Conservés pour le rapprochement des cartes Dresseur japonaises :
+       ces trois champs ne sont pas traduits et servent de clé vers la
+       fiche française. */
+    category: carte.category,
+    illustrator: carte.illustrator,
+    rarity: carte.rarity,
   };
 }
 
@@ -234,6 +242,61 @@ async function nomFrancais(dexId) {
 }
 
 /*
+  Cartes DRESSEUR japonaises : PokéAPI ne connaît que les espèces, donc
+  aucune traduction n'était possible et le nom japonais ressortait tel
+  quel (« ウルトラ調査隊 », vu en production le 27 août 2026).
+
+  Deux niveaux, du plus sûr au plus large :
+
+  1. Table vérifiée à la main (data/traductions-dresseurs.json).
+  2. Rapprochement automatique sur TCGdex par ILLUSTRATEUR + catégorie +
+     rareté — trois champs qui ne sont PAS traduits et concordent entre
+     la fiche japonaise et la fiche française. Retenu UNIQUEMENT si un
+     seul candidat sort.
+
+  Le seuil du point 2 n'est pas de la prudence excessive : mesuré sur
+  « ウルトラ調査隊 », ces filtres laissent 26 candidats (10 en se
+  limitant à l'ère du set). Trancher au hasard aurait publié « Kahili »
+  à la place d'« Ultra-Commando ». Un nom faux est pire qu'une carte
+  écartée — d'où la table pour les cas ambigus.
+*/
+let tableDresseurs = null;
+function traductionManuelle(nom) {
+  if (tableDresseurs === null) {
+    try {
+      const chemin = new URL('../data/traductions-dresseurs.json', import.meta.url);
+      tableDresseurs = JSON.parse(readFileSync(chemin, 'utf8')).traductions || {};
+    } catch {
+      tableDresseurs = {};
+    }
+  }
+  return tableDresseurs[nom] || null;
+}
+
+async function nomFrancaisDresseur(carte) {
+  const manuelle = traductionManuelle(carte.name);
+  if (manuelle) return manuelle;
+
+  if (!carte.illustrator || !carte.rarity) return null;
+  try {
+    const params = new URLSearchParams({
+      illustrator: carte.illustrator,
+      category: 'Dresseur',
+      rarity: carte.rarity,
+    });
+    const r = await fetch(`${API}/fr/cards?${params}`);
+    if (!r.ok) return null;
+    const candidats = await r.json();
+    /* Un seul candidat = correspondance certaine. Au-delà, on ne devine
+       pas : la carte sera écartée et son nom journalisé pour être ajouté
+       à la table après vérification. */
+    return Array.isArray(candidats) && candidats.length === 1 ? candidats[0].name : null;
+  } catch {
+    return null;
+  }
+}
+
+/*
   Podium constitué au fil de la traduction, et NON avec un `slice(0, 3)`
   suivi d'une traduction.
 
@@ -257,21 +320,36 @@ const podium = [];
 for (const c of retenues) {
   if (podium.length >= 3) break;
 
-  const fr = await nomFrancais(c.dexId);
   /* Le nom d'espèce n'est ajouté que si le nom de la carte n'est PAS
      en alphabet latin. Sur « Méga-Méganium-ex », préfixer « Méganium »
      est redondant ; sur « エリカのモンジャラ », c'est indispensable. */
   const enLatin = [...c.nom].every((ch) => ch.codePointAt(0) < 0x0370);
 
+  /* Espèce via PokéAPI ; à défaut, carte Dresseur via TCGdex. */
+  let fr = await nomFrancais(c.dexId);
+  let estDresseur = false;
+  if (!fr && !enLatin && c.category === 'Trainer') {
+    fr = await nomFrancaisDresseur({ name: c.nom, illustrator: c.illustrator, rarity: c.rarity });
+    estDresseur = Boolean(fr);
+  }
+
   if (!enLatin && !fr) {
     rejets['nom non traduisible'] = (rejets['nom non traduisible'] || 0) + 1;
+    /* Journalisé pour pouvoir enrichir data/traductions-dresseurs.json
+       après vérification manuelle : sans ce nom, impossible de savoir
+       quoi ajouter. */
+    console.error(`  ↳ nom non traduisible, à ajouter à la table : ${c.nom} (${c.id})`);
     continue;
   }
 
   /* On garde le nom d'origine à côté : sur une carte japonaise il situe
      la version, sur une carte française il est déjà identique. */
   c.nomFr = fr;
-  c.affichage = fr && !enLatin ? `${fr} — ${c.nom}` : c.nom;
+  /* Le nom japonais est conservé à côté pour une carte Pokémon : il
+     situe la version. Pour un Dresseur en revanche, le nom français EST
+     le nom officiel de la carte — accoler le japonais n'apporterait
+     qu'une ligne illisible. */
+  c.affichage = !fr || enLatin ? c.nom : estDresseur ? fr : `${fr} — ${c.nom}`;
   podium.push(c);
 }
 

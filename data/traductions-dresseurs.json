@@ -1,0 +1,6 @@
+{
+  "_lisezmoi": "Noms francais des cartes DRESSEUR japonaises, verifies un par un. PokeAPI ne traduit que les especes Pokemon : sans cette table, une carte Dresseur japonaise ressort en japonais dans le top des hausses (constate en production le 27/08/2026 avec ウルトラ調査隊). Le script tente d'abord un rapprochement automatique par illustrateur + categorie + rarete sur TCGdex, et ne s'y fie QUE si un seul candidat sort ; cette table couvre les cas ambigus. Verifier chaque ajout sur la fiche TCGdex francaise avant de l'inscrire ici — un nom faux est pire qu'une carte ecartee.",
+  "traductions": {
+    "ウルトラ調査隊": "Ultra-Commando"
+  }
+}
