@@ -228,21 +228,29 @@ ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agré
 - Le domaine apex redirige en 307 vers `www.` — utiliser `curl -L`.
 - Vercel consomme `s-maxage` et `stale-while-revalidate` et les retire de la
   réponse envoyée au navigateur : voir seulement `Cache-Control: public` est normal.
-- ⚠️ **Les déploiements sont traités EN FILE.** Un déploiement isolé met
-  ~1 min ; plusieurs commits rapprochés s'empilent et le dernier peut
-  attendre bien plus longtemps. Tout workflow qui committe un fichier
-  *puis attend qu'il soit servi* doit prévoir une marge large.
+- ⚠️ **Le `curl -L` de la règle précédente vaut AUSSI dans les workflows.**
+  Un test d'attente qui interroge l'apex sans `-L` reçoit 307 et n'atteint
+  jamais 200 : il échoue au bout de son timeout, quelle qu'en soit la durée.
 
-  Constaté le 27 août 2026 sur `cote-hebdo` : 5 déploiements en 3 minutes
-  (le workflow en produit 3 à lui seul, une session de travail en avait
-  ajouté d'autres), vignette servie juste après la fenêtre de 5 min,
-  publication de la semaine perdue alors que le calcul, la vignette et le
-  commit avaient tous réussi. Fenêtre portée à 12 min.
+  `cote-hebdo` committe sa vignette puis attend qu'elle soit servie avant
+  de publier. Ce test tournait sans `-L` : les trois premiers passages
+  réels du 27 août 2026 ont tous échoué là, après que le calcul, la
+  vignette et le commit avaient pourtant réussi.
 
-  Le symptôme trompe : `curl` sur l'URL répond 200 quelques minutes plus
-  tard, ce qui donne l'impression que le workflow avait tort. Vérifier
-  l'horodatage des déploiements avant de conclure à un bug :
-  `gh api repos/TchikiBalianos/cards-trading/deployments --jq '.[0:6][] | "\(.created_at) \(.ref[0:7])"'`
+  **Le piège se referme deux fois**, et c'est le plus important à retenir :
+  vérifier la même URL à la main avec `curl -L` répond 200, ce qui fait
+  conclure « la vignette est bien là, le workflow a juste été trop
+  impatient ». J'ai perdu deux itérations à élargir le timeout (5 → 12 min)
+  et à documenter une fausse cause (« les déploiements Vercel s'empilent »)
+  avant de comparer les deux commandes :
+
+  ```bash
+  curl -s  -o /dev/null -w '%{http_code}' "https://cards-trading.com/…"  # 307
+  curl -sL -o /dev/null -w '%{http_code}' "https://cards-trading.com/…"  # 200
+  ```
+
+  Reproduire **exactement** la commande qui échoue, options comprises,
+  avant de théoriser sur sa cause.
 
 ---
 

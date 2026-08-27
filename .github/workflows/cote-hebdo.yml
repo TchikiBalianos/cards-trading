@@ -128,17 +128,16 @@ jobs:
           git pull --rebase --autostash origin main
           git push origin HEAD:main
 
-      # Vercel met ~1 min à publier un déploiement isolé. On vérifie l'URL
-      # au lieu de parier sur un délai fixe : un `sleep 90` échouerait un
-      # jour de lenteur.
+      # Vercel met ~1 min à publier. On vérifie l'URL au lieu de parier sur
+      # un délai fixe : un `sleep 90` échouerait un jour de lenteur.
       #
-      # ⚠️ 12 min et non 5. Les déploiements Vercel sont traités EN FILE :
-      # plusieurs commits rapprochés (ce workflow en produit déjà 3 à lui
-      # seul, et une session de travail en ajoute d'autres) s'empilent et
-      # celui qui porte la vignette attend son tour. Constaté le 27 août
-      # 2026 : 5 déploiements en 3 minutes, la vignette servie juste après
-      # la fenêtre de 5 min, publication perdue pour la semaine alors que
-      # tout le reste avait fonctionné.
+      # ⚠️ `-L` OBLIGATOIRE. Le domaine apex redirige en 307 vers `www.`
+      # (déjà consigné dans CLAUDE.md) : sans suivre la redirection, ce
+      # test reçoit 307 et n'atteint JAMAIS 200, quelle que soit la durée
+      # d'attente. C'est ce qui a fait échouer les trois premiers passages
+      # réels du 27 août 2026 — et le piège se referme deux fois, car
+      # vérifier l'URL à la main avec `curl -L` répond bien 200 et donne
+      # l'illusion d'une simple lenteur de déploiement.
       - name: Attendre que la vignette soit servie
         if: steps.preparer.outputs.a_publier == 'oui'
         run: |
@@ -146,7 +145,7 @@ jobs:
           URL="https://cards-trading.com/assets/social/$FICHIER"
           echo "Attente de $URL"
           for i in $(seq 1 72); do
-            CODE=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+            CODE=$(curl -sL -o /dev/null -w '%{http_code}' "$URL")
             if [ "$CODE" = "200" ]; then echo "Servie après $((i*10))s."; exit 0; fi
             sleep 10
           done
