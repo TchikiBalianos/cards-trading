@@ -243,9 +243,21 @@ function composerHtml(articles, podiumEntry) {
       </table>
     </td>
   </tr>
+  <!--
+    Le motif de réception dit « newsletter », JAMAIS « liste d'attente ».
+
+    Les deux consentements sont distincts et stockés séparément :
+    beta_submissions (Supabase) retient tous les inscrits à la bêta,
+    le segment Resend ne reçoit un contact QUE si la case newsletter a
+    été cochée (voir api/submit-form.js). Un destinataire de cet email
+    a donc toujours consenti à la newsletter — annoncer la liste
+    d'attente à la place décrivait mal la base légale de l'envoi.
+
+    Corrigé le 27 août 2026, après le premier envoi réel.
+  -->
   <tr>
     <td style="padding:28px 28px 24px; border-top:1px solid #1c2333; font-family:Arial,Helvetica,sans-serif; font-size:11px; line-height:1.6; color:#5c6a82; text-align:center;">
-      Vous recevez cet email parce que vous êtes inscrit à la liste d'attente Cards Trading.<br>
+      Vous recevez cet email parce que vous vous êtes inscrit à la newsletter Cards Trading.<br>
       Cards Trading — édité par Thugz Labs.<br>
       <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#7c879c; text-decoration:underline;">Se désinscrire</a>
     </td>
@@ -274,6 +286,7 @@ function composerTexte(articles, podiumEntry) {
   }
   lignes.push(`Voir le site : ${SITE}/`);
   lignes.push('');
+  lignes.push('Vous recevez cet email parce que vous vous êtes inscrit à la newsletter Cards Trading.');
   lignes.push('Se désinscrire : {{{RESEND_UNSUBSCRIBE_URL}}}');
   return lignes.join('\n');
 }
