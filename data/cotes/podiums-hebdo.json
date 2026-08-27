@@ -1,0 +1,53 @@
+[
+  {
+    "date": "2026-08-27",
+    "marche": "jp",
+    "podium": [
+      {
+        "ok": true,
+        "nom": "ミュウツーGX",
+        "dexId": 150,
+        "id": "SM3p-075",
+        "actuel": 107.6,
+        "reference": 33.58,
+        "variation": 220,
+        "image": null,
+        "maj": "2026-08-26T20:57:07.265Z",
+        "recoupeTcgplayer": false,
+        "set": "ひかる伝説",
+        "nomFr": "Mewtwo",
+        "affichage": "Mewtwo — ミュウツーGX"
+      },
+      {
+        "ok": true,
+        "nom": "ルカリオGX",
+        "dexId": 448,
+        "id": "SM5p-030",
+        "actuel": 6.28,
+        "reference": 2.31,
+        "variation": 172,
+        "image": null,
+        "maj": "2026-08-26T20:57:07.283Z",
+        "recoupeTcgplayer": false,
+        "set": "ウルトラフォース",
+        "nomFr": "Lucario",
+        "affichage": "Lucario — ルカリオGX"
+      },
+      {
+        "ok": true,
+        "nom": "ウルトラ調査隊",
+        "dexId": null,
+        "id": "SM5p-055",
+        "actuel": 80.04,
+        "reference": 38.6,
+        "variation": 107,
+        "image": null,
+        "maj": "2026-08-26T20:57:07.283Z",
+        "recoupeTcgplayer": false,
+        "set": "ウルトラフォース",
+        "nomFr": null,
+        "affichage": "ウルトラ調査隊"
+      }
+    ]
+  }
+]
