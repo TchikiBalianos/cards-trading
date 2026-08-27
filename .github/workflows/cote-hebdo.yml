@@ -28,6 +28,10 @@ on:
         type: choice
         options: [auto, int, jp]
         default: auto
+      sans_discord:
+        description: "Reprise : ne pas reposter sur Discord (deja parti)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -160,7 +164,7 @@ jobs:
           DISCORD_WEBHOOK_ONE_PIECE: ${{ secrets.DISCORD_WEBHOOK_ONE_PIECE }}
           DISCORD_WEBHOOK_DEFAUT: ${{ secrets.DISCORD_WEBHOOK_DEFAUT }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=publier
+        run: node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=publier ${{ inputs.sans_discord && '--sans-discord' || '' }}
 
       # La newsletter du samedi lit ce fichier. Commit indépendant du
       # succès Discord/Buffer (if: always()) : un raté social ne doit pas

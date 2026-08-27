@@ -36,6 +36,16 @@ const MARCHE = (args.find((a) => a.startsWith('--marche=')) || '').split('=')[1]
 const SEC = args.includes('--dry-run');
 
 /*
+  Reprise après échec partiel.
+
+  Discord et Buffer sont publiés à la suite : Discord peut réussir puis
+  Buffer échouer, et c'est arrivé dès le premier passage réel (27 août
+  2026). Relancer tel quel reposterait sur Discord un message déjà vu par
+  la communauté. Cette option permet de ne rejouer que ce qui manque.
+*/
+const SANS_DISCORD = args.includes('--sans-discord');
+
+/*
   Deux phases, parce que Buffer récupère l'image par URL PUBLIQUE : la
   vignette doit être déployée avant qu'on puisse la référencer.
 
@@ -263,7 +273,9 @@ const echecs = [];
 const webhook =
   (MARCHE === 'op' ? process.env.DISCORD_WEBHOOK_ONE_PIECE : process.env.DISCORD_WEBHOOK_POKEMON) ||
   process.env.DISCORD_WEBHOOK_DEFAUT;
-if (webhook) {
+if (SANS_DISCORD) {
+  console.log('—  Discord : sauté (--sans-discord), reprise après échec partiel.');
+} else if (webhook) {
   try {
     const r = await fetch(webhook, {
       method: 'POST',
