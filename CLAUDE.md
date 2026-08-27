@@ -228,6 +228,21 @@ ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agré
 - Le domaine apex redirige en 307 vers `www.` — utiliser `curl -L`.
 - Vercel consomme `s-maxage` et `stale-while-revalidate` et les retire de la
   réponse envoyée au navigateur : voir seulement `Cache-Control: public` est normal.
+- ⚠️ **Les déploiements sont traités EN FILE.** Un déploiement isolé met
+  ~1 min ; plusieurs commits rapprochés s'empilent et le dernier peut
+  attendre bien plus longtemps. Tout workflow qui committe un fichier
+  *puis attend qu'il soit servi* doit prévoir une marge large.
+
+  Constaté le 27 août 2026 sur `cote-hebdo` : 5 déploiements en 3 minutes
+  (le workflow en produit 3 à lui seul, une session de travail en avait
+  ajouté d'autres), vignette servie juste après la fenêtre de 5 min,
+  publication de la semaine perdue alors que le calcul, la vignette et le
+  commit avaient tous réussi. Fenêtre portée à 12 min.
+
+  Le symptôme trompe : `curl` sur l'URL répond 200 quelques minutes plus
+  tard, ce qui donne l'impression que le workflow avait tort. Vérifier
+  l'horodatage des déploiements avant de conclure à un bug :
+  `gh api repos/TchikiBalianos/cards-trading/deployments --jq '.[0:6][] | "\(.created_at) \(.ref[0:7])"'`
 
 ---
 
