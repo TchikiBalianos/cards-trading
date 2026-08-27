@@ -208,7 +208,6 @@ for (const s of recents) {
 }
 
 retenues.sort((a, b) => b.variation - a.variation);
-const podium = retenues.slice(0, 3);
 
 /*
   Nom français de l'espèce, via PokéAPI (gratuit, sans clé).
@@ -234,16 +233,46 @@ async function nomFrancais(dexId) {
   }
 }
 
-for (const c of podium) {
+/*
+  Podium constitué au fil de la traduction, et NON avec un `slice(0, 3)`
+  suivi d'une traduction.
+
+  Une carte dont le nom reste en japonais n'a rien à faire dans une
+  publication française. Le cas se produit sur les cartes DRESSEUR :
+  PokéAPI ne connaît que les espèces, donc une carte sans `dexId` —
+  « ウルトラ調査隊 » (Ultra Recon Squad) — ressortait telle quelle.
+  Constaté en production le 27 août 2026, en 3e position du podium.
+
+  Vérifié avant de choisir cette approche : TCGdex n'expose aucune
+  correspondance entre une carte japonaise et sa version française
+  (l'identifiant SM5p-055 répond 404 en locale fr comme en), et sa
+  recherche par nom ne traverse pas les langues. Il n'existe donc pas de
+  traduction fiable à aller chercher — d'où l'écart au profit de la
+  carte suivante, plutôt qu'un affichage illisible.
+
+  On s'arrête dès qu'on a trois cartes nommables : au pire on parcourt
+  toutes les retenues, mais l'appel PokéAPI reste rare.
+*/
+const podium = [];
+for (const c of retenues) {
+  if (podium.length >= 3) break;
+
   const fr = await nomFrancais(c.dexId);
-  /* On garde le nom d'origine à côté : sur une carte japonaise il situe
-     la version, sur une carte française il est déjà identique. */
-  c.nomFr = fr;
   /* Le nom d'espèce n'est ajouté que si le nom de la carte n'est PAS
      en alphabet latin. Sur « Méga-Méganium-ex », préfixer « Méganium »
      est redondant ; sur « エリカのモンジャラ », c'est indispensable. */
   const enLatin = [...c.nom].every((ch) => ch.codePointAt(0) < 0x0370);
+
+  if (!enLatin && !fr) {
+    rejets['nom non traduisible'] = (rejets['nom non traduisible'] || 0) + 1;
+    continue;
+  }
+
+  /* On garde le nom d'origine à côté : sur une carte japonaise il situe
+     la version, sur une carte française il est déjà identique. */
+  c.nomFr = fr;
   c.affichage = fr && !enLatin ? `${fr} — ${c.nom}` : c.nom;
+  podium.push(c);
 }
 
 /*
