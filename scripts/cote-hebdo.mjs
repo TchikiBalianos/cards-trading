@@ -58,6 +58,13 @@ const HAUSSE_MIN_INTERESSANTE = 12;
 const TAUX_USD_EUR = 0.92;
 const RATIO_MARCHES_MAX = 3;
 
+/* Repli quand TCGplayer ne cote pas la carte (toutes les japonaises) :
+   `avg7` doit dépasser `avg30` d'au moins 15 % pour que la hausse soit
+   considérée confirmée sur la semaine, et non portée par une vente
+   isolée. Seuil bas à dessein — il écarte les artefacts sans exiger que
+   la hausse hebdomadaire égale la hausse instantanée. */
+const CONFIRMATION_AVG7 = 1.15;
+
 /* Le nom de la variante (holofoil, normal, reverseHolofoil…) change selon
    les cartes ; on prend la première qui a un prix plutôt que de viser un
    nom précis. */
@@ -107,6 +114,21 @@ function examiner(carte, cm, tp) {
   if (variation > HAUSSE_MAX_PLAUSIBLE) return { ok: false, motif: `hausse aberrante (${Math.round(variation)} %)` };
   if (variation < HAUSSE_MIN_INTERESSANTE) return { ok: false, motif: 'variation négligeable' };
 
+  /*
+    Deux recoupements possibles, et il en faut TOUJOURS un.
+
+    Le recoupement TCGplayer ne s'applique qu'aux cartes internationales :
+    vérifié le 27 août 2026, TCGdex n'expose aucun prix TCGplayer sur les
+    cartes japonaises. Or la rotation alterne int/jp — le garde-fou posé
+    la veille était donc inopérant une semaine sur deux, sans que rien ne
+    le signale.
+
+    Repli pour ces cartes : exiger que la moyenne à 7 jours confirme la
+    hausse. Une flambée réelle tire `avg7` au-dessus d'`avg30` ; une vente
+    isolée à prix fort gonfle `trend` en laissant `avg7` collé à `avg30`.
+    Sur un marché peu liquide comme le japonais, c'est précisément la
+    confusion à éviter.
+  */
   const tcgplayerEur = prixTcgplayerEur(tp);
   const recoupe = tcgplayerEur !== null;
   if (recoupe) {
@@ -115,6 +137,15 @@ function examiner(carte, cm, tp) {
       return {
         ok: false,
         motif: `incohérent avec TCGplayer (${actuel} € contre ~${tcgplayerEur.toFixed(2)} € converti)`,
+      };
+    }
+  } else {
+    const a7 = cm.avg7;
+    if (!a7) return { ok: false, motif: 'ni TCGplayer ni avg7 pour recouper' };
+    if (a7 < reference * CONFIRMATION_AVG7) {
+      return {
+        ok: false,
+        motif: `pic isolé, avg7 (${a7} €) ne confirme pas la hausse sur 30 j (${reference} €)`,
       };
     }
   }
