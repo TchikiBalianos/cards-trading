@@ -136,10 +136,21 @@ async function graphql(requete, variables) {
   silencieusement un identifiant figé dans le dépôt.
 */
 async function canaux() {
-  const d = await graphql(`{ account { organizations { id channels { id service isDisconnected } } } }`);
+  /*
+    La liste passe par la requête RACINE `channels`, et non par
+    `account.organizations[].channels` : ce chemin-là répond FORBIDDEN à une
+    clé personnelle. Vérifié le 27 août 2026 sur une clé neuve portant les
+    9 permissions disponibles, donc ce n'est pas une question de périmètre.
+    Les deux renvoient les mêmes champs.
+  */
+  const d = await graphql(`{ account { organizations { id } } }`);
   const org = d.account.organizations[0];
+  const liste = await graphql(
+    `query ($input: ChannelsInput!) { channels(input: $input) { id service isDisconnected } }`,
+    { input: { organizationId: org.id } },
+  );
   const par = {};
-  for (const c of org.channels || []) {
+  for (const c of liste.channels || []) {
     if (!c.isDisconnected) par[c.service] = c.id;
   }
   return par;
@@ -248,8 +259,10 @@ for (const [service, envoyer] of envois) {
   L'article n'est marqué annoncé QUE si au moins un réseau a reçu le post.
   Sinon on le laisse en attente pour la prochaine exécution — sans quoi une
   panne Buffer ferait disparaître l'article de la file, définitivement.
+  Un brouillon ne compte pas non plus : rien n'est parti, l'article doit
+  rester en file pour le prochain relais réel.
 */
-if (reussites > 0) {
+if (reussites > 0 && !BROUILLON) {
   etat.annonces.push(slug);
   writeFileSync(FICHIER_ETAT, JSON.stringify(etat, null, 2) + '\n');
   console.log(`État mis à jour (${etat.annonces.length} article(s) relayé(s)).`);
