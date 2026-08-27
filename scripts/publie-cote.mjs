@@ -52,6 +52,33 @@ const CACHE = join(RACINE, '.cote-cache.json');
 const BLEU = '#2997ff';
 const FOND = '#07111f';
 
+/*
+  Garde-fou : un seul top des hausses par jour.
+
+  Le podium archivé fait foi. Sans ce contrôle, un déclenchement manuel
+  suivi du cron du jeudi republierait le même classement sur Discord et
+  Buffer, à quelques heures d'intervalle — un doublon visible par tous
+  les abonnés, impossible à rattraper une fois parti.
+
+  Volontairement INACTIF en phase « publier » : à ce moment-là le run
+  légitime est déjà engagé (vignette committée et déployée), et l'entrée
+  du jour n'est écrite qu'à la fin de cette phase. L'y appliquer
+  bloquerait la publication qu'on vient justement de préparer.
+*/
+if (PHASE !== 'publier' && !SEC) {
+  const FICHIER = join(RACINE, 'data', 'cotes', 'podiums-hebdo.json');
+  try {
+    const historique = JSON.parse(readFileSync(FICHIER, 'utf8'));
+    const aujourdhui = new Date().toISOString().slice(0, 10);
+    if (Array.isArray(historique) && historique.some((e) => e.date === aujourdhui)) {
+      console.log(`Un top des hausses a déjà été publié aujourd'hui (${aujourdhui}). Rien à faire.`);
+      process.exit(0);
+    }
+  } catch {
+    /* Fichier absent ou illisible : premier passage, on continue. */
+  }
+}
+
 /* ── 1. Classement ─────────────────────────────────────── */
 
 const brut = execFileSync(
