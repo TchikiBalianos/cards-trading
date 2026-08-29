@@ -5,6 +5,7 @@ pubDate: 2026-08-28
 category: "star-wars"
 tags: ["star-wars", "swu", "cendres-de-l-empire", "rotation", "eternal", "meta"]
 author: "Cards Trading"
+heroImage: "/assets/img/logo-starwars.png"
 draft: true
 ---
 
