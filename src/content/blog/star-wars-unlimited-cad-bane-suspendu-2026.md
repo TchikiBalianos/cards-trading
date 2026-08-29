@@ -115,7 +115,7 @@ Trois analyses qui prolongent le sujet :
 
 Star Wars: Unlimited est entré dans l'âge où la légalité d'une carte compte autant que sa puissance. En six mois, le jeu a vécu sa première rotation, lancé un format non tournant et suspendu un leader cinq semaines après sa sortie. Rien d'anormal pour un TCG compétitif, mais cela demande une gestion active : vérifier le symbole de rotation, distinguer les traitements spéciaux du reste, et laisser passer quelques semaines de tournois avant de revendre après une annonce.
 
-Pour acheter et vendre vos cartes Star Wars: Unlimited entre collectionneurs francophones, avec des vendeurs vérifiés et des prix transparents, [rejoignez la bêta de Cards-Trading.com](https://cards-trading.com/#beta).
+Pour acheter et vendre vos cartes entre collectionneurs francophones, avec des vendeurs vérifiés et des prix transparents, [rejoignez la bêta de Cards-Trading.com](https://cards-trading.com/#beta).
 
 ---
 
