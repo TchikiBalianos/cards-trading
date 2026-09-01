@@ -1,90 +1,64 @@
 # Reste à faire — Cards-Trading
 
-État au **26 août 2026**. Les règles durables vivent dans `CLAUDE.md` ;
+État au **2 septembre 2026**. Les règles durables vivent dans `CLAUDE.md` ;
 ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès
 qu'elle est traitée.
 
 ---
 
-## 🔴 Bloquant — secret manquant pour la newsletter
+## 📊 Ce que disent les chiffres (2 septembre)
 
-`RESEND_API_KEY` n'est **pas** dans les secrets GitHub Actions de ce
-dépôt (vérifié : `gh secret list` ne le montre pas). Sans lui,
-`newsletter-hebdo.yml` échouera silencieusement samedi.
+**26 inscrits, dont 7 sur les sept derniers jours** — contre 16 au total
+une semaine plus tôt. La croissance est réelle et récente.
 
-C'est la même clé que celle déjà en variable d'environnement Vercel pour
-`api/submit-form.js`/`api/keep-alive.js` — à copier telle quelle dans
-GitHub : Settings → Secrets and variables → Actions → New repository
-secret, nom `RESEND_API_KEY`.
+Provenance des inscriptions tracées :
 
-Une fois le secret ajouté, un `workflow_dispatch` manuel testera la
-création d'un vrai brouillon en conditions réelles (jamais d'envoi
-automatique, voir `scripts/newsletter-hebdo.mjs`).
+| Source | Inscriptions | Dernière |
+|---|---|---|
+| `direct` | 4 | 31 août |
+| `chatgpt.com` | 3 | 29 août |
+| `google.com` | 2 | 30 août |
+| `perplexity.ai` | 1 | 20 août |
+| Réseaux sociaux (`x`, `instagram`, `tiktok`, `discord`) | **0** | — |
+
+⚠️ **Le constat le plus important du projet à ce jour.** Six inscriptions
+sur onze tracées viennent de moteurs de recherche, dont quatre de moteurs
+IA. **Aucune ne vient des réseaux sociaux**, alors que Discord, X,
+Instagram et TikTok publient automatiquement depuis deux semaines.
+
+Cela ne veut pas dire que les réseaux ne servent à rien — l'audience s'y
+construit — mais que **le SEO et les moteurs IA sont, mesurément, le seul
+canal qui convertit aujourd'hui**. Toute décision d'arbitrage de temps
+devrait en tenir compte.
 
 ---
 
-## Observer la FAQ dans les moteurs conversationnels
+## 🟠 À observer — premiers passages réels
 
-Le balisage `FAQPage` est en ligne depuis le 24 aout 2026, verifie servi
-et valide. Reste a constater s il est repris : poser a Perplexity et a
-ChatGPT une question couverte par la FAQ (« combien coute la vente d une
-carte sur Cards-Trading ») et regarder si la reponse cite le site.
+### 1. Le format X « image + lien en réponse »
 
-Le delai est de plusieurs semaines, ces moteurs ne reindexent pas a la
-demande. Aucune action a prevoir si la reponse ne vient pas tout de suite.
+Mis en place le 1er septembre, **jamais tourné en conditions réelles**.
+Le post principal porte la vignette 1200×630 et le lien part en première
+réponse (thread Buffer), pour ne pas subir la pénalité de portée que X
+applique aux liens sortants.
 
-## 🟢 Le 25 août : la routine article a tourné pour de vrai
+Premier vrai passage : jeudi 3 septembre (tâche planifiée
+`cards-trading-annonce-storm-emeralda-jeudi`). À vérifier dans les logs
+du run Buffer : aucune erreur sur le canal `twitter`, et le rendu réel
+du thread sur le compte.
 
-Le garde-fou anti-doublon ajouté aux deux tâches planifiées (voir
-`~/.claude/scheduled-tasks/blog-cards-trading-article-hebdo/SKILL.md`)
-a passé son premier vrai test ce matin : la tâche du mardi 9h a détecté
-que l'article Bandai (catégorie `actualite`) ne couvrait PAS le créneau
-Pokémon obligatoire, et a rédigé un article sur les Championnats du Monde
-sans rien dupliquer. Un second passage (fact-check) a corrigé un prix et
-des noms d'attaques à 11h37 le même jour.
-
-**Publié le 25 août**, après relecture complète par recherche web (15
-faits vérifiés indépendamment — dates, règles, decklist du NAIC, prix
-Cardmarket, traductions FR — aucune erreur trouvée) : voir le détail dans
-le message du commit `a7bf7d8`.
-
-## 🟠 À observer — ce qui reste vraiment ouvert
-
-### 1. Le premier passage réel de chaque automatisation
-
-**Discord est désormais vérifié en conditions réelles** : le run de ce
-matin (25 août, 09h53 UTC) a bien posté un article publié — le Dragon
-Ball Story Booster 01 — sur le vrai webhook. La file traite un article
-par exécution, du plus ancien au plus récent ; Bandai (24 août) partira
-au prochain passage, vendredi.
-
-Restent deux choses jamais vues en conditions réelles :
-
-| À observer | Quand | Ce qui peut casser |
-|---|---|---|
-| Publication d'un post Buffer | aujourd'hui, ~12h23 | l'API a accepté la mise en file, pas la publication |
-| Validation du média par Instagram et TikTok | idem | la vignette peut être refusée au moment de publier |
-| Enchaînement de `cote-hebdo` | jeudi | commit → déploiement Vercel → publication, jamais joué bout en bout |
-
-Le point le plus fragile est le troisième : le workflow committe la
-vignette, **attend que l'URL réponde 200**, puis publie. La vérification
-remplace un délai fixe, mais l'enchaînement complet reste à voir.
-
-Vérifié le 25 août : la chaîne d'inscription fonctionne de bout en bout
-(base + email admin + opt-in newsletter, testé en conditions réelles).
-Vérifier aussi que la colonne `source` de `beta_submissions` se remplit
-avec `x`, `instagram`, `discord`. C'est elle qui dira quel canal convertit
-— et pour l'instant elle n'a enregistré aucune inscription réelle.
-
-### 2. Défilement et animations sur un vrai téléphone
+### 2. Validation mobile sur un vrai téléphone
 
 Le navigateur d'audit **ne défile pas** et **ne compose pas de frames** :
-aucune transition CSS ne s'exécute, les captures d'écran échouent.
+aucune transition CSS ne s'exécute, les captures échouent.
 
 Tout ce qui a été affirmé sur la navigation mobile repose sur des valeurs
 **cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les
-7 ancres du menu, la fermeture du panneau, les carrousels, et le rendu des
-images après le correctif de ratio.
+ancres du menu, la fermeture du panneau, les carrousels, et le rendu des
+images après les correctifs de ratio.
+
+Le correctif du logo du blog (1er septembre) a été mesuré à 320, 360, 412
+et 1280px, mais jamais vu à l'œil sur un téléphone.
 
 ---
 
@@ -95,63 +69,27 @@ images après le correctif de ratio.
 One Piece reste **hors de la rotation du top des hausses**, et c'est
 définitif tant qu'aucune source gratuite ne cote en euros.
 
-Vérifié le 20 août : `optcgapi`, `apitcg` et `tcgcsv` sont tous adossés à
-TCGplayer, donc en **dollars sur le marché américain**. TCGdex est le seul
-à coter en euros via Cardmarket, et ne couvre que Pokémon.
+`optcgapi`, `apitcg` et `tcgcsv` sont tous adossés à TCGplayer, donc en
+**dollars sur le marché américain**. TCGdex est le seul à coter en euros
+via Cardmarket, et ne couvre que Pokémon. **L'accès Cardmarket est
+écarté** : il exige un compte professionnel, décision prise le 20 août,
+ne pas y revenir.
 
-**L'accès Cardmarket est écarté** : il exige un compte professionnel, que
-Julian ne souhaite pas ouvrir. Décision prise le 20 août, ne pas y revenir.
+Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la cote
+One Piece (185 cartes), pour des variations maison en dollars sur des
+fenêtres longues.
 
-Reste le repli : `scripts/releve-cotes.mjs` archive chaque semaine la cote
-One Piece (185 cartes). Il permettra des variations maison — en dollars,
-mais sur des fenêtres longues. À rebrancher dans le format si vous décidez
-qu'une cote en dollars vaut mieux que pas de cote du tout.
-
-### 4. Visuels générés par IA — service gratuit trouvé, gain à arbitrer
-
-**Pollinations.ai** répond au besoin, vérifié le 20 août :
-
-| Critère | Réalité mesurée |
-|---|---|
-| Clé d'API | aucune |
-| Palier anonyme | 1 requête / 15 s (largement suffisant) |
-| Licence | MIT, usage commercial permis |
-| Appel réel | HTTP 200 en 1,6 s, image exploitable |
-| Coût | 0 € |
-
-Limites : dimensions **approximatives** (1200×630 demandé → 1059×556, à
-recadrer avec `sharp`), un seul modèle sur le palier anonyme, sortie JPEG,
-et un filigrane possible que `nologo=true` a évité sur les essais.
-
-**Intégration prouvée** : fond IA + texte vectoriel composé par-dessus.
-C'est le bon découpage — l'IA sait faire une ambiance, pas une typographie
-ni une marque. Un essai sans cette séparation a produit une forme
-pseudo-logo malgré la consigne « no logo ».
-
-⚠️ **Mais le gain est marginal sur la vignette de cote** : pour que le texte
-blanc reste lisible quel que soit le fond généré, il faut l'assombrir de
-45 %. À ce niveau, la différence avec le dégradé déterministe se voit à
-peine. Ne pas l'appliquer là.
-
-**Où ça vaudrait le coup** : les vignettes d'ARTICLE, où un fond thématique
-par TCG (dresseurs Pokémon, navire One Piece, arène Magic) apporterait une
-vraie variété — là où la vignette actuelle est identique d'un article à
-l'autre au titre près.
-
-La clé Gemini reste en secret `GEMINI_API_KEY` : elle marchera si la
-facturation Google est activée, mais elle n'est plus nécessaire.
-
-### 5. Débordement de « Cardmarket » sous 1100 px
+### 4. Débordement de « Cardmarket » sous 1100 px
 
 Préexistant, **amélioré mais pas éliminé** (24 px → 15 px à 980 px).
 Mot insécable dans une colonne fixe. Invisible au-dessus de 1100 px.
 
-### 6. Compte TikTok personnel
+### 5. Compte TikTok personnel
 
 `tchikibalianos` est un compte **personnel**. À convertir en compte
 Cards-Trading avant d'y pousser de la promo régulière.
 
-### 7. Durcir la gestion des secrets
+### 6. Durcir la gestion des secrets
 
 Décision assumée : les webhooks Discord et les clés d'API ont transité en
 clair dans une conversation, l'enjeu étant jugé faible à ce stade. Ils
@@ -161,11 +99,36 @@ l'historique git est définitif. Vérifié : aucune fuite.
 À reprendre quand l'audience ou l'équipe grandira : faire tourner les
 webhooks et les clés, et envisager un dépôt privé pour l'automatisation.
 
-### 8. Webhook de bounce Resend
+### 7. Webhook de bounce Resend
 
 Optionnel. Détecterait les adresses invalides côté serveur plutôt qu'a
 posteriori dans le dashboard. Le validateur Damerau-Levenshtein couvre
 déjà les fautes de frappe courantes.
+
+### 8. Aucun salon Discord interne
+
+Constaté le 2 septembre en cherchant à faire relire un brouillon à
+Valérian : les 7 webhooks configurés pointent tous vers des **salons
+publics** de la communauté. Il n'existe aucun canal interne pour la
+coordination d'équipe, ni d'identifiant Discord de Valérian côté projet.
+
+À créer si les échanges d'équipe doivent passer par Discord plutôt que
+par un autre canal.
+
+---
+
+## 📅 Suivi éditorial en cours
+
+- **Jeudi 3 septembre, 10h** — tâche `cards-trading-annonce-storm-emeralda-jeudi` :
+  annonce Storm Emeralda sur Discord et Buffer, ce qui libère la file.
+- **Vendredi 4 septembre, 8h30** — tâche `cards-trading-publie-op17-vendredi` :
+  publie l'article OP-17 avant les crons d'annonce de 11h17 et 12h23.
+- **Brouillon Star Wars** (`blog/star-wars-unlimited-cad-bane-suspendu-2026`),
+  en attente depuis le 29 août avec un `pubDate` dépassé au 28 août : à
+  rafraîchir avant toute publication.
+
+⚠️ Les tâches planifiées ne tournent que si l'application est ouverte à
+l'heure prévue ; sinon elles se déclenchent à la prochaine ouverture.
 
 ---
 
@@ -173,13 +136,17 @@ déjà les fautes de frappe courantes.
 
 | Automatisation | Rythme | État |
 |---|---|---|
-| `keep-alive` | 6 h | ✅ les deux bases Supabase |
-| `annonce-discord` | mardi, vendredi | ✅ routé par TCG, 7 webhooks validés, premier post réel le 25/08 |
+| `keep-alive` | 6 h | ✅ les deux bases Supabase, 59 passages |
+| `annonce-discord` | mardi, vendredi | ✅ routé par TCG, posts réels vérifiés |
 | `annonce-buffer` | mardi, vendredi | ✅ X, Instagram, TikTok |
-| `cote-hebdo` | jeudi | ⏳ jamais tourné en réel — premier passage le 27/08, avec le recoupement TCGplayer et l'archivage du podium |
-| `newsletter-hebdo` | samedi 13h37 | ⏳ secret manquant (voir plus haut), jamais tourné |
+| `cote-hebdo` | jeudi | ✅ a tourné le 27/08, podium archivé |
+| `newsletter-hebdo` | samedi 13h37 | ✅ 2 digests créés et envoyés |
 
-Plus : provenance des inscriptions (`beta_submissions.source`), CTA en fin
-d'article, aperçu de lien social corrigé (URL absolue + vignette 1200×630),
-flux RSS, vignettes 1080×1080 par article, design de la newsletter
-(`docs/plans/2026-08-26-newsletter-design.md`).
+La chaîne complète **cote-hebdo → archivage du podium → newsletter** a
+fonctionné : le digest du 29 août contenait bien les trois cartes du
+marché japonais relevées le 27.
+
+Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien
+social (URL absolue + vignette 1200×630), flux RSS, vignettes par article,
+balisage FAQPage, `llms.txt`, robots.txt ouvert aux moteurs IA, traduction
+des cartes Dresseur japonaises, recoupement des prix contre TCGplayer.
