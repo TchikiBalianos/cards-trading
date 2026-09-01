@@ -9,6 +9,20 @@ heroImage: "/assets/img/logo-onepiece.png"
 draft: true
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Deux courbes qui partent en sens inverse](#deux-courbes-qui-partent-en-sens-inverse)
+- [Ce que coûte réellement une Manga Rare à l'ouverture](#ce-que-coûte-réellement-une-manga-rare-à-louverture)
+- [Pourquoi les projections d'avant-sortie se sont dégonflées](#pourquoi-les-projections-davant-sortie-se-sont-dégonflées)
+- [Le cas français : un display payé deux fois son prix](#le-cas-français--un-display-payé-deux-fois-son-prix)
+- [Quand ouvrir du scellé garde du sens](#quand-ouvrir-du-scellé-garde-du-sens)
+- [Acheter une single OP-17 sans se faire avoir](#acheter-une-single-op-17-sans-se-faire-avoir)
+- [Questions fréquentes](#questions-fréquentes)
+- [Découvrez les autres TCG du moment](#découvrez-les-autres-tcg-du-moment)
+- [Ce qu'il faut retenir](#ce-quil-faut-retenir)
+<!-- /sommaire -->
+
 ## Deux courbes qui partent en sens inverse
 
 OP-17 « Les Guerriers les Plus Puissants au Monde » (世界最強の戦士, *Sekai Saikyou no Senshi*, « The World's Strongest Warriors » en anglais) est sorti au Japon le 22 août 2026 et en français le 28 août. Dix jours plus tard, le marché raconte une histoire que peu d'acheteurs avaient anticipée : **le produit scellé coûte de plus en plus cher, et les cartes qu'il contient valent de moins en moins.**
