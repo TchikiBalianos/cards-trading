@@ -9,6 +9,21 @@ heroImage: "/assets/img/logo-lorcana.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Lorcana en 2026 : la maturité, trois ans après](#lorcana-en-2026--la-maturité-trois-ans-après)
+- [Où en est le jeu : sets et cadence en 2026](#où-en-est-le-jeu--sets-et-cadence-en-2026)
+- [La révolution des raretés : Enchanted, Epic, Iconic](#la-révolution-des-raretés--enchanted-epic-iconic)
+- [Les cartes les plus chères en 2026](#les-cartes-les-plus-chères-en-2026)
+- [Comprendre la valorisation : au-delà du booster](#comprendre-la-valorisation--au-delà-du-booster)
+- [La scène compétitive : la rotation change tout](#la-scène-compétitive--la-rotation-change-tout)
+- [Conseils pour aborder Lorcana en 2026](#conseils-pour-aborder-lorcana-en-2026)
+- [Questions fréquentes](#questions-fréquentes)
+- [Explorez d'autres univers TCG](#explorez-dautres-univers-tcg)
+- [Conclusion : un TCG à double lecture](#conclusion--un-tcg-à-double-lecture)
+<!-- /sommaire -->
+
 ## Lorcana en 2026 : la maturité, trois ans après
 
 Lancé par **Ravensburger** en août 2023 avec *The First Chapter*, **Disney Lorcana** a rapidement dépassé le statut de curiosité pour s'installer parmi les TCG les plus suivis au monde. Trois ans plus tard, le jeu affiche tous les signes d'un écosystème mûr : un rythme de sorties industriel, une échelle de raretés retravaillée, un marché secondaire lisible et — c'est nouveau — une scène compétitive structurée autour d'une rotation officielle.

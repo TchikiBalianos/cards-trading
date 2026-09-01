@@ -9,6 +9,20 @@ heroImage: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Magicthegatherin
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Le marché Magic en 2026 : entre tension et maturité](#le-marché-magic-en-2026--entre-tension-et-maturité)
+- [Méthodologie du classement](#méthodologie-du-classement)
+- [Le classement 2026](#le-classement-2026)
+- [Comprendre la mécanique de valorisation](#comprendre-la-mécanique-de-valorisation)
+- [Conseils pour investir intelligemment dans Magic](#conseils-pour-investir-intelligemment-dans-magic)
+- [Authentification et grading : pourquoi c'est crucial](#authentification-et-grading--pourquoi-cest-crucial)
+- [Questions fréquentes](#questions-fréquentes)
+- [Explorez d'autres univers TCG](#explorez-dautres-univers-tcg)
+- [Conclusion : un marché qui se professionnalise](#conclusion--un-marché-qui-se-professionnalise)
+<!-- /sommaire -->
+
 ## Le marché Magic en 2026 : entre tension et maturité
 
 Plus de trente ans après la sortie d'Alpha en 1993, **Magic: The Gathering** demeure la pierre angulaire du marché des TCG haut de gamme. L'année 2026 marque un tournant : Wizards of the Coast multiplie les éditions premium (*Universes Beyond*, séries sérialisées, Secret Lairs), tandis que les cartes vintage atteignent des sommets historiques. Le segment collection-investissement, longtemps cantonné à une niche d'initiés, s'ouvre désormais à un public global, dopé par l'authentification professionnelle (PSA, BGS, CGC) et les plateformes spécialisées.

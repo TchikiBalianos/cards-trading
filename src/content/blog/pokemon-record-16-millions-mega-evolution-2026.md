@@ -9,6 +9,20 @@ heroImage: "/assets/img/logo-pokemon.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Un record qui dépasse le seul cadre Pokémon](#un-record-qui-dépasse-le-seul-cadre-pokémon)
+- [Le socle vintage : la Base Set toujours reine](#le-socle-vintage--la-base-set-toujours-reine)
+- [Les chase cards modernes n'ont rien à envier au vintage](#les-chase-cards-modernes-nont-rien-à-envier-au-vintage)
+- [La nouvelle ère : Méga-Évolution](#la-nouvelle-ère--méga-évolution)
+- [Grading et marché : ce qui a changé en 2026](#grading-et-marché--ce-qui-a-changé-en-2026)
+- [Conseils pour aborder le marché Pokémon en 2026](#conseils-pour-aborder-le-marché-pokémon-en-2026)
+- [Questions fréquentes](#questions-fréquentes)
+- [Explorez d'autres univers TCG](#explorez-dautres-univers-tcg)
+- [Conclusion : un marché à deux vitesses, mais une seule direction](#conclusion--un-marché-à-deux-vitesses-mais-une-seule-direction)
+<!-- /sommaire -->
+
 ## Un record qui dépasse le seul cadre Pokémon
 
 Le 15 février 2026, le monde des cartes à collectionner a changé d'échelle. La carte **Pikachu Illustrator** appartenant à Logan Paul, gradée **PSA 10**, s'est vendue **16 492 000 $** frais inclus, au terme d'une enchère de 42 jours marquée par une envolée finale spectaculaire — de 6 à 13,3 millions de dollars en un peu moins de trois heures. L'acheteur, l'investisseur américain **AJ Scaramucci**, met ainsi la main sur l'un des objets de collection les plus rares au monde.

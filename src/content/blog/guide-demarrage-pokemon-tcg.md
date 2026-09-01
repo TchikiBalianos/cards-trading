@@ -9,6 +9,24 @@ heroImage: "/assets/img/logo-pokemon.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Pourquoi commencer le Pokémon TCG en 2026 ?](#pourquoi-commencer-le-pokémon-tcg-en-2026-)
+- [Comprendre les bases du jeu](#comprendre-les-bases-du-jeu)
+- [Anatomie d'une carte Pokémon](#anatomie-dune-carte-pokémon)
+- [Construction de deck : trouver l'équilibre](#construction-de-deck--trouver-léquilibre)
+- [Les meilleurs decks méta de 2026 (post-rotation)](#les-meilleurs-decks-méta-de-2026-post-rotation)
+- [Premiers achats : par où commencer concrètement ?](#premiers-achats--par-où-commencer-concrètement-)
+- [Erreurs fatales du débutant](#erreurs-fatales-du-débutant)
+- [Comprendre le marché secondaire](#comprendre-le-marché-secondaire)
+- [Tournois et jeu organisé](#tournois-et-jeu-organisé)
+- [Ressources pour progresser](#ressources-pour-progresser)
+- [Questions fréquentes](#questions-fréquentes)
+- [Aller plus loin dans l'univers TCG](#aller-plus-loin-dans-lunivers-tcg)
+- [Conclusion : votre premier mois](#conclusion--votre-premier-mois)
+<!-- /sommaire -->
+
 ## Pourquoi commencer le Pokémon TCG en 2026 ?
 
 Près de **trois décennies** après son lancement japonais en octobre 1996, le Pokémon Trading Card Game n'a jamais été aussi vivant. Selon les chiffres officiels de The Pokémon Company, la franchise a dépassé les **75 milliards de cartes imprimées** dans le monde (mars 2025), avec encore plus de 10 milliards de cartes produites sur le seul exercice 2024-2025. Le segment compétitif comme la collection traversent une phase de croissance soutenue depuis la pandémie. En 2026, deux dynamiques se combinent : l'ère *Scarlet & Violet* qui continue de renouveler le méta avec des extensions de haute qualité, et la maturation d'un marché secondaire désormais structuré, avec des outils de pricing en temps réel et une professionnalisation des plateformes d'échange.

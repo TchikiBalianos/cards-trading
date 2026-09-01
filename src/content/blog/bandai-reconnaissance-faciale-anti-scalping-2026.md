@@ -9,6 +9,19 @@ heroImage: "/assets/img/logo-onepiece.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Le vrai problème : des cartes introuvables au prix normal](#le-vrai-problème--des-cartes-introuvables-au-prix-normal)
+- [La solution de Bandai : lier un visage à son historique d'achat](#la-solution-de-bandai--lier-un-visage-à-son-historique-dachat)
+- [Pokémon avait déjà ouvert la voie un mois plus tôt](#pokémon-avait-déjà-ouvert-la-voie-un-mois-plus-tôt)
+- [Une solution qui a ses limites — et ses critiques](#une-solution-qui-a-ses-limites--et-ses-critiques)
+- [Et en France, une reconnaissance faciale en boutique serait-elle même possible ?](#et-en-france-une-reconnaissance-faciale-en-boutique-serait-elle-même-possible-)
+- [Questions fréquentes](#questions-fréquentes)
+- [Pour aller plus loin](#pour-aller-plus-loin)
+- [Conclusion](#conclusion)
+<!-- /sommaire -->
+
 ## Le vrai problème : des cartes introuvables au prix normal
 
 Depuis plusieurs années, la même scène se répète à chaque grosse sortie de booster au Japon : des files d'attente avant l'ouverture des boutiques, des displays entiers achetés en quelques minutes par les mêmes acheteurs, puis revendus le jour même à des prix largement supérieurs au tarif magasin. Le collectionneur ou le joueur qui voulait simplement ouvrir quelques boosters au prix normal se retrouve devant des rayons vides — ou face à des vendeurs tiers qui appliquent une marge parfois considérable.
