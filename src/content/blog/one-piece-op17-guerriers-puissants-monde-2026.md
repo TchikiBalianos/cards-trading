@@ -125,4 +125,4 @@ Toutes ces cartes sont disponibles sur [Cards-Trading.com](https://cards-trading
 
 Entre le méta de l'été porté par Teach et Yamato, le sacre historique de Wasinha aux Worlds, et maintenant un set anniversaire qui abolit quasiment le décalage entre Japon et France, OP-17 arrive à un moment où OPCG n'a jamais été aussi suivi par la communauté francophone. Que vous visiez les Manga Rare des Quatre Empereurs ou simplement les singles pour compléter un deck compétitif, la fenêtre entre le 21 et le 28 août 2026 s'annonce chargée.
 
-**Cards-Trading.com** ouvre sa beta en 2026 avec 0 % de commission pendant 3 mois pour tous les vendeurs inscrits — [rejoignez la liste d'attente](https://cards-trading.com/#beta) avant la ruée sur les premières singles OP-17.
+**Cards-Trading.com** ouvre sa beta en 2026 avec 0 % de commission pendant toute la bêta pour tous les vendeurs inscrits — [rejoignez la liste d'attente](https://cards-trading.com/#beta) avant la ruée sur les premières singles OP-17.

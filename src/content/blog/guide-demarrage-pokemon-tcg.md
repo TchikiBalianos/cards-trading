@@ -271,6 +271,6 @@ Si vous deviez résumer ce guide en plan d'action sur 30 jours :
 
 Le Pokémon TCG est un jeu qui récompense la **patience et la précision** bien plus que le budget. La plupart des joueurs aujourd'hui en haut du circuit français ont commencé avec des decks modestes : c'est la régularité du jeu qui fait la différence, pas le portefeuille.
 
-Pour vous accompagner dans cette aventure, **Cards-Trading.com** ouvre sa beta en 2026 avec **0 % de commission pendant 3 mois** sur tous les vendeurs inscrits. Que vous achetiez vos premières *singles* ou que vous mettiez en vente des doubles dormants dans vos classeurs, c'est le moment de prendre date.
+Pour vous accompagner dans cette aventure, **Cards-Trading.com** ouvre sa beta en 2026 avec **0 % de commission pendant toute la bêta** pour tous les vendeurs inscrits. Que vous achetiez vos premières *singles* ou que vous mettiez en vente des doubles dormants dans vos classeurs, c'est le moment de prendre date.
 
 > *Cet article sera mis à jour à chaque rotation de format et sortie de bloc majeur. Bookmarkez-le pour suivre l'évolution du méta 2026.*
