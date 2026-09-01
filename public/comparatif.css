@@ -61,6 +61,29 @@
         white-space: nowrap;
       }
 
+      /*
+        « Cardmarket » déborde de sa colonne entre ~1000 et ~1145 px.
+
+        Le conteneur fait 60 % du viewport et la colonne 16 % de ce
+        conteneur : à 1050 px de fenêtre, la cellule n'offre que 85 px
+        de contenu alors que le mot en réclame 94 à 15 px. `nowrap`
+        n'est pas le coupable — « Cardmarket » est un mot unique, il
+        déborderait de toute façon.
+
+        Mesuré : 10 px de débordement à 1050 px. Réduire la fonte de
+        l'en-tête à 13 px ramène le mot à ~81 px et lui rend 4 px de
+        marge, sans toucher aux largeurs de colonnes ni au reste du
+        tableau. En dessous de 980 px le tableau cède la place aux
+        cartes empilées, la règle n'a donc pas à descendre plus bas.
+      */
+      @media (max-width: 1200px) {
+        thead th {
+          font-size: 13px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
       thead {
         background: linear-gradient(
           90deg,

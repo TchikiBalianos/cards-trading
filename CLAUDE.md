@@ -368,6 +368,30 @@ document.documentElement.scrollWidth > innerWidth   // là, c'est vrai
 Pour un élément précis, comparer les bords réels plutôt que les largeurs :
 `element.getBoundingClientRect().right > parent.getBoundingClientRect().right`.
 
+⚠️ **Ce signal du document a lui-même un faux positif : `overflow-x: clip`.**
+Le `<body>` le porte, si bien qu'un carrousel volontairement plus large que
+l'écran (`#licenceTrack`, 2240px, encapsulé dans un conteneur en
+`overflow-x: hidden`) gonfle `documentElement.scrollWidth` sans que rien ne
+dépasse ni ne défile. Mesuré le 2 septembre 2026 : 1035px de `scrollWidth`
+pour 985px de fenêtre, et pourtant aucun défilement possible.
+
+Le seul test qui tranche est donc de TENTER le défilement :
+
+```js
+const de = document.documentElement, avant = de.scrollLeft;
+de.scrollLeft = 9999;
+const vraiDebordement = de.scrollLeft > 0;   // verdict fiable
+de.scrollLeft = avant;
+```
+
+⚠️ **Autre piège, sur la mesure d'une largeur responsive :** réduire un
+conteneur en JavaScript (`element.style.width = '1050px'`) ne reproduit PAS
+un vrai redimensionnement de fenêtre — les `@media` ne se réévaluent pas et
+les pourcentages se recalculent sur une autre base. Un balayage de 720 à
+1100px fait ainsi conclure « aucun débordement » là où un vrai
+`resize_window` à 1050px révèle 10px de débordement sur « Cardmarket ».
+Toujours redimensionner la fenêtre, jamais le conteneur.
+
 ### Balisage FAQPage — le visible et le JSON-LD doivent concorder
 
 Un `FAQPage` dont les questions-réponses ne figurent pas *visiblement*
