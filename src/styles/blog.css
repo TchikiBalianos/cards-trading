@@ -60,6 +60,22 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 700;
   font-size: 18px;
   text-decoration: none;
+  /*
+    Ne JAMAIS se laisser comprimer par la nav.
+
+    Sans ça, le logo est un flex item à `flex-shrink: 1` : quand la nav
+    réclame plus de place que le header n'en a, c'est l'image qui cède.
+    Mesuré sur un écran de 412px — logo affiché en 79×32 pour un fichier
+    natif de 287×68, soit 58 % de sa largeur, écrasé. `width: auto` sur
+    l'image n'y change rien, la contrainte vient du parent flex.
+
+    Même famille que les déformations d'images déjà consignées dans
+    CLAUDE.md, avec une cause différente : ici c'est le flex, pas un
+    attribut HTML.
+  */
+  flex-shrink: 0;
+  /* Respiration minimale avec la nav, même quand la place manque. */
+  margin-right: 16px;
 }
 
 .blog-header-logo img {
@@ -380,6 +396,42 @@ img { max-width: 100%; height: auto; display: block; }
   }
 
   .blog-header-nav {
-    gap: 16px;
+    gap: 14px;
+  }
+
+  /*
+    Le lien le plus long cède la place au logo.
+
+    Mesuré à 412px de large : la nav complète réclame 292px alors qu'il
+    n'en reste que 220 une fois le logo à sa vraie largeur (135px) et sa
+    marge. « Fonctionnalités » pèse 99px à lui seul ; le masquer ramène
+    la nav à 177px et tout tient sans rien comprimer.
+
+    C'est le lien le moins nécessaire ici : « Avantages » et « Accueil »
+    renvoient déjà vers la landing, et la page d'accueil expose les
+    fonctionnalités dès le premier écran.
+  */
+  .blog-nav-optionnel {
+    display: none;
+  }
+}
+
+/*
+  Très petits écrans (iPhone SE et assimilés).
+
+  Mesuré à 320px : même sans « Fonctionnalités », la nav dépasse encore
+  le header de 24px. « Avantages » cède à son tour — « Accueil » suffit
+  à renvoyer vers la landing, et « Blog » situe la page courante.
+
+  Le logo, lui, ne bouge pas : c'est l'élément d'identité, il garde sa
+  taille et son ratio jusqu'au bout.
+*/
+@media (max-width: 380px) {
+  .blog-header {
+    padding: 0 16px;
+  }
+
+  .blog-header-nav a[href="/#avantages"] {
+    display: none;
   }
 }
