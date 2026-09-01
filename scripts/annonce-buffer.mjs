@@ -156,16 +156,33 @@ async function canaux() {
   return par;
 }
 
-/* X compte tout lien pour 23 caractères, quelle que soit sa longueur.
-   2 mots-clés : un post qui en porte 1 ou 2 devance nettement un post
-   qui n'en porte aucun, mais 3 font chuter l'engagement. */
-function texteX(fm, url) {
+/*
+  X : AUCUN lien dans le post principal, il part en réponse.
+
+  Deux raisons mesurées, pas une préférence de style :
+
+  1. Portée. X limite délibérément la diffusion des posts sortants pour
+     garder les lecteurs sur la plateforme — un lien dans le corps coûte
+     de l'ordre de 30 à 50 % de portée initiale. Le lien en première
+     réponse laisse le post principal circuler normalement.
+
+  2. Visuel. Depuis 2023, X a retiré le titre des aperçus de lien et n'en
+     garde au mieux qu'une image ; en pratique, nos posts sortaient sans
+     aucune carte (constaté le 27 août 2026, alors que og:image,
+     twitter:card et la vignette 1200×630 étaient tous corrects et servis
+     au crawler). Attacher la vignette DIRECTEMENT au post ne dépend plus
+     du bon vouloir de X.
+
+  2 mots-clés : un post qui en porte 1 ou 2 devance nettement un post qui
+  n'en porte aucun, mais 3 font chuter l'engagement.
+*/
+function texteX(fm) {
   const cles = motsCles(fm.category, 2);
-  const LIEN = 23;
-  const reste = 280 - LIEN - cles.length - 6;
+  /* Plus de réserve de 23 caractères pour le lien : il n'est plus là. */
+  const reste = 280 - cles.length - 4;
   let tete = fm.title;
   if (tete.length > reste) tete = tete.slice(0, reste - 1).trimEnd() + '…';
-  return `${tete}\n\n${url}\n\n${cles}`;
+  return `${tete}\n\n${cles}`;
 }
 
 /* Légende resserrée : le titre, le chapô, l'appel, la signature. Rien de
@@ -245,20 +262,45 @@ const article = attente[0];
 const { slug, fm } = article;
 const url = `${SITE}/blog/${slug}/?utm_source=`;
 const vignette = `${SITE}/assets/social/${slug}.png`;
+/* Paysage 1200×630, le format de la timeline X (le carré y serait rogné). */
+const vignetteOg = `${SITE}/assets/social/${slug}-og.png`;
+/* Même image, sous la forme attendue dans un item de thread. */
+const imageX = {
+  image: { url: vignetteOg, metadata: { altText: `Vignette : ${fm.title}` } },
+};
 
 console.log(`${attente.length} article(s) en attente — on relaie « ${fm.title} ».`);
 
 if (SEC) {
-  console.log('\n[dry-run] X :\n' + texteX(fm, url + 'x'));
+  console.log('\n[dry-run] X — post principal :\n' + texteX(fm));
+  console.log('\n[dry-run] X — réponse (thread) :\n' + `${url}x`);
+  console.log('\n[dry-run] X — image jointe : ' + vignetteOg);
   console.log('\n[dry-run] Instagram :\n' + texteInstagram(fm));
   console.log('\n[dry-run] TikTok :\n' + texteTikTok(fm));
-  console.log('\n[dry-run] vignette : ' + vignette);
+  console.log('\n[dry-run] vignette carrée : ' + vignette);
   process.exit(0);
 }
 
 const dispo = await canaux();
 const envois = [
-  ['twitter', () => publier(dispo.twitter, texteX(fm, url + 'x'), null, null)],
+  /*
+    Format paysage 1200×630 pour X : c'est celui de sa timeline (le carré
+    1080×1080 y serait rogné, il reste pour Instagram et TikTok).
+
+    ⚠️ Le `thread` doit contenir TOUS les messages, le premier compris, et
+    son texte doit répéter exactement celui du post. Ne mettre que la
+    réponse produit un thread incohérent. Vérifié le 1er septembre 2026
+    sur un brouillon de test : cette forme renvoie `threadCount: 2` avec
+    l'image bien attachée au message d'ouverture.
+  */
+  ['twitter', () => publier(dispo.twitter, texteX(fm), vignetteOg, {
+    twitter: {
+      thread: [
+        { text: texteX(fm), assets: [imageX] },
+        { text: `${url}x` },
+      ],
+    },
+  })],
   ['instagram', () => publier(dispo.instagram, texteInstagram(fm), vignette,
       { instagram: { type: 'post', shouldShareToFeed: true } })],
   ['tiktok', () => publier(dispo.tiktok, texteTikTok(fm), vignette,
