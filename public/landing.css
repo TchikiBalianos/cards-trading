@@ -1,12 +1,12 @@
-@import url(animations.css?v=27);
-@import url(avantages.css?v=27);
-@import url(comparatif.css?v=27);
-@import url(features.css?v=27);
-@import url(hero.css?v=27);
-@import url(layout.css?v=27);
-@import url(questionnaire.css?v=27);
-@import url(seller-tools.css?v=27);
-@import url(social.css?v=27);
+@import url(animations.css?v=28);
+@import url(avantages.css?v=28);
+@import url(comparatif.css?v=28);
+@import url(features.css?v=28);
+@import url(hero.css?v=28);
+@import url(layout.css?v=28);
+@import url(questionnaire.css?v=28);
+@import url(seller-tools.css?v=28);
+@import url(social.css?v=28);
 
 /* ── REVEAL H2 — IntersectionObserver custom (remplace AOS) */
 .reveal-h2 {
@@ -541,6 +541,27 @@ footer {
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin: 0 0 16px;
+    }
+
+    /* Marque les TCG annoncés mais absents du catalogue de lancement.
+       La colonne s'intitule « TCG supportés » : sans ce repère, Riftbound
+       et Star Wars s'y lisent comme déjà disponibles, ce que le MVP ne
+       tiendra pas. Décision du 2 septembre 2026 — la FAQ dit désormais
+       « au lancement » et « ajoutés à terme », les deux doivent rester
+       cohérents. */
+    .tcg-bientot {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 7px;
+      border-radius: 100px;
+      background: rgba(41, 151, 255, 0.14);
+      border: 1px solid rgba(41, 151, 255, 0.3);
+      color: #7cb8f5;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      vertical-align: middle;
     }
 
     ul {
