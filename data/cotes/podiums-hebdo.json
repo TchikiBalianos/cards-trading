@@ -49,5 +49,65 @@
         "affichage": "Ultra-Commando"
       }
     ]
+  },
+  {
+    "date": "2026-09-03",
+    "marche": "int",
+    "podium": [
+      {
+        "ok": true,
+        "nom": "Méga-Camérupt-ex",
+        "dexId": 323,
+        "id": "me01-156",
+        "actuel": 3.54,
+        "reference": 2.93,
+        "variation": 21,
+        "image": "https://assets.tcgdex.net/fr/me/me01/156/high.png",
+        "maj": "2026-09-02T15:44:48.720Z",
+        "recoupeTcgplayer": true,
+        "category": "Pokémon",
+        "illustrator": "5ban Graphics",
+        "rarity": "Ultra Rare",
+        "set": "Méga-Évolution",
+        "nomFr": "Camérupt",
+        "affichage": "Méga-Camérupt-ex"
+      },
+      {
+        "ok": true,
+        "nom": "Ludicolo",
+        "dexId": 272,
+        "id": "me02-095",
+        "actuel": 2.21,
+        "reference": 1.94,
+        "variation": 14,
+        "image": "https://assets.tcgdex.net/fr/me/me02/095/high.png",
+        "maj": "2026-09-02T15:44:48.786Z",
+        "recoupeTcgplayer": true,
+        "category": "Pokémon",
+        "illustrator": "Jerky",
+        "rarity": "Illustration rare",
+        "set": "Flammes Fantasmagoriques",
+        "nomFr": "Ludicolo",
+        "affichage": "Ludicolo"
+      },
+      {
+        "ok": true,
+        "nom": "Mélofée-ex de Lilie",
+        "dexId": null,
+        "id": "me02.5-280",
+        "actuel": 127.84,
+        "reference": 113.09,
+        "variation": 13,
+        "image": "https://assets.tcgdex.net/fr/me/me02.5/280/high.png",
+        "maj": "2026-09-02T15:44:48.922Z",
+        "recoupeTcgplayer": true,
+        "category": "Pokémon",
+        "illustrator": "Naoki Saito",
+        "rarity": "Illustration spéciale rare",
+        "set": "Héros Transcendants",
+        "nomFr": null,
+        "affichage": "Mélofée-ex de Lilie"
+      }
+    ]
   }
 ]
