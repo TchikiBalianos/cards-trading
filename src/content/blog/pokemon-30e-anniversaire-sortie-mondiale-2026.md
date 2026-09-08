@@ -42,8 +42,6 @@ Cette béquille disparaît. Le 16 septembre au matin, personne n'aura de donnée
 - **Il n'y a plus d'arbitrage entre versions.** Acheter la version japonaise moins chère en avance, revendre, puis racheter la française : cette stratégie n'a plus d'objet ici, tout part le même jour.
 - **La demande mondiale se concentre sur un seul créneau.** C'est le point le moins commenté et le plus douloureux. Les stocks européens ne bénéficient plus de l'étalement naturel que créait le décalage.
 
-La conclusion pratique est simple : si vous visez du scellé, la précommande vaut mieux que le jour J. Si vous visez une carte précise, laissez passer deux à trois semaines.
-
 ## Ce que contient réellement un booster
 
 L'annonce officielle est inhabituellement précise, et elle mérite d'être lue au mot près. Chaque booster occidental contient **cinq cartes brillantes**, dont l'une des 30 cartes Pikachu, **plus une carte Énergie de base brillante**.
