@@ -1,0 +1,81 @@
+# Prévient Julian par email qu'un article attend sa relecture.
+#
+# POURQUOI CE WORKFLOW EXISTE. Les tâches de rédaction du mardi et du
+# vendredi poussent leurs brouillons sur une branche `blog/<slug>` et
+# s'arrêtent là : elles ne relisent ni ne fusionnent rien. Aucun signal ne
+# partait. Le 18 août 2026, un article est resté six jours sur sa branche
+# avant qu'un audit manuel ne le retrouve. Les vérifications du mercredi et
+# du samedi le voyaient, mais deux fois par semaine et seulement si l'app
+# Claude Desktop était ouverte : le rythme de publication en dépendait.
+#
+# DEUX DÉCLENCHEURS, deux besoins :
+#   push sur blog/**  → email immédiat, c'est la réactivité ;
+#   cron quotidien    → rappel, pour que rien ne s'enlise.
+#
+# ⚠️ Le déclencheur `push` n'existe QUE pour les branches créées après ce
+# commit : sur un push, GitHub exécute le workflow tel qu'il est sur la
+# branche poussée, et une branche partie d'un `main` plus ancien ne le
+# contient pas. Les branches déjà ouvertes sont couvertes par le rappel.
+#
+# 05:32 UTC = 07:32 à Paris en été, juste après `publie-articles.yml`
+# (05:12) : l'email du matin ne mentionne donc jamais un article que le
+# cron vient de mettre en ligne.
+
+name: Alerte relecture
+
+on:
+  push:
+    branches:
+      - 'blog/**'
+    paths:
+      - 'src/content/blog/**'
+  schedule:
+    - cron: '32 5 * * *'
+  workflow_dispatch:
+    inputs:
+      branche:
+        description: "Branche à signaler (vide = rappel des branches qui traînent)"
+        type: string
+        default: ''
+      dry_run:
+        description: "Composer sans envoyer l'email"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  prevenir:
+    name: Article à relire
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # `fetch-depth: 0` obligatoire : le script compare la branche à
+      # `origin/main` et date le dernier commit. Un clone superficiel n'a ni
+      # l'un ni l'autre, et le job échouerait sans rien dire d'utile.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Aucune dépendance npm : le script n'utilise que `git`, `fetch` et
+      # les modules natifs de Node. Pas de `npm ci`, donc pas d'install à
+      # attendre pour une simple alerte.
+      - name: Signaler
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            CIBLE="--branche=${{ github.ref_name }}"
+          elif [ -n "${{ inputs.branche }}" ]; then
+            CIBLE="--branche=${{ inputs.branche }}"
+          else
+            CIBLE="--rappel"
+          fi
+          echo "Mode : $CIBLE"
+          node scripts/alerte-relecture.mjs $CIBLE ${{ inputs.dry_run && '--dry-run' || '' }}

@@ -340,6 +340,43 @@ brouillon avec la bonne `pubDate`.
 > justifié le doublement du keep-alive : une automatisation qui dépend
 > d'un poste allumé n'est pas une automatisation.
 
+### Alerte de relecture par email
+
+`alerte-relecture.yml` prévient Julian dès qu'un brouillon attend, à
+`julian.schmerkin@gmail.com` via Resend (secret `RESEND_API_KEY`, déjà en
+place). Deux déclencheurs : un **push sur `blog/**`** envoie l'email tout
+de suite, et un **cron quotidien à 05:32 UTC** rappelle les branches qui
+dépassent 2 jours. L'email porte le verdict des mêmes contrôles que la
+publication, plus les points éditoriaux à vérifier.
+
+> **Pourquoi.** Les tâches de rédaction poussent un brouillon sur une
+> branche et s'arrêtent là. Rien ne le signalait : le 18 août 2026, un
+> article y est resté six jours. Les vérifications du mercredi et du
+> samedi le voyaient, mais deux fois par semaine et seulement si l'app
+> était ouverte, ce qui faisait dépendre le rythme de publication d'un
+> poste allumé.
+
+⚠️ **Le déclencheur `push` ne vaut que pour les branches créées après le
+8 septembre 2026.** Sur un push, GitHub exécute le workflow tel qu'il est
+*sur la branche poussée* : une branche partie d'un `main` antérieur ne le
+contient pas. Le rappel quotidien, lui, tourne depuis `main` et les
+couvre toutes.
+
+⚠️ **Le rappel ne part que si une branche dépasse le seuil**, et jamais
+sinon. Une alerte quotidienne systématique cesse d'être lue au bout d'une
+semaine, soit exactement le jour où elle compte. Le seuil est
+`SEUIL_JOURS` dans `scripts/alerte-relecture.mjs`.
+
+Les critères de complétude sont dans `scripts/lib/article.mjs`, partagés
+avec `publie-articles.mjs` : séparés, ils divergeraient et l'alerte
+annoncerait « publiable » un article que la publication refuserait le
+lendemain.
+
+```bash
+node scripts/alerte-relecture.mjs --rappel --dry-run
+node scripts/alerte-relecture.mjs --branche=blog/<slug> --dry-run
+```
+
 ⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
 commits d'archivage des autres workflows. Vercel honore ce marqueur :
 l'article serait committé et jamais déployé.

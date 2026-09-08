@@ -32,9 +32,10 @@
  * Sortie : 0 si tout va bien, 1 si un article dû n'a pas pu être publié.
  */
 
-import { readFileSync, writeFileSync, readdirSync, appendFileSync } from 'node:fs';
+import { writeFileSync, readdirSync, appendFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { lireArticle, defauts } from './lib/article.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOSSIER = join(RACINE, 'src', 'content', 'blog');
@@ -43,47 +44,13 @@ const CONTROLE = process.argv.includes('--controle');
 const argDate = process.argv.find((a) => a.startsWith('--date='));
 const AUJOURDHUI = argDate ? argDate.slice(7) : new Date().toISOString().slice(0, 10);
 
-/** Découpe le frontmatter du corps, sans dépendance externe. */
-function lire(chemin) {
-  const brut = readFileSync(chemin, 'utf8');
-  const m = brut.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-  if (!m) return null;
-  const champs = {};
-  for (const ligne of m[1].split(/\r?\n/)) {
-    const c = ligne.match(/^(\w+):\s*(.*)$/);
-    if (c) champs[c[1]] = c[2].trim().replace(/^["']|["']$/g, '');
-  }
-  return { brut, frontmatter: m[1], champs, corps: m[2] };
-}
-
-/**
- * Contrôle de complétude. Volontairement souple sur la forme (les titres
- * de FAQ varient : « Questions fréquentes », « FAQ »...) et strict sur le
- * fond : il faut de vraies questions en `###` et un sommaire.
- */
-function defauts(article) {
-  const manque = [];
-  if (!/<!--\s*sommaire\s*-->|^##\s*Sommaire/im.test(article.corps)) manque.push('sommaire');
-  const faq = article.corps.match(/^##\s*(FAQ|Questions?[^\n]*)$/im);
-  if (!faq) manque.push('section FAQ');
-  else {
-    const apres = article.corps.slice(article.corps.indexOf(faq[0]));
-    const questions = (apres.match(/^###\s+\S/gm) || []).length;
-    if (questions < 3) manque.push(`FAQ trop courte (${questions} question(s), 3 minimum)`);
-  }
-  if (article.corps.trim().length < 2000) manque.push('corps trop court (moins de 2000 signes)');
-  if (!article.champs.title) manque.push('titre absent');
-  if (!article.champs.description) manque.push('description absente');
-  return manque;
-}
-
 const dus = [];
 const refuses = [];
 const programmes = [];
 
 for (const fichier of readdirSync(DOSSIER).filter((f) => /\.mdx?$/.test(f))) {
   const chemin = join(DOSSIER, fichier);
-  const article = lire(chemin);
+  const article = lireArticle(chemin);
   if (!article) {
     refuses.push({ fichier, raisons: ['frontmatter illisible'] });
     continue;
