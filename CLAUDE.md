@@ -318,6 +318,48 @@ Un brouillon ne consomme pas l'article : `.github/etat-annonces-buffer.json`
 n'est écrit que si un post part réellement. Sans quoi un simple test
 retirerait l'article de la file et il ne serait jamais annoncé.
 
+## Publication des articles : jamais depuis un poste
+
+Un article de blog passe en ligne quand `publie-articles.yml` (GitHub
+Actions, quotidien à 05:12 UTC) trouve sur `main` un fichier réunissant
+trois conditions : `draft: true`, `pubDate` atteinte, et sommaire + FAQ
+présents. Il lève le drapeau, génère les vignettes, contrôle le build et
+la concordance FAQ, committe, puis **attend le 200 en production**.
+
+La relecture reste humaine : le script ne touche à aucune branche
+`blog/*`. Programmer un article, c'est le fusionner sur `main` en
+brouillon avec la bonne `pubDate`.
+
+> **Pourquoi ce n'est plus une tâche planifiée de l'app Claude Desktop.**
+> Celles-ci ne tournent que si l'app est ouverte. Le 4 septembre 2026, la
+> tâche armée pour 08h30 a démarré à 15h02, soit après `annonce-discord`
+> (11:17 Paris) et `annonce-buffer` (12:23). L'article OP-17 est resté en
+> brouillon, 404 en production, et le relais du vendredi a republié
+> l'article du mardi faute de nouveauté. Personne n'a rien vu pendant
+> trois jours. Même famille que les crons Vercel « best effort » qui ont
+> justifié le doublement du keep-alive : une automatisation qui dépend
+> d'un poste allumé n'est pas une automatisation.
+
+⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
+commits d'archivage des autres workflows. Vercel honore ce marqueur :
+l'article serait committé et jamais déployé.
+
+⚠️ Le créneau de 05:12 UTC est **avant** les deux crons d'annonce, et
+c'est le seul point qui compte dans le choix de l'heure. Le déplacer
+après 09:17 UTC ferait attendre chaque article jusqu'au créneau éditorial
+suivant, soit trois ou quatre jours.
+
+⚠️ Un brouillon incomplet est **refusé, pas publié** : sans sommaire ni
+FAQ d'au moins trois questions, le script sort en erreur et l'article
+reste en attente. L'étape est en `continue-on-error` pour qu'un article
+bancal n'empêche pas la sortie des articles valides du même jour ;
+l'échec est rejoué en fin de job.
+
+```bash
+node scripts/publie-articles.mjs --controle              # état du jour, aucune écriture
+node scripts/publie-articles.mjs --controle --date=2026-09-10   # simule un autre jour
+```
+
 ## Vérification — non négociable
 
 Ce projet a une histoire de correctifs annoncés sans preuve. **Toujours vérifier

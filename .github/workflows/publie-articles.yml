@@ -1,0 +1,131 @@
+# Publie les articles de blog arrivés à échéance, et vérifie qu'aucun
+# brouillon dû ne reste bloqué.
+#
+# POURQUOI CE WORKFLOW EXISTE. La publication dépendait d'une tâche
+# planifiée de l'app Claude Desktop, qui ne tourne que si l'app est
+# ouverte sur le poste de Julian. Le 4 septembre 2026, la tâche armée
+# pour 08h30 a démarré à 15h02, soit APRÈS annonce-discord (11h17) et
+# annonce-buffer (12h23) : l'article OP-17 est resté en brouillon, 404 en
+# production, et le relais du vendredi a republié l'article du mardi
+# faute de nouveauté. Trois jours perdus, sans le moindre signal.
+#
+# GitHub Actions ne dépend d'aucun poste allumé. Même raisonnement que le
+# doublement du keep-alive : la fréquence ET la traçabilité.
+#
+# 05:12 UTC = 07:12 à Paris en été. Volontairement AVANT annonce-discord
+# (09:17 UTC) et annonce-buffer (10:23 UTC) : un article publié le matin
+# est relayé le jour même. Décalé de 12 min car les crons GitHub sont
+# retardés aux heures rondes.
+#
+# ⚠️ Quotidien, pas seulement les mardis et vendredis. Un article dont la
+# pubDate tombe un autre jour doit sortir ce jour-là, et un rattrapage
+# après incident ne doit pas attendre le prochain créneau éditorial.
+#
+# ⚠️ PAS de `[skip ci]` dans le commit de publication, contrairement aux
+# commits d'archivage des autres workflows : Vercel honore ce marqueur et
+# l'article ne serait jamais déployé.
+
+name: Publie les articles dus
+
+on:
+  schedule:
+    - cron: '12 5 * * *'
+  workflow_dispatch:
+    inputs:
+      controle_seul:
+        description: "Contrôle seul : rend compte sans rien publier"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  publier:
+    name: Articles à échéance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances
+        run: npm ci --omit=dev --ignore-scripts=false
+
+      # Sort en 1 si un brouillon dû est incomplet (sommaire ou FAQ
+      # manquants) : mieux vaut une alerte qu'un article bancal en ligne.
+      # `continue-on-error` volontaire : le script sort en 1 dès qu'un
+      # brouillon dû est incomplet, or un article bancal ne doit pas
+      # empêcher la sortie des articles valides du même jour. L'échec est
+      # rejoué à la toute fin, une fois les bons articles en ligne.
+      - name: Lever les brouillons arrivés à échéance
+        id: publication
+        continue-on-error: true
+        run: node scripts/publie-articles.mjs ${{ inputs.controle_seul && '--controle' || '' }}
+
+      # Instagram et TikTok refusent un post sans média : sans vignette,
+      # l'article sortirait mais son relais social échouerait.
+      - name: Générer les vignettes sociales
+        if: steps.publication.outputs.publies != '0' && !inputs.controle_seul
+        run: node scripts/vignettes-sociales.mjs
+
+      - name: Contrôler le build
+        if: steps.publication.outputs.publies != '0' && !inputs.controle_seul
+        run: npm run build
+
+      # Le balisage FAQPage et le HTML visible doivent concorder, sous
+      # peine de sanction Google sur la page entière.
+      - name: Contrôler la concordance FAQ
+        if: steps.publication.outputs.publies != '0' && !inputs.controle_seul
+        run: node scripts/verifie-faq.mjs
+
+      - name: Publier
+        if: steps.publication.outputs.publies != '0' && !inputs.controle_seul
+        run: |
+          if [ -z "$(git status --porcelain -- src/content/blog/ public/assets/social/)" ]; then
+            echo "Rien à committer."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/blog/ public/assets/social/
+          git commit -m "feat(blog): publie ${{ steps.publication.outputs.slugs }}"
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+
+      # Le push ne prouve rien : seul le 200 en production fait foi.
+      # ⚠️ `-L` OBLIGATOIRE, l'apex redirige en 307 vers `www.` et un test
+      # sans redirection n'atteint JAMAIS 200, quelle que soit l'attente.
+      - name: Vérifier en production
+        if: steps.publication.outputs.publies != '0' && !inputs.controle_seul
+        run: |
+          ECHEC=0
+          for SLUG in $(echo "${{ steps.publication.outputs.slugs }}" | tr ',' ' '); do
+            URL="https://cards-trading.com/blog/$SLUG/"
+            echo "Attente de $URL"
+            SERVI=0
+            for i in $(seq 1 48); do
+              CODE=$(curl -sL -o /dev/null -w '%{http_code}' "$URL")
+              if [ "$CODE" = "200" ]; then
+                echo "  en ligne après $((i*10))s."
+                SERVI=1
+                break
+              fi
+              sleep 10
+            done
+            if [ "$SERVI" = "0" ]; then
+              echo "::error::$SLUG toujours pas servi après 8 min (dernier code : $CODE)."
+              ECHEC=1
+            fi
+          done
+          exit $ECHEC
+
+      # Dernier maillon : remonte l'alerte une fois le travail utile fait.
+      - name: Signaler les brouillons refusés
+        if: always() && steps.publication.outputs.refuses != '0' && steps.publication.outputs.refuses != ''
+        run: |
+          echo "::error::${{ steps.publication.outputs.refuses }} brouillon(s) dû(s) refusé(s) : voir l'étape « Lever les brouillons » pour le détail."
+          exit 1
