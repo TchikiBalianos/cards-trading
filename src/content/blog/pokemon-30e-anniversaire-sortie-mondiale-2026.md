@@ -17,7 +17,7 @@ draft: true
 - [Ce que contient réellement un booster](#ce-que-contient-réellement-un-booster)
 - [Les 30 Pikachu : la vraie mécanique du set](#les-30-pikachu--la-vraie-mécanique-du-set)
 - [La Collection Classique : à collectionner, pas à jouer](#la-collection-classique--à-collectionner-pas-à-jouer)
-- [Six dates de sortie, pas une seule](#six-dates-de-sortie-pas-une-seule)
+- [Des sorties jusqu'en décembre, pas une seule date](#des-sorties-jusquen-décembre-pas-une-seule-date)
 - [Le prix conseillé en euros n'existe pas](#le-prix-conseillé-en-euros-nexiste-pas)
 - [Questions fréquentes](#questions-fréquentes)
 - [Découvrez les autres articles du moment](#découvrez-les-autres-articles-du-moment)
@@ -76,22 +76,25 @@ La logique est celle des marques de réglementation. Pour la saison 2026, seules
 
 Si vous achetez ce set en pensant renforcer un deck compétitif, vous vous trompez de produit. Les seules cartes de l'extension susceptibles d'être jouées en Standard sont les nouveautés, Amphinobi-ex et Nymphali-ex en tête.
 
-## Six dates de sortie, pas une seule
+## Des sorties jusqu'en décembre, pas une seule date
 
-Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'étale jusqu'à la mi-novembre, et les produits les plus fournis en boosters arrivent en dernier.
+Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'étale sur près de trois mois, et les produits les plus fournis en boosters arrivent en dernier.
 
 | Date | Produits |
 |---|---|
-| **16 septembre** | ETB (Coffret Dresseur d'élite), Coffret Poster, coffrets Amphinobi-ex et Nymphali-ex, blister 2 boosters Évoli |
+| **16 septembre** | ETB (Coffret Dresseur d'élite), Coffret Poster, coffrets Amphinobi-ex et Nymphali-ex, blister 2 boosters Évoli, Collection K.O. |
 | **2 octobre** | Lot de boosters (Bundle), Mini-Tins |
 | **16 octobre** | Coffret Collection Classeur |
 | **30 octobre** | Decks Combat Mentali-ex et Noctali-ex |
 | **6 novembre** | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, Ultra-Premium Collection (UPC) |
 | **13 novembre** | Tripacks autocollants Noadkoko d'Alola et Lucario |
+| **4 décembre** *(à confirmer)* | Les deux PokéBox |
 
-Les deux bornes décideront de votre budget. L'**ETB du 16 septembre** (neuf boosters, promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies brillantes, rangement à six séparateurs) est le produit d'entrée sérieux, et celui qui partira le plus vite. L'**UPC du 6 novembre** concentre de loin le plus de boosters par boîte. Sept semaines séparent les deux, de quoi étaler la dépense.
+Les deux bornes décideront de votre budget. L'**ETB du 16 septembre** (neuf boosters, promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies brillantes, rangement à six séparateurs) est le produit d'entrée sérieux, et celui qui partira le plus vite. L'**UPC du 6 novembre** concentre de loin le plus de boosters par boîte.
 
-Une nuance importante : la communication officielle française ne donne que des trimestres, « T3 2026 » et « T4 2026 ». Les dates ci-dessus viennent des revendeurs et des calendriers spécialisés : cohérentes entre elles, mais susceptibles de bouger. La **Collection K.O.**, annoncée par Pokémon en septembre, n'y figure d'ailleurs pas.
+Attention à ne pas payer deux fois la même chose : le **blister de 2 boosters Évoli** et la **Collection K.O.** sortent le même jour avec un contenu quasi identique, deux boosters et une carte Évoli brillante accompagnée d'une pièce. Seuls la référence et le packaging changent. C'est pensé pour les collectionneurs de scellé, pas pour ceux qui veulent des cartes.
+
+Une nuance importante : la communication officielle française ne donne que des trimestres, « T3 2026 » et « T4 2026 ». Les dates ci-dessus viennent des revendeurs et des calendriers spécialisés : cohérentes entre elles dans les grandes lignes, mais susceptibles de bouger, et les deux dernières échéances restent les plus incertaines.
 
 Enfin, la particularité habituelle des sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus, ce qui concentre la demande sur les ETB et les UPC.
 
