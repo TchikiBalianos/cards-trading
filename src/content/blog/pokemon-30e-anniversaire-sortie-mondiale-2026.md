@@ -1,6 +1,6 @@
 ---
-title: "30ᵉ Anniversaire : le JCC Pokémon sort partout le même jour, et ça change vos achats"
-description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, rareté futuriste rare et ce que ça change."
+title: "30ᵉ Anniversaire : l'extension sort partout le même jour, et ça change tout !"
+description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, nouvelle rareté et ce que ça change."
 pubDate: 2026-09-08
 category: "pokemon"
 tags: ["pokemon", "30e-anniversaire", "sortie-mondiale", "collection", "marche"]
@@ -70,21 +70,21 @@ Le conseil est le même que pour toute sous-série numérotée : **ouvrez pour l
 
 L'extension ramène des cartes historiques réimprimées, dont **Dracaufeu du Set de Base** et **Pikachu et Zekrom-GX**, issu de l'extension *Duo de Choc* (série Soleil et Lune).
 
-Un point à ne surtout pas rater, écrit noir sur blanc dans l'annonce officielle : **ces réimpressions ne seront pas légales en format Standard**. Elles restent utilisables dans les formats qui acceptent déjà les éditions originales de ces cartes.
+Un point à ne surtout pas rater, écrit noir sur blanc dans l'annonce officielle : **ces réimpressions ne seront pas légales en tournoi format Standard**. Elles restent utilisables dans les formats qui acceptent déjà les éditions originales de ces cartes.
 
-La logique est celle des marques de réglementation. Pour la saison 2026, seules les cartes marquées **H**, **I** et **J** sont autorisées en Standard. Une réimpression de Dracaufeu du Set de Base ne rentre dans aucune de ces catégories : c'est une pièce de collection, pas une carte de tournoi.
+La logique est celle des marques de réglementation. Pour la saison 2026, seules les cartes marquées **H**, **I** et **J** sont autorisées en Standard. Une réimpression de Dracaufeu du Set de Base ne rentre dans aucune de ces catégories : c'est une pièce de collection, pas une carte à jouer en tournoi.
 
 Si vous achetez ce set en pensant renforcer un deck compétitif, vous vous trompez de produit. Les seules cartes de l'extension susceptibles d'être jouées en Standard sont les nouveautés, Amphinobi-ex et Nymphali-ex en tête.
 
 ## Quatre vagues de produits, pas une seule date
 
-Le 16 septembre marque la première vague, pas la totalité de la gamme. Les produits annoncés pour ce jour comprennent le **Coffret Dresseur d'élite** (neuf boosters, une promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies de base brillantes, des dés et un rangement à six séparateurs), les **coffrets Amphinobi-ex et Nymphali-ex** (quatre boosters chacun), la **Collection poster** (trois boosters et les promos brillantes d'Artikodin, Électhor et Sulfura), la **Collection autocollant**, le **blister de 2 boosters** et la **Collection K.O.**
+Le 16 septembre marque la première vague, pas la totalité de la gamme. Les produits annoncés pour ce jour comprennent l'emblématique **Coffret Dresseur d'élite** aka ETB (neuf boosters, une promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies de base brillantes, des dés et un rangement à six séparateurs), les **coffrets Amphinobi-ex et Nymphali-ex** (quatre boosters chacun), la **Collection poster** (trois boosters et les promos brillantes d'Artikodin, Électhor et Sulfura), la **Collection autocollant**, le **blister de 2 boosters** et la **Collection K.O.**
 
-Les vagues suivantes s'échelonnent ensuite : Collection classeur, lot de 6 boosters et mini-boîtes début octobre, decks Combat plus tard dans le mois, puis les **Collections Ultra-Premium** début novembre, celles qui concentrent le plus de boosters par boîte.
+Les vagues suivantes s'échelonnent ensuite : Collection classeur, lot de 6 boosters et mini-tins début octobre, decks Combat plus tard dans le mois, puis les **Collections Ultra-Premium** aka UPC pour début novembre, celles qui concentrent le plus de boosters par boîte.
 
 Une nuance importante : la communication officielle française ne donne pour l'instant que des trimestres, « T3 2026 » et « T4 2026 ». Les dates précises qui circulent viennent des revendeurs et des calendriers spécialisés. Elles sont cohérentes entre elles, mais elles peuvent bouger.
 
-Enfin, une particularité qui surprend chaque fois sur les sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident. Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus. Cela concentre mécaniquement la demande sur les Coffrets Dresseur d'élite et les Ultra-Premium.
+Enfin, une particularité qui surprend chaque fois sur les sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus. Cela concentre mécaniquement la demande sur les Coffrets Dresseur d'élite et les Ultra-Premium.
 
 ## Le prix conseillé en euros n'existe pas
 
@@ -116,17 +116,17 @@ Non, pas en format Standard. Les réimpressions de la Collection Classique ne so
 
 ### Qu'est-ce qu'une carte « futuriste rare » ?
 
-Une nouvelle rareté introduite par cette extension, au style graphique inédit dans le JCC. Les premières cartes concernées sont Mewtwo et Mew, illustrées par l'artiste japonais YOSHIROTTEN.
+Une nouvelle rareté introduite par cette extension, au style graphique "RGB" inédit dans le JCC. Les premières cartes concernées sont Mewtwo et Mew, illustrées par l'artiste japonais YOSHIROTTEN.
 
 ### Combien coûte un Coffret Dresseur d'élite 30ᵉ Anniversaire ?
 
-Il n'existe pas de prix conseillé officiel en euros. Selon les revendeurs, le coffret s'affiche entre environ 55 € et plus de 150 €. Comparez plusieurs vendeurs avant de précommander.
+Il n'existe pas de prix conseillé officiel en euros. Selon les revendeurs, l'ETB s'affiche entre environ 55 € et plus de 150 €. Comparez plusieurs vendeurs avant de précommander.
 
 ### Faut-il acheter à la sortie ou attendre ?
 
 Pour du scellé, précommander à prix ferme reste plus sûr que d'acheter le jour J, faute de display de 36 boosters et avec une demande mondiale concentrée sur une seule date. Pour une carte précise, attendre deux à trois semaines laisse le temps aux cotes de se stabiliser sur des données d'ouverture réelles.
 
-## Découvrez les autres TCG du moment
+## Découvrez les autres articles du moment
 
 - **[Storm Emeralda (M6) et Méga-Rayquaza ex](/blog/pokemon-storm-emeralda-m6-mega-rayquaza-ex)** : l'autre grosse sortie Pokémon de la fin d'année, celle qui arrive par le circuit classique.
 - **[Championnats du Monde Pokémon 2026](/blog/pokemon-worlds-2026-san-francisco-meta-standard)** : le format Standard actuel et les marques de réglementation en vigueur.
@@ -141,4 +141,4 @@ Concrètement : précommandez à prix ferme si vous voulez du scellé, comparez 
 
 C'est exactement pour ce genre d'arbitrage que nous construisons **Cards-Trading.com** : une place de marché française où comparer les prix réels entre vendeurs, avec 0 % de commission pendant la bêta pour ceux qui vendent. [Rejoignez la liste d'attente](https://cards-trading.com/#beta) avant la vague du 16 septembre.
 
-Et vous, vous partez sur un Coffret Dresseur d'élite le jour J, ou vous attendez les Ultra-Premium de novembre ?
+Et vous, vous êtes plutôt ETB le jour J, ou vous attendez les UPC de novembre ?
