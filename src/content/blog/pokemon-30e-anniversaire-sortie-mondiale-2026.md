@@ -17,10 +17,10 @@ draft: true
 - [Ce que contient réellement un booster](#ce-que-contient-réellement-un-booster)
 - [Les 30 Pikachu : la vraie mécanique du set](#les-30-pikachu--la-vraie-mécanique-du-set)
 - [La Collection Classique : à collectionner, pas à jouer](#la-collection-classique--à-collectionner-pas-à-jouer)
-- [Quatre vagues de produits, pas une seule date](#quatre-vagues-de-produits-pas-une-seule-date)
+- [Six dates de sortie, pas une seule](#six-dates-de-sortie-pas-une-seule)
 - [Le prix conseillé en euros n'existe pas](#le-prix-conseillé-en-euros-nexiste-pas)
 - [Questions fréquentes](#questions-fréquentes)
-- [Découvrez les autres TCG du moment](#découvrez-les-autres-tcg-du-moment)
+- [Découvrez les autres articles du moment](#découvrez-les-autres-articles-du-moment)
 - [Ce qu'il faut retenir](#ce-quil-faut-retenir)
 <!-- /sommaire -->
 
@@ -76,15 +76,24 @@ La logique est celle des marques de réglementation. Pour la saison 2026, seules
 
 Si vous achetez ce set en pensant renforcer un deck compétitif, vous vous trompez de produit. Les seules cartes de l'extension susceptibles d'être jouées en Standard sont les nouveautés, Amphinobi-ex et Nymphali-ex en tête.
 
-## Quatre vagues de produits, pas une seule date
+## Six dates de sortie, pas une seule
 
-Le 16 septembre marque la première vague, pas la totalité de la gamme. Les produits annoncés pour ce jour comprennent l'emblématique **Coffret Dresseur d'élite** aka ETB (neuf boosters, une promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies de base brillantes, des dés et un rangement à six séparateurs), les **coffrets Amphinobi-ex et Nymphali-ex** (quatre boosters chacun), la **Collection poster** (trois boosters et les promos brillantes d'Artikodin, Électhor et Sulfura), la **Collection autocollant**, le **blister de 2 boosters** et la **Collection K.O.**
+Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'étale jusqu'à la mi-novembre, et les produits les plus fournis en boosters arrivent en dernier.
 
-Les vagues suivantes s'échelonnent ensuite : Collection classeur, lot de 6 boosters et mini-tins début octobre, decks Combat plus tard dans le mois, puis les **Collections Ultra-Premium** aka UPC pour début novembre, celles qui concentrent le plus de boosters par boîte.
+| Date | Produits |
+|---|---|
+| **16 septembre** | ETB (Coffret Dresseur d'élite), Coffret Poster, coffrets Amphinobi-ex et Nymphali-ex, blister 2 boosters Évoli |
+| **2 octobre** | Lot de boosters (Bundle), Mini-Tins |
+| **16 octobre** | Coffret Collection Classeur |
+| **30 octobre** | Decks Combat Mentali-ex et Noctali-ex |
+| **6 novembre** | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, Ultra-Premium Collection (UPC) |
+| **13 novembre** | Tripacks autocollants Noadkoko d'Alola et Lucario |
 
-Une nuance importante : la communication officielle française ne donne pour l'instant que des trimestres, « T3 2026 » et « T4 2026 ». Les dates précises qui circulent viennent des revendeurs et des calendriers spécialisés. Elles sont cohérentes entre elles, mais elles peuvent bouger.
+Les deux bornes décideront de votre budget. L'**ETB du 16 septembre** (neuf boosters, promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies brillantes, rangement à six séparateurs) est le produit d'entrée sérieux, et celui qui partira le plus vite. L'**UPC du 6 novembre** concentre de loin le plus de boosters par boîte. Sept semaines séparent les deux, de quoi étaler la dépense.
 
-Enfin, une particularité qui surprend chaque fois sur les sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus. Cela concentre mécaniquement la demande sur les Coffrets Dresseur d'élite et les Ultra-Premium.
+Une nuance importante : la communication officielle française ne donne que des trimestres, « T3 2026 » et « T4 2026 ». Les dates ci-dessus viennent des revendeurs et des calendriers spécialisés : cohérentes entre elles, mais susceptibles de bouger. La **Collection K.O.**, annoncée par Pokémon en septembre, n'y figure d'ailleurs pas.
+
+Enfin, la particularité habituelle des sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus, ce qui concentre la demande sur les ETB et les UPC.
 
 ## Le prix conseillé en euros n'existe pas
 
