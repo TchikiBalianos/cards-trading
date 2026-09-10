@@ -109,5 +109,65 @@
         "affichage": "Mélofée-ex de Lilie"
       }
     ]
+  },
+  {
+    "date": "2026-09-10",
+    "marche": "jp",
+    "podium": [
+      {
+        "ok": true,
+        "nom": "ニンフィアGX",
+        "dexId": 700,
+        "id": "SM1p-064",
+        "actuel": 152.86,
+        "reference": 42.58,
+        "variation": 259,
+        "image": null,
+        "maj": "2026-09-10T11:15:33.339Z",
+        "recoupeTcgplayer": false,
+        "category": "Pokemon",
+        "illustrator": "",
+        "rarity": "Hyper rare",
+        "set": "サン＆ムーン",
+        "nomFr": "Nymphali",
+        "affichage": "Nymphali — ニンフィアGX"
+      },
+      {
+        "ok": true,
+        "nom": "ミュウツーGX",
+        "dexId": 150,
+        "id": "SM3p-075",
+        "actuel": 107.6,
+        "reference": 33.58,
+        "variation": 220,
+        "image": null,
+        "maj": "2026-09-10T11:15:33.339Z",
+        "recoupeTcgplayer": false,
+        "category": "Pokemon",
+        "illustrator": "5ban Graphics",
+        "rarity": "Ultra Rare",
+        "set": "ひかる伝説",
+        "nomFr": "Mewtwo",
+        "affichage": "Mewtwo — ミュウツーGX"
+      },
+      {
+        "ok": true,
+        "nom": "ルカリオGX",
+        "dexId": 448,
+        "id": "SM5p-030",
+        "actuel": 6.28,
+        "reference": 2.31,
+        "variation": 172,
+        "image": null,
+        "maj": "2026-09-10T11:15:33.392Z",
+        "recoupeTcgplayer": false,
+        "category": "Pokemon",
+        "illustrator": "5ban Graphics",
+        "rarity": "Double rare",
+        "set": "ウルトラフォース",
+        "nomFr": "Lucario",
+        "affichage": "Lucario — ルカリオGX"
+      }
+    ]
   }
 ]
