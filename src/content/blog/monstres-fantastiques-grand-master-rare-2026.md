@@ -1,12 +1,12 @@
 ---
 title: "Grand Master Rare : Konami passe à la carte numérotée"
 description: "Les Monstres Fantastiques (MAMO) introduit la Grand Master Rare : 100 exemplaires par carte et par zone, numérotés. Ce que la sérialisation change pour votre collection."
-pubDate: 2026-09-07
+pubDate: 2026-09-14
 category: "yugioh"
 tags: ["yugioh", "magnificent-monsters", "grand-master-rare", "rarete", "collection", "marche"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-yugiho.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
