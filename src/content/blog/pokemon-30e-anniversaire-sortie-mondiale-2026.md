@@ -1,12 +1,12 @@
 ---
 title: "30ᵉ Anniversaire : l'extension sort partout le même jour, et ça change tout !"
 description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, nouvelle rareté et ce que ça change."
-pubDate: 2026-09-08
+pubDate: 2026-09-12
 category: "pokemon"
 tags: ["pokemon", "30e-anniversaire", "sortie-mondiale", "collection", "marche"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-pokemon.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
