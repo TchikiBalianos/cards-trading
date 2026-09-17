@@ -2,6 +2,7 @@
 title: "30ᵉ Anniversaire : l'extension sort partout le même jour, et ça change tout !"
 description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, nouvelle rareté et ce que ça change."
 pubDate: 2026-09-12
+updatedDate: 2026-09-17
 category: "pokemon"
 tags: ["pokemon", "30e-anniversaire", "sortie-mondiale", "collection", "marche"]
 author: "Cards Trading"
@@ -82,19 +83,17 @@ Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'éta
 
 | Date | Produits |
 |---|---|
-| **16 septembre** | ETB (Coffret Dresseur d'élite), Coffret Poster, coffrets Amphinobi-ex et Nymphali-ex, blister 2 boosters Évoli, Collection K.O. |
-| **2 octobre** | Lot de boosters (Bundle), Mini-Tins |
-| **16 octobre** | Coffret Collection Classeur |
+| **16 septembre** | ETB (Coffret Dresseur d'élite), Coffret Poster, coffrets Amphinobi-ex et Nymphali-ex, les deux PokéBox (Amphinobi-ex, Nymphali-ex), les deux Tripacks autocollants (Noadkoko d'Alola, Lucario), blister 2 boosters Évoli, Collection K.O. |
+| **2 octobre** | Lot de boosters (Bundle), Mini-Tins Jour et Nuit, Coffret Collection Classeur |
 | **30 octobre** | Decks Combat Mentali-ex et Noctali-ex |
-| **6 novembre** | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, Ultra-Premium Collection (UPC) |
-| **13 novembre** | Tripacks autocollants Noadkoko d'Alola et Lucario |
-| **4 décembre** *(à confirmer)* | Les deux PokéBox |
+| **6 novembre** | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, les deux Ultra-Premium Collection (UPC) Jour et Nuit |
+| **4 décembre** *(à confirmer)* | Boîtes métal Amphinobi-ex et Nymphali-ex |
 
 Les deux bornes décideront de votre budget. L'**ETB du 16 septembre** (neuf boosters, promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies brillantes, rangement à six séparateurs) est le produit d'entrée sérieux, et celui qui partira le plus vite. L'**UPC du 6 novembre** concentre de loin le plus de boosters par boîte.
 
 Attention à ne pas payer deux fois la même chose : le **blister de 2 boosters Évoli** et la **Collection K.O.** sortent le même jour avec un contenu quasi identique, deux boosters et une carte Évoli brillante accompagnée d'une pièce. Seuls la référence et le packaging changent. C'est pensé pour les collectionneurs de scellé, pas pour ceux qui veulent des cartes.
 
-Une nuance importante : la communication officielle française ne donne que des trimestres, « T3 2026 » et « T4 2026 ». Les dates ci-dessus viennent des revendeurs et des calendriers spécialisés : cohérentes entre elles dans les grandes lignes, mais susceptibles de bouger, et les deux dernières échéances restent les plus incertaines.
+Une nuance importante : la communication officielle française ne donne que des trimestres, « T3 2026 » et « T4 2026 ». La première vague, elle, n'est plus une prévision : elle a bien eu lieu le 16 septembre, avec les PokéBox et les Tripacks autocollants dedans. Les dates suivantes viennent des revendeurs et des calendriers spécialisés, cohérentes entre elles mais toujours susceptibles de bouger. La seule échéance réellement incertaine est celle du 4 décembre : plusieurs listes de distributeurs la décrivent dans des termes très proches des PokéBox déjà sorties (boîte métal, 4 boosters et une carte promo), sans qu'on puisse trancher entre un vrai second produit et un doublon de catalogue.
 
 Enfin, la particularité habituelle des sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus, ce qui concentre la demande sur les ETB et les UPC.
 
