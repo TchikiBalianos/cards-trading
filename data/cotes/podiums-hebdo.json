@@ -169,5 +169,65 @@
         "affichage": "Lucario — ルカリオGX"
       }
     ]
+  },
+  {
+    "date": "2026-09-17",
+    "marche": "int",
+    "podium": [
+      {
+        "ok": true,
+        "nom": "Zoroark-ex de N",
+        "dexId": 571,
+        "id": "me02.5-286",
+        "actuel": 167.47,
+        "reference": 134.25,
+        "variation": 25,
+        "image": "https://assets.tcgdex.net/fr/me/me02.5/286/high.png",
+        "maj": "2026-09-16T22:54:06.861Z",
+        "recoupeTcgplayer": true,
+        "category": "Pokémon",
+        "illustrator": "Raita Kazama",
+        "rarity": "Illustration spéciale rare",
+        "set": "Héros Transcendants",
+        "nomFr": "Zoroark",
+        "affichage": "Zoroark-ex de N"
+      },
+      {
+        "ok": true,
+        "nom": "Méga-Dracaufeu Y-ex",
+        "dexId": 6,
+        "id": "me02.5-294",
+        "actuel": 427.58,
+        "reference": 345.41,
+        "variation": 24,
+        "image": "https://assets.tcgdex.net/fr/me/me02.5/294/high.png",
+        "maj": "2026-09-16T22:54:06.888Z",
+        "recoupeTcgplayer": true,
+        "category": "Pokémon",
+        "illustrator": "aky CG Works",
+        "rarity": "Méga Hyper Rare",
+        "set": "Héros Transcendants",
+        "nomFr": "Dracaufeu",
+        "affichage": "Méga-Dracaufeu Y-ex"
+      },
+      {
+        "ok": true,
+        "nom": "Méga-Zygarde-ex",
+        "dexId": 718,
+        "id": "me03-120",
+        "actuel": 54.96,
+        "reference": 46.21,
+        "variation": 19,
+        "image": "https://assets.tcgdex.net/fr/me/me03/120/high.png",
+        "maj": "2026-09-16T22:54:06.894Z",
+        "recoupeTcgplayer": true,
+        "category": "Pokémon",
+        "illustrator": "kantaro",
+        "rarity": "Illustration spéciale rare",
+        "set": "Équilibre Parfait",
+        "nomFr": "Zygarde",
+        "affichage": "Méga-Zygarde-ex"
+      }
+    ]
   }
 ]
