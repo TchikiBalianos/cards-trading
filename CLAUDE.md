@@ -372,6 +372,31 @@ avec `publie-articles.mjs` : séparés, ils divergeraient et l'alerte
 annoncerait « publiable » un article que la publication refuserait le
 lendemain.
 
+⚠️ **L'alerte couvre deux natures de branche, et la seconde a longtemps
+été muette.** Un article `nouveau` (absent de `main`) et une
+`modification` (correction d'un article **déjà en ligne**) déclenchent
+tous deux l'email, avec un libellé, un lien et des consignes différents.
+Le script ne testait au départ que l'**existence** du fichier sur `main`
+et concluait « déjà intégré » : toute correction d'article publié était
+donc silencieuse, précisément le cas où la production sert une
+information fausse en attendant la fusion. Constaté le 17 septembre 2026
+sur `blog/fix-30e-anniversaire-calendrier`, qui corrigeait un calendrier
+de sortie faux sans que rien ne prévienne.
+
+⚠️ **Comparer les contenus ne suffit pas non plus.** Une branche fusionnée
+en *squash* garde des commits absents de `main` et un contenu différent
+(`main` a reçu les corrections suivantes) : elle repasse donc pour une
+« correction en attente » et le rappel quotidien repart chaque matin pour
+des branches mortes. Le test qui tranche est **`main` a-t-il touché cet
+article depuis que la branche s'en est séparée ?** :
+
+```bash
+git rev-list --count <branche>..origin/main -- <chemin>   # > 0 → branche périmée
+```
+
+Mesuré sur ce dépôt : trois branches déjà fusionnées remontaient comme
+« à relire » sans ce garde-fou.
+
 ```bash
 node scripts/alerte-relecture.mjs --rappel --dry-run
 node scripts/alerte-relecture.mjs --branche=blog/<slug> --dry-run
