@@ -6,7 +6,7 @@ category: "star-wars"
 tags: ["star-wars", "swu", "cendres-de-l-empire", "rotation", "eternal", "meta"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-starwars.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
