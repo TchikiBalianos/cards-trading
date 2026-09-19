@@ -46,10 +46,70 @@ Annoncer une tendance sans dire DE QUELLE carte on parle ne veut rien dire.
 Cible : identifier chaque carte par son nom, le code de son extension, son
 numéro de carte, et si la source le permet sa variante et sa langue.
 
-⚠️ À trancher avant de toucher à l'affichage : l'information est-elle
-perdue dès le calcul et l'archivage, ou seulement à l'affichage ? Si
-`data/cotes/` indexe les cartes par nom seul, l'historique mélange déjà
-des impressions différentes et les variations calculées sont fausses.
+**Tranché le 19 septembre, après vérification dans le code et les données.**
+Pour Pokémon, l'information N'EST PAS perdue : `cote-hebdo.mjs` conserve un
+`id` qui porte déjà le code d'extension et le numéro (`me01-156`), plus le
+nom de l'extension, et l'archive `data/cotes/podiums-hebdo.json` les contient.
+Le podium est appauvri au seul moment de la mise en forme, dans
+`publie-cote.mjs`. Le correctif est donc localisé et peu risqué.
+
+Deux réserves quand même :
+
+- **La variante reste réellement absente.** TCGdex expose deux séries de prix
+  en parallèle (`trend`/`avg30` et `trend-holo`/`avg30-holo`) ; le script lit
+  les champs non suffixés, donc il cote une variante sans jamais dire
+  laquelle.
+- **Il existe un second consommateur.** `scripts/newsletter-hebdo.mjs` lit le
+  même archive pour l'email du samedi. Corriger le post du jeudi sans lui
+  laisserait la newsletter annoncer « Camérupt » deux jours plus tard.
+
+Sur le marché japonais, `set` reste le nom japonais (« ひかる伝説 ») et
+l'image est absente : l'affichage devra retomber sur le code d'extension.
+
+---
+
+### 0 bis. L'archive des cotes One Piece se corrompt chaque semaine
+
+Découvert le 19 septembre en instruisant le point précédent. Rien ne le
+signalait, et le fichier seul ne permet pas de le voir.
+
+`releve-cotes.mjs` indexe les cartes par `card_set_id` (`OP14-112`). Or cet
+identifiant ne désigne PAS une impression : sur les 5 derniers sets, 159 des
+632 identifiants portent 2 ou 3 variantes, avec un écart de cote médian de
+x36 entre variantes d'un même identifiant. Exemple réel :
+
+```
+OP14-112  Boa Hancock                    6,01 $
+OP14-112  Boa Hancock (Alternate Art)   83,68 $
+OP14-112  Boa Hancock (SP)             531,82 $
+```
+
+L'affectation écrase donc silencieusement : le prix retenu est celui de la
+dernière ligne renvoyée par l'API, dont l'ordre n'est pas garanti. Et le nom
+est figé à la première apparition, donc une bascule de variante ne se voit
+même pas dans le nom archivé.
+
+**Ce n'est pas théorique.** Sur les 227 clés suivies, 150 sont exposées et
+**6 ont déjà basculé** en cours d'historique, valeurs concordant au centime
+avec la cote de l'autre variante :
+
+```
+EB04-061   20/08 : 69,75 $ (Alternate Art)  ->  03/09 : 24 995,95 $ (SP)
+OP16-003   20/08 : 37,39 $ (Alternate Art)  ->  03/09 : 2 $ (carte de base)
+```
+
+Conséquence : `calculerVariations()` produit aujourd'hui un top 5 entièrement
+faux, mené par un « +35 736 % » sur une carte qui n'a pas bougé. Cette
+fonction est d'ailleurs la seule des trois à n'avoir **aucun plafond de
+plausibilité**, contrairement à `cote-hebdo.mjs` et `cote-one-piece.mjs`.
+
+Ce qui limite l'urgence : One Piece est **hors rotation de publication**
+(voir le point 3), donc rien de faux n'est publié aujourd'hui. Ce qui la
+maintient : le relevé tourne tous les jeudis et continue d'écrire, donc
+l'historique se dégrade semaine après semaine.
+
+⚠️ Corriger la clé ne réparera pas le passé : les 5 relevés existants ne sont
+pas réattribuables de façon sûre pour les cartes ambiguës.
 
 ---
 
