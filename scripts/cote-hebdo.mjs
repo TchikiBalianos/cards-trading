@@ -31,8 +31,94 @@ const FRAICHEUR_MAX_JOURS = 4;
 const PRIX_PLANCHER_EUR = 1.5;
 
 /* Au-delà, on soupçonne une donnée aberrante plutôt qu'un vrai mouvement.
-   Mieux vaut rater une flambée réelle que publier un chiffre faux. */
-const HAUSSE_MAX_PLAUSIBLE = 300;
+   Mieux vaut rater une flambée réelle que publier un chiffre faux.
+
+   Abaissé de 300 à 100 le 19 septembre 2026. À 300 il n'avait JAMAIS rien
+   filtré : mesuré sur le marché international, la plus forte hausse
+   plausible observée est de +26 %, et aucun candidat ne dépasse +50 %. Sur
+   le japonais, 6 candidats sur 49 dépassaient 100 %, dont les trois cartes
+   gelées publiées les 27 août et 11 septembre. Le plafond ne coûte donc
+   rien là où les données vivent, et arrête ce qui ne vit plus. */
+const HAUSSE_MAX_PLAUSIBLE = 100;
+
+/*
+  ── Liquidité ──────────────────────────────────────────
+
+  La cote d'une carte que personne n'échange n'est pas une cote, c'est un
+  vestige. TCGdex ne publie aucun volume de ventes (vérifié : `cardmarket`
+  expose exactement 15 clés, et l'API Cardmarket qui, elle, expose
+  `countArticles` n'est pas relayée). On travaille donc par indices, tous
+  déjà présents dans la réponse et donc gratuits.
+
+  Chacun vient d'un cas réel du podium japonais du 11 septembre 2026 :
+  Nymphali SM1p-064 y a été classée PREMIÈRE avec « low: null », c'est-à-dire
+  zéro annonce en vente, et un avg1 à 850 € pour un avg30 à 42,58 €.
+
+  Mesuré avant d'être imposé, sur les deux marchés :
+    - international, 8 candidats : 1 seul rejet, podium INCHANGÉ ;
+    - japonais, 49 candidats : 31 rejets.
+
+  Le seuil de décorrélation est à 5 fois et non 3 : à 3, la mesure écartait
+  4 candidats internationaux sur 8 dont un du podium, ce qui est trop pour
+  un signal aussi indirect.
+*/
+const RATIO_LOW_MAX = 5;
+const ECART_AVG1_AVG7_MAX = 0.5;
+
+function motifIlliquide(cm, actuel) {
+  if (cm.low == null) return 'aucune annonce en vente';
+  if (cm.low > actuel) return `cote sous la plus basse annonce (${actuel} € contre ${cm.low} €)`;
+  if (cm.low > 0 && actuel > RATIO_LOW_MAX * cm.low)
+    return `cote décorrélée de l'offre (${actuel} € contre ${cm.low} € au plus bas)`;
+  if (cm.avg7 != null && cm.avg7 === cm.avg30)
+    return 'avg7 rigoureusement égal à avg30, fenêtre figée';
+  if (cm.avg1 != null && cm.avg != null && cm.avg1 === cm.avg)
+    return 'avg1 rigoureusement égal à avg, vente unique';
+  if (cm.avg1 != null && cm.avg7 > 0 && Math.abs(cm.avg1 / cm.avg7 - 1) > ECART_AVG1_AVG7_MAX)
+    return `dernière vente aberrante (avg1 ${cm.avg1} € contre avg7 ${cm.avg7} €)`;
+  return null;
+}
+
+/*
+  ── Non-stagnation ─────────────────────────────────────
+
+  Le garde-fou décisif, et le seul qui attrape Lucario SM5p-030 : ses
+  chiffres sont parfaitement cohérents entre eux, ils sont simplement
+  IDENTIQUES depuis le 27 août. Aucun test de liquidité ne peut le voir.
+
+  Une hausse réelle de +172 % ne peut pas rester figée au centime pendant
+  23 jours : avg30 l'absorberait mécaniquement. Numérateur ET dénominateur
+  inchangés signifient qu'aucune vente n'alimente plus le calcul.
+
+  On compare donc aux podiums DÉJÀ PUBLIÉS, archive qui existe déjà. C'est
+  volontairement étroit : ça n'attrape que les cartes qu'on a annoncées
+  nous-mêmes, mais c'est exactement le défaut constaté (Mewtwo et Lucario
+  publiés deux fois, aux mêmes valeurs, à quinze jours d'écart).
+*/
+const ARCHIVE_PODIUMS = new URL('../data/cotes/podiums-hebdo.json', import.meta.url);
+const dejaPublie = new Map();
+try {
+  const historique = JSON.parse(readFileSync(ARCHIVE_PODIUMS, 'utf8'));
+  for (const entree of Array.isArray(historique) ? historique : []) {
+    for (const c of entree.podium || []) {
+      if (!c.id) continue;
+      const liste = dejaPublie.get(c.id) || [];
+      liste.push({ date: entree.date, actuel: c.actuel, reference: c.reference });
+      dejaPublie.set(c.id, liste);
+    }
+  }
+} catch {
+  /* Archive absente ou illisible : premier passage, rien à comparer. */
+}
+
+function motifStagnation(id, actuel, reference) {
+  for (const p of dejaPublie.get(id) || []) {
+    if (p.actuel === actuel && p.reference === reference) {
+      return `déjà publiée le ${p.date} aux mêmes valeurs (${actuel} € / ${reference} €), cote figée`;
+    }
+  }
+  return null;
+}
 
 /* En dessous, ce n'est pas une hausse, c'est du bruit de marché. */
 const HAUSSE_MIN_INTERESSANTE = 12;
@@ -115,6 +201,23 @@ function examiner(carte, cm, tp) {
   if (!Number.isFinite(variation)) return { ok: false, motif: 'variation non calculable' };
   if (variation > HAUSSE_MAX_PLAUSIBLE) return { ok: false, motif: `hausse aberrante (${Math.round(variation)} %)` };
   if (variation < HAUSSE_MIN_INTERESSANTE) return { ok: false, motif: 'variation négligeable' };
+
+  /* Liquidité : une cote sans échanges derrière elle n'est pas publiable.
+     Placé APRÈS le seuil de variation pour que les motifs de rejet
+     journalisés restent lisibles : on ne veut pas noyer le rapport sous des
+     cartes qui, de toute façon, ne bougeaient pas. */
+  const illiquide = motifIlliquide(cm, actuel);
+  if (illiquide) return { ok: false, motif: illiquide };
+
+  /* Non-stagnation : comparée aux valeurs DÉJÀ PUBLIÉES, arrondies comme
+     elles le sont à l'archivage, sans quoi la comparaison échouerait sur
+     une décimale. */
+  const fige = motifStagnation(
+    carte.id,
+    Math.round(actuel * 100) / 100,
+    Math.round(reference * 100) / 100,
+  );
+  if (fige) return { ok: false, motif: fige };
 
   /*
     Deux recoupements possibles, et il en faut TOUJOURS un.

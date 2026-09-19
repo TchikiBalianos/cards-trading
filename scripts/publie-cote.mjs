@@ -115,8 +115,40 @@ if (!donnees.podium || donnees.podium.length === 0) {
 
 const titreMarche =
   MARCHE === 'jp' ? 'Cartes japonaises' : MARCHE === 'op' ? 'One Piece Card Game' : 'Cartes Pokémon';
+
+/*
+  Mention de source : ce que la mesure EST réellement.
+
+  Jusqu'au 19 septembre 2026, l'accroche annonçait « hausses de la semaine »
+  pendant que la mention disait « sur 30 jours ». La mesure n'est ni l'une
+  ni l'autre : le script calcule (trend − avg30) / avg30, soit l'écart entre
+  la cote du jour et la moyenne des ventes du mois. Deux formulations
+  fausses pour une même ligne, sur le visuel comme dans la légende.
+
+  Sur l'international, « toutes langues confondues » n'est pas une prudence
+  de façade : vérifié en appliquant le filtre de langue sur une fiche
+  Cardmarket, aucune ligne de cote ne bouge, seule la liste d'annonces
+  change. La cote est publiée par PRODUIT, et l'exemplaire français le moins
+  cher partait à 1,60 € quand l'anglais partait à 2,50 €, pour la même carte
+  au même instant.
+
+  Sur le japonais c'est l'inverse, et c'est à revendiquer : les cartes
+  japonaises ont leurs propres fiches produit chez Cardmarket, donc leur
+  cote est bien mono-langue.
+*/
 const mentionSource =
-  MARCHE === 'op' ? 'Évolution sur 13 jours' : 'Cote Cardmarket en euros, sur 30 jours';
+  MARCHE === 'op'
+    ? 'Évolution sur 13 jours'
+    : MARCHE === 'jp'
+      ? 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, cartes japonaises'
+      : 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, toutes langues confondues';
+
+/* Version courte pour le pied de vignette, où la ligne est unique. */
+const mentionCourte =
+  MARCHE === 'op'
+    ? 'Évolution sur 13 jours'
+    : 'Cote du jour contre moyenne des ventes sur 30 jours · Cardmarket';
+
 const motsCles = MARCHE === 'op' ? '#onepiececardgame #opcg' : '#pokemontcg #cartespokemon';
 const semaine = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
 console.log(`${donnees.podium.length} carte(s) au podium sur ${donnees.examinees} examinées.`);
@@ -197,7 +229,7 @@ async function vignetteCote() {
         fill="${BLEU}">${echapper(titreMarche)} · semaine du ${echapper(semaine)}</text>
 ${lignes}
   <text x="${marge}" y="972" font-family="Arial, Helvetica, sans-serif" font-size="26"
-        fill="#ffffff" fill-opacity="0.5">${echapper(mentionSource)} · cards-trading.com</text>
+        fill="#ffffff" fill-opacity="0.5">${echapper(mentionCourte)} · cards-trading.com</text>
 </svg>`;
 
   const marque = await sharp(MARQUE)
@@ -218,9 +250,26 @@ ${lignes}
 }
 
 let fichier;
+/*
+  En phase « publier », le classement vient du CACHE et non d’un nouvel
+  appel à l’API.
+
+  La vignette a été construite en phase « préparer », committée, puis il
+  s’écoule 2 à 12 minutes d’attente du déploiement Vercel. Recalculer ici
+  produisait des textes décrivant un podium que l’image ne montre pas : les
+  prix bougent, et depuis l’ajout des garde-fous une carte peut même sortir
+  du classement entre les deux phases.
+
+  Le cache portait déjà `podium` depuis l’origine, personne ne le relisait.
+*/
 if (PHASE === 'publier') {
   const cache = JSON.parse(readFileSync(CACHE, 'utf8'));
   fichier = cache.fichier;
+  if (!Array.isArray(cache.podium) || cache.podium.length === 0) {
+    console.error("::error::Cache sans podium. La phase « préparer » doit tourner avant.");
+    process.exit(1);
+  }
+  donnees.podium = cache.podium;
 } else {
   fichier = await vignetteCote();
 }
@@ -296,7 +345,11 @@ function poidsX(texte) {
 }
 
 const lien = `${SITE}/?utm_source=`;
-const accroche = `📈 Top des hausses de la semaine — ${titreMarche.toLowerCase()}`;
+/* Plus de « de la semaine » : la mesure compare la cote du JOUR a la
+   moyenne des ventes du MOIS, elle ne dit rien de la semaine ecoulee.
+   La cadence hebdomadaire reste portee par le sous-titre de la vignette,
+   qui date la publication et non le mouvement. */
+const accroche = `📈 Top des hausses · ${titreMarche.toLowerCase()}`;
 const socle = `${accroche}\n\n${classementRiche}\n\n${mentionSource}.`;
 
 /*
@@ -305,9 +358,41 @@ const socle = `${accroche}\n\n${classementRiche}\n\n${mentionSource}.`;
   qui TIENNE, mesurée et non supposée, et on le journalise quand il faut se
   rabattre. Jamais de troncature muette : ce projet en a déjà payé le prix.
 */
-const texteX = (cl) => `${accroche}\n\n${cl}\n\n${lien}x\n\n#pokemontcg #cartespokemon`;
+const SAUT2 = String.fromCharCode(10) + String.fromCharCode(10);
+/*
+  AUCUN lien dans le corps du post X : il part en première réponse.
+
+  Le projet l'a déjà établi pour les annonces d'articles, mais le post de
+  cotes n'avait jamais reçu ce traitement. X limite délibérément la
+  diffusion des posts sortants pour garder les lecteurs sur la plateforme,
+  de l'ordre de 30 à 50 % de portée initiale.
+
+  Le constat est chiffré sur ce post précis : celui du 18 septembre 2026
+  totalise 151 impressions, 0 clic, 0 réaction et 0 repost, lien dans le
+  corps et sans visuel.
+
+  Effet de bord utile : le lien pesait 23 caractères dans le budget de X,
+  qui reviennent au classement.
+*/
+const texteX = (cl) => accroche + SAUT2 + cl + SAUT2 + motsCles;
+/*
+  X est figé sur la forme COURTE, pas sur la plus riche qui tiendrait.
+
+  Mesuré : la forme riche pèse exactement 280 sur 280 cette semaine, soit
+  zéro marge. Elle passerait donc certaines semaines et pas d’autres, selon
+  la longueur des noms de cartes (médiane 10 caractères, mais 27 au 99e
+  centile). Le lecteur verrait la mise en forme changer d’une semaine à
+  l’autre sans raison visible, ce qui est pire qu’une forme un peu plus
+  sobre mais constante.
+
+  La forme riche reste sur Discord, Instagram et TikTok, où la place ne
+  manque pas.
+
+  La forme sobre n’est qu’un filet : elle n’a jamais servi, mais si un jour
+  trois noms très longs se présentaient ensemble, mieux vaut un post sans
+  référence qu’aucun post.
+*/
 const candidatsX = [
-  ['riche', classementRiche],
   ['courte', classementCourt],
   ['sobre', classementSobre],
 ];
@@ -315,10 +400,12 @@ const [formeX, classementX] =
   candidatsX.find(([, cl]) => poidsX(texteX(cl)) <= LIMITE_X) ||
   candidatsX[candidatsX.length - 1];
 
-if (formeX !== 'riche') {
+/* Avertir seulement si l’on descend SOUS la forme attendue. Le premier
+   candidat est le cas nominal, pas un repli. */
+if (formeX !== candidatsX[0][0]) {
   console.warn(
     `::warning::X : forme « ${formeX} » retenue (${poidsX(texteX(classementX))}/${LIMITE_X}), ` +
-    `la forme riche pesait ${poidsX(texteX(classementRiche))}.`
+    `la forme attendue pesait ${poidsX(texteX(candidatsX[0][1]))}.`
   );
 }
 if (poidsX(texteX(classementX)) > LIMITE_X) {
@@ -439,7 +526,21 @@ if (cle) {
   }
 
   const envois = [
-    ['twitter', textes.twitter, null, null],
+    /*
+      ⚠️ Le `thread` doit contenir TOUS les messages, le premier compris,
+      et son texte doit répéter EXACTEMENT celui du post. Ne mettre que la
+      réponse produit un thread incohérent. Même forme que
+      scripts/annonce-buffer.mjs, vérifiée le 1er septembre 2026 sur un
+      brouillon de test.
+    */
+    ['twitter', textes.twitter, null, {
+      twitter: {
+        thread: [
+          { text: textes.twitter },
+          { text: lien + String.fromCharCode(120) },
+        ],
+      },
+    }],
     ['instagram', textes.instagram, urlVignette, { instagram: { type: 'post', shouldShareToFeed: true } }],
     ['tiktok', textes.tiktok, urlVignette, { tiktok: { title: court(accroche, 90) } }],
   ];
