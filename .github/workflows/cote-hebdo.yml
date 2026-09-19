@@ -98,6 +98,36 @@ jobs:
           if [ -z "$CHOIX" ] || [ "$CHOIX" = "auto" ]; then
             SEMAINE=$(date -u +%V)
             if [ $((10#$SEMAINE % 2)) -eq 0 ]; then CHOIX=int; else CHOIX=jp; fi
+
+            # ⚠️ SUSPENSION DU MARCHÉ JAPONAIS, décidée le 19 septembre 2026.
+            #
+            # Les cotes japonaises renvoyées par TCGdex sont GELÉES sur les
+            # cartes que ce classement remonte. Preuve : Mewtwo SM3p-075 et
+            # Lucario SM5p-030 ont été publiés le 27 août PUIS le 11
+            # septembre comme « hausses de la semaine », avec des valeurs
+            # identiques au centime (107,60 / 33,58 et 6,28 / 2,31), et ces
+            # valeurs sont encore identiques aujourd'hui. Une hausse réelle
+            # de +220 % ne peut pas rester figée 23 jours : avg30
+            # l'absorberait. La carte classée 1re le 11/09 (Nymphali
+            # SM1p-064) a même « low: null », donc aucune annonce en vente.
+            #
+            # Trois causes de fond, toutes dans scripts/cote-hebdo.mjs :
+            #   - la fenêtre « sets récents » (slice sur l'ordre de /sets)
+            #     suppose un tri chronologique, faux en japonais : des sets
+            #     de 2017-2018 y entrent, et tout le podium en venait ;
+            #   - FRAICHEUR_MAX_JOURS teste cardmarket.updated, qui est
+            #     l'horodatage de l'import TCGdex (identique à la seconde
+            #     sur toutes les cartes), pas la date de dernière vente ;
+            #   - le recoupement TCGplayer, garde-fou principal, n'existe
+            #     sur AUCUNE carte japonaise (0 sur 400 mesurées).
+            #
+            # Le japonais revient dès que les garde-fous de liquidité et de
+            # non-stagnation sont en place et éprouvés. Retirer ces trois
+            # lignes à ce moment-là, et rien d'autre.
+            if [ "$CHOIX" = "jp" ]; then
+              echo "::warning::Marché japonais suspendu (cotes gelées), repli sur international."
+              CHOIX=int
+            fi
           fi
           echo "valeur=$CHOIX" >> "$GITHUB_OUTPUT"
           echo "Marché retenu : $CHOIX"
