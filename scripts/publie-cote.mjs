@@ -132,6 +132,21 @@ function echapper(t) {
    laisser déborder hors de la toile. */
 const court = (t, n) => (t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t);
 
+/*
+  Nom de la CARTE, pas du Pokémon.
+
+  `nomFr` est le nom d’espèce récupéré chez PokéAPI : le lire en premier
+  dégradait « Méga-Camérupt-ex » en « Camérupt », c’est-à-dire en un nom qui
+  désigne des dizaines d’impressions aux cotes sans rapport. Signalé par un
+  follower le 19 septembre 2026, vérifié dans l’archive : le podium du
+  3 septembre portait bien `affichage: "Méga-Camérupt-ex"` pendant que le post
+  annonçait « Camérupt ».
+
+  `affichage` est construit pour ça par cote-hebdo.mjs. Même chaîne de repli
+  que newsletter-hebdo.mjs, qui la faisait déjà correctement : elle couvre
+  One Piece, où `affichage` n’existe pas.
+*/
+const nomCarte = (c) => c.affichage || c.nomFr || c.nom;
 /* Virgule décimale et espace insécable avant le symbole : « 96,54 € ».
    Un « 96.54 € » à l'anglaise sur un compte français fait amateur. */
 const DEVISE = MARCHE === 'op' ? '$' : '€';
@@ -145,7 +160,7 @@ async function vignetteCote() {
   <text x="${marge}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="46"
         font-weight="700" fill="${BLEU}">${i + 1}</text>
   <text x="${marge + 52}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="40"
-        font-weight="700" fill="#ffffff">${echapper(court(c.nomFr || c.nom, 26))}</text>
+        font-weight="700" fill="#ffffff">${echapper(court(nomCarte(c), 26))}</text>
   <text x="${marge + 52}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
         fill="#ffffff" fill-opacity="0.72">${echapper(euros(c.actuel))}</text>
   <text x="${marge + 200}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
@@ -208,7 +223,7 @@ if (PHASE === 'preparer') {
 /* ── 3. Textes ─────────────────────────────────────────── */
 
 const classement = donnees.podium
-  .map((c, i) => `${i + 1}. ${c.nomFr || c.nom} — ${euros(c.actuel)} (+${c.variation} %)`)
+  .map((c, i) => `${i + 1}. ${nomCarte(c)} — ${euros(c.actuel)} (+${c.variation} %)`)
   .join('\n');
 
 const lien = `${SITE}/?utm_source=`;
