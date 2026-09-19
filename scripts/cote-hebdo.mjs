@@ -26,9 +26,21 @@ const API = 'https://api.tcgdex.net/v2';
    produire un classement. C'est la leçon des 50 jours. */
 const FRAICHEUR_MAX_JOURS = 4;
 
-/* Sous ce prix, une variation ne veut rien dire : passer de 0,02 € à
-   0,03 € fait « +50 % » et n'intéresse personne. */
-const PRIX_PLANCHER_EUR = 1.5;
+/*
+  Sous ce prix, une variation ne veut rien dire : passer de 0,02 € à
+  0,03 € fait « +50 % » et n'intéresse personne.
+
+  Relevé de 1,50 à 10 € le 19 septembre 2026, sur décision éditoriale.
+  À 1,50 €, le podium mêlait une carte à 1,72 € et une à 435 €, ce qui
+  décrédibilisait l'ensemble : le lecteur compare des montants sans
+  rapport et finit par douter des deux.
+
+  ⚠️ Contrepartie assumée : sur une semaine calme, le podium peut compter
+  moins de trois cartes, voire aucune. Le script publie alors ce qu'il a,
+  et RIEN du tout si la liste est vide, ce qui reste le comportement voulu
+  depuis l'origine : un marché calme est un marché calme.
+*/
+const PRIX_PLANCHER_EUR = 10;
 
 /* Au-delà, on soupçonne une donnée aberrante plutôt qu'un vrai mouvement.
    Mieux vaut rater une flambée réelle que publier un chiffre faux.

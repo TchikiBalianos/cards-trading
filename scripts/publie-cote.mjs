@@ -108,8 +108,26 @@ const brut = execFileSync(
 );
 const donnees = JSON.parse(brut);
 
-if (!donnees.podium || donnees.podium.length === 0) {
-  console.log(`Aucune hausse significative (${donnees.examinees} cartes examinées). Rien à publier.`);
+/*
+  Un podium, c'est trois lignes. En dessous, on ne publie pas.
+
+  Ce n'est pas un raffinement : avec le plancher de prix relevé à 10 € le
+  19 septembre 2026, le marché japonais ne retenait plus qu'UNE carte sur
+  400 examinées. Un « top des hausses » à une ligne n'est pas un top, et la
+  vignette comme les textes sont dessinés pour trois entrées.
+
+  C'est la même doctrine que le cas vide, déjà en place depuis l'origine :
+  un marché calme est un marché calme, et le silence vaut mieux qu'un
+  classement bancal. On le dit dans les journaux pour que la semaine sans
+  publication soit lisible, et non prise pour une panne.
+*/
+const PODIUM_MINIMUM = 3;
+
+if (!donnees.podium || donnees.podium.length < PODIUM_MINIMUM) {
+  console.log(
+    `Podium incomplet : ${donnees.podium?.length || 0} carte(s) retenue(s) sur ` +
+    `${donnees.examinees} examinées, ${PODIUM_MINIMUM} minimum. Rien à publier.`
+  );
   process.exit(0);
 }
 
