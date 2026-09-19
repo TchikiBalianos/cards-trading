@@ -91,22 +91,48 @@ if (PHASE !== 'publier' && !SEC) {
 
 /* ── 1. Classement ─────────────────────────────────────── */
 
-const brut = execFileSync(
-  process.execPath,
-  [
-    /* One Piece a sa propre source : optcgapi expose un historique de
-       13 jours, la ou TCGdex ne couvre que Pokemon. Les deux scripts
-       produisent le MEME contrat JSON, d'ou l'aiguillage ici plutot
-       qu'un branchement dans toute la suite. */
-    MARCHE === 'op'
-      ? join(RACINE, 'scripts', 'cote-one-piece.mjs')
-      : join(RACINE, 'scripts', 'cote-hebdo.mjs'),
-    ...(MARCHE === 'op' ? [] : [`--marche=${MARCHE}`]),
-    '--json',
-  ],
-  { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }
-);
-const donnees = JSON.parse(brut);
+/*
+  En phase « publier », TOUT vient du cache : le classement comme le nom de
+  la vignette. Aucun appel à TCGdex n'est fait.
+
+  Deux raisons, et la seconde est la plus importante :
+
+  1. Cohérence. La vignette est construite en phase « préparer », committée,
+     puis il s'écoule 2 à 12 minutes d'attente du déploiement Vercel.
+     Recalculer ici produisait des textes décrivant un podium que l'image ne
+     montre pas, les prix bougeant entre les deux.
+
+  2. Robustesse. Tout est déjà calculé, dessiné, committé et déployé quand
+     cette phase démarre. Elle n'a plus qu'à envoyer. La faire dépendre
+     encore de la disponibilité de la source, c'est accepter de perdre une
+     publication entièrement prête à cause d'un incident chez un tiers.
+*/
+const cache = PHASE === 'publier' ? JSON.parse(readFileSync(CACHE, 'utf8')) : null;
+
+if (cache && (!Array.isArray(cache.podium) || cache.podium.length === 0)) {
+  console.error('::error::Cache sans podium. La phase « préparer » doit tourner avant.');
+  process.exit(1);
+}
+
+const donnees = cache
+  ? { podium: cache.podium, examinees: cache.examinees ?? 0 }
+  : JSON.parse(
+      execFileSync(
+        process.execPath,
+        [
+          /* One Piece a sa propre source : optcgapi expose un historique de
+             13 jours, la ou TCGdex ne couvre que Pokemon. Les deux scripts
+             produisent le MEME contrat JSON, d'ou l'aiguillage ici plutot
+             qu'un branchement dans toute la suite. */
+          MARCHE === 'op'
+            ? join(RACINE, 'scripts', 'cote-one-piece.mjs')
+            : join(RACINE, 'scripts', 'cote-hebdo.mjs'),
+          ...(MARCHE === 'op' ? [] : [`--marche=${MARCHE}`]),
+          '--json',
+        ],
+        { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }
+      )
+    );
 
 /*
   Un podium, c'est trois lignes. En dessous, on ne publie pas.
@@ -286,35 +312,19 @@ ${lignes}
   return nom;
 }
 
-let fichier;
-/*
-  En phase « publier », le classement vient du CACHE et non d’un nouvel
-  appel à l’API.
-
-  La vignette a été construite en phase « préparer », committée, puis il
-  s’écoule 2 à 12 minutes d’attente du déploiement Vercel. Recalculer ici
-  produisait des textes décrivant un podium que l’image ne montre pas : les
-  prix bougent, et depuis l’ajout des garde-fous une carte peut même sortir
-  du classement entre les deux phases.
-
-  Le cache portait déjà `podium` depuis l’origine, personne ne le relisait.
-*/
-if (PHASE === 'publier') {
-  const cache = JSON.parse(readFileSync(CACHE, 'utf8'));
-  fichier = cache.fichier;
-  if (!Array.isArray(cache.podium) || cache.podium.length === 0) {
-    console.error("::error::Cache sans podium. La phase « préparer » doit tourner avant.");
-    process.exit(1);
-  }
-  donnees.podium = cache.podium;
-} else {
-  fichier = await vignetteCote();
-}
+/* Le nom de la vignette vient du cache en phase « publier » : le fichier a
+   déjà été dessiné, committé et déployé. En phase « préparer » ou en mode
+   complet, on le dessine. */
+const fichier = cache ? cache.fichier : await vignetteCote();
 const urlVignette = `${SITE}/assets/social/${fichier}`;
 console.log(`Vignette : ${fichier}`);
 
 if (PHASE === 'preparer') {
-  writeFileSync(CACHE, JSON.stringify({ fichier, podium: donnees.podium, marche: MARCHE }, null, 2));
+  writeFileSync(CACHE, JSON.stringify(
+    { fichier, podium: donnees.podium, examinees: donnees.examinees, marche: MARCHE },
+    null,
+    2
+  ));
   console.log('Cache écrit. La vignette doit être committée et déployée avant la phase « publier ».');
   process.exit(0);
 }
