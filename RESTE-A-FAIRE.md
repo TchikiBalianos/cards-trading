@@ -99,10 +99,13 @@ réindexée par impression.
 
 **Ce qui reste ouvert :**
 
-- **Le post X des cotes n'a toujours pas de visuel.** La vignette du podium
-  n'existe qu'en 1080×1080, format que X rogne. Lui donner une image demande
-  une maquette 1200×630 : le podium à 165 px d'interligne ne rentre pas dans
-  630 px de haut.
+- ~~Le post X des cotes n’a pas de visuel~~ **fait le 19 septembre.**
+  `vignetteCote()` prend un format, et produit une variante 1200×630 en
+  plus du carré. Les coordonnées ne sont pas dérivées les unes des autres :
+  le podium carré respire sur 165 px d’interligne, transposé tel quel dans
+  630 px il déborderait de 200 px. La vignette paysage est attachée au post
+  X et au premier message du thread, et le workflow attend que LES DEUX
+  images soient servies avant de publier.
 - **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous
   sont posés et mesurés (49 candidats ramenés à 4, les trois cartes gelées
   écartées), mais aucun passage réel ne les a validés. À rouvrir après un
@@ -113,21 +116,44 @@ réindexée par impression.
 
 ---
 
-## 🔵 Prochain chantier décidé
+## ✅ SEO : volume, maillage interne et pages hub — fait le 19 septembre
 
-### SEO : volume, maillage interne et pages hub
+Plan suivi : `docs/plans/2026-09-08-seo-volume-maillage-hubs.md`.
 
-Plan d'implémentation écrit et committé :
-`docs/plans/2026-09-08-seo-volume-maillage-hubs.md`.
+**Volet 1, volume.** L'article du vendredi passe d'optionnel à obligatoire
+dans `scripts/prochain-article.mjs`. Le volume indexable double, et deux
+articles par semaine pour deux créneaux d'annonce font que la file
+d'annonce cesse de prendre du retard structurellement.
 
-Trois volets : l'article du vendredi passe d'optionnel à obligatoire (le
-volume indexable double), un lien interne vers un article du même TCG devient
-un critère bloquant contrôlé à la publication, et une page hub par TCG agrège
-les articles avec un appel à rejoindre la bêta.
+**Volet 2, maillage interne.** Un lien vers un article du MÊME TCG devient
+un critère bloquant, contrôlé à la publication dans
+`scripts/lib/article.mjs`. Le contrôle existait mais était non bloquant et
+sans notion de jeu : il signalait « aucun lien croisé » même quand le lien
+pointait vers un TCG sans rapport.
 
-⚠️ La tâche 1 du plan suppose que la rédaction du vendredi soit réellement
-déclenchée : elle dépend d'une tâche planifiée Claude Desktop, hors dépôt,
-qui ne tourne que si l'application est ouverte.
+Calibrage mesuré sur le corpus réel, 14 articles publiés : 7 déjà
+conformes, 4 seuls de leur TCG donc non concernés, 3 sans lien. Le premier
+article d'un jeu n'est jamais bloqué, sans quoi l'ouverture de chaque
+nouveau TCG serait impossible.
+
+**Volet 3, pages hub.** Six pages en ligne (`/tcg/pokemon/` et consorts),
+présentes au sitemap, avec l'appel à rejoindre la bêta et une navigation
+par jeu depuis l'index du blog. `star-wars` n'existe pas encore : son
+unique article est en brouillon, et la page apparaîtra d'elle-même à sa
+publication.
+
+**Ce qui reste sur ce chantier :**
+
+- **La rédaction du vendredi dépend d'une tâche Claude Desktop**, hors
+  dépôt, qui ne tourne que si l'application est ouverte. Rendre le créneau
+  obligatoire dans le calendrier ne suffit pas à faire écrire l'article :
+  la consigne de cette tâche doit être mise à jour.
+- **Trois anciens articles n'ont pas de lien vers leur propre TCG**
+  (`dragon-ball-fusion-world-ultrabout-2026`, `guide-demarrage-pokemon-tcg`,
+  `one-piece-card-game-revolution-tcg`). Déjà publiés, donc jamais
+  réexaminés par le contrôle : reliquat à rattraper à la main, pas blocage.
+- **16 tests** couvrent le calendrier et les critères de publication
+  (`npm test`, runner intégré de Node, aucune dépendance ajoutée).
 
 ---
 
@@ -225,6 +251,7 @@ faute d'API de montage et d'export côté serveur.
 | `newsletter-hebdo` | samedi 13h37 | ✅ digests envoyés |
 | `publie-articles` | quotidien 05:12 UTC | ✅ après passage en Node 22 |
 | `alerte-automatisations` | quotidien 06:02 UTC | ✅ éprouvé en CI |
+| pages hub par TCG | statique | ✅ 6 en ligne, au sitemap |
 
 Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien
 social, flux RSS, vignettes par article, balisage FAQPage, `llms.txt`,
