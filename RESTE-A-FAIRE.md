@@ -72,10 +72,14 @@ passages étaient rouges dans l'onglet Actions. Personne ne les regardait.
 
 ### B. Ce qui reste ouvert de cette histoire
 
-- **Rien n'alerte quand un workflow échoue.** Huit échecs consécutifs n'ont
-  déclenché aucun signal exploitable. `alerte-relecture.yml` prévient qu'un
-  brouillon attend, mais pas qu'une automatisation est morte. C'est le
-  garde-fou manquant le plus évident du projet aujourd'hui.
+- ~~Rien n'alerte quand un workflow échoue~~ **posé le 19 septembre.**
+  `alerte-automatisations.yml` tourne chaque jour à 06:02 UTC, après la
+  publication et l'alerte de relecture. Il signale l'état COURANT et non
+  « des échecs cette nuit » : un workflow n'apparaît que si son dernier
+  passage terminé est un échec, et l'email dit depuis combien de passages.
+  Éprouvé en CI sur l'état réel : « Publie les articles dus échoue depuis
+  10 passages, depuis le 2026-09-09 ». Rien n'est envoyé quand tout est au
+  vert.
 - **L'article Star Wars n'est pas encore publié** : le prochain passage du
   cron (05:12 UTC) devrait le sortir maintenant que le build passe. À
   vérifier en production.
@@ -220,6 +224,7 @@ faute d'API de montage et d'export côté serveur.
 | `cote-hebdo` | jeudi | ✅ marché international, japonais suspendu |
 | `newsletter-hebdo` | samedi 13h37 | ✅ digests envoyés |
 | `publie-articles` | quotidien 05:12 UTC | ✅ après passage en Node 22 |
+| `alerte-automatisations` | quotidien 06:02 UTC | ✅ éprouvé en CI |
 
 Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien
 social, flux RSS, vignettes par article, balisage FAQPage, `llms.txt`,
