@@ -260,10 +260,29 @@ ${lignes}
      immutable un an. Réutiliser « cote-jp.png » chaque semaine servirait
      éternellement la première image. */
   const nom = `cote-${MARCHE}-${new Date().toISOString().slice(0, 10)}.png`;
-  await sharp(Buffer.from(svg))
+
+  /*
+    En essai à blanc, on DESSINE mais on n'écrit pas dans public/assets/.
+
+    Le mode « affiche sans rien envoyer » laissait sinon un PNG non suivi
+    dans le dépôt à chaque essai, que le prochain `git add` aurait emporté
+    sans qu'on le veuille.
+
+    Le rendu est quand même exécuté : c'est là que se révèlent les SVG
+    invalides, un titre qui déborde ou une police manquante. Ne pas
+    dessiner du tout ferait passer un essai qui ne prouve rien.
+  */
+  const image = await sharp(Buffer.from(svg))
     .composite([{ input: marque, left: marge, top: 62 }])
     .png({ compressionLevel: 9 })
-    .toFile(join(SORTIE, nom));
+    .toBuffer();
+
+  if (SEC) {
+    console.log(`[dry-run] vignette rendue (${Math.round(image.length / 1024)} Ko), non écrite : ${nom}`);
+    return nom;
+  }
+
+  writeFileSync(join(SORTIE, nom), image);
   return nom;
 }
 
