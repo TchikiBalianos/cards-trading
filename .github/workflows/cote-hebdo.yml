@@ -172,18 +172,22 @@ jobs:
       # réels du 27 août 2026 — et le piège se referme deux fois, car
       # vérifier l'URL à la main avec `curl -L` répond bien 200 et donne
       # l'illusion d'une simple lenteur de déploiement.
-      - name: Attendre que la vignette soit servie
+      - name: Attendre que les vignettes soient servies
         if: steps.preparer.outputs.a_publier == 'oui'
         run: |
-          FICHIER=$(node -e "console.log(require('./.cote-cache.json').fichier)")
-          URL="https://cards-trading.com/assets/social/$FICHIER"
-          echo "Attente de $URL"
+          CARRE=$(node -e "console.log(require('./.cote-cache.json').fichier)")
+          OG=$(node -e "const c=require('./.cote-cache.json'); console.log(c.fichierOg || c.fichier)")
+          echo "Attente de $CARRE et $OG"
           for i in $(seq 1 72); do
-            CODE=$(curl -sL -o /dev/null -w '%{http_code}' "$URL")
-            if [ "$CODE" = "200" ]; then echo "Servie après $((i*10))s."; exit 0; fi
+            A=$(curl -sL -o /dev/null -w '%{http_code}' "https://cards-trading.com/assets/social/$CARRE")
+            B=$(curl -sL -o /dev/null -w '%{http_code}' "https://cards-trading.com/assets/social/$OG")
+            if [ "$A" = "200" ] && [ "$B" = "200" ]; then
+              echo "Les deux servies après $((i*10))s."
+              exit 0
+            fi
             sleep 10
           done
-          echo "::error::La vignette n'est toujours pas servie après 12 min."
+          echo "::error::Vignettes toujours pas servies après 12 min (carré $A, paysage $B)."
           exit 1
 
       - name: Publier

@@ -228,15 +228,55 @@ const nomCarte = (c) => c.affichage || c.nomFr || c.nom;
 const DEVISE = MARCHE === 'op' ? '$' : '€';
 const euros = (n) => n.toFixed(2).replace('.', ',') + ' ' + DEVISE;
 
-async function vignetteCote() {
-  const L = 1080, H = 1080, marge = 90;
+/*
+  Deux formats, deux géométries assumées.
+
+  Le carré 1080×1080 sert Instagram et TikTok. Le paysage 1200×630 sert X,
+  dont la timeline rogne un carré — c'est la même règle que pour les
+  annonces d'articles, déjà consignée dans scripts/annonce-buffer.mjs.
+
+  Les coordonnées ne sont PAS dérivées les unes des autres. Le podium carré
+  respire sur 165 px d'interligne ; transposé tel quel dans 630 px de haut,
+  il déborderait de 200 px. Chaque format porte donc ses propres valeurs,
+  ce qui est plus long à lire mais évite une formule tordue qui rendrait
+  mal les deux.
+*/
+const FORMATS_COTE = [
+  {
+    suffixe: '',
+    L: 1080, H: 1080, marge: 90,
+    logo: { haut: 62, hauteur: 92 }, motXY: [212, 132], motTaille: 40,
+    titreY: 280, titreTaille: 58,
+    sousTitreY: 336, sousTitreTaille: 32,
+    podiumY: 430, pas: 165,
+    rangTaille: 46, nomDx: 52, nomTaille: 40, nomMax: 36,
+    prixDy: 46, prixTaille: 32, variationDx: 240,
+    situeDy: 84, situeTaille: 26, situeMax: 46,
+    piedY: 972, piedTaille: 26,
+  },
+  {
+    suffixe: '-og',
+    L: 1200, H: 630, marge: 60,
+    logo: { haut: 40, hauteur: 56 }, motXY: [132, 80], motTaille: 27,
+    titreY: 142, titreTaille: 40,
+    sousTitreY: 176, sousTitreTaille: 22,
+    podiumY: 242, pas: 112,
+    rangTaille: 30, nomDx: 40, nomTaille: 28, nomMax: 44,
+    prixDy: 30, prixTaille: 22, variationDx: 200,
+    situeDy: 56, situeTaille: 17, situeMax: 60,
+    piedY: 596, piedTaille: 18,
+  },
+];
+
+async function vignetteCote(f) {
+  const { L, H, marge } = f;
+
   const lignes = donnees.podium.map((c, i) => {
-    const y = 430 + i * 165;
+    const y = f.podiumY + i * f.pas;
     /*
       Troisième ligne : extension en clair et référence complète, avec le
-      dénominateur. La place existe (166 px sous le dernier bloc, 81 px
-      entre deux entrées) et, contrairement au texte des réseaux, rien ici
-      n'est compté.
+      dénominateur. Contrairement au texte des réseaux, rien n'est compté
+      ici.
 
       Le dénominateur porte un signal éditorial : « 286/217 » veut dire
       carte secrète. Deux des trois cartes du podium du 17 septembre en
@@ -244,16 +284,16 @@ async function vignetteCote() {
     */
     const situe = [c.set, c.refLongue].filter(Boolean).join(' · ');
     return `
-  <text x="${marge}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="46"
+  <text x="${marge}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="${f.rangTaille}"
         font-weight="700" fill="${BLEU}">${i + 1}</text>
-  <text x="${marge + 52}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="40"
-        font-weight="700" fill="#ffffff">${echapper(court(nomCarte(c), 36))}</text>
-  <text x="${marge + 52}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
+  <text x="${marge + f.nomDx}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="${f.nomTaille}"
+        font-weight="700" fill="#ffffff">${echapper(court(nomCarte(c), f.nomMax))}</text>
+  <text x="${marge + f.nomDx}" y="${y + f.prixDy}" font-family="Arial, Helvetica, sans-serif" font-size="${f.prixTaille}"
         fill="#ffffff" fill-opacity="0.72">${echapper(euros(c.actuel))}</text>
-  <text x="${marge + 240}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
+  <text x="${marge + f.variationDx}" y="${y + f.prixDy}" font-family="Arial, Helvetica, sans-serif" font-size="${f.prixTaille}"
         font-weight="700" fill="#22c55e">+${c.variation} %</text>${situe ? `
-  <text x="${marge + 52}" y="${y + 84}" font-family="Arial, Helvetica, sans-serif" font-size="26"
-        fill="#ffffff" fill-opacity="0.5">${echapper(court(situe, 46))}</text>` : ''}`;
+  <text x="${marge + f.nomDx}" y="${y + f.situeDy}" font-family="Arial, Helvetica, sans-serif" font-size="${f.situeTaille}"
+        fill="#ffffff" fill-opacity="0.5">${echapper(court(situe, f.situeMax))}</text>` : ''}`;
   }).join('\n');
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
@@ -265,27 +305,27 @@ async function vignetteCote() {
   </defs>
   <rect width="${L}" height="${H}" fill="${FOND}"/>
   <rect width="${L}" height="${H}" fill="url(#halo)"/>
-  <text x="212" y="132" font-family="Arial, Helvetica, sans-serif" font-size="40"
+  <text x="${f.motXY[0]}" y="${f.motXY[1]}" font-family="Arial, Helvetica, sans-serif" font-size="${f.motTaille}"
         font-weight="700" fill="#ffffff">Cards-Trading</text>
-  <text x="${marge}" y="280" font-family="Arial, Helvetica, sans-serif" font-size="58"
+  <text x="${marge}" y="${f.titreY}" font-family="Arial, Helvetica, sans-serif" font-size="${f.titreTaille}"
         font-weight="700" fill="#ffffff">Top des hausses</text>
-  <text x="${marge}" y="336" font-family="Arial, Helvetica, sans-serif" font-size="32"
+  <text x="${marge}" y="${f.sousTitreY}" font-family="Arial, Helvetica, sans-serif" font-size="${f.sousTitreTaille}"
         fill="${BLEU}">${echapper(titreMarche)} · semaine du ${echapper(semaine)}</text>
 ${lignes}
-  <text x="${marge}" y="972" font-family="Arial, Helvetica, sans-serif" font-size="26"
+  <text x="${marge}" y="${f.piedY}" font-family="Arial, Helvetica, sans-serif" font-size="${f.piedTaille}"
         fill="#ffffff" fill-opacity="0.5">${echapper(mentionCourte)} · cards-trading.com</text>
 </svg>`;
 
   const marque = await sharp(MARQUE)
     .extract({ left: 23, top: 53, width: 360, height: 407 })
-    .resize({ height: 92 })
+    .resize({ height: f.logo.hauteur })
     .toBuffer();
 
   mkdirSync(SORTIE, { recursive: true });
   /* Nom horodaté : les fichiers de public/assets/ sont servis en cache
      immutable un an. Réutiliser « cote-jp.png » chaque semaine servirait
      éternellement la première image. */
-  const nom = `cote-${MARCHE}-${new Date().toISOString().slice(0, 10)}.png`;
+  const nom = `cote-${MARCHE}-${new Date().toISOString().slice(0, 10)}${f.suffixe}.png`;
 
   /*
     En essai à blanc, on DESSINE mais on n'écrit pas dans public/assets/.
@@ -299,12 +339,12 @@ ${lignes}
     dessiner du tout ferait passer un essai qui ne prouve rien.
   */
   const image = await sharp(Buffer.from(svg))
-    .composite([{ input: marque, left: marge, top: 62 }])
+    .composite([{ input: marque, left: marge, top: f.logo.haut }])
     .png({ compressionLevel: 9 })
     .toBuffer();
 
   if (SEC) {
-    console.log(`[dry-run] vignette rendue (${Math.round(image.length / 1024)} Ko), non écrite : ${nom}`);
+    console.log(`[dry-run] ${L}×${H} rendue (${Math.round(image.length / 1024)} Ko), non écrite : ${nom}`);
     return nom;
   }
 
@@ -312,20 +352,28 @@ ${lignes}
   return nom;
 }
 
-/* Le nom de la vignette vient du cache en phase « publier » : le fichier a
-   déjà été dessiné, committé et déployé. En phase « préparer » ou en mode
-   complet, on le dessine. */
-const fichier = cache ? cache.fichier : await vignetteCote();
+/*
+  Deux vignettes par semaine : le carré pour Instagram et TikTok, le
+  paysage pour X.
+
+  En phase « publier » elles viennent du cache, ayant déjà été dessinées,
+  committées et déployées. Le repli `|| cache.fichier` couvre les caches
+  écrits avant le 19 septembre 2026, qui ne portaient que le carré : mieux
+  vaut une image rognée par X qu'une URL indéfinie.
+*/
+const fichier = cache ? cache.fichier : await vignetteCote(FORMATS_COTE[0]);
+const fichierOg = cache ? cache.fichierOg || cache.fichier : await vignetteCote(FORMATS_COTE[1]);
 const urlVignette = `${SITE}/assets/social/${fichier}`;
-console.log(`Vignette : ${fichier}`);
+const urlVignetteOg = `${SITE}/assets/social/${fichierOg}`;
+console.log(`Vignettes : ${fichier} (carré) et ${fichierOg} (paysage)`);
 
 if (PHASE === 'preparer') {
   writeFileSync(CACHE, JSON.stringify(
-    { fichier, podium: donnees.podium, examinees: donnees.examinees, marche: MARCHE },
+    { fichier, fichierOg, podium: donnees.podium, examinees: donnees.examinees, marche: MARCHE },
     null,
     2
   ));
-  console.log('Cache écrit. La vignette doit être committée et déployée avant la phase « publier ».');
+  console.log('Cache écrit. Les vignettes doivent être committées et déployées avant la phase « publier ».');
   process.exit(0);
 }
 
@@ -572,6 +620,12 @@ if (cle) {
     if (!c.isDisconnected) canaux[c.service] = c.id;
   }
 
+  /* Même forme que dans le corps du post : Buffer attend l'asset aux DEUX
+     endroits, sur le post et dans le premier message du thread. */
+  const imageX = {
+    image: { url: urlVignetteOg, metadata: { altText: `Top des hausses — ${titreMarche}` } },
+  };
+
   const envois = [
     /*
       ⚠️ Le `thread` doit contenir TOUS les messages, le premier compris,
@@ -579,11 +633,17 @@ if (cle) {
       réponse produit un thread incohérent. Même forme que
       scripts/annonce-buffer.mjs, vérifiée le 1er septembre 2026 sur un
       brouillon de test.
+
+      La vignette est le format PAYSAGE : la timeline de X rogne un carré,
+      et jusqu'au 19 septembre 2026 ce post partait carrément sans image.
+      Le post de cotes du 18 septembre totalisait 151 impressions et 0 clic,
+      quand un post d'article avec vignette et lien en réponse en faisait
+      239 pour 2,09 % d'engagement.
     */
-    ['twitter', textes.twitter, null, {
+    ['twitter', textes.twitter, urlVignetteOg, {
       twitter: {
         thread: [
-          { text: textes.twitter },
+          { text: textes.twitter, assets: [imageX] },
           { text: lien + String.fromCharCode(120) },
         ],
       },
