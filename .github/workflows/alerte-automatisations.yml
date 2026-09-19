@@ -1,0 +1,59 @@
+# Prévient Julian par email qu'une automatisation est cassée.
+#
+# POURQUOI CE WORKFLOW EXISTE. Du 11 au 18 septembre 2026,
+# `publie-articles.yml` a échoué HUIT jours de suite sur la même ligne :
+# Astro 6 refuse Node 20, et les workflows étaient épinglés sur Node 20.
+# Les huit passages étaient rouges dans l'onglet Actions, et rien n'a
+# bougé pendant huit jours.
+#
+# Le coût a été en cascade : l'article Star Wars est resté en brouillon
+# neuf jours, les vignettes de deux articles publiés n'ont jamais été
+# committées (le workflow mourait au build, juste avant l'étape de
+# commit), et `annonce-buffer` a ensuite échoué sur les trois réseaux
+# faute de trouver ces images en production.
+#
+# Le projet alertait déjà sur les brouillons qui traînent
+# (`alerte-relecture.yml`), mais jamais sur une automatisation morte.
+#
+# 06:02 UTC = 08:02 à Paris en été. Placé APRÈS `publie-articles` (05:12)
+# et `alerte-relecture` (05:32), pour que l'échec du matin soit déjà connu
+# quand ce workflow regarde.
+
+name: Alerte automatisations
+
+on:
+  schedule:
+    - cron: '2 6 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Composer sans envoyer l'email"
+        type: boolean
+        default: false
+
+# `actions: read` est le seul droit nécessaire : le script interroge
+# l'historique des passages, il ne touche à rien.
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  surveiller:
+    name: Automatisations en échec
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Aucune dépendance npm : le script n'utilise que `fetch` et les
+      # modules natifs. Pas de `npm ci` à attendre pour une alerte.
+      - name: Relever l'état des automatisations
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node scripts/alerte-automatisations.mjs ${{ inputs.dry_run && '--dry-run' || '' }}
