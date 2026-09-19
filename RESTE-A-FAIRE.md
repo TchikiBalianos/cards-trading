@@ -1,6 +1,6 @@
 # Reste à faire — Cards-Trading
 
-État au **2 septembre 2026**. Les règles durables vivent dans `CLAUDE.md` ;
+État au **2 septembre 2026**, complété le **19 septembre**. Les règles durables vivent dans `CLAUDE.md` ;
 ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès
 qu'elle est traitée.
 
@@ -30,6 +30,41 @@ Cela ne veut pas dire que les réseaux ne servent à rien — l'audience s'y
 construit — mais que **le SEO et les moteurs IA sont, mesurément, le seul
 canal qui convertit aujourd'hui**. Toute décision d'arbitrage de temps
 devrait en tenir compte.
+
+---
+
+## 🔴 En cours — priorité absolue
+
+### 0. Identification des cartes dans le top des hausses
+
+Signalé par un follower, et le reproche est fondé : le post affiche
+« Camérupt 3,54 € (+21 %) », c'est-à-dire le seul nom du Pokémon. Or une
+même carte existe en dizaines d'impressions selon l'extension, le numéro,
+la langue et la variante, dont les cotes n'ont aucun rapport entre elles.
+Annoncer une tendance sans dire DE QUELLE carte on parle ne veut rien dire.
+
+Cible : identifier chaque carte par son nom, le code de son extension, son
+numéro de carte, et si la source le permet sa variante et sa langue.
+
+⚠️ À trancher avant de toucher à l'affichage : l'information est-elle
+perdue dès le calcul et l'archivage, ou seulement à l'affichage ? Si
+`data/cotes/` indexe les cartes par nom seul, l'historique mélange déjà
+des impressions différentes et les variations calculées sont fausses.
+
+---
+
+## 🔵 Prochain chantier décidé
+
+### SEO : volume, maillage interne et pages hub
+
+Décidé le 19 septembre, à enchaîner après la correction ci-dessus. Plan
+d'implémentation écrit et committé :
+`docs/plans/2026-09-08-seo-volume-maillage-hubs.md`.
+
+Trois volets : l'article du vendredi passe d'optionnel à obligatoire (le
+volume indexable double), un lien interne vers un article du même TCG
+devient un critère bloquant contrôlé à la publication, et une page hub par
+TCG agrège les articles avec un appel à rejoindre la bêta.
 
 ---
 
@@ -114,6 +149,23 @@ coordination d'équipe, ni d'identifiant Discord de Valérian côté projet.
 
 À créer si les échanges d'équipe doivent passer par Discord plutôt que
 par un autre canal.
+
+### 9. Pipeline vidéo TikTok par Seedance — reporté, pas abandonné
+
+Plan complet écrit et committé :
+`docs/plans/2026-09-08-pipeline-video-tiktok.md`. Il remplace l'image fixe
+des posts TikTok par un clip de 7 à 10 s généré en image-to-video depuis la
+vignette existante, avec repli automatique sur l'image en cas d'échec ou de
+plafond de dépense atteint.
+
+**Reporté le 19 septembre** : implémentation jugée lourde au regard du gain
+attendu à ce stade. À reproposer quand le reste sera stabilisé, ou si la
+portée TikTok redevient un enjeu prioritaire.
+
+Ce qui est déjà tranché et n'a pas à être réinstruit : Seedance en
+image-to-video (un text-to-video inventerait un visuel de carte inexistant),
+Kling et Grok Imagine écartés au prix à qualité comparable, CapCut écarté
+faute d'API de montage et d'export côté serveur.
 
 ---
 
