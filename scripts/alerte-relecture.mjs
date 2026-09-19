@@ -27,7 +27,18 @@ import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { lireArticle, defauts, points_de_vigilance, compterMots } from './lib/article.mjs';
+import { fileURLToPath } from 'node:url';
+import { lireArticle, defauts, points_de_vigilance, compterMots, listerPublies } from './lib/article.mjs';
+
+/*
+  Articles déjà publiés sur main, relevés UNE fois.
+
+  Même base que publie-articles.mjs pour le contrôle de maillage : si
+  les deux scripts jugeaient sur des listes différentes, l’alerte
+  annoncerait « publiable » un article que la publication refuserait.
+*/
+const RACINE = join(fileURLToPath(new URL('..', import.meta.url)));
+const PUBLIES = listerPublies(join(RACINE, 'src', 'content', 'blog'));
 
 const DEPOT = 'TchikiBalianos/cards-trading';
 const SEUIL_JOURS = 2;
@@ -83,7 +94,7 @@ function articleDeLaBranche(ref) {
     categorie: article.champs.category || 'sans catégorie',
     pubDate: article.champs.pubDate || 'absente',
     mots: compterMots(article),
-    bloquants: defauts(article),
+    bloquants: defauts(article, PUBLIES.filter((p) => p.slug !== slug)),
     vigilance: points_de_vigilance(article),
   };
 }

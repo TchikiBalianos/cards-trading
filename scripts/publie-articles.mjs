@@ -35,10 +35,21 @@
 import { writeFileSync, readdirSync, appendFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { lireArticle, defauts } from './lib/article.mjs';
+import { lireArticle, defauts, listerPublies } from './lib/article.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOSSIER = join(RACINE, 'src', 'content', 'blog');
+
+/*
+  Articles déjà publiés, relevés UNE fois.
+
+  Sert au contrôle de maillage interne : un article doit renvoyer vers
+  un autre article du même TCG. La liste est construite ici et passée à
+  defauts(), exactement comme le fait alerte-relecture.mjs — les deux
+  scripts doivent juger sur la même base, sans quoi l’alerte annoncerait
+  « publiable » un article que la publication refuserait le lendemain.
+*/
+const PUBLIES = listerPublies(DOSSIER);
 
 const CONTROLE = process.argv.includes('--controle');
 const argDate = process.argv.find((a) => a.startsWith('--date='));
@@ -65,7 +76,9 @@ for (const fichier of readdirSync(DOSSIER).filter((f) => /\.mdx?$/.test(f))) {
   } else if (article.champs.pubDate > AUJOURDHUI) {
     programmes.push(entree);
   } else {
-    const manque = defauts(article);
+    /* On retire l’article examiné : sans ça, il se verrait exiger un
+       lien vers lui-même. */
+    const manque = defauts(article, PUBLIES.filter((p) => p.slug !== slug));
     if (manque.length) refuses.push({ ...entree, raisons: manque });
     else dus.push(entree);
   }
