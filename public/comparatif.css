@@ -84,6 +84,27 @@
         }
       }
 
+      /*
+        Dernier palier, sous 1020 px.
+
+        Mesuré au pire cas, à 981 px (juste au-dessus de la bascule vers
+        les cartes empilées à 980 px) : la cellule offre 68,7 px utiles
+        et « Cardmarket » en réclame 75 à 13 px, soit 2,3 px qui mordent
+        sur la cellule voisine. Le mot reste à 155 px du bord du tableau
+        et le document ne déborde pas, donc rien ne se voit, mais autant
+        finir le travail.
+
+        12 px ramènent le mot à 69,2 px et 3 px de marge intérieure
+        portent la zone utile à 72,7 px : 3,5 px de réserve.
+      */
+      @media (max-width: 1020px) {
+        thead th {
+          font-size: 12px;
+          padding-left: 3px;
+          padding-right: 3px;
+        }
+      }
+
       thead {
         background: linear-gradient(
           90deg,
