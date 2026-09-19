@@ -1,0 +1,100 @@
+---
+/*
+  Une page d'entrée par TCG.
+
+  POURQUOI. Les articles visent des recherches d'actualité (« Storm
+  Emeralda », « OP-17 »). Rien ne captait les recherches génériques et
+  durables (« carte pokémon prix », « one piece tcg france »), qui sont
+  celles qui ramènent du monde en continu plutôt que par pics.
+
+  Ces pages agrègent les articles d'un jeu et portent l'appel à rejoindre
+  la bêta, ce que les articles ne font qu'en fin de texte.
+*/
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { LIBELLES_TCG, ACCROCHES_TCG, estTcg } from '../../lib/tcg.js';
+
+/* Libellés et accroches viennent du module partagé : la page hub et
+   l'index du blog doivent nommer les jeux de la même façon. */
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  const parCategorie = {};
+  for (const p of posts) {
+    (parCategorie[p.data.category] ||= []).push(p);
+  }
+
+  /*
+    Une page n'est générée que pour un TCG ayant AU MOINS un article : une
+    page vide est du contenu mince, que les moteurs pénalisent plutôt
+    qu'ils ne l'indexent.
+  */
+  return Object.entries(parCategorie)
+    .filter(([categorie]) => estTcg(categorie))
+    .map(([categorie, articles]) => ({
+      params: { categorie },
+      props: {
+        articles: articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+      },
+    }));
+}
+
+const { categorie } = Astro.params;
+const { articles } = Astro.props;
+const libelle = LIBELLES_TCG[categorie];
+const accroche = ACCROCHES_TCG[categorie];
+const pluriel = articles.length > 1 ? 's' : '';
+---
+
+<BlogLayout
+  title={`${libelle} : actualité, cotes et guides`}
+  description={`Toute l'actualité ${libelle} sur Cards-Trading : ${accroche}.`}
+>
+  <section class="blog-hero">
+    <h1>{libelle}</h1>
+    <p>
+      {articles.length} article{pluriel} sur {libelle} : {accroche}.
+    </p>
+    <p class="tcg-hub-cta">
+      <a href="/#beta">Rejoindre la bêta de la marketplace</a> , 0 % de
+      commission pendant toute la bêta.
+    </p>
+  </section>
+
+  <section class="blog-grid">
+    {articles.map((post) => (
+      <BlogCard
+        title={post.data.title}
+        description={post.data.description}
+        pubDate={post.data.pubDate}
+        heroImage={post.data.heroImage}
+        category={post.data.category}
+        slug={post.id}
+      />
+    ))}
+  </section>
+
+  <section class="tcg-hub-retour">
+    <a href="/blog/">Voir tous les articles du blog</a>
+  </section>
+</BlogLayout>
+
+<style>
+  .tcg-hub-cta {
+    margin-top: 18px;
+    font-size: 15px;
+  }
+  .tcg-hub-cta a {
+    color: #2997ff;
+    font-weight: bold;
+  }
+  .tcg-hub-retour {
+    text-align: center;
+    padding: 40px 20px 60px;
+  }
+  .tcg-hub-retour a {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+  }
+</style>

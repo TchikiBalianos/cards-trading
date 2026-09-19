@@ -2,9 +2,20 @@
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import BlogCard from '../../components/BlogCard.astro';
 import { getCollection } from 'astro:content';
+import { LIBELLES_COURTS, estTcg } from '../../lib/tcg.js';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+/*
+  Jeux réellement couverts, déduits des articles chargés : pas de second
+  appel à la collection, et aucun lien vers une page hub qui n'existerait
+  pas. Une catégorie transverse (guide, actualité, stratégie) n’a pas de
+  page de jeu, donc pas de lien.
+*/
+const jeux = [...new Set(posts.map((p) => p.data.category))]
+  .filter(estTcg)
+  .sort((a, b) => LIBELLES_COURTS[a].localeCompare(LIBELLES_COURTS[b], "fr"));
 ---
 
 <BlogLayout
@@ -17,6 +28,15 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       Guides, actualites et strategies pour les fans de cartes TCG.
     </p>
   </section>
+
+  {jeux.length > 0 && (
+    <nav class="blog-jeux" aria-label="Parcourir par jeu">
+      <span class="blog-jeux__label">Par jeu :</span>
+      {jeux.map((c) => (
+        <a href={`/tcg/${c}/`}>{LIBELLES_COURTS[c]}</a>
+      ))}
+    </nav>
+  )}
 
   {posts.length > 0 ? (
     <section class="blog-grid">
@@ -39,3 +59,30 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     </section>
   )}
 </BlogLayout>
+
+<style>
+  .blog-jeux {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .blog-jeux__label {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+  }
+  .blog-jeux a {
+    color: #2997ff;
+    font-size: 13px;
+    border: 1px solid rgba(41, 151, 255, 0.35);
+    border-radius: 999px;
+    padding: 5px 13px;
+    text-decoration: none;
+  }
+  .blog-jeux a:hover {
+    background: rgba(41, 151, 255, 0.12);
+  }
+</style>
