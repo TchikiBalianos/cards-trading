@@ -33,38 +33,77 @@ devrait en tenir compte.
 
 ---
 
-## 🔴 En cours — priorité absolue
+## 🔴 Fiabilité des cotes
 
-### 0. Identification des cartes dans le top des hausses
+### 0. Identification et fiabilité du top des hausses — ✅ traité le 19 septembre
 
-Signalé par un follower, et le reproche est fondé : le post affiche
-« Camérupt 3,54 € (+21 %) », c'est-à-dire le seul nom du Pokémon. Or une
-même carte existe en dizaines d'impressions selon l'extension, le numéro,
-la langue et la variante, dont les cotes n'ont aucun rapport entre elles.
-Annoncer une tendance sans dire DE QUELLE carte on parle ne veut rien dire.
+Signalé par un follower : le post affichait « Camérupt 3,54 € (+21 %) »,
+c'est-à-dire le seul nom du Pokémon. Le reproche était fondé, et en tirant
+le fil on a trouvé deux défauts plus graves derrière.
 
-Cible : identifier chaque carte par son nom, le code de son extension, son
-numéro de carte, et si la source le permet sa variante et sa langue.
+**Ce qui était cassé, et ce qui a été corrigé :**
 
-**Tranché le 19 septembre, après vérification dans le code et les données.**
-Pour Pokémon, l'information N'EST PAS perdue : `cote-hebdo.mjs` conserve un
-`id` qui porte déjà le code d'extension et le numéro (`me01-156`), plus le
-nom de l'extension, et l'archive `data/cotes/podiums-hebdo.json` les contient.
-Le podium est appauvri au seul moment de la mise en forme, dans
-`publie-cote.mjs`. Le correctif est donc localisé et peu risqué.
+1. **Le nom publié était faux, pas seulement imprécis.** `publie-cote.mjs`
+   lisait `c.nomFr`, qui est le nom d'ESPÈCE récupéré chez PokéAPI, alors que
+   le champ `affichage` existait depuis le début et n'était jamais lu.
+   « Camérupt » était en réalité **Méga-Camérupt-ex**, et « Dracaufeu » à
+   427,58 € était un **Méga-Dracaufeu Y-ex** en illustration spéciale, ce qui
+   faisait paraître le prix aberrant. La newsletter du samedi, elle, lisait
+   déjà `affichage` : les réseaux du jeudi étaient le seul canal dégradé.
 
-Deux réserves quand même :
+2. **Chaque carte porte désormais sa référence d'impression** : `(ASC 294)`
+   dans les textes, `Héros Transcendants · ASC 294/217` sur la vignette. Ce
+   format n'est pas une convention de marchand, c'est ce qui est imprimé en
+   bas de la carte française (`[I] [ASC FR] 294/217`) et ce que Cardmarket
+   emploie dans ses propres titres français. Tout venait de réponses API déjà
+   reçues : zéro appel supplémentaire.
 
-- **La variante reste réellement absente.** TCGdex expose deux séries de prix
-  en parallèle (`trend`/`avg30` et `trend-holo`/`avg30-holo`) ; le script lit
-  les champs non suffixés, donc il cote une variante sans jamais dire
-  laquelle.
-- **Il existe un second consommateur.** `scripts/newsletter-hebdo.mjs` lit le
-  même archive pour l'email du samedi. Corriger le post du jeudi sans lui
-  laisserait la newsletter annoncer « Camérupt » deux jours plus tard.
+3. **Les podiums japonais publiaient des chiffres gelés.** Mewtwo SM3p-075 et
+   Lucario SM5p-030 ont été annoncés le 27 août PUIS le 11 septembre comme
+   « hausses de la semaine », aux mêmes valeurs au centime. La carte classée
+   première le 11/09 avait `low: null`, donc aucune annonce en vente. Trois
+   garde-fous ont été posés, chacun mesuré sur les deux marchés avant d'être
+   imposé :
+   - six tests de liquidité (annonce absente, cote sous la plus basse offre,
+     cote décorrélée, fenêtre figée, vente unique, dernière vente aberrante) ;
+   - plafond de hausse abaissé de 300 % à 100 %, qui ne filtrait rien à 300 ;
+   - comparaison aux podiums déjà publiés, seul test qui attrape une carte
+     dont les chiffres sont cohérents entre eux mais figés.
 
-Sur le marché japonais, `set` reste le nom japonais (« ひかる伝説 ») et
-l'image est absente : l'affichage devra retomber sur le code d'extension.
+   Effet mesuré : **international inchangé** (7 retenues sur 288, même
+   podium), **japonais ramené de 49 candidats à 4 retenues**, amplitudes
+   passant de +259 % à +55 %.
+
+4. **La mention était fausse deux fois.** Le titre disait « de la semaine »,
+   la légende « sur 30 jours », et la mesure n'est ni l'une ni l'autre : le
+   script calcule l'écart entre la cote du jour et la moyenne des ventes du
+   mois. La mention le dit maintenant, et précise « toutes langues
+   confondues » (vérifié : le filtre de langue de Cardmarket ne change aucune
+   ligne de cote, seulement la liste d'annonces).
+
+5. **Le post X partait sans visuel et avec le lien dans le corps**, ce qui lui
+   valait 151 impressions et 0 clic le 18 septembre. Le lien part désormais en
+   première réponse, comme pour les annonces d'articles.
+
+6. **L'image et le texte pouvaient décrire des podiums différents** : la
+   vignette est construite en phase « préparer », les textes en phase
+   « publier », 2 à 12 minutes plus tard, et le classement était recalculé
+   entre les deux. La phase de publication relit maintenant le cache.
+
+**Ce qui reste ouvert sur ce sujet :**
+
+- **X n'a toujours pas de visuel.** La vignette existe en 1080×1080, format
+  que X rogne. Lui donner une image demande une maquette en 1200×630, le
+  podium ne rentrant pas tel quel dans cette hauteur.
+- **La phase « publier » appelle encore l'API** avant de relire le cache,
+  donc elle reste inutilement dépendante de TCGdex au moment de publier.
+- **`--dry-run` écrit une vraie vignette** dans `public/assets/social/`, ce
+  qui contredit son contrat.
+- **Le plancher de prix est à 1,50 €**, ce qui laisse passer des cartes à
+  1,72 € à côté de cartes à 435 €. Question éditoriale, pas technique.
+- **Le marché japonais reste suspendu** dans le workflow. Les garde-fous sont
+  posés et éprouvés, mais aucun passage réel n'a encore eu lieu : à rouvrir
+  après un déclenchement manuel concluant.
 
 ---
 
