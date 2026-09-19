@@ -3,10 +3,10 @@
  * Calendrier éditorial du blog Cards-Trading.
  *
  * Règle demandée :
- *  - 1 à 2 articles par semaine
+ *  - 2 articles par semaine, tous deux obligatoires depuis le 19/09/2026
  *  - le 1er article de la semaine ALTERNE Pokémon / One Piece
  *    → 2 Pokémon et 2 One Piece par mois
- *  - le 2e article tourne sur les autres TCG
+ *  - le 2e article tourne sur les autres TCG (volume indexable doublé)
  *
  * Déterministe : la même semaine donne toujours le même résultat, quel que
  * soit le moment où on lance le script. Aucun état à stocker.
@@ -16,6 +16,7 @@
  */
 
 import { readdirSync, readFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 /* Lundi de référence : semaine 0 = Pokémon. Ne jamais changer cette date,
    sinon toute l'alternance passée et future se décale. */
@@ -53,7 +54,7 @@ export function planSemaine(n) {
     lundi: lundi.toISOString().slice(0, 10),
     articles: [
       { jour: 'mardi', categorie: ancre, libelle: LIBELLE[ancre], statut: 'obligatoire' },
-      { jour: 'vendredi', categorie: secondaire, libelle: LIBELLE[secondaire], statut: 'optionnel' },
+      { jour: 'vendredi', categorie: secondaire, libelle: LIBELLE[secondaire], statut: 'obligatoire' },
     ],
   };
 }
@@ -74,21 +75,28 @@ function dejaPublies() {
   } catch { return []; }
 }
 
-const n = Number(process.argv[2]) || 1;
-const debut = semaineNo();
+/*
+  Bloc d’exécution isolé : sans cette garde, importer le module pour le
+  tester déclencherait l’affichage du calendrier et polluerait la sortie
+  des tests.
+*/
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const n = Number(process.argv[2]) || 1;
+  const debut = semaineNo();
 
-console.log('\n  CALENDRIER ÉDITORIAL — blog Cards-Trading\n');
-for (let i = 0; i < n; i++) {
-  const p = planSemaine(debut + i);
-  const [a1, a2] = p.articles;
-  console.log(`  Semaine du ${p.lundi}`);
-  console.log(`    ${a1.jour.padEnd(9)} ${a1.libelle.padEnd(22)} (${a1.statut})`);
-  console.log(`    ${a2.jour.padEnd(9)} ${a2.libelle.padEnd(22)} (${a2.statut})\n`);
-}
+  console.log('\n  CALENDRIER ÉDITORIAL — blog Cards-Trading\n');
+  for (let i = 0; i < n; i++) {
+    const p = planSemaine(debut + i);
+    const [a1, a2] = p.articles;
+    console.log(`  Semaine du ${p.lundi}`);
+    console.log(`    ${a1.jour.padEnd(9)} ${a1.libelle.padEnd(22)} (${a1.statut})`);
+    console.log(`    ${a2.jour.padEnd(9)} ${a2.libelle.padEnd(22)} (${a2.statut})\n`);
+  }
 
-const pub = dejaPublies();
-if (pub.length) {
-  const parCat = {};
-  pub.forEach((p) => { parCat[p.categorie] = (parCat[p.categorie] || 0) + 1; });
-  console.log('  Déjà publié : ' + Object.entries(parCat).map(([c, v]) => `${c}×${v}`).join(', ') + '\n');
+  const pub = dejaPublies();
+  if (pub.length) {
+    const parCat = {};
+    pub.forEach((p) => { parCat[p.categorie] = (parCat[p.categorie] || 0) + 1; });
+    console.log('  Déjà publié : ' + Object.entries(parCat).map(([c, v]) => `${c}×${v}`).join(', ') + '\n');
+  }
 }

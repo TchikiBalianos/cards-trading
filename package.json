@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "install-deps": "npm install"
+    "install-deps": "npm install",
+    "test": "node --test \"scripts/**/*.test.mjs\""
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
