@@ -1,158 +1,111 @@
 # Reste à faire — Cards-Trading
 
-État au **2 septembre 2026**, complété le **19 septembre**. Les règles durables vivent dans `CLAUDE.md` ;
-ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès
-qu'elle est traitée.
+État au **19 septembre 2026**. Les règles durables vivent dans `CLAUDE.md` ;
+ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle
+est traitée.
 
 ---
 
-## 📊 Ce que disent les chiffres (2 septembre)
+## 📊 Ce que disent les chiffres (19 septembre)
 
-**26 inscrits, dont 7 sur les sept derniers jours** — contre 16 au total
-une semaine plus tôt. La croissance est réelle et récente.
+**28 inscrits**, dont **2 seulement depuis le 2 septembre**. La croissance
+constatée début septembre (7 en une semaine) s'est arrêtée net.
 
-Provenance des inscriptions tracées :
+Provenance, relevée directement en base :
 
 | Source | Inscriptions | Dernière |
 |---|---|---|
+| (non renseignée, avant le traçage) | 15 | 8 août |
+| `chatgpt.com` | 4 | 10 sept |
 | `direct` | 4 | 31 août |
-| `chatgpt.com` | 3 | 29 août |
 | `google.com` | 2 | 30 août |
+| **`l.instagram.com`** | **1** | **13 sept** |
 | `perplexity.ai` | 1 | 20 août |
-| Réseaux sociaux (`x`, `instagram`, `tiktok`, `discord`) | **0** | — |
+| `verif-manuelle` | 1 | 25 août |
 
-⚠️ **Le constat le plus important du projet à ce jour.** Six inscriptions
-sur onze tracées viennent de moteurs de recherche, dont quatre de moteurs
-IA. **Aucune ne vient des réseaux sociaux**, alors que Discord, X,
-Instagram et TikTok publient automatiquement depuis deux semaines.
+Deux corrections par rapport à l'état du 2 septembre :
 
-Cela ne veut pas dire que les réseaux ne servent à rien — l'audience s'y
-construit — mais que **le SEO et les moteurs IA sont, mesurément, le seul
-canal qui convertit aujourd'hui**. Toute décision d'arbitrage de temps
-devrait en tenir compte.
+1. **Les réseaux sociaux ont produit leur première inscription**, via
+   Instagram le 13 septembre. L'affirmation « aucune ne vient des réseaux »
+   n'est plus vraie. Une seule sur treize tracées, mais elle existe.
+2. **Le SEO et les moteurs IA restent le canal dominant** : 7 des 13
+   inscriptions tracées, dont 5 de moteurs IA. Le constat d'arbitrage tient
+   donc toujours, mais sur une base qui a cessé de croître.
 
----
-
-## 🔴 Fiabilité des cotes
-
-### 0. Identification et fiabilité du top des hausses — ✅ traité le 19 septembre
-
-Signalé par un follower : le post affichait « Camérupt 3,54 € (+21 %) »,
-c'est-à-dire le seul nom du Pokémon. Le reproche était fondé, et en tirant
-le fil on a trouvé deux défauts plus graves derrière.
-
-**Ce qui était cassé, et ce qui a été corrigé :**
-
-1. **Le nom publié était faux, pas seulement imprécis.** `publie-cote.mjs`
-   lisait `c.nomFr`, qui est le nom d'ESPÈCE récupéré chez PokéAPI, alors que
-   le champ `affichage` existait depuis le début et n'était jamais lu.
-   « Camérupt » était en réalité **Méga-Camérupt-ex**, et « Dracaufeu » à
-   427,58 € était un **Méga-Dracaufeu Y-ex** en illustration spéciale, ce qui
-   faisait paraître le prix aberrant. La newsletter du samedi, elle, lisait
-   déjà `affichage` : les réseaux du jeudi étaient le seul canal dégradé.
-
-2. **Chaque carte porte désormais sa référence d'impression** : `(ASC 294)`
-   dans les textes, `Héros Transcendants · ASC 294/217` sur la vignette. Ce
-   format n'est pas une convention de marchand, c'est ce qui est imprimé en
-   bas de la carte française (`[I] [ASC FR] 294/217`) et ce que Cardmarket
-   emploie dans ses propres titres français. Tout venait de réponses API déjà
-   reçues : zéro appel supplémentaire.
-
-3. **Les podiums japonais publiaient des chiffres gelés.** Mewtwo SM3p-075 et
-   Lucario SM5p-030 ont été annoncés le 27 août PUIS le 11 septembre comme
-   « hausses de la semaine », aux mêmes valeurs au centime. La carte classée
-   première le 11/09 avait `low: null`, donc aucune annonce en vente. Trois
-   garde-fous ont été posés, chacun mesuré sur les deux marchés avant d'être
-   imposé :
-   - six tests de liquidité (annonce absente, cote sous la plus basse offre,
-     cote décorrélée, fenêtre figée, vente unique, dernière vente aberrante) ;
-   - plafond de hausse abaissé de 300 % à 100 %, qui ne filtrait rien à 300 ;
-   - comparaison aux podiums déjà publiés, seul test qui attrape une carte
-     dont les chiffres sont cohérents entre eux mais figés.
-
-   Effet mesuré : **international inchangé** (7 retenues sur 288, même
-   podium), **japonais ramené de 49 candidats à 4 retenues**, amplitudes
-   passant de +259 % à +55 %.
-
-4. **La mention était fausse deux fois.** Le titre disait « de la semaine »,
-   la légende « sur 30 jours », et la mesure n'est ni l'une ni l'autre : le
-   script calcule l'écart entre la cote du jour et la moyenne des ventes du
-   mois. La mention le dit maintenant, et précise « toutes langues
-   confondues » (vérifié : le filtre de langue de Cardmarket ne change aucune
-   ligne de cote, seulement la liste d'annonces).
-
-5. **Le post X partait sans visuel et avec le lien dans le corps**, ce qui lui
-   valait 151 impressions et 0 clic le 18 septembre. Le lien part désormais en
-   première réponse, comme pour les annonces d'articles.
-
-6. **L'image et le texte pouvaient décrire des podiums différents** : la
-   vignette est construite en phase « préparer », les textes en phase
-   « publier », 2 à 12 minutes plus tard, et le classement était recalculé
-   entre les deux. La phase de publication relit maintenant le cache.
-
-**Ce qui reste ouvert sur ce sujet :**
-
-- **X n'a toujours pas de visuel.** La vignette existe en 1080×1080, format
-  que X rogne. Lui donner une image demande une maquette en 1200×630, le
-  podium ne rentrant pas tel quel dans cette hauteur.
-- **La phase « publier » appelle encore l'API** avant de relire le cache,
-  donc elle reste inutilement dépendante de TCGdex au moment de publier.
-- **`--dry-run` écrit une vraie vignette** dans `public/assets/social/`, ce
-  qui contredit son contrat.
-- ~~Plancher de prix à 1,50 €~~ **tranché le 19 septembre : relevé à 10 €.**
-  Sur l'international, la carte à 1,72 € cède la place à une à 139 €, et les
-  trois montants deviennent cohérents. Contrepartie constatée aussitôt sur le
-  japonais, une seule carte retenue sur 400 : le script exige désormais
-  **trois cartes pour publier**, et se tait sinon, comme il le faisait déjà
-  pour un podium vide.
-- **Le marché japonais reste suspendu** dans le workflow. Les garde-fous sont
-  posés et éprouvés, mais aucun passage réel n'a encore eu lieu : à rouvrir
-  après un déclenchement manuel concluant.
+⚠️ Le compteur « joueurs déjà inscrits » de la landing est **délibérément
+artificiel** (`api/views.js` : base 263, plus 1 à 3 par jour, déterministe).
+Ne pas le confondre avec le nombre réel d'inscrits ci-dessus.
 
 ---
 
-### 0 bis. L'archive des cotes One Piece se corrompt chaque semaine
+## 🔴 Chaîne de publication — cassée huit jours, réparée le 19 septembre
 
-Découvert le 19 septembre en instruisant le point précédent. Rien ne le
-signalait, et le fichier seul ne permet pas de le voir.
+### A. Le build refusait Node 20, et personne ne l'a vu
 
-`releve-cotes.mjs` indexe les cartes par `card_set_id` (`OP14-112`). Or cet
-identifiant ne désigne PAS une impression : sur les 5 derniers sets, 159 des
-632 identifiants portent 2 ou 3 variantes, avec un écart de cote médian de
-x36 entre variantes d'un même identifiant. Exemple réel :
+`publie-articles.yml` a **échoué tous les jours du 11 au 18 septembre**,
+toujours au même endroit :
 
 ```
-OP14-112  Boa Hancock                    6,01 $
-OP14-112  Boa Hancock (Alternate Art)   83,68 $
-OP14-112  Boa Hancock (SP)             531,82 $
+Node.js v20.20.2 is not supported by Astro!
+Please upgrade Node.js to a supported version: ">=22.12.0"
 ```
 
-L'affectation écrase donc silencieusement : le prix retenu est celui de la
-dernière ligne renvoyée par l'API, dont l'ordre n'est pas garanti. Et le nom
-est figé à la première apparition, donc une bascule de variante ne se voit
-même pas dans le nom archivé.
+Astro 6.3.1 exige Node 22.12 minimum ; les workflows étaient épinglés sur
+Node 20. Les six sont passés en Node 22.
 
-**Ce n'est pas théorique.** Sur les 227 clés suivies, 150 sont exposées et
-**6 ont déjà basculé** en cours d'historique, valeurs concordant au centime
-avec la cote de l'autre variante :
+**Ce que la panne a coûté**, et c'est la partie instructive :
 
-```
-EB04-061   20/08 : 69,75 $ (Alternate Art)  ->  03/09 : 24 995,95 $ (SP)
-OP16-003   20/08 : 37,39 $ (Alternate Art)  ->  03/09 : 2 $ (carte de base)
-```
+- L'article Star Wars, dû le 10 septembre et jugé complet par les contrôles,
+  est resté en brouillon **neuf jours**.
+- Les vignettes des deux articles de septembre étaient générées à chaque
+  passage puis **perdues**, le workflow mourant au build juste avant l'étape
+  de commit. Elles répondaient 404 en production.
+- D'où l'échec en cascade d'`annonce-buffer` les 15 et 18 septembre :
+  « InvalidInputError : Image could not be read from its URL » sur les trois
+  réseaux.
+- Et aucun aperçu de lien social sur ces deux articles.
 
-Conséquence : `calculerVariations()` produit aujourd'hui un top 5 entièrement
-faux, mené par un « +35 736 % » sur une carte qui n'a pas bougé. Cette
-fonction est d'ailleurs la seule des trois à n'avoir **aucun plafond de
-plausibilité**, contrairement à `cote-hebdo.mjs` et `cote-one-piece.mjs`.
+⚠️ **La leçon à retenir.** Le contrôle local répondait « PUBLIE » sans rien
+signaler, parce que le poste tourne déjà en Node 22. C'est l'écart entre le
+local et la CI qui a rendu la panne invisible, pas son silence : les huit
+passages étaient rouges dans l'onglet Actions. Personne ne les regardait.
 
-Ce qui limite l'urgence : One Piece est **hors rotation de publication**
-(voir le point 3), donc rien de faux n'est publié aujourd'hui. Ce qui la
-maintient : le relevé tourne tous les jeudis et continue d'écrire, donc
-l'historique se dégrade semaine après semaine.
+### B. Ce qui reste ouvert de cette histoire
 
-⚠️ Corriger la clé ne réparera pas le passé : les 5 relevés existants ne sont
-pas réattribuables de façon sûre pour les cartes ambiguës.
+- **Rien n'alerte quand un workflow échoue.** Huit échecs consécutifs n'ont
+  déclenché aucun signal exploitable. `alerte-relecture.yml` prévient qu'un
+  brouillon attend, mais pas qu'une automatisation est morte. C'est le
+  garde-fou manquant le plus évident du projet aujourd'hui.
+- **L'article Star Wars n'est pas encore publié** : le prochain passage du
+  cron (05:12 UTC) devrait le sortir maintenant que le build passe. À
+  vérifier en production.
+- **Deux articles attendent d'être annoncés** sur Buffer. Le relais ne sort
+  qu'un article par passage, les mardis et vendredis.
+
+---
+
+## 🟠 Fiabilité des cotes — traité le 19 septembre
+
+Le détail est dans les messages de commit et les commentaires de
+`scripts/cote-hebdo.mjs`, `publie-cote.mjs` et `releve-cotes.mjs`. En
+résumé : nom de carte réellement publié, référence d'impression ajoutée,
+garde-fous de liquidité et de non-stagnation, mention factuelle, lien X en
+réponse, phase de publication rendue indépendante de l'API, archive One Piece
+réindexée par impression.
+
+**Ce qui reste ouvert :**
+
+- **Le post X des cotes n'a toujours pas de visuel.** La vignette du podium
+  n'existe qu'en 1080×1080, format que X rogne. Lui donner une image demande
+  une maquette 1200×630 : le podium à 165 px d'interligne ne rentre pas dans
+  630 px de haut.
+- **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous
+  sont posés et mesurés (49 candidats ramenés à 4, les trois cartes gelées
+  écartées), mais aucun passage réel ne les a validés. À rouvrir après un
+  déclenchement manuel concluant.
+- **L'historique One Piece repart de zéro** pour 46 identifiants à variantes
+  multiples, leurs séries passées n'étant pas réattribuables. Les variations
+  redeviendront calculables pour eux après deux relevés, soit début octobre.
 
 ---
 
@@ -160,110 +113,83 @@ pas réattribuables de façon sûre pour les cartes ambiguës.
 
 ### SEO : volume, maillage interne et pages hub
 
-Décidé le 19 septembre, à enchaîner après la correction ci-dessus. Plan
-d'implémentation écrit et committé :
+Plan d'implémentation écrit et committé :
 `docs/plans/2026-09-08-seo-volume-maillage-hubs.md`.
 
 Trois volets : l'article du vendredi passe d'optionnel à obligatoire (le
-volume indexable double), un lien interne vers un article du même TCG
-devient un critère bloquant contrôlé à la publication, et une page hub par
-TCG agrège les articles avec un appel à rejoindre la bêta.
+volume indexable double), un lien interne vers un article du même TCG devient
+un critère bloquant contrôlé à la publication, et une page hub par TCG agrège
+les articles avec un appel à rejoindre la bêta.
+
+⚠️ La tâche 1 du plan suppose que la rédaction du vendredi soit réellement
+déclenchée : elle dépend d'une tâche planifiée Claude Desktop, hors dépôt,
+qui ne tourne que si l'application est ouverte.
 
 ---
 
-## 🟠 À observer — premiers passages réels
+## 🟠 À observer
 
-### 1. Le format X « image + lien en réponse »
-
-Mis en place le 1er septembre, **jamais tourné en conditions réelles**.
-Le post principal porte la vignette 1200×630 et le lien part en première
-réponse (thread Buffer), pour ne pas subir la pénalité de portée que X
-applique aux liens sortants.
-
-Premier vrai passage : jeudi 3 septembre (tâche planifiée
-`cards-trading-annonce-storm-emeralda-jeudi`). À vérifier dans les logs
-du run Buffer : aucune erreur sur le canal `twitter`, et le rendu réel
-du thread sur le compte.
-
-### 2. Validation mobile sur un vrai téléphone
+### 1. Validation mobile sur un vrai téléphone
 
 Le navigateur d'audit **ne défile pas** et **ne compose pas de frames** :
-aucune transition CSS ne s'exécute, les captures échouent.
+aucune transition CSS ne s'exécute.
 
 Tout ce qui a été affirmé sur la navigation mobile repose sur des valeurs
 **cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les
 ancres du menu, la fermeture du panneau, les carrousels, et le rendu des
 images après les correctifs de ratio.
 
-Le correctif du logo du blog (1er septembre) a été mesuré à 320, 360, 412
-et 1280px, mais jamais vu à l'œil sur un téléphone.
-
 ---
 
 ## 🟡 Améliorations identifiées, non appliquées
 
-### 3. Cote One Piece en euros — abandonnée en l'état
+### 2. Cote One Piece en euros — abandonnée en l'état
 
 One Piece reste **hors de la rotation du top des hausses**, et c'est
 définitif tant qu'aucune source gratuite ne cote en euros.
 
 `optcgapi`, `apitcg` et `tcgcsv` sont tous adossés à TCGplayer, donc en
-**dollars sur le marché américain**. TCGdex est le seul à coter en euros
-via Cardmarket, et ne couvre que Pokémon. **L'accès Cardmarket est
-écarté** : il exige un compte professionnel, décision prise le 20 août,
-ne pas y revenir.
+**dollars sur le marché américain**. TCGdex est le seul à coter en euros via
+Cardmarket, et ne couvre que Pokémon. **L'accès Cardmarket est écarté** : il
+exige un compte professionnel, décision prise le 20 août, ne pas y revenir.
 
 Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la cote
-One Piece (185 cartes), pour des variations maison en dollars sur des
-fenêtres longues.
+One Piece, désormais indexée par impression.
 
-### 4. Débordement de « Cardmarket » sous 1100 px
-
-Préexistant, **amélioré mais pas éliminé** (24 px → 15 px à 980 px).
-Mot insécable dans une colonne fixe. Invisible au-dessus de 1100 px.
-
-### 5. Compte TikTok personnel
-
-`tchikibalianos` est un compte **personnel**. À convertir en compte
-Cards-Trading avant d'y pousser de la promo régulière.
-
-### 6. Durcir la gestion des secrets
+### 3. Durcir la gestion des secrets
 
 Décision assumée : les webhooks Discord et les clés d'API ont transité en
-clair dans une conversation, l'enjeu étant jugé faible à ce stade. Ils
-sont en secrets GitHub, **jamais committés** — le dépôt est public et
-l'historique git est définitif. Vérifié : aucune fuite.
+clair dans une conversation, l'enjeu étant jugé faible à ce stade. Ils sont
+en secrets GitHub, **jamais committés** — le dépôt est public et l'historique
+git est définitif. Vérifié : aucune fuite.
 
 À reprendre quand l'audience ou l'équipe grandira : faire tourner les
 webhooks et les clés, et envisager un dépôt privé pour l'automatisation.
 
-### 7. Webhook de bounce Resend
+### 4. Webhook de bounce Resend
 
 Optionnel. Détecterait les adresses invalides côté serveur plutôt qu'a
-posteriori dans le dashboard. Le validateur Damerau-Levenshtein couvre
-déjà les fautes de frappe courantes.
+posteriori dans le dashboard. Le validateur Damerau-Levenshtein couvre déjà
+les fautes de frappe courantes.
 
-### 8. Aucun salon Discord interne
+### 5. Aucun salon Discord interne
 
-Constaté le 2 septembre en cherchant à faire relire un brouillon à
-Valérian : les 7 webhooks configurés pointent tous vers des **salons
-publics** de la communauté. Il n'existe aucun canal interne pour la
-coordination d'équipe, ni d'identifiant Discord de Valérian côté projet.
+Les 7 webhooks configurés pointent tous vers des **salons publics** de la
+communauté. Il n'existe aucun canal interne pour la coordination d'équipe, ni
+d'identifiant Discord de Valérian côté projet.
 
-À créer si les échanges d'équipe doivent passer par Discord plutôt que
-par un autre canal.
+À créer si les échanges d'équipe doivent passer par Discord plutôt que par un
+autre canal.
 
-### 9. Pipeline vidéo TikTok par Seedance — reporté, pas abandonné
+### 6. Pipeline vidéo TikTok par Seedance — reporté, pas abandonné
 
 Plan complet écrit et committé :
-`docs/plans/2026-09-08-pipeline-video-tiktok.md`. Il remplace l'image fixe
-des posts TikTok par un clip de 7 à 10 s généré en image-to-video depuis la
-vignette existante, avec repli automatique sur l'image en cas d'échec ou de
-plafond de dépense atteint.
+`docs/plans/2026-09-08-pipeline-video-tiktok.md`. Il remplace l'image fixe des
+posts TikTok par un clip de 7 à 10 s généré en image-to-video depuis la
+vignette existante, avec repli automatique sur l'image.
 
 **Reporté le 19 septembre** : implémentation jugée lourde au regard du gain
-attendu à ce stade. À reproposer quand le reste sera stabilisé, ou si la
-portée TikTok redevient un enjeu prioritaire.
+attendu à ce stade.
 
 Ce qui est déjà tranché et n'a pas à être réinstruit : Seedance en
 image-to-video (un text-to-video inventerait un visuel de carte inexistant),
@@ -272,36 +198,30 @@ faute d'API de montage et d'export côté serveur.
 
 ---
 
-## 📅 Suivi éditorial en cours
+## ✅ Vérifié le 19 septembre
 
-- **Jeudi 3 septembre, 10h** — tâche `cards-trading-annonce-storm-emeralda-jeudi` :
-  annonce Storm Emeralda sur Discord et Buffer, ce qui libère la file.
-- **Vendredi 4 septembre, 8h30** — tâche `cards-trading-publie-op17-vendredi` :
-  publie l'article OP-17 avant les crons d'annonce de 11h17 et 12h23.
-- **Brouillon Star Wars** (`blog/star-wars-unlimited-cad-bane-suspendu-2026`),
-  en attente depuis le 29 août avec un `pubDate` dépassé au 28 août : à
-  rafraîchir avant toute publication.
-
-⚠️ Les tâches planifiées ne tournent que si l'application est ouverte à
-l'heure prévue ; sinon elles se déclenchent à la prochaine ouverture.
+| Point | Preuve |
+|---|---|
+| Format X « image + lien en réponse » | Post OP-17 du 9 sept : `threadCount: 2`, vignette 1200×630 sur le message principal, lien en réponse, aucune erreur. 239 impressions et 2,09 % d'engagement, contre 151 et 0 % pour le post de cotes sans visuel. |
+| Débordement de « Cardmarket » | Mesuré au pire cas (981 px) après correctif : 3,5 px de réserve, 4,2 px de la cellule voisine, aucun débordement du document. Les 15 px annoncés jusqu'ici étaient périmés. |
+| Vignettes sociales | Les quatre fichiers des deux articles de septembre répondent 200 en production. |
+| Chaîne Buffer | Essai en mode brouillon après correctif : twitter, instagram et tiktok acceptés. |
+| Compte TikTok | Reste **volontairement personnel** (`tchikibalianos`). Décision du 19 septembre : pas de rebrand, pas de tournage. La ligne « à convertir » était caduque. |
 
 ---
 
-## ✅ En place et vérifié
+## ✅ En place
 
 | Automatisation | Rythme | État |
 |---|---|---|
-| `keep-alive` | 6 h | ✅ les deux bases Supabase, 59 passages |
-| `annonce-discord` | mardi, vendredi | ✅ routé par TCG, posts réels vérifiés |
-| `annonce-buffer` | mardi, vendredi | ✅ X, Instagram, TikTok |
-| `cote-hebdo` | jeudi | ✅ a tourné le 27/08, podium archivé |
-| `newsletter-hebdo` | samedi 13h37 | ✅ 2 digests créés et envoyés |
-
-La chaîne complète **cote-hebdo → archivage du podium → newsletter** a
-fonctionné : le digest du 29 août contenait bien les trois cartes du
-marché japonais relevées le 27.
+| `keep-alive` | 6 h | ✅ les deux bases Supabase |
+| `annonce-discord` | mardi, vendredi | ✅ routé par TCG |
+| `annonce-buffer` | mardi, vendredi | ✅ après correctif des vignettes |
+| `cote-hebdo` | jeudi | ✅ marché international, japonais suspendu |
+| `newsletter-hebdo` | samedi 13h37 | ✅ digests envoyés |
+| `publie-articles` | quotidien 05:12 UTC | ✅ après passage en Node 22 |
 
 Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien
-social (URL absolue + vignette 1200×630), flux RSS, vignettes par article,
-balisage FAQPage, `llms.txt`, robots.txt ouvert aux moteurs IA, traduction
-des cartes Dresseur japonaises, recoupement des prix contre TCGplayer.
+social, flux RSS, vignettes par article, balisage FAQPage, `llms.txt`,
+robots.txt ouvert aux moteurs IA, traduction des cartes Dresseur japonaises,
+recoupement des prix contre TCGplayer.
