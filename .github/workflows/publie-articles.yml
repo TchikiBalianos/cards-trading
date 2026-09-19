@@ -48,9 +48,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      # ⚠️ Node 22 minimum, ne pas redescendre.
+      #
+      # Astro 6.3.1 exige « >=22.12.0 ». Sur Node 20, `npm run build` sort en
+      # erreur avant même de compiler, et l'étape de publication s'arrête là.
+      #
+      # C'est ce qui a cassé la publication du blog pendant HUIT jours :
+      # du 11 au 18 septembre 2026, chaque passage quotidien a echoue sur
+      # cette seule ligne, et l'article Star Wars du 10 septembre est reste
+      # en brouillon sans que rien ne le signale. Le controle local passait,
+      # lui, parce que le poste tourne deja en Node 22.
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Installer les dépendances
         run: npm ci --omit=dev --ignore-scripts=false

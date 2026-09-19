@@ -61,7 +61,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       # Aucune dépendance npm : le script n'utilise que `git`, `fetch` et
       # les modules natifs de Node. Pas de `npm ci`, donc pas d'install à
