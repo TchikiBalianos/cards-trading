@@ -35,6 +35,11 @@ const VARIATIONS = args.includes('--variations');
    grossit sans servir — et il est committé à chaque fois. */
 const RELEVES_MAX = 26;
 
+/* Au-dela, on soupconne une donnee aberrante plutot qu un vrai mouvement,
+   dans les deux sens. La fenetre par defaut etant de 4 relevés, soit un
+   mois, 150 % laisse largement passer une vraie flambee de collection. */
+const VARIATION_MAX_PLAUSIBLE = 150;
+
 /* Sous ce prix une variation ne veut rien dire, comme pour le calcul
    Pokémon : passer de 0,10 à 0,15 $ fait « +50 % » sans intérêt. */
 const PRIX_PLANCHER = 2;
@@ -84,10 +89,38 @@ async function releverOnePiece() {
     for (const c of liste) {
       const prix = Number(c.market_price);
       if (!Number.isFinite(prix) || prix < PRIX_PLANCHER) continue;
-      /* card_set_id identifie la carte de façon stable d'un relevé à
-         l'autre, contrairement au nom qui peut varier. */
-      const id = c.card_set_id || `${set}-${c.card_name}`;
-      cartes[id] = { nom: c.card_name, set: c.set_name || set, prix, releve: c.date_scraped };
+
+      /*
+        ⚠️ `card_set_id` n'identifie PAS une impression.
+
+        Sous un même « OP17-022 », l'API renvoie trois cartes : la version
+        de base à 3,53 $, l'Alternate Art à 33,31 $ et la Manga à
+        1502,19 $. Un facteur 425. Sur OP-17, 32 identifiants sur 130
+        portent ainsi plusieurs variantes.
+
+        Indexer là-dessus écrasait silencieusement : le prix conservé était
+        celui de la DERNIÈRE ligne renvoyée, dont l'ordre n'est pas garanti
+        par l'API. Sur les 227 clés archivées, 150 étaient exposées et 6
+        avaient déjà basculé d'une variante à l'autre en cours
+        d'historique, produisant des variations calculées absurdes
+        (+35 736 % sur une carte qui n'avait pas bougé).
+
+        `card_image_id` porte le suffixe de variante (« OP17-022_p1 ») et
+        sépare 24 des 32 cas. Pour les 8 qui collisionnent encore, on
+        ajoute le nom, qui porte la variante entre parenthèses.
+      */
+      let id = c.card_image_id || c.card_set_id || `${set}-${c.card_name}`;
+      if (cartes[id] && cartes[id].nom !== c.card_name) id = `${id}#${c.card_name}`;
+
+      cartes[id] = {
+        nom: c.card_name,
+        set: c.set_name || set,
+        prix,
+        releve: c.date_scraped,
+        /* Conservé pour la migration : permet de repérer les anciennes
+           entrées indexées sur l'identifiant sans variante. */
+        base: c.card_set_id || null,
+      };
     }
   }
   return cartes;
@@ -131,16 +164,43 @@ function calculerVariations(archive, semaines = 4) {
   const cible = dates[Math.max(0, dates.length - 1 - semaines)];
 
   const mouvements = [];
+  const aberrantes = [];
   for (const [id, c] of Object.entries(archive.cartes)) {
     const avant = c.historique?.[cible];
     const apres = c.historique?.[derniere];
     if (!avant || !apres || avant < PRIX_PLANCHER) continue;
     const variation = ((apres - avant) / avant) * 100;
     if (!Number.isFinite(variation) || Math.abs(variation) < 10) continue;
+
+    /*
+      Plafond de plausibilité, dans les deux sens.
+
+      Cette fonction était la SEULE des trois à ne pas en avoir, alors que
+      cote-hebdo.mjs et cote-one-piece.mjs en portent un depuis l'origine.
+      C'est ce qui laissait sortir un « +35 736 % » en tête de classement,
+      produit par une bascule de variante et non par le marché.
+
+      La cause est traitée en amont (clé d'indexation corrigée), mais le
+      plafond reste : un garde-fou qui n'existe que tant que le défaut
+      qu'il couvre est connu ne sert à rien. Même famille que les échecs
+      silencieux déjà consignés dans CLAUDE.md.
+    */
+    if (Math.abs(variation) > VARIATION_MAX_PLAUSIBLE) {
+      aberrantes.push({ id, nom: c.nom, avant, apres, variation: Math.round(variation) });
+      continue;
+    }
+
     mouvements.push({ id, nom: c.nom, set: c.set, avant, apres, variation: Math.round(variation) });
   }
   mouvements.sort((a, b) => b.variation - a.variation);
-  return { pret: true, de: cible, a: derniere, ecart: dates.length - 1, mouvements };
+  if (aberrantes.length) {
+    console.warn(
+      `⚠️  ${aberrantes.length} variation(s) écartée(s) comme aberrante(s), ` +
+      `au-delà de ${VARIATION_MAX_PLAUSIBLE} % : ` +
+      aberrantes.slice(0, 3).map((a) => `${a.nom} ${a.variation} %`).join(', ')
+    );
+  }
+  return { pret: true, de: cible, a: derniere, ecart: dates.length - 1, mouvements, aberrantes };
 }
 
 /* ── Exécution ─────────────────────────────────────────── */
@@ -184,8 +244,50 @@ if (nb === 0) {
 }
 
 const auj = new Date().toISOString().slice(0, 10);
+
+/*
+  Migration unique de l'indexation, le 19 septembre 2026.
+
+  Les entrées écrites sous l'ancienne clé (`card_set_id`, sans variante)
+  mélangent plusieurs impressions : leur historique n'est pas réparable,
+  les valeurs passées n'étant pas réattribuables à coup sûr. On les
+  supprime PLUTÔT que de les laisser continuer sous la clé de la variante
+  de base, ce qui perpétuerait l'erreur en la rendant invisible.
+
+  La purge est chirurgicale : seules disparaissent les séries dont
+  l'identifiant porte effectivement plusieurs variantes dans le relevé du
+  jour. Les cartes sans variante gardent tout leur historique, leur clé
+  étant inchangée (pour elles, card_image_id vaut card_set_id).
+*/
+const SCHEMA_CLES = 2;
+if (archive.schemaCles !== SCHEMA_CLES) {
+  const parBase = {};
+  for (const c of Object.values(cartes)) {
+    if (c.base) parBase[c.base] = (parBase[c.base] || 0) + 1;
+  }
+  const ambigus = Object.entries(parBase).filter(([, n]) => n > 1).map(([b]) => b);
+
+  let purgees = 0;
+  for (const base of ambigus) {
+    if (archive.cartes[base]) { delete archive.cartes[base]; purgees++; }
+  }
+  archive.schemaCles = SCHEMA_CLES;
+  console.log(
+    `Migration des clés : ${ambigus.length} identifiant(s) à variantes multiples, ` +
+    `${purgees} série(s) d'historique purgée(s) car non réattribuable(s).`
+  );
+}
+
 for (const [id, c] of Object.entries(cartes)) {
-  if (!archive.cartes[id]) archive.cartes[id] = { nom: c.nom, set: c.set, historique: {} };
+  if (!archive.cartes[id]) {
+    archive.cartes[id] = { nom: c.nom, set: c.set, historique: {} };
+  } else {
+    /* Le nom n'est plus figé à la première apparition : sans cette mise à
+       jour, une bascule de variante restait invisible dans l'archive, ce
+       qui est exactement ce qui a caché le défaut pendant cinq semaines. */
+    archive.cartes[id].nom = c.nom;
+    archive.cartes[id].set = c.set;
+  }
   archive.cartes[id].historique[auj] = c.prix;
 }
 
