@@ -99,8 +99,12 @@ le fil on a trouvé deux défauts plus graves derrière.
   donc elle reste inutilement dépendante de TCGdex au moment de publier.
 - **`--dry-run` écrit une vraie vignette** dans `public/assets/social/`, ce
   qui contredit son contrat.
-- **Le plancher de prix est à 1,50 €**, ce qui laisse passer des cartes à
-  1,72 € à côté de cartes à 435 €. Question éditoriale, pas technique.
+- ~~Plancher de prix à 1,50 €~~ **tranché le 19 septembre : relevé à 10 €.**
+  Sur l'international, la carte à 1,72 € cède la place à une à 139 €, et les
+  trois montants deviennent cohérents. Contrepartie constatée aussitôt sur le
+  japonais, une seule carte retenue sur 400 : le script exige désormais
+  **trois cartes pour publier**, et se tait sinon, comme il le faisait déjà
+  pour un podium vide.
 - **Le marché japonais reste suspendu** dans le workflow. Les garde-fous sont
   posés et éprouvés, mais aucun passage réel n'a encore eu lieu : à rouvrir
   après un déclenchement manuel concluant.
