@@ -156,15 +156,28 @@ async function vignetteCote() {
   const L = 1080, H = 1080, marge = 90;
   const lignes = donnees.podium.map((c, i) => {
     const y = 430 + i * 165;
+    /*
+      Troisième ligne : extension en clair et référence complète, avec le
+      dénominateur. La place existe (166 px sous le dernier bloc, 81 px
+      entre deux entrées) et, contrairement au texte des réseaux, rien ici
+      n'est compté.
+
+      Le dénominateur porte un signal éditorial : « 286/217 » veut dire
+      carte secrète. Deux des trois cartes du podium du 17 septembre en
+      étaient, et rien ne le disait.
+    */
+    const situe = [c.set, c.refLongue].filter(Boolean).join(' · ');
     return `
   <text x="${marge}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="46"
         font-weight="700" fill="${BLEU}">${i + 1}</text>
   <text x="${marge + 52}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="40"
-        font-weight="700" fill="#ffffff">${echapper(court(nomCarte(c), 26))}</text>
+        font-weight="700" fill="#ffffff">${echapper(court(nomCarte(c), 36))}</text>
   <text x="${marge + 52}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
         fill="#ffffff" fill-opacity="0.72">${echapper(euros(c.actuel))}</text>
-  <text x="${marge + 200}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
-        font-weight="700" fill="#22c55e">+${c.variation} %</text>`;
+  <text x="${marge + 240}" y="${y + 46}" font-family="Arial, Helvetica, sans-serif" font-size="32"
+        font-weight="700" fill="#22c55e">+${c.variation} %</text>${situe ? `
+  <text x="${marge + 52}" y="${y + 84}" font-family="Arial, Helvetica, sans-serif" font-size="26"
+        fill="#ffffff" fill-opacity="0.5">${echapper(court(situe, 46))}</text>` : ''}`;
   }).join('\n');
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
@@ -222,17 +235,103 @@ if (PHASE === 'preparer') {
 
 /* ── 3. Textes ─────────────────────────────────────────── */
 
-const classement = donnees.podium
-  .map((c, i) => `${i + 1}. ${nomCarte(c)} — ${euros(c.actuel)} (+${c.variation} %)`)
+/*
+  Référence d'impression, accolée au nom : « (ASC 286) ».
+
+  C'est ce qui rend la cote vérifiable, et ce n'est pas une convention de
+  marchand : cette référence est imprimée en bas de la carte française
+  (ligne « [I] [ASC FR] 286/217 »), et Cardmarket titre lui-même
+  « Dracaufeu ex (OBF 125) » sur son propre site français. Le lecteur
+  retrouve donc la carte exacte sans rien avoir à apprendre.
+
+  Sans elle, le podium du 17 septembre annonçait « Dracaufeu 427,58 € »
+  pour un Méga-Dracaufeu Y-ex en illustration spéciale : un prix qui
+  paraissait aberrant faute de dire de quelle carte il s'agissait.
+
+  Repli silencieux si la référence manque (podiums archivés avant le
+  19 septembre 2026, marché One Piece) : le nom seul vaut mieux qu'une
+  parenthèse vide.
+*/
+const reference = (c) => (c.refCourte ? ` (${c.refCourte})` : '');
+
+/* Séparateur : point médian, comme en pied de vignette. La convention
+   typographique du projet écarte le tiret cadratin. */
+const SEP = ' · ';
+
+const ligne = (c, i, avecSet) =>
+  `${i + 1}. ${nomCarte(c)}${avecSet && c.set ? ', ' + c.set : ''}${reference(c)}` +
+  `${SEP}${euros(c.actuel)} (+${c.variation} %)`;
+
+const classementRiche = donnees.podium.map((c, i) => ligne(c, i, true)).join('\n');
+const classementCourt = donnees.podium.map((c, i) => ligne(c, i, false)).join('\n');
+const classementSobre = donnees.podium
+  .map((c, i) => `${i + 1}. ${nomCarte(c)}${SEP}${euros(c.actuel)} (+${c.variation} %)`)
   .join('\n');
+
+/*
+  Poids d'un texte selon les règles de X, et non son nombre de caractères.
+
+  Une URL compte 23 quelle que soit sa longueur, et les caractères japonais
+  comme les emoji comptent DOUBLE : « ニンフィアGX » pèse 12 et non 6. Le
+  symbole « € » et les points de suspension comptent double eux aussi.
+
+  Sans cette mesure, une semaine japonaise paraît tenir alors qu'elle
+  dépasse. Le post serait alors rejeté par Buffer et X perdu pour la
+  semaine, alors que Discord et Instagram seraient déjà partis.
+*/
+const LIMITE_X = 280;
+function poidsX(texte) {
+  let poids = 0;
+  const sansUrl = String(texte).replace(/https?:\/\/\S+/g, () => { poids += 23; return ''; });
+  for (const ch of sansUrl) {
+    const c = ch.codePointAt(0);
+    const large =
+      c === 0x20ac || c === 0x2026 ||
+      (c >= 0x1100 &&
+        (c <= 0x115f || (c >= 0x2e80 && c <= 0xa4cf) || (c >= 0xac00 && c <= 0xd7a3) ||
+         (c >= 0xf900 && c <= 0xfaff) || (c >= 0x1f300 && c <= 0x1faff)));
+    poids += large ? 2 : 1;
+  }
+  return poids;
+}
 
 const lien = `${SITE}/?utm_source=`;
 const accroche = `📈 Top des hausses de la semaine — ${titreMarche.toLowerCase()}`;
-const socle = `${accroche}\n\n${classement}\n\n${mentionSource}.`;
+const socle = `${accroche}\n\n${classementRiche}\n\n${mentionSource}.`;
+
+/*
+  X est le seul réseau contraint : 280 caractères, contre 2000 sur Discord
+  et 2200 sur Instagram et TikTok. On y retient donc la forme la plus riche
+  qui TIENNE, mesurée et non supposée, et on le journalise quand il faut se
+  rabattre. Jamais de troncature muette : ce projet en a déjà payé le prix.
+*/
+const texteX = (cl) => `${accroche}\n\n${cl}\n\n${lien}x\n\n#pokemontcg #cartespokemon`;
+const candidatsX = [
+  ['riche', classementRiche],
+  ['courte', classementCourt],
+  ['sobre', classementSobre],
+];
+const [formeX, classementX] =
+  candidatsX.find(([, cl]) => poidsX(texteX(cl)) <= LIMITE_X) ||
+  candidatsX[candidatsX.length - 1];
+
+if (formeX !== 'riche') {
+  console.warn(
+    `::warning::X : forme « ${formeX} » retenue (${poidsX(texteX(classementX))}/${LIMITE_X}), ` +
+    `la forme riche pesait ${poidsX(texteX(classementRiche))}.`
+  );
+}
+if (poidsX(texteX(classementX)) > LIMITE_X) {
+  console.error(
+    `::error::Même la forme sobre dépasse la limite de X ` +
+    `(${poidsX(texteX(classementX))}/${LIMITE_X}). Rien n'est envoyé sur X.`
+  );
+  process.exit(1);
+}
 
 const textes = {
   discord: `${socle}\n\nLa bêta Cards-Trading ouvre bientôt : <${lien}discord#beta>`,
-  twitter: `${accroche}\n\n${classement}\n\n${lien}x\n\n#pokemontcg #cartespokemon`,
+  twitter: texteX(classementX),
   instagram: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
   tiktok: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
 };

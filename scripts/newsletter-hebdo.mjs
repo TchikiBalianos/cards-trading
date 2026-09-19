@@ -149,6 +149,21 @@ function ligneArticle(a) {
         </tr>`;
 }
 
+/*
+  Situe la carte : extension puis référence d’impression complète.
+
+  La newsletter lit le MÊME archive que le post du jeudi
+  (data/cotes/podiums-hebdo.json). Sans ce rappel, l’email du samedi
+  annoncerait « Héros Transcendants » quand le post du jeudi annonce
+  « Héros Transcendants · ASC 286/217 », pour la même carte.
+
+  `refLongue` est absent des podiums archivés avant le 19 septembre 2026 :
+  on retombe alors sur la seule extension, comme avant.
+*/
+function situeCarte(c) {
+  return [c.set, c.refLongue].filter(Boolean).join(' · ');
+}
+
 function ligneCarte(c) {
   return `
               <tr>
@@ -157,7 +172,7 @@ function ligneCarte(c) {
                     <tr>
                       <td style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#e6ebf5;">
                         <strong>${echapper(c.affichage || c.nomFr || c.nom)}</strong><br>
-                        <span style="font-size:12px; color:#7c879c;">${echapper(c.set)}</span>
+                        <span style="font-size:12px; color:#7c879c;">${echapper(situeCarte(c))}</span>
                       </td>
                       <td align="right" style="font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; color:#3ddc84; white-space:nowrap;">+${c.variation} %</td>
                     </tr>
@@ -280,7 +295,7 @@ function composerTexte(articles, podiumEntry) {
   if (podiumEntry?.podium?.length) {
     lignes.push('Hausses de la semaine :');
     for (const c of podiumEntry.podium) {
-      lignes.push(`- ${c.affichage || c.nomFr || c.nom} (${c.set}) : +${c.variation} %`);
+      lignes.push(`- ${c.affichage || c.nomFr || c.nom} (${situeCarte(c)}) : +${c.variation} %`);
     }
     lignes.push('');
   }

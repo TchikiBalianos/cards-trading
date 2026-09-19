@@ -161,6 +161,17 @@ function examiner(carte, cm, tp) {
     reference: Math.round(reference * 100) / 100,
     variation: Math.round(variation),
     image: carte.image ? `${carte.image}/high.png` : null,
+    /* Numéro de collection imprimé sur la carte. Déjà dans la réponse de
+       /cards/{id}, jeté jusqu'ici : sans lui, « Méga-Zygarde-ex » désigne
+       cinq impressions de 0,69 € à 110,18 €, dont trois dans la MÊME
+       extension. Le nom et l'extension ne suffisent donc pas. */
+    localId: carte.localId ?? null,
+    /* Sert à savoir si la variante est ambiguë. Une seule entrée signifie
+       qu'il n'y a rien à lever ; plusieurs signifient que le prix publié
+       porte sur l'une d'elles sans qu'on puisse la nommer (TCGdex
+       n'étiquette pas les sous-variantes : trois « Reverse » d'une même
+       carte sont indiscernables). */
+    variantesConnues: Array.isArray(carte.variants_detailed) ? carte.variants_detailed.length : null,
     maj: cm.updated,
     recoupeTcgplayer: recoupe,
     /* Conservés pour le rapprochement des cartes Dresseur japonaises :
@@ -210,7 +221,30 @@ for (const s of recents) {
     }
     examinees++;
     const verdict = examiner(carte, carte.pricing?.cardmarket, carte.pricing?.tcgplayer);
-    if (verdict.ok) retenues.push({ ...verdict, set: s.name });
+    if (verdict.ok) {
+      retenues.push({
+        ...verdict,
+        set: s.name,
+        setId: s.id,
+        /*
+          Code d'extension imprimé (« PAF », « POR »). Il vit sur /sets/{id},
+          pas sur la carte, et `detail` est déjà en main : coût réseau nul.
+
+          Repli sur l'identifiant TCGdex : `abbreviation.official` est absent
+          sur les 25 sets japonais, où l'id fait office de code (« SM3p »),
+          et sur quelques sets internationaux (swshp, Pokémon Pocket).
+
+          `abbreviation.localized` (le code français) est VOLONTAIREMENT
+          ignoré : il manque sur la moitié des sets récents, dont me01, me02,
+          me04 et me05, c'est-à-dire là où ce classement se joue.
+        */
+        setCode: detail.abbreviation?.official || s.id,
+        /* Dénominateur imprimé. `cardCount.total` compte les variantes et
+           peut DÉPASSER le total officiel (me02.5 : 295 contre 318) : c'est
+           `official` qui figure sur la carte. */
+        setTotal: detail.cardCount?.official ?? null,
+      });
+    }
     else rejets[verdict.motif.replace(/\(.*\)/, '').trim()] = (rejets[verdict.motif.replace(/\(.*\)/, '').trim()] || 0) + 1;
   }
 }
@@ -350,6 +384,51 @@ for (const c of retenues) {
      le nom officiel de la carte — accoler le japonais n'apporterait
      qu'une ligne illisible. */
   c.affichage = !fr || enLatin ? c.nom : estDresseur ? fr : `${fr} — ${c.nom}`;
+
+  /*
+    Référence courte de l'impression : « POR 120/088 ».
+
+    C'est ce qui rend la cote VÉRIFIABLE. Sans elle, un lecteur ne peut pas
+    retrouver la carte dont on annonce la hausse, et le prix paraît
+    arbitraire : le podium du 17 septembre annonçait « Dracaufeu 427,58 € »
+    pour un Méga-Dracaufeu Y-ex en illustration spéciale.
+
+    Le dénominateur est aligné sur la largeur du numéro pour respecter la
+    typographie imprimée (« 012/091 » et non « 012/91 »).
+  */
+  if (c.localId != null && c.setCode) {
+    const num = String(c.localId);
+
+    /*
+      Forme courte, « ASC 286 » : exactement ce qui est imprimé en bas de la
+      carte française (ligne « [I] [ASC FR] 286/217 »), et exactement le
+      titre que Cardmarket emploie sur son propre site français
+      (« Dracaufeu ex (OBF 125) »). Aucun apprentissage à demander au
+      lecteur, et la cote devient vérifiable par copier-coller.
+
+      C'est aussi la seule forme qui tienne sur X en pire cas : mesuré sur
+      les 228 noms de la fenêtre balayée, la longueur médiane est de 10
+      caractères mais le 99e centile monte à 27. La forme avec
+      dénominateur n'en couvre que 90 %.
+    */
+    c.refCourte = `${c.setCode} ${num}`;
+
+    /*
+      Forme complète pour la vignette, où la place ne manque pas. Le
+      dénominateur porte un signal éditorial réel : « 286/217 » signifie
+      carte secrète, et deux des trois cartes du podium du 17 septembre en
+      étaient.
+
+      Omis sur les promos, qui n'en portent PAS sur la carte (« SVP FR 206 »,
+      sans rien d'autre) : l'inventer serait une erreur factuelle.
+    */
+    const total = c.setTotal ? String(c.setTotal).padStart(num.length, '0') : null;
+    c.refLongue = total ? `${c.setCode} ${num}/${total}` : c.refCourte;
+  } else {
+    c.refCourte = null;
+    c.refLongue = null;
+  }
+
   podium.push(c);
 }
 
@@ -369,7 +448,7 @@ if (EN_JSON) {
   } else {
     console.log('\nTop des hausses :');
     for (const [i, c] of podium.entries()) {
-      console.log(`  ${i + 1}. ${c.affichage} (${c.set}) — ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €)`);
+      console.log(`  ${i + 1}. ${c.affichage} — ${c.set} ${c.refLongue || '?'} — ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €)`);
     }
   }
 }
