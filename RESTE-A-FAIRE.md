@@ -136,24 +136,46 @@ conformes, 4 seuls de leur TCG donc non concernés, 3 sans lien. Le premier
 article d'un jeu n'est jamais bloqué, sans quoi l'ouverture de chaque
 nouveau TCG serait impossible.
 
-**Volet 3, pages hub.** Six pages en ligne (`/tcg/pokemon/` et consorts),
+**Volet 3, pages hub.** Sept pages en ligne (`/tcg/pokemon/` et consorts),
 présentes au sitemap, avec l'appel à rejoindre la bêta et une navigation
-par jeu depuis l'index du blog. `star-wars` n'existe pas encore : son
-unique article est en brouillon, et la page apparaîtra d'elle-même à sa
-publication.
+par jeu depuis l'index du blog.
 
-**Ce qui reste sur ce chantier :**
+`star-wars` a rejoint les autres le 19 septembre, à la publication de son
+article : la page est apparue d'elle-même, sans rien faire.
 
-- **La rédaction du vendredi dépend d'une tâche Claude Desktop**, hors
-  dépôt, qui ne tourne que si l'application est ouverte. Rendre le créneau
-  obligatoire dans le calendrier ne suffit pas à faire écrire l'article :
-  la consigne de cette tâche doit être mise à jour.
-- **Trois anciens articles n'ont pas de lien vers leur propre TCG**
-  (`dragon-ball-fusion-world-ultrabout-2026`, `guide-demarrage-pokemon-tcg`,
-  `one-piece-card-game-revolution-tcg`). Déjà publiés, donc jamais
-  réexaminés par le contrôle : reliquat à rattraper à la main, pas blocage.
+**Ce qui restait sur ce chantier, traité le 20 septembre :**
+
+- **Le vendredi ne s'écrivait pas, et ce n'était pas le mot « optionnel ».**
+  Les deux routines Claude Desktop sortaient en une minute à leur étape 0,
+  qui s'arrêtait dès qu'une branche `blog/*` portait la catégorie de la
+  semaine. Or cinq branches fusionnées n'avaient jamais été supprimées, et
+  elles couvraient quatre des cinq catégories du vendredi. Trois créneaux
+  perdus (mardi 15, vendredis 11 et 18 septembre) sans aucun signal : les
+  routines rendaient compte d'un arrêt légitime. Les branches sont
+  supprimées, et les deux consignes ignorent désormais toute branche dont
+  l'article est déjà sur `main`.
+- **Les trois articles fondateurs sont reliés à leur propre TCG**
+  (`a422e41`). Un lien contextuel chacun, placé dans le corps du texte et
+  non dans la liste de fin, dont l'intitulé annonce « les autres TCG ».
+- **Le mini sommaire manquait sur 11 des 15 articles publiés.** Le correctif
+  attendait depuis le 2 septembre sur `blog/sommaires-articles`, invisible
+  pour `alerte-relecture` qui ne cherche que des brouillons, jamais une
+  correction d'articles déjà en ligne. Fusionné, avec `scripts/sommaire.mjs`
+  que les deux consignes invoquaient déjà sans qu'il existe sur `main`.
+- **Une date fausse était en production** sur l'article du 30e Anniversaire :
+  PokéBox annoncée au 4 décembre alors qu'elle est sortie le 16 septembre,
+  tripacks au 13 novembre au lieu du 16 septembre. Correctif fusionné depuis
+  `blog/fix-30e-anniversaire-calendrier`, en attente depuis le 17 septembre.
 - **16 tests** couvrent le calendrier et les critères de publication
   (`npm test`, runner intégré de Node, aucune dépendance ajoutée).
+
+Corpus vérifié article par article avec `defauts()`, sur les critères réels
+de publication : **15 articles publiés, 0 défaut bloquant.**
+
+Trois branches restent sur le dépôt (`blog/op17-scelle-flambe-...`,
+`blog/pokemon-storm-emeralda-...`, `blog/star-wars-unlimited-...`). Leurs
+articles sont en ligne dans une version plus récente : elles ne bloquent
+plus rien depuis le correctif de consigne, mais elles ne servent à rien.
 
 ---
 

@@ -539,8 +539,8 @@ node scripts/prochain-article.mjs 8   # les 8 prochaines semaines
 
 - **Mardi** — article obligatoire, alternant **Pokémon / One Piece**
   → 2 Pokémon et 2 One Piece par mois
-- **Vendredi** — article optionnel, rotation sur Magic, Yu-Gi-Oh!, Lorcana,
-  Dragon Ball, Star Wars
+- **Vendredi** : article obligatoire depuis le 19 septembre 2026, rotation
+  sur Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball, Star Wars
 
 > La constante `REF` du script (lundi 27 juillet 2026) fixe l'origine de
 > l'alternance. **Ne jamais la modifier** : tout le calendrier, passé comme
@@ -553,3 +553,31 @@ toujours `draft: true` et poussent sur une **branche dédiée**, jamais sur
 
 Le schéma du frontmatter (`src/content.config.ts`) est strict : une
 catégorie hors de l'énumération casse le build.
+
+### Supprimer la branche après fusion, sans quoi la routine se bloque
+
+Les deux tâches de rédaction commencent par lister les branches `blog/*`
+distantes et s'arrêtent si l'une porte la catégorie de la semaine, pour
+ne pas écrire un doublon. Une branche fusionnée mais jamais supprimée
+déclenche ce garde-fou à vide.
+
+Cinq d'entre elles traînaient sur le dépôt en septembre 2026, et elles
+couvraient quatre des cinq catégories du vendredi. Trois créneaux
+consécutifs sont partis en fumée (mardi 15, vendredis 11 et 18) : la
+routine démarrait, sortait en une minute, et rendait compte d'un arrêt
+parfaitement légitime. Aucune alerte ne pouvait le voir, puisque rien
+n'avait échoué. Même famille que le `return 200` inconditionnel de mai
+2026 : le mécanisme de sécurité déclenche, et son déclenchement ressemble
+à un succès.
+
+**Le symptôme qui trahit ce cas est la durée du passage.** Une rédaction
+dure des minutes, souvent des heures. Un passage à soixante-dix secondes
+n'a rien écrit, quoi qu'en dise son compte-rendu. C'est la première chose
+à regarder quand un article manque sans qu'aucune alerte ne soit partie.
+
+Les consignes ignorent désormais toute branche dont l'article est déjà
+sur `main` (`git cat-file -e origin/main:src/content/blog/<slug>.md`),
+mais la vraie hygiène reste de supprimer la branche à la fusion.
+
+⚠️ Avant de supprimer, confirmer que l'article répond 200 en production,
+pas seulement qu'il est présent sur `main`.
