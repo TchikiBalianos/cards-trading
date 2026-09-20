@@ -178,15 +178,15 @@ article : la page est apparue d'elle-même, sans rien faire.
 Corpus vérifié article par article avec `defauts()`, sur les critères réels
 de publication : **15 articles publiés, 0 défaut bloquant.**
 
-Trois branches restent sur le dépôt (`blog/op17-scelle-flambe-...`,
-`blog/pokemon-storm-emeralda-...`, `blog/star-wars-unlimited-...`) : ce sont les
-brouillons d'origine d'articles aujourd'hui publiés sur `main` dans une version
-plus récente. Julian les relit avant de décider de les supprimer.
+Les trois branches périmées (`blog/op17-scelle-flambe-...`,
+`blog/pokemon-storm-emeralda-...`, `blog/star-wars-unlimited-...`) ont été
+supprimées le 20 septembre, sur décision de Julian, après vérification que
+chaque article est publié sur `main` (`draft: false`) et en production (200,
+titre identique). SHA de secours : `55d5f18`, `8e277f2` et `26a2047`.
 
-Vérifié le 20 septembre : la branche Star Wars portait `logo-starwars.png`,
+Leur examen avait révélé que la branche Star Wars portait `logo-starwars.png`,
 jamais fusionné, donc absent de la production (image de l'article et de la
-page `/tcg/star-wars/` en 404). Restauré sur `main`. Les deux autres ne
-portent rien d'autre que leur article.
+page `/tcg/star-wars/` en 404). Restauré sur `main`.
 
 ---
 
@@ -216,6 +216,12 @@ Quatre produits n'ont pas de date certaine en France, et l'article
   officielle de septembre.
 
 Bundle et Mini-Tins (2 octobre) sont à vérifier en rayon ce jour-là.
+
+Cette relecture est faite chaque lundi à 8h par la tâche planifiée
+`veille-calendrier-pokemon-30-ans` (de septembre à décembre 2026). Elle ne
+modifie rien : elle signale un changement et Julian décide. Elle se
+désactive d'elle-même à partir du 1er janvier 2027. Le résultat se lit dans
+le volet des exécutions de l'app, et une notification part si une date change.
 
 À relire périodiquement : les deux pages de Pokémon France (« produits du
 JCC qui sortiront en septembre 2026 », puis les pages équivalentes des mois
