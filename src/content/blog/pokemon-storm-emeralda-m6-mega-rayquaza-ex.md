@@ -9,6 +9,20 @@ heroImage: "/assets/img/logo-pokemon.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Un mois de jeu au Japon, et deux mois d'attente pour nous](#un-mois-de-jeu-au-japon-et-deux-mois-dattente-pour-nous)
+- [Méga-Rayquaza ex : la carte que tout le monde regarde en boucle](#méga-rayquaza-ex--la-carte-que-tout-le-monde-regarde-en-boucle)
+- [Les autres Méga-Évolution ex de Storm Emeralda](#les-autres-méga-évolution-ex-de-storm-emeralda)
+- [Les Stadiums Legendary : la vraie nouveauté de règles](#les-stadiums-legendary--la-vraie-nouveauté-de-règles)
+- [Impact sur le méta : une carte qui récompense l'étalement](#impact-sur-le-méta--une-carte-qui-récompense-létalement)
+- [Impact sur la collection : une seule MUR dans tout le set](#impact-sur-la-collection--une-seule-mur-dans-tout-le-set)
+- [Questions fréquentes](#questions-fréquentes)
+- [Explorez d'autres univers TCG](#explorez-dautres-univers-tcg)
+- [À vous de jouer](#à-vous-de-jouer)
+<!-- /sommaire -->
+
 ## Un mois de jeu au Japon, et deux mois d'attente pour nous
 
 Méga-Rayquaza ex tourne sur les tables japonaises depuis le **31 juillet 2026**, date de sortie de l'extension **M6 Storm Emeralda** (ストームエメラルダ). Les cartes arriveront en français dans l'extension **Delta Reign (ME06)** le **6 novembre 2026**. Deux mois d'écart, pendant lesquels le Japon défriche un format que nous n'avons pas encore.

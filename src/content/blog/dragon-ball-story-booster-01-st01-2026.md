@@ -9,6 +9,21 @@ heroImage: "/assets/img/logo-dbz.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Un booster qui ne cherche pas à changer le méta](#un-booster-qui-ne-cherche-pas-à-changer-le-méta)
+- [Story Booster : la troisième ligne de produits Fusion World](#story-booster--la-troisième-ligne-de-produits-fusion-world)
+- [Ce que contient réellement ST01](#ce-que-contient-réellement-st01)
+- [Trois nouveaux Leaders bâtis autour du Ki](#trois-nouveaux-leaders-bâtis-autour-du-ki)
+- [Le signal envoyé par le marché japonais](#le-signal-envoyé-par-le-marché-japonais)
+- [Ce que cela change concrètement pour un acheteur en France](#ce-que-cela-change-concrètement-pour-un-acheteur-en-france)
+- [Le calendrier derrière ST01](#le-calendrier-derrière-st01)
+- [Questions fréquentes](#questions-fréquentes)
+- [Explorez d'autres univers TCG](#explorez-dautres-univers-tcg)
+- [En résumé](#en-résumé)
+<!-- /sommaire -->
+
 ## Un booster qui ne cherche pas à changer le méta
 
 Le **STORY BOOSTER 01 [ST01]**, que Bandai France désigne sous le nom de **Booster spécial HISTOIRE 01** (「ストーリーブースター01」 au Japon), arrive en version anglaise le **21 août 2026**, treize jours après sa sortie japonaise du 8 août. À première vue, c'est une extension de plus dans un calendrier déjà dense. En réalité, Bandai a fait quelque chose d'inhabituel : il a sorti un booster dont l'argument principal n'est pas la puissance des cartes, mais leur finition.

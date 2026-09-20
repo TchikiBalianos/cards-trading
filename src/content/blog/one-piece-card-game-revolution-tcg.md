@@ -9,6 +9,23 @@ heroImage: "/assets/img/logo-onepiece.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Le tsunami venu de l'Est](#le-tsunami-venu-de-lest)
+- [Comment se joue One Piece Card Game](#comment-se-joue-one-piece-card-game)
+- [Les sets emblématiques (OP01 à OP09)](#les-sets-emblématiques-op01-à-op09)
+- [Les cartes les plus chères et iconiques](#les-cartes-les-plus-chères-et-iconiques)
+- [Construction de deck : les fondamentaux](#construction-de-deck--les-fondamentaux)
+- [Le marché secondaire : spéculation et opportunités](#le-marché-secondaire--spéculation-et-opportunités)
+- [Différences clé avec Pokémon et Magic](#différences-clé-avec-pokémon-et-magic)
+- [La communauté française](#la-communauté-française)
+- [Conseils pour débuter en 2026](#conseils-pour-débuter-en-2026)
+- [Questions fréquentes](#questions-fréquentes)
+- [Découvrez les autres TCG du moment](#découvrez-les-autres-tcg-du-moment)
+- [Conclusion : OPCG sur Cards-Trading.com](#conclusion--opcg-sur-cards-tradingcom)
+<!-- /sommaire -->
+
 ## Le tsunami venu de l'Est
 
 Lancé par Bandai au Japon en juillet 2022 (le 8 juillet pour les Starter Decks initiaux), puis distribué internationalement à partir du 2 décembre 2022 avec le set Romance Dawn, le **One Piece Card Game** (OPCG) était attendu comme une simple adaptation supplémentaire d'un manga culte. Quatre ans plus tard, le constat est sans appel : c'est l'un des jeux de cartes à collectionner les plus dynamiques de la décennie. Selon les rapports financiers de Bandai Namco, le jeu a généré plusieurs centaines de millions de dollars de revenus cumulés depuis son lancement, et les premiers tirages OP01 sont devenus introuvables à des prix raisonnables. Sur le marché secondaire, certaines cartes ont vu leur valeur multipliée par 10, parfois 30, en moins de deux ans.

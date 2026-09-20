@@ -9,6 +9,23 @@ heroImage: "/assets/img/logo-dbz.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Dragon Ball : la licence qui ne lâche rien](#dragon-ball--la-licence-qui-ne-lâche-rien)
+- [Deux jeux, deux philosophies, un même héritage](#deux-jeux-deux-philosophies-un-même-héritage)
+- [Le circuit compétitif Bandai](#le-circuit-compétitif-bandai)
+- [Mécaniques uniques de Fusion World](#mécaniques-uniques-de-fusion-world)
+- [Les sets clés de Fusion World](#les-sets-clés-de-fusion-world)
+- [Les cartes les plus recherchées en 2026](#les-cartes-les-plus-recherchées-en-2026)
+- [Stratégies meta actuelles](#stratégies-meta-actuelles)
+- [Le marché secondaire : pourquoi les prix grimpent](#le-marché-secondaire--pourquoi-les-prix-grimpent)
+- [La communauté française : où jouer, où acheter](#la-communauté-française--où-jouer-où-acheter)
+- [Questions fréquentes](#questions-fréquentes)
+- [Les autres TCG à suivre en 2026](#les-autres-tcg-à-suivre-en-2026)
+- [Conclusion](#conclusion)
+<!-- /sommaire -->
+
 ## Dragon Ball : la licence qui ne lâche rien
 
 Dragon Ball, c'est plus qu'une licence : c'est une mythologie générationnelle. Depuis qu'Akira Toriyama (disparu le 1er mars 2024) a posé les premières cases du manga en 1984, Bandai cherche le format de carte à jouer capable de traduire la frénésie d'un Kamehameha ou la rupture visuelle d'une transformation Super Saiyan. En 2026, deux jeux coexistent sous la même bannière, mais avec des philosophies opposées : **Dragon Ball Super Card Game Masters** (DBS Masters) pour les vétérans techniques, et **Dragon Ball Super Card Game Fusion World** (Fusion World) pour les joueurs qui veulent du nerf, et vite. Voici un guide complet pour comprendre l'écosystème, le méta compétitif, et investir intelligemment via Cards-Trading.com.

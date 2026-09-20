@@ -9,6 +9,20 @@ heroImage: "/assets/img/logo-pokemon.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Un format qui n'a que cinq mois](#un-format-qui-na-que-cinq-mois)
+- [La couche Méga-Évolution et sa règle à trois Récompenses](#la-couche-méga-évolution-et-sa-règle-à-trois-récompenses)
+- [Les cinq decks à surveiller](#les-cinq-decks-à-surveiller)
+- [Ce que la saison a déjà montré](#ce-que-la-saison-a-déjà-montré)
+- [Ce que Worlds fait concrètement au prix de vos cartes](#ce-que-worlds-fait-concrètement-au-prix-de-vos-cartes)
+- [Suivre l'événement, et viser la saison prochaine](#suivre-lévénement-et-viser-la-saison-prochaine)
+- [Questions fréquentes](#questions-fréquentes)
+- [Explorez d'autres univers TCG](#explorez-dautres-univers-tcg)
+- [Ce qu'il faut retenir](#ce-quil-faut-retenir)
+<!-- /sommaire -->
+
 Les **Championnats du Monde Pokémon 2026** se tiennent du **vendredi 28 au dimanche 30 août** à San Francisco. Les rondes se jouent au **Moscone Center**, la grande finale au **Chase Center** le dimanche. C'est le point d'arrivée d'une saison entière de Championship Points, et le premier Worlds disputé dans le format né de la rotation d'avril.
 
 Pour un joueur français, l'intérêt dépasse le spectacle : ce que les compétiteurs vont poser sur les tables ce week-end fixe la référence de la méta jusqu'à la fin de l'année, et déplace mécaniquement les prix des cartes concernées. Voici de quoi regarder l'événement en sachant ce qui se joue.

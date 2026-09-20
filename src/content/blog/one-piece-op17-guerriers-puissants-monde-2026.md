@@ -9,6 +9,21 @@ heroImage: "/assets/img/logo-onepiece.png"
 draft: false
 ---
 
+<!-- sommaire -->
+**Au sommaire**
+
+- [Un anniversaire qui change les règles du calendrier](#un-anniversaire-qui-change-les-règles-du-calendrier)
+- [Depuis notre dernier point : où en est le format en 2026](#depuis-notre-dernier-point--où-en-est-le-format-en-2026)
+- [OP-16 : le clou du Marineford avant l'anniversaire](#op-16--le-clou-du-marineford-avant-lanniversaire)
+- [Le méta de l'été 2026, avant l'arrivée d'OP-17](#le-méta-de-lété-2026-avant-larrivée-dop-17)
+- [OP-17 : le contenu du set des 4 ans](#op-17--le-contenu-du-set-des-4-ans)
+- [Pourquoi le resserrement du calendrier compte pour les acheteurs français](#pourquoi-le-resserrement-du-calendrier-compte-pour-les-acheteurs-français)
+- [Conseils pratiques pour aborder OP-17](#conseils-pratiques-pour-aborder-op-17)
+- [Questions fréquentes](#questions-fréquentes)
+- [Découvrez les autres TCG du moment](#découvrez-les-autres-tcg-du-moment)
+- [Conclusion : une semaine à suivre de près](#conclusion--une-semaine-à-suivre-de-près)
+<!-- /sommaire -->
+
 ## Un anniversaire qui change les règles du calendrier
 
 Le **One Piece Card Game** (OPCG) souffle sa quatrième bougie cette semaine, et Bandai marque le coup avec **OP-17 « Les Guerriers les Plus Puissants au Monde »** (世界最強の戦士, *Sekai Saikyou no Senshi* en japonais). Le set sort au Japon le **22 août 2026**, avec des événements de prélancement organisés en boutique dès le 21 août, puis débarque en français et en anglais le **28 août 2026** — soit seulement **6 jours d'écart** avec la version japonaise.
