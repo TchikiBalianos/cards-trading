@@ -85,6 +85,8 @@ Avec la rotation Standard du 10 avril 2026 (sortie des cartes marquées G), le p
 
 La rotation Standard du **10 avril 2026** a profondément rebattu les cartes. Plusieurs piliers historiques (Charizard ex Obsidian Flames, Gardevoir ex Scarlet & Violet, Pidgeot ex Obsidian Flames, ainsi que Iono et Counter Catcher) sont sortis du format avec la marque G. Voici les archétypes qui dominent les premiers tournois post-rotation :
 
+Pour voir ce format à son plus haut niveau, les **[Championnats du Monde 2026 de San Francisco](/blog/pokemon-worlds-2026-san-francisco-meta-standard)** ont servi de premier test grandeur nature à ce Standard post-rotation, couche Méga-Évolution comprise.
+
 ### Dragapult ex
 
 ![Dragapult ex Pokémon TCG Twilight Masquerade — la carte centrale du deck-roi du format Standard 2026](https://images.pokemontcg.io/sv6/130_hires.png)

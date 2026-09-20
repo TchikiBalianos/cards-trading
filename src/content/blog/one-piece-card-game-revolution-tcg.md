@@ -72,6 +72,8 @@ Bandai suit un rythme effréné : un nouveau set principal tous les 3 à 4 mois,
 | OP08 | Two Legends | Septembre 2024 | Roger, Whitebeard alt arts |
 | OP09 | Emperors in the New World | Décembre 2024 | Yonko reboot, méta competitive |
 
+Le rythme ne faiblit pas : **[OP-17 « Les Guerriers les Plus Puissants au Monde »](/blog/one-piece-op17-guerriers-puissants-monde-2026)**, le set des quatre ans du jeu, est sorti le 22 août 2026 au Japon et six jours seulement après en France, signe d’un calendrier francophone qui se resserre.
+
 Chaque set introduit en moyenne 120 cartes, dont une dizaine en raretés extrêmes (Secret Rare, Manga Rare, Special Card). Les **Manga Rare** sont des illustrations directement extraites du manga, en noir et blanc avec un effet doré, et constituent le Saint Graal des collectionneurs OPCG.
 
 ![Roronoa Zoro OP06-118 Alternate Art Manga Rare — l'une des Manga Rare les plus convoitées du One Piece Card Game](https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP06/OP06-118_EN.webp)

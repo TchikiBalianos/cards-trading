@@ -89,6 +89,8 @@ Voici les premiers sets Fusion World qui ont structuré le jeu.
 
 Bandai maintient un rythme de sortie soutenu avec de nouveaux sets tous les quelques mois, chacun enrichissant le pool de cartes et redéfinissant le meta compétitif. Les sets suivants continuent d'introduire de nouveaux Leaders, mécaniques et Secret Rares très recherchées par les collectionneurs.
 
+Sorti en août 2026, le **[Story Booster 01](/blog/dragon-ball-story-booster-01-st01-2026)** rompt avec cette logique : un set court, pensé pour les collectionneurs plutôt que pour le meta, avec des finitions inédites et trois Leaders très exigeants en construction.
+
 ![Key Art officiel Blazing Aura FB-02 Dragon Ball Super Card Game Fusion World — second set Bandai mai 2024](https://dragonball.gg/wp-content/uploads/sites/36/2024/04/Fusion-World-Blazing-Aura-FB02.jpg)
 
 ## Les cartes les plus recherchées en 2026
