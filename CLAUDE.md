@@ -604,7 +604,16 @@ Hiérarchie à respecter pour toute date de sortie de produit :
    datée, puis fiche produit). Il ne donne souvent que des trimestres :
    c'est une information, pas un vide à combler avec un blog.
 3. **Fiches produit de revendeurs** (une date par référence) et feuilles de
-   distributeurs.
+   distributeurs. **La Maison du TCG** (lamaisondutcg.com), boutique dont
+   Julian connaît le sérieux, écrit la date dans la description de chaque
+   fiche (« PRÉCOMMANDE: sortie le … »), lisible dans les données
+   structurées de la page plutôt que dans le texte affiché. C'est une date
+   **annoncée** : le 20 septembre 2026, ses fiches Tripack et Pokébox
+   donnaient encore le 16 septembre alors que ni l'un ni l'autre n'était
+   sorti, et le Classeur y figurait au 2 octobre alors que les États-Unis
+   l'ont repoussé au 4 décembre. Cohérente avec les faits connus pour cinq
+   produits sur huit ce jour-là : précieuse pour repérer un changement,
+   jamais suffisante seule.
 4. **Presse et blogs**, jamais seuls.
 
 Une date que seules les sources 3 et 4 portent s'écrit « annoncée pour »

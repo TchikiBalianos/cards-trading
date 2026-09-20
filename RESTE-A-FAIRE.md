@@ -248,6 +248,11 @@ suivants, et « produits 30ᵉ Anniversaire »). N'ajuster l'article qu'à parti
 ces pages ou d'un constat en magasin, jamais d'un blog seul. Règle dans
 `CLAUDE.md`, section « Dates de sortie de produits ».
 
+La veille lit aussi les fiches 30 ans de La Maison du TCG, signal secondaire à
+croiser avec Pokémon France : un changement de date sur l'une d'elles est un
+bon indice qu'une date a bougé. Ses fiches Tripack et Pokébox donnaient encore
+le 16 septembre le 20 septembre, alors qu'aucun des deux n'était sorti.
+
 ---
 
 ## 🟡 Améliorations identifiées, non appliquées
