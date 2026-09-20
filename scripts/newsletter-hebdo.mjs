@@ -391,6 +391,23 @@ async function creerBrouillon({ segmentId, sujet, html, texte, previewText }) {
 const articles = articlesDeLaSemaine();
 const podiumEntry = podiumDeLaSemaine();
 
+/*
+  Une carte sans référence d'impression (code d'extension et numéro)
+  s'afficherait avec sa seule extension, sans que rien ne le signale. C'est
+  ce qui est arrivé au digest du 19 septembre 2026 : son podium avait été
+  archivé avant l'ajout des références, et l'email annonçait « Héros
+  Transcendants » pour une carte que le post du jeudi identifiait par
+  « ASC 294/217 ». On le dit à voix haute, dans le journal du workflow et
+  dans la notification, plutôt que de laisser le brouillon partir tel quel.
+*/
+const sansReference = (podiumEntry?.podium || []).filter((c) => !c.refLongue);
+if (sansReference.length) {
+  console.log(
+    `::warning::${sansReference.length} carte(s) du podium du ${podiumEntry.date} sans référence d'impression : ` +
+      `${sansReference.map((c) => c.id).join(', ')}. L'email n'affichera que leur extension.`,
+  );
+}
+
 if (articles.length === 0 && !podiumEntry) {
   console.log('Rien à digérer cette semaine (aucun article récent, aucun podium récent). Aucun brouillon créé.');
   process.exit(0);
@@ -451,6 +468,9 @@ try {
     ${articles.length} article(s)${podiumEntry ? ` et les tendances de prix du ${podiumEntry.date}` : ', sans tendances de prix cette semaine'}.
     Rien n'est envoyé tant que vous ne cliquez pas sur « Send » dans le dashboard.
   </p>
+  ${sansReference.length ? `<p style="font-size:13px;line-height:1.5;color:#b45309">
+    ⚠️ ${sansReference.length} carte(s) du podium sans code d'extension ni numéro (${sansReference.map((c) => echapper(c.id)).join(', ')}) : l'email n'affiche que leur extension.
+  </p>` : ''}
   ${anciens.length ? `<p style="font-size:13px;line-height:1.5;color:#888">
     ${anciens.length} brouillon(s) précédent(s) jamais envoyé(s) ont été remplacés par celui-ci.
   </p>` : ''}
