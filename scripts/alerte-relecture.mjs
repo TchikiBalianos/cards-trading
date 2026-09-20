@@ -99,13 +99,66 @@ function articleDeLaBranche(ref) {
   };
 }
 
-function branchesEnAttente() {
+function toutesLesBranches() {
   return git('branch', '-r', '--list', 'origin/blog/*')
     .split('\n')
     .map((b) => b.trim())
-    .filter(Boolean)
-    .map(articleDeLaBranche)
-    .filter((a) => a && !a.surMain);
+    .filter(Boolean);
+}
+
+function branchesEnAttente() {
+  return toutesLesBranches().map(articleDeLaBranche).filter((a) => a && !a.surMain);
+}
+
+/**
+ * Les articles DÉJÀ publiés que cette branche modifie, sans en créer de
+ * nouveau. Cas distinct du brouillon : ce n'est pas une rédaction qui
+ * attend d'être complétée puis fusionnée avec `draft: true` retiré, c'est
+ * une correction sur un article déjà en ligne, qui attend juste d'être
+ * fusionnée telle quelle. `defauts()` et `points_de_vigilance()` n'ont
+ * ici aucun sens : un correctif n'a pas à satisfaire les critères d'un
+ * brouillon neuf.
+ *
+ * Sans ce second cas, une branche de correction restait invisible : son
+ * fichier touché existait déjà sur `main`, donc `surMain` était vrai, et
+ * `branchesEnAttente` l'excluait — pas de doublon à craindre, mais pas
+ * d'alerte non plus. Deux correctifs sont restés 3 et 18 jours sans
+ * qu'aucun email ne parte (constaté le 20 septembre 2026 : une date
+ * fausse sur l'article du 30e Anniversaire, en production tout ce temps).
+ */
+function correctifsDeLaBranche(ref) {
+  let fichiers;
+  try {
+    fichiers = git('diff', '--name-only', `origin/main...${ref}`, '--', 'src/content/blog/')
+      .split('\n')
+      .filter((f) => /\.mdx?$/.test(f))
+      .filter((f) => {
+        try {
+          git('cat-file', '-e', `origin/main:${f}`);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+  } catch {
+    return null;
+  }
+  if (!fichiers.length) return null;
+
+  const dernier = git('log', '-1', '--format=%cI', ref);
+
+  return {
+    branche: ref.replace(/^origin\//, ''),
+    ageJours: Math.floor((Date.now() - new Date(dernier)) / 86400000),
+    fichiers: fichiers.map((chemin) => ({
+      chemin,
+      slug: chemin.replace(/^.*\//, '').replace(/\.mdx?$/, ''),
+    })),
+  };
+}
+
+function correctifsEnAttente() {
+  return toutesLesBranches().map(correctifsDeLaBranche).filter(Boolean);
 }
 
 const echapper = (s) =>
@@ -146,10 +199,53 @@ function carte(a) {
     </table>`;
 }
 
-function composerHtml(articles, immediat) {
-  const intro = immediat
-    ? "Un nouvel article vient d'être rédigé et attend ta relecture."
-    : `${articles.length} article${articles.length > 1 ? 's' : ''} attend${articles.length > 1 ? 'ent' : ''} depuis plus de ${SEUIL_JOURS} jours.`;
+function carteCorrectif(c) {
+  const diff = `https://github.com/${DEPOT}/compare/main...${c.branche}`;
+  const liste = c.fichiers.map((f) => echapper(f.slug)).join(', ');
+
+  return `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#171d2b; border-radius:10px; margin-bottom:14px;" bgcolor="#171d2b">
+      <tr><td style="padding:20px 22px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:bold; letter-spacing:0.06em; text-transform:uppercase; color:#e0b341; padding-bottom:6px;">Correctif &nbsp;&middot;&nbsp; ${jours(c.ageJours)}</td></tr>
+          <tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:17px; line-height:1.35; font-weight:bold; color:#ffffff; padding-bottom:8px;">${echapper(c.branche)}</td></tr>
+          <tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#a9b4c7; padding-bottom:10px;">Modifie ${c.fichiers.length > 1 ? 'des articles déjà publiés' : 'un article déjà publié'} : ${liste}.</td></tr>
+          <tr><td style="padding-top:4px;">
+            <a href="${diff}" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; color:#2997ff; text-decoration:none;">Voir le diff &rarr;</a>
+          </td></tr>
+        </table>
+      </td></tr>
+    </table>`;
+}
+
+function composerHtml(articles, correctifs, immediat) {
+  const morceaux = [];
+  if (articles.length) {
+    morceaux.push(
+      immediat
+        ? "Un nouvel article vient d'être rédigé et attend ta relecture."
+        : `${articles.length} article${articles.length > 1 ? 's' : ''} attend${articles.length > 1 ? 'ent' : ''} depuis plus de ${SEUIL_JOURS} jours.`
+    );
+  }
+  if (correctifs.length) {
+    morceaux.push(
+      immediat
+        ? 'Une branche corrige un article déjà en ligne et attend sa fusion.'
+        : `${correctifs.length} correctif${correctifs.length > 1 ? 's' : ''} sur des articles déjà en ligne attend${correctifs.length > 1 ? 'ent' : ''} depuis plus de ${SEUIL_JOURS} jours.`
+    );
+  }
+  const intro = morceaux.join(' ');
+
+  const sectionCorrectifs = correctifs.length
+    ? `<tr><td style="padding-top:${articles.length ? '6px' : '0'};">${correctifs.map(carteCorrectif).join('')}</td></tr>`
+    : '';
+
+  const noteFusion = articles.length
+    ? `<strong style="color:#ffffff;">Pour programmer la publication</strong><br>
+       Fusionne l'article sur <span style="color:#2997ff;">main</span> en gardant <span style="color:#2997ff;">draft: true</span>, et mets la <span style="color:#2997ff;">pubDate</span> au jour voulu.
+       Le workflow <span style="color:#2997ff;">publie-articles.yml</span> le met en ligne ce matin-là à 07h12, avant les crons d'annonce, et vérifie lui-même le 200 en production.`
+    : `<strong style="color:#ffffff;">Pour appliquer un correctif</strong><br>
+       Vérifie d'abord le diff : si la branche retire un élément présent sur <span style="color:#2997ff;">main</span> (sommaire, vignette, section ajoutée depuis), c'est elle qui est périmée, pas l'inverse, et il faut la supprimer plutôt que la fusionner. Sinon, fusionne-la sur <span style="color:#2997ff;">main</span> pour répercuter le changement au prochain déploiement.`;
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -163,19 +259,18 @@ function composerHtml(articles, immediat) {
         <tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#e6ebf5; padding-bottom:20px;">${echapper(intro)}</td></tr>
 
         <tr><td>${articles.map(carte).join('')}</td></tr>
+        ${sectionCorrectifs}
 
         <tr><td style="padding-top:10px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#101725; border-radius:10px;" bgcolor="#101725">
             <tr><td style="padding:18px 22px; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.7; color:#a9b4c7;">
-              <strong style="color:#ffffff;">Pour programmer la publication</strong><br>
-              Fusionne l'article sur <span style="color:#2997ff;">main</span> en gardant <span style="color:#2997ff;">draft: true</span>, et mets la <span style="color:#2997ff;">pubDate</span> au jour voulu.
-              Le workflow <span style="color:#2997ff;">publie-articles.yml</span> le met en ligne ce matin-là à 07h12, avant les crons d'annonce, et vérifie lui-même le 200 en production.
+              ${noteFusion}
             </td></tr>
           </table>
         </td></tr>
 
         <tr><td style="padding:18px 4px 0; font-family:Arial,Helvetica,sans-serif; font-size:11px; line-height:1.5; color:#5c6a82;">
-          Envoyé par alerte-relecture.mjs. Le rappel quotidien ne part que si une branche dépasse ${SEUIL_JOURS} jours, et s'arrête de lui-même une fois l'article fusionné.
+          Envoyé par alerte-relecture.mjs. Le rappel quotidien ne part que si une branche dépasse ${SEUIL_JOURS} jours, et s'arrête de lui-même une fois la branche fusionnée.
         </td></tr>
 
       </table>
@@ -185,54 +280,71 @@ function composerHtml(articles, immediat) {
 </html>`;
 }
 
-function composerTexte(articles) {
-  return articles
-    .map((a) => {
-      const lignes = [
-        a.titre,
-        `  ${a.categorie} | ${jours(a.ageJours)} | ${a.mots} mots | pubDate ${a.pubDate}`,
-        `  ${a.description}`,
-        a.bloquants.length
-          ? `  INCOMPLET : ${a.bloquants.join(', ')}`
-          : `  Structure complète, publiable en l'état`,
-      ];
-      if (a.vigilance.length) lignes.push(`  À vérifier : ${a.vigilance.join(' | ')}`);
-      lignes.push(`  https://github.com/${DEPOT}/blob/${a.branche}/${a.chemin}`);
-      return lignes.join('\n');
-    })
-    .join('\n\n');
+function composerTexte(articles, correctifs) {
+  const blocsArticles = articles.map((a) => {
+    const lignes = [
+      a.titre,
+      `  ${a.categorie} | ${jours(a.ageJours)} | ${a.mots} mots | pubDate ${a.pubDate}`,
+      `  ${a.description}`,
+      a.bloquants.length
+        ? `  INCOMPLET : ${a.bloquants.join(', ')}`
+        : `  Structure complète, publiable en l'état`,
+    ];
+    if (a.vigilance.length) lignes.push(`  À vérifier : ${a.vigilance.join(' | ')}`);
+    lignes.push(`  https://github.com/${DEPOT}/blob/${a.branche}/${a.chemin}`);
+    return lignes.join('\n');
+  });
+
+  const blocsCorrectifs = correctifs.map((c) => {
+    const lignes = [
+      `[correctif] ${c.branche}`,
+      `  ${jours(c.ageJours)} | modifie : ${c.fichiers.map((f) => f.slug).join(', ')}`,
+      `  https://github.com/${DEPOT}/compare/main...${c.branche}`,
+    ];
+    return lignes.join('\n');
+  });
+
+  return [...blocsArticles, ...blocsCorrectifs].join('\n\n');
 }
 
 /* Exécution */
 
 let articles;
+let correctifs;
 if (BRANCHE) {
-  const a = articleDeLaBranche(BRANCHE.startsWith('origin/') ? BRANCHE : `origin/${BRANCHE}`);
+  const ref = BRANCHE.startsWith('origin/') ? BRANCHE : `origin/${BRANCHE}`;
+  const a = articleDeLaBranche(ref);
   articles = a && !a.surMain ? [a] : [];
+  const c = correctifsDeLaBranche(ref);
+  correctifs = c ? [c] : [];
 } else if (RAPPEL) {
   articles = branchesEnAttente().filter((a) => a.ageJours >= SEUIL_JOURS);
+  correctifs = correctifsEnAttente().filter((c) => c.ageJours >= SEUIL_JOURS);
 } else {
   console.error('Usage : --branche=blog/<slug> ou --rappel');
   process.exit(2);
 }
 
-if (!articles.length) {
+if (!articles.length && !correctifs.length) {
   console.log(
     RAPPEL
       ? `Aucune branche en attente depuis plus de ${SEUIL_JOURS} jours.`
-      : 'Rien à signaler sur cette branche (article déjà sur main, ou aucun article dessus).'
+      : 'Rien à signaler sur cette branche (déjà sur main, ou aucun article/correctif dessus).'
   );
   process.exit(0);
 }
 
 articles.sort((x, y) => y.ageJours - x.ageJours);
+correctifs.sort((x, y) => y.ageJours - x.ageJours);
 
 const sujet = BRANCHE
-  ? `Article à relire : ${articles[0].titre}`
-  : `${articles.length} article${articles.length > 1 ? 's' : ''} en attente de relecture`;
+  ? articles.length
+    ? `Article à relire : ${articles[0].titre}`
+    : `Correctif à fusionner : ${correctifs[0].branche}`
+  : `${articles.length + correctifs.length} branche${articles.length + correctifs.length > 1 ? 's' : ''} en attente${articles.length && correctifs.length ? ' (relecture + correctifs)' : ''}`;
 
-const html = composerHtml(articles, Boolean(BRANCHE));
-const texte = composerTexte(articles);
+const html = composerHtml(articles, correctifs, Boolean(BRANCHE));
+const texte = composerTexte(articles, correctifs);
 
 console.log(`Sujet : ${sujet}\n`);
 console.log(texte);
