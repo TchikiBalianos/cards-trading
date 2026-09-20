@@ -162,10 +162,16 @@ article : la page est apparue d'elle-même, sans rien faire.
   pour `alerte-relecture` qui ne cherche que des brouillons, jamais une
   correction d'articles déjà en ligne. Fusionné, avec `scripts/sommaire.mjs`
   que les deux consignes invoquaient déjà sans qu'il existe sur `main`.
-- **Une date fausse était en production** sur l'article du 30e Anniversaire :
-  PokéBox annoncée au 4 décembre alors qu'elle est sortie le 16 septembre,
-  tripacks au 13 novembre au lieu du 16 septembre. Correctif fusionné depuis
-  `blog/fix-30e-anniversaire-calendrier`, en attente depuis le 17 septembre.
+- **Une correction fausse du calendrier du 30e Anniversaire a été fusionnée
+  le 20 septembre, puis annulée le jour même.** La branche
+  `blog/fix-30e-anniversaire-calendrier` (17 septembre) affirmait que la
+  Pokébox et les Tripacks étaient sortis le 16 septembre. Faux : Julian a
+  constaté en magasin, à l'ouverture, ETB, Collection poster, duopack et deux
+  coffrets ex, rien d'autre, et la liste officielle de Pokémon France du 1er
+  septembre ne cite ni Pokébox, ni Tripack, ni Mini-Tin. La fusion avait été
+  faite sans revérifier le fait, puis défendue sur des sources secondaires.
+  La hiérarchie de sources qui en découle est dans `CLAUDE.md`, section
+  « Dates de sortie de produits ».
 - **16 tests** couvrent le calendrier et les critères de publication
   (`npm test`, runner intégré de Node, aucune dépendance ajoutée).
 

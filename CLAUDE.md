@@ -581,3 +581,37 @@ mais la vraie hygiène reste de supprimer la branche à la fusion.
 
 ⚠️ Avant de supprimer, confirmer que l'article répond 200 en production,
 pas seulement qu'il est présent sur `main`.
+
+### Dates de sortie de produits : quelles sources croire
+
+Le 20 septembre 2026, une « correction » du calendrier du 30ᵉ Anniversaire
+Pokémon est restée quelques heures en production alors qu'elle était fausse :
+elle plaçait la Pokébox et les Tripacks au 16 septembre. Julian, présent en
+magasin à l'ouverture après douze heures de queue, a constaté qu'ils n'y
+étaient pas. Les pages officielles de Pokémon France lui donnaient raison
+depuis le 1er septembre.
+
+La correction avait été validée par des sources toutes secondaires : presse
+généraliste écrite le matin de la sortie, blogs de revendeurs, calendriers
+agrégés. Elles recopient le calendrier **annoncé** et n'ont aucun moyen de
+savoir ce qui est **arrivé en rayon**. Certaines appellent même « Pokébox »
+les coffrets Amphinobi-ex et Nymphali-ex, qui sont des produits différents.
+
+Hiérarchie à respecter pour toute date de sortie de produit :
+
+1. **Le constat de Julian**, s'il existe : il bat toute source écrite.
+2. **Le site officiel de l'éditeur** (pokemon.com/fr, page d'actualités
+   datée, puis fiche produit). Il ne donne souvent que des trimestres :
+   c'est une information, pas un vide à combler avec un blog.
+3. **Fiches produit de revendeurs** (une date par référence) et feuilles de
+   distributeurs.
+4. **Presse et blogs**, jamais seuls.
+
+Une date que seules les sources 3 et 4 portent s'écrit « annoncée pour »
+ou « à confirmer », jamais comme un fait. Distinguer toujours *annoncé*,
+*sorti* et *constaté*.
+
+⚠️ Une branche de correction écrite par une session précédente n'est pas une
+source, et un message de commit qui affirme un fait sans URL ne prouve rien.
+La fusionner sans revérifier le fait lui-même est ce qui a mis la fausse
+date en ligne.
