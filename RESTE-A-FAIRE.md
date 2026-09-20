@@ -179,9 +179,14 @@ Corpus vérifié article par article avec `defauts()`, sur les critères réels
 de publication : **15 articles publiés, 0 défaut bloquant.**
 
 Trois branches restent sur le dépôt (`blog/op17-scelle-flambe-...`,
-`blog/pokemon-storm-emeralda-...`, `blog/star-wars-unlimited-...`). Leurs
-articles sont en ligne dans une version plus récente : elles ne bloquent
-plus rien depuis le correctif de consigne, mais elles ne servent à rien.
+`blog/pokemon-storm-emeralda-...`, `blog/star-wars-unlimited-...`) : ce sont les
+brouillons d'origine d'articles aujourd'hui publiés sur `main` dans une version
+plus récente. Julian les relit avant de décider de les supprimer.
+
+Vérifié le 20 septembre : la branche Star Wars portait `logo-starwars.png`,
+jamais fusionné, donc absent de la production (image de l'article et de la
+page `/tcg/star-wars/` en 404). Restauré sur `main`. Les deux autres ne
+portent rien d'autre que leur article.
 
 ---
 
@@ -196,6 +201,27 @@ Tout ce qui a été affirmé sur la navigation mobile repose sur des valeurs
 **cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les
 ancres du menu, la fermeture du panneau, les carrousels, et le rendu des
 images après les correctifs de ratio.
+
+### 1 bis. Veille du calendrier du 30e Anniversaire
+
+Quatre produits n'ont pas de date certaine en France, et l'article
+`pokemon-30e-anniversaire-sortie-mondiale-2026` le dit :
+
+- **Collection K.O.** : annoncée au T3 2026, sans date précise, absente des
+  rayons à l'ouverture (ligne « Sans date précise »).
+- **Coffret Classeur** : 4 décembre retenu par défaut, comme aux États-Unis,
+  faute d'information française.
+- **Tripack** : T4 2026, 13 novembre ou fin novembre selon les sources.
+- **Pokébox** : 4 décembre selon les distributeurs, absente de la liste
+  officielle de septembre.
+
+Bundle et Mini-Tins (2 octobre) sont à vérifier en rayon ce jour-là.
+
+À relire périodiquement : les deux pages de Pokémon France (« produits du
+JCC qui sortiront en septembre 2026 », puis les pages équivalentes des mois
+suivants, et « produits 30ᵉ Anniversaire »). N'ajuster l'article qu'à partir de
+ces pages ou d'un constat en magasin, jamais d'un blog seul. Règle dans
+`CLAUDE.md`, section « Dates de sortie de produits ».
 
 ---
 
