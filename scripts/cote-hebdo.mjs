@@ -16,6 +16,7 @@
  */
 
 import { readFileSync } from 'node:fs';
+import { referenceCarte, corroborerExtension } from './lib/reference-carte.mjs';
 
 const API = 'https://api.tcgdex.net/v2';
 
@@ -511,38 +512,64 @@ for (const c of retenues) {
     Le dénominateur est aligné sur la largeur du numéro pour respecter la
     typographie imprimée (« 012/091 » et non « 012/91 »).
   */
-  if (c.localId != null && c.setCode) {
-    const num = String(c.localId);
+  /*
+    Forme courte, « ASC 286 » : exactement ce qui est imprimé en bas de la
+    carte française (ligne « [I] [ASC FR] 286/217 »), et exactement le
+    titre que Cardmarket emploie sur son propre site français
+    (« Dracaufeu ex (OBF 125) »). Aucun apprentissage à demander au
+    lecteur, et la cote devient vérifiable par copier-coller.
 
-    /*
-      Forme courte, « ASC 286 » : exactement ce qui est imprimé en bas de la
-      carte française (ligne « [I] [ASC FR] 286/217 »), et exactement le
-      titre que Cardmarket emploie sur son propre site français
-      (« Dracaufeu ex (OBF 125) »). Aucun apprentissage à demander au
-      lecteur, et la cote devient vérifiable par copier-coller.
+    C'est aussi la seule forme qui tienne sur X en pire cas : mesuré sur
+    les 228 noms de la fenêtre balayée, la longueur médiane est de 10
+    caractères mais le 99e centile monte à 27. La forme avec
+    dénominateur n'en couvre que 90 %.
+  */
 
-      C'est aussi la seule forme qui tienne sur X en pire cas : mesuré sur
-      les 228 noms de la fenêtre balayée, la longueur médiane est de 10
-      caractères mais le 99e centile monte à 27. La forme avec
-      dénominateur n'en couvre que 90 %.
-    */
-    c.refCourte = `${c.setCode} ${num}`;
+  /*
+    Forme complète pour la vignette, où la place ne manque pas. Le
+    dénominateur porte un signal éditorial réel : « 286/217 » signifie
+    carte secrète, et deux des trois cartes du podium du 17 septembre en
+    étaient.
 
-    /*
-      Forme complète pour la vignette, où la place ne manque pas. Le
-      dénominateur porte un signal éditorial réel : « 286/217 » signifie
-      carte secrète, et deux des trois cartes du podium du 17 septembre en
-      étaient.
+    Omis sur les promos, qui n'en portent PAS sur la carte (« SVP FR 206 »,
+    sans rien d'autre) : l'inventer serait une erreur factuelle.
+  */
 
-      Omis sur les promos, qui n'en portent PAS sur la carte (« SVP FR 206 »,
-      sans rien d'autre) : l'inventer serait une erreur factuelle.
-    */
-    const total = c.setTotal ? String(c.setTotal).padStart(num.length, '0') : null;
-    c.refLongue = total ? `${c.setCode} ${num}/${total}` : c.refCourte;
-  } else {
-    c.refCourte = null;
-    c.refLongue = null;
+  /* Le calcul lui-même vit dans le module partagé : la newsletter et
+     l'outil de complétion des archives doivent produire EXACTEMENT la même
+     chaîne, sans quoi un post et un email désigneraient la même carte de
+     deux façons. Couvert par scripts/lib/reference-carte.test.mjs. */
+  const { refCourte, refLongue } = referenceCarte({ localId: c.localId, setCode: c.setCode, setTotal: c.setTotal });
+  c.refCourte = refCourte;
+  c.refLongue = refLongue;
+
+  /*
+    Recoupement du dénominateur contre une seconde base, pokemontcg.io
+    (scripts/lib/reference-carte.mjs). TCGdex est la seule source du code
+    d'extension et du total imprimé : sans recoupement, une erreur de sa
+    part s'afficherait comme un fait dans les posts et dans la newsletter.
+
+    Il ne fait JAMAIS échouer le classement. Base injoignable : on garde la
+    valeur de TCGdex et on le note. Divergence avérée : on retire le
+    dénominateur, la forme courte restant vraie.
+
+    `refVerifiee` : true (confirmée), false (divergente), null (non
+    recoupée). Archivé avec la carte, pour savoir après coup ce qui a été
+    vérifié et ce qui ne l'a pas été.
+  */
+  const aUnTotal = c.refLongue != null && c.refLongue !== c.refCourte;
+  const recoupement = aUnTotal ? await corroborerExtension(c) : { statut: 'non_applicable' };
+  c.refVerifiee = recoupement.statut === 'confirmee' ? true : recoupement.statut === 'divergente' ? false : null;
+  if (recoupement.statut === 'divergente') {
+    console.error(
+      `::warning::Total imprimé non recoupé pour ${c.affichage} (${c.setCode}) : ${recoupement.ecarts.join(' ; ')}. ` +
+        `Référence réduite à « ${c.refCourte} ».`,
+    );
+    c.refLongue = c.refCourte;
+  } else if (recoupement.statut === 'indisponible') {
+    console.error(`::notice::Total imprimé de ${c.setCode} non recoupé (${recoupement.detail}) : valeur TCGdex conservée.`);
   }
+  for (const note of recoupement.notes || []) console.error(`::notice::${c.setCode} : ${note}`);
 
   podium.push(c);
 }
