@@ -190,7 +190,14 @@
         "rarity": "Illustration spéciale rare",
         "set": "Héros Transcendants",
         "nomFr": "Zoroark",
-        "affichage": "Zoroark-ex de N"
+        "affichage": "Zoroark-ex de N",
+        "localId": "286",
+        "setId": "me02.5",
+        "setCode": "ASC",
+        "setTotal": 217,
+        "refCourte": "ASC 286",
+        "refLongue": "ASC 286/217",
+        "refVerifiee": true
       },
       {
         "ok": true,
@@ -208,7 +215,14 @@
         "rarity": "Méga Hyper Rare",
         "set": "Héros Transcendants",
         "nomFr": "Dracaufeu",
-        "affichage": "Méga-Dracaufeu Y-ex"
+        "affichage": "Méga-Dracaufeu Y-ex",
+        "localId": "294",
+        "setId": "me02.5",
+        "setCode": "ASC",
+        "setTotal": 217,
+        "refCourte": "ASC 294",
+        "refLongue": "ASC 294/217",
+        "refVerifiee": true
       },
       {
         "ok": true,
@@ -226,7 +240,14 @@
         "rarity": "Illustration spéciale rare",
         "set": "Équilibre Parfait",
         "nomFr": "Zygarde",
-        "affichage": "Méga-Zygarde-ex"
+        "affichage": "Méga-Zygarde-ex",
+        "localId": "120",
+        "setId": "me03",
+        "setCode": "POR",
+        "setTotal": 88,
+        "refCourte": "POR 120",
+        "refLongue": "POR 120/088",
+        "refVerifiee": true
       }
     ]
   }
