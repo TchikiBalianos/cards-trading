@@ -97,6 +97,25 @@ garde-fous de liquidité et de non-stagnation, mention factuelle, lien X en
 réponse, phase de publication rendue indépendante de l'API, archive One Piece
 réindexée par impression.
 
+**Ajouté le 20 septembre, après la relecture du digest du 19 :** la
+newsletter lit l'archive du podium, et celle du 17 septembre avait été
+écrite avant l'ajout des références. Le digest annonçait « Héros
+Transcendants » là où le post du jeudi disait « ASC 294/217 ». L'archive est
+complétée (ASC 286/217, ASC 294/217, POR 120/088) et trois protections
+sont posées :
+
+- le total imprimé est **recoupé sur pokemontcg.io** au moment du
+  classement (`scripts/lib/reference-carte.mjs`). Par extension et non par
+  carte, car l'API répond souvent 500 sur les cartes. Divergence avérée : la
+  référence retombe sur la forme courte. Base injoignable : valeur de TCGdex
+  conservée, sans faire échouer le classement. Le résultat est archivé
+  avec la carte (`refVerifiee`) ;
+- la newsletter **avertit** (journal du workflow et email de notification)
+  quand une carte du podium n'a pas de référence, au lieu de retomber en
+  silence sur la seule extension ;
+- relancer `newsletter-hebdo.yml` suffit à régénérer un brouillon : le
+  script remplace lui-même le brouillon non envoyé « Digest hebdo » précédent.
+
 **Ce qui reste ouvert :**
 
 - ~~Le post X des cotes n’a pas de visuel~~ **fait le 19 septembre.**
