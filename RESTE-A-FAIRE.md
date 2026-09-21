@@ -277,6 +277,22 @@ Le même jour, `alerte-automatisations` a été corrigée : pour `annonce-buffer
 `publie-articles`, seuls les passages planifiés comptent, car un test manuel en
 mode brouillon avait effacé l'échec réel du 18 septembre.
 
+### 1 quater. Article Pokémon du 22 septembre : dossier préparé
+
+Julian a demandé qu'un prochain article Pokémon s'inspire d'un papier du Journal du
+Geek (21 septembre, stratégie anti-scalpers de l'extension 30 ans) pour l'améliorer et
+l'augmenter. Le dossier est dans `docs/briefs/2026-09-22-pokemon-scalpers-sortie-mondiale.md`
+et la routine du mardi (`blog-cards-trading-article-hebdo`) a reçu la consigne de le suivre
+pour cette semaine seulement.
+
+Ce que le dossier corrige dans la source : aucune déclaration officielle ne parle d'une
+stratégie ni de taux de tirage, les chiffres des tiers ne coïncident pas (1 sur 18 pour
+Kotaku, 5,24 % sur 420 boosters pour Collider, un booster sur deux avec une carte ex pour
+DigitalTQ), et rien n'est dit des produits scellés, là où se joue la pénurie.
+
+À vérifier à la relecture de la branche : chaque chiffre relu à sa source, aucune phrase
+reprise de la source, un seul angle, et la mention « observé » plutôt que « voulu ».
+
 ---
 
 ## 🟡 Améliorations identifiées, non appliquées
