@@ -228,8 +228,8 @@ Quatre produits n'ont pas de date certaine en France, et l'article
 
 - **Collection K.O.** : annoncée au T3 2026, sans date précise, absente des
   rayons à l'ouverture (ligne « Sans date précise »).
-- **Coffret Classeur** : 4 décembre retenu par défaut, comme aux États-Unis,
-  faute d'information française.
+- **Coffret Classeur** : deux dates affichées dans l'article, 2 octobre selon les
+  revendeurs français et 4 décembre aux États-Unis, faute de date française confirmée.
 - **Tripack** : T4 2026, 13 novembre ou fin novembre selon les sources.
 - **Pokébox** : 4 décembre selon les distributeurs, absente de la liste
   officielle de septembre.
@@ -252,6 +252,27 @@ La veille lit aussi les fiches 30 ans de La Maison du TCG, signal secondaire à
 croiser avec Pokémon France : un changement de date sur l'une d'elles est un
 bon indice qu'une date a bougé. Ses fiches Tripack et Pokébox donnaient encore
 le 16 septembre le 20 septembre, alors qu'aucun des deux n'était sorti.
+
+### 1 ter. File d'annonces : un retard qui ne se résorbe pas
+
+`annonce-buffer` et `annonce-discord` relaient **un seul article par passage, le
+plus ancien en attente**, le mardi et le vendredi. Avec deux articles publiés par
+semaine (le vendredi est obligatoire depuis le 19 septembre), la file reste à
+trois : chaque article part une dizaine de jours après sa publication.
+
+Le 21 septembre, Buffer attend Star Wars (pubDate 10/09), le 30e Anniversaire
+(12/09) et Monstres Fantastiques (14/09) ; Discord attend Star Wars et Monstres
+Fantastiques. Le passage du mardi 15 a échoué lui aussi (même cause que le 18 :
+Node 20), ce que le rapport de la routine de vérification supprimée n'avait pas
+relevé.
+
+Options : un troisième créneau hebdomadaire (le mercredi, le jeudi étant pris par
+le post des cotes), et/ou sauter l'annonce du 30e Anniversaire, dont l'intérêt
+tenait au jour de la sortie (16 septembre). Décision de Julian.
+
+Le même jour, `alerte-automatisations` a été corrigée : pour `annonce-buffer` et
+`publie-articles`, seuls les passages planifiés comptent, car un test manuel en
+mode brouillon avait effacé l'échec réel du 18 septembre.
 
 ---
 

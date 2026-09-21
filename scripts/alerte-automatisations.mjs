@@ -42,6 +42,23 @@ const EXCLUS = new Set(['Alerte automatisations']);
    passages » suffit à comprendre qu'il faut agir. */
 const PROFONDEUR = 15;
 
+/*
+  Workflows dont un déclenchement MANUEL peut ne rien publier : `brouillon`
+  pour annonce-buffer, `controle_seul` pour publie-articles. Un tel passage
+  réussi ne prouve rien sur la chaîne réelle, et il a masqué un incident :
+  l'échec d'annonce-buffer du 18 septembre 2026 a été effacé par le test en
+  brouillon du lendemain, et l'alerte a annoncé « 0 en échec » alors que
+  l'article du vendredi n'avait été relayé nulle part. Pour ces deux-là,
+  seuls les passages PLANIFIÉS comptent.
+
+  Coût assumé : après une réparation, un passage manuel réel ne suffit pas à
+  faire taire l'alerte, il faut attendre le prochain passage planifié (un
+  jour pour publie-articles, trois ou quatre pour annonce-buffer). Mieux
+  vaut un email de trop qu'un incident sans email : c'est la raison d'être
+  de ce script.
+*/
+const SEULS_PLANIFIES = new Set(['annonce-buffer.yml', 'publie-articles.yml']);
+
 async function github(chemin) {
   const entetes = { Accept: 'application/vnd.github+json' };
   if (process.env.GITHUB_TOKEN) entetes.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
@@ -77,7 +94,10 @@ for (const w of workflows) {
 
   /* `cancelled` et `skipped` ne disent rien de la santé du workflow : on
      ne retient que le dernier verdict qui tranche. */
-  const verdicts = termines.filter((r) => ['success', 'failure', 'timed_out'].includes(r.conclusion));
+  const fichier = w.path.replace('.github/workflows/', '');
+  const planifieSeul = SEULS_PLANIFIES.has(fichier);
+  const retenus = planifieSeul ? termines.filter((r) => r.event === 'schedule') : termines;
+  const verdicts = retenus.filter((r) => ['success', 'failure', 'timed_out'].includes(r.conclusion));
   if (verdicts.length === 0) continue;
 
   const dernier = verdicts[0];
@@ -90,15 +110,24 @@ for (const w of workflows) {
   }
   const premier = verdicts[suite - 1];
 
+  /* Un passage manuel réussi, plus récent que l'échec : on le mentionne
+     dans l'email, sans le compter. */
+  const masque = planifieSeul
+    ? termines.find(
+        (r) => r.event !== 'schedule' && r.conclusion === 'success' && new Date(r.created_at) > new Date(dernier.created_at)
+      )
+    : null;
+
   casses.push({
     nom: w.name,
-    fichier: w.path.replace('.github/workflows/', ''),
+    fichier,
     suite,
     complet: suite < verdicts.length,
     depuis: premier.created_at,
     joursDepuis: jours(premier.created_at),
     lien: dernier.html_url,
     conclusion: dernier.conclusion,
+    masqueLe: masque ? masque.created_at : null,
   });
 }
 
@@ -128,7 +157,10 @@ const ligne = (c) => {
   const duree = c.complet
     ? `${c.suite} passage${c.suite > 1 ? 's' : ''} d'affilée, depuis le ${c.depuis.slice(0, 10)} (${c.joursDepuis} j)`
     : `au moins ${c.suite} passages d'affilée`;
-  return { duree };
+  const note = c.masqueLe
+    ? `un passage manuel réussi le ${c.masqueLe.slice(0, 10)} n'est pas compté : il peut n'avoir rien publié (mode brouillon ou contrôle seul)`
+    : null;
+  return { duree, note };
 };
 
 const texte = [
@@ -139,6 +171,7 @@ const texte = [
   ...casses.flatMap((c) => [
     `- ${c.nom} (${c.fichier})`,
     `  ${ligne(c).duree}`,
+    ...(ligne(c).note ? [`  ${ligne(c).note}`] : []),
     `  ${c.lien}`,
     '',
   ]),
@@ -159,6 +192,7 @@ const html = `<!doctype html><html lang="fr"><body style="margin:0;background:#0
       <div style="font-size:15px;color:#e6ebf5;font-weight:bold;">${c.nom}</div>
       <div style="font-size:12px;color:#7c879c;padding-top:2px;">${c.fichier}</div>
       <div style="font-size:13px;color:#ffb454;padding-top:8px;">${ligne(c).duree}</div>
+      ${ligne(c).note ? `<div style="font-size:12px;color:#7c879c;padding-top:4px;">${ligne(c).note}</div>` : ''}
       <div style="padding-top:10px;"><a href="${c.lien}" style="font-size:13px;color:#2997ff;">Voir le dernier passage</a></div>
     </td></tr>`
       )
