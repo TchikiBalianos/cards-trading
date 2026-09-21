@@ -260,7 +260,7 @@ ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agré
 
 Le relais d'articles vers X, Instagram et TikTok passe par
 `scripts/annonce-buffer.mjs`, lancé par `.github/workflows/annonce-buffer.yml`
-les mardis et vendredis. Entre le 23 et le 25 août 2026, **deux évolutions
+les dimanches, mardis et vendredis. Entre le 23 et le 25 août 2026, **deux évolutions
 simultanées** de l'API GraphQL l'ont cassé net, sans préavis ni changement
 de version. Le premier symptôme fait accuser la clé : ce n'est pas elle.
 

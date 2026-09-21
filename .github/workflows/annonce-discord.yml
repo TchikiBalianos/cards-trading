@@ -9,8 +9,11 @@
 # Buffer reste pertinent pour Instagram, où la publication programmatique
 # demande un compte Business et une permission dédiée.
 #
-# Cadence : mardi et vendredi, calée sur le calendrier éditorial du blog
-# (mardi obligatoire, vendredi optionnel — voir scripts/prochain-article.mjs).
+# Cadence : dimanche, mardi et vendredi. Mardi et vendredi suivent le calendrier
+# éditorial du blog (tous deux obligatoires depuis le 19 septembre 2026, voir
+# scripts/prochain-article.mjs). Le dimanche date du 22 septembre 2026 et le
+# rend jumeau d'annonce-buffer.yml, dont il partage les jours : voir le choix
+# des jours dans ce fichier-là.
 # Le script poste AU PLUS UN article par exécution et ne poste rien s'il n'y
 # a pas de nouveauté : mieux vaut un salon calme qu'un salon bruyant.
 
@@ -20,7 +23,7 @@ on:
   schedule:
     # 09:17 UTC = 11:17 à Paris en été. Décalé de 17 min : les crons GitHub
     # sont retardés aux heures rondes, quand tout le monde programme.
-    - cron: '17 9 * * 2,5'
+    - cron: '17 9 * * 0,2,5'
   workflow_dispatch:
 
 # Nécessaire pour recommitter l'état des annonces

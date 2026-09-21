@@ -16,8 +16,20 @@ name: Annonce Buffer
 
 on:
   schedule:
-    # Mardi et vendredi, 10:23 UTC = 12:23 à Paris en été.
-    - cron: '23 10 * * 2,5'
+    # Dimanche, mardi et vendredi, 10:23 UTC = 12:23 à Paris en été.
+    #
+    # Le dimanche date du 22 septembre 2026 : à deux passages par semaine pour
+    # deux articles publiés, la file ne se vidait jamais et chaque article partait
+    # une dizaine de jours après sa publication.
+    #
+    # Le choix du jour tient à la file Buffer : un post part au prochain créneau
+    # libre de la grille, en pratique le LENDEMAIN du passage. Un mercredi ferait
+    # donc tomber l'article le jeudi, jour des cotes (TikTok recevrait deux posts
+    # à trois heures d'écart), et deux passages consécutifs, lundi et mardi, ne
+    # resteraient distincts que grâce au retard habituel de GitHub. Dimanche,
+    # mardi et vendredi ne sont jamais consécutifs : les posts tombent le lundi,
+    # le mercredi et le samedi.
+    - cron: '23 10 * * 0,2,5'
   workflow_dispatch:
     inputs:
       brouillon:

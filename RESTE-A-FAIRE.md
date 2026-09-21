@@ -84,7 +84,7 @@ passages étaient rouges dans l'onglet Actions. Personne ne les regardait.
   cron (05:12 UTC) devrait le sortir maintenant que le build passe. À
   vérifier en production.
 - **Deux articles attendent d'être annoncés** sur Buffer. Le relais ne sort
-  qu'un article par passage, les mardis et vendredis.
+  qu'un article par passage, les dimanches, mardis et vendredis.
 
 ---
 
@@ -266,9 +266,12 @@ Fantastiques. Le passage du mardi 15 a échoué lui aussi (même cause que le 18
 Node 20), ce que le rapport de la routine de vérification supprimée n'avait pas
 relevé.
 
-Options : un troisième créneau hebdomadaire (le mercredi, le jeudi étant pris par
-le post des cotes), et/ou sauter l'annonce du 30e Anniversaire, dont l'intérêt
-tenait au jour de la sortie (16 septembre). Décision de Julian.
+Décidé le 22 septembre : un **troisième créneau, le dimanche** (les posts partent
+le lundi). Pas le mercredi : la file Buffer fait partir un post au prochain créneau
+libre, donc le lendemain du passage, et un article du jeudi rejoindrait les cotes
+sur TikTok à trois heures d'écart. Dimanche, mardi et vendredi ne sont jamais
+consécutifs. Le 30e Anniversaire sera annoncé normalement, sans être sauté.
+Premier passage du dimanche : le 27 septembre.
 
 Le même jour, `alerte-automatisations` a été corrigée : pour `annonce-buffer` et
 `publie-articles`, seuls les passages planifiés comptent, car un test manuel en
@@ -350,8 +353,8 @@ faute d'API de montage et d'export côté serveur.
 | Automatisation | Rythme | État |
 |---|---|---|
 | `keep-alive` | 6 h | ✅ les deux bases Supabase |
-| `annonce-discord` | mardi, vendredi | ✅ routé par TCG |
-| `annonce-buffer` | mardi, vendredi | ✅ après correctif des vignettes |
+| `annonce-discord` | dimanche, mardi, vendredi | ✅ routé par TCG |
+| `annonce-buffer` | dimanche, mardi, vendredi | ✅ après correctif des vignettes |
 | `cote-hebdo` | jeudi | ✅ marché international, japonais suspendu |
 | `newsletter-hebdo` | samedi 13h37 | ✅ digests envoyés |
 | `publie-articles` | quotidien 05:12 UTC | ✅ après passage en Node 22 |
