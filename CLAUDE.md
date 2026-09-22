@@ -624,3 +624,22 @@ ou « à confirmer », jamais comme un fait. Distinguer toujours *annoncé*,
 source, et un message de commit qui affirme un fait sans URL ne prouve rien.
 La fusionner sans revérifier le fait lui-même est ce qui a mis la fausse
 date en ligne.
+
+### Chiffres et prix dans les articles : jamais inventés
+
+Règle de Julian, 22 septembre 2026 : **il est interdit d'inventer un chiffre ou un
+prix ; mieux vaut un vocabulaire plus vague.** Un prix, un taux de tirage, un volume
+d'impression ou une statistique n'entre dans un article que s'il a été lu sur la page
+d'origine, en entier, et il y est attribué (« selon … »). Sinon, ou si deux sources
+divergent, ou si c'est un comptage communautaire encore fragile, on l'écrit en mots :
+« nettement plus fréquentes », « une fraction de son prix d'avant-sortie ».
+
+⚠️ **Les résumés d'outils ne sont pas des lectures.** En préparant un seul dossier
+(`docs/briefs/2026-09-22-pokemon-scalpers-sortie-mondiale.md`), les résumés d'un
+moteur de recherche et d'un outil de lecture ont attribué des chiffres de Kotaku à
+Wargamer, daté de l'été 2025 un fait de l'été 2026, et laissé passer un taux (« un
+booster sur deux avec une carte ex ») absent de la source qu'il citait. Tout est apparu
+en relisant les pages en texte brut dans le navigateur.
+
+Même prudence pour la presse elle-même : un article peut citer un chiffre que sa propre
+source ne contient pas. Remonter à la source primaire, ou renoncer au chiffre.

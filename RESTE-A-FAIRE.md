@@ -253,6 +253,13 @@ croiser avec Pokémon France : un changement de date sur l'une d'elles est un
 bon indice qu'une date a bougé. Ses fiches Tripack et Pokébox donnaient encore
 le 16 septembre le 20 septembre, alors qu'aucun des deux n'était sorti.
 
+**Contradiction officielle connue** : le communiqué de presse de Pokémon France du 16
+septembre (agence Reset PR, the-pokemon-company-international.prezly.com) liste la
+Collection autocollant et la « Boîte 30ᵉ Anniversaire » parmi les produits disponibles
+dès le 16, alors que Julian ne les a vues dans aucun magasin et que la page produits
+officielle place la Collection autocollant au 4e trimestre. Le constat de Julian prime ;
+ce communiqué ne doit pas servir à dater les produits.
+
 ### 1 ter. File d'annonces : un retard qui ne se résorbe pas
 
 `annonce-buffer` et `annonce-discord` relaient **un seul article par passage, le
@@ -290,8 +297,12 @@ stratégie ni de taux de tirage, les chiffres des tiers ne coïncident pas (1 su
 Kotaku, 5,24 % sur 420 boosters pour Collider, un booster sur deux avec une carte ex pour
 DigitalTQ), et rien n'est dit des produits scellés, là où se joue la pénurie.
 
-À vérifier à la relecture de la branche : chaque chiffre relu à sa source, aucune phrase
-reprise de la source, un seul angle, et la mention « observé » plutôt que « voulu ».
+Revu le même jour après une seconde consigne de Julian : aucun chiffre ni prix inventé,
+le vocabulaire qualitatif plutôt qu'un chiffre fragile. Le dossier contient désormais
+une liste fermée de faits chiffrés, relus un à un dans le navigateur, et la routine doit
+lister en compte-rendu chaque chiffre de son article avec sa ligne d'origine. À la
+relecture de la branche : aucun chiffre hors de cette liste, aucune phrase reprise de la
+source, un seul angle, et « observé » plutôt que « voulu ».
 
 ---
 
