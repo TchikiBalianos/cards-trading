@@ -54,6 +54,25 @@ const ETIQUETTES = {
   strategie: 'Stratégie',
 };
 
+/*
+  Une couleur d'accent par TCG (halo, pastille, filet), au lieu du bleu de
+  marque partout. Choisie pour évoquer chaque licence sans en singer le
+  logo, et pour rester lisible en accent clair sur le fond bleu nuit
+  (#07111f) commun à toutes les vignettes.
+
+  guide/actualite/strategie n'ont pas de TCG : ils gardent le bleu de
+  marque, qui reste donc la couleur « par défaut » de tout le reste.
+*/
+const COULEURS = {
+  pokemon: '#f4c430',
+  magic: '#8b5cf6',
+  'one-piece': '#e5484d',
+  yugioh: '#caa14b',
+  lorcana: '#2dd4bf',
+  'dragon-ball': '#ff7a1a',
+  'star-wars': '#5ac8fa',
+};
+
 function lireFrontmatter(chemin) {
   const m = readFileSync(chemin, 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!m) return null;
@@ -228,6 +247,7 @@ function graineDe(slug) {
 async function vignette(slug, fm, format, fond) {
   const { largeur: L, hauteur: H, suffixe, maxLignesTitre, maxLignesChapo } = format;
   const categorie = ETIQUETTES[fm.category] || fm.category || '';
+  const accent = COULEURS[fm.category] || BLEU;
 
   const marge = Math.round(L * 0.083);
   const utile = L - marge * 2;
@@ -261,12 +281,12 @@ async function vignette(slug, fm, format, fond) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
   <defs>
     <radialGradient id="halo" cx="78%" cy="18%" r="62%">
-      <stop offset="0%" stop-color="${BLEU}" stop-opacity="0.34"/>
-      <stop offset="100%" stop-color="${BLEU}" stop-opacity="0"/>
+      <stop offset="0%" stop-color="${accent}" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="${accent}" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="filet" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${BLEU}"/>
-      <stop offset="100%" stop-color="${BLEU}" stop-opacity="0"/>
+      <stop offset="0%" stop-color="${accent}"/>
+      <stop offset="100%" stop-color="${accent}" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
@@ -278,11 +298,11 @@ async function vignette(slug, fm, format, fond) {
         font-weight="700" fill="#ffffff" letter-spacing="1">Cards-Trading</text>
 
   <rect x="${marge}" y="${hautPastille}" width="${largeurPastille}" height="${Math.round(H * 0.05)}"
-        rx="${Math.round(H * 0.025)}" fill="${BLEU}" fill-opacity="0.18"
-        stroke="${BLEU}" stroke-opacity="0.55"/>
+        rx="${Math.round(H * 0.025)}" fill="${accent}" fill-opacity="0.18"
+        stroke="${accent}" stroke-opacity="0.55"/>
   <text x="${marge + largeurPastille / 2}" y="${hautPastille + Math.round(H * 0.033)}"
         text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="${Math.round(H * 0.024)}" font-weight="700" fill="${BLEU}"
+        font-size="${Math.round(H * 0.024)}" font-weight="700" fill="${accent}"
         letter-spacing="1">${echapper(categorie.toUpperCase())}</text>
 
   ${lignes.map((l, i) => `<text x="${marge}" y="${hautTitre + i * interligne}"
