@@ -16,6 +16,14 @@
  * ⚠️ Aucune clé requise, mais le service est le projet personnel d'un
  * développeur unique qui demande de ne pas le marteler. D'où le
  * plafond d'appels ci-dessous et la pause entre chaque.
+ *
+ * ⚠️ Corrigé le 27 septembre 2026, avant toute publication : la lecture
+ * de Day1/Day13 était inversée (Day1 est le jour le PLUS RÉCENT, Day13 le
+ * plus ANCIEN), ce qui faisait ressortir en « hausse » des cartes ayant en
+ * réalité reculé — voir le commentaire sur `actuelUsd`/`referenceUsd`
+ * plus bas. Profité de la relecture pour convertir l'affichage en euros
+ * (marché anglophone en dollars sinon, aucune source Cardmarket libre
+ * n'existant pour One Piece).
  */
 
 const BASE = 'https://www.optcgapi.com/api';
@@ -30,9 +38,14 @@ const BASE = 'https://www.optcgapi.com/api';
 const FRAICHEUR_MAX_JOURS = 10;
 const VALEURS_DISTINCTES_MIN = 3;
 
+/* En dollars : comparé à `actuelUsd`, avant conversion. */
 const PRIX_PLANCHER = 3;
 const HAUSSE_MIN = 12;
 const HAUSSE_MAX_PLAUSIBLE = 300;
+
+/* Ordre de grandeur, pas une conversion précise — même convention que
+   TAUX_USD_EUR dans cote-hebdo.mjs. À réviser de temps en temps. */
+const TAUX_USD_EUR = 0.92;
 
 /* Le service est un hobby project : on borne les appels et on espace. */
 const CARTES_MAX = 40;
@@ -115,11 +128,25 @@ for (const c of aExaminer) {
 
     if (new Set(jours).size < VALEURS_DISTINCTES_MIN) { rejeter('série figée'); continue; }
 
-    const debut = jours[0];
-    const fin = jours[jours.length - 1];
-    if (!debut || fin < PRIX_PLANCHER) { rejeter('sous le plancher'); continue; }
+    /*
+      Day1 est le jour le PLUS RÉCENT, Day13 le plus ANCIEN (documenté par
+      le SDK Go de cette API, et recoupé à la main : Day1_Market_Price
+      colle toujours au `market_price` « live » renvoyé en tête de la même
+      réponse, Day13 s'en écarte le plus).
 
-    const variation = ((fin - debut) / debut) * 100;
+      Piège vécu le 27 septembre 2026, avant toute publication : la
+      première version prenait jours[0] pour le début de période et
+      jours[12] pour la fin, donc l'inverse. Résultat, Zeus (OP11-106),
+      qui a RECULÉ de 3,97 $ à 2,24 $ en 13 jours (-44 %), sortait en tête
+      du podium annoncé en hausse de +77 %. Le calcul était cohérent avec
+      lui-même, seulement inversé, donc rien ne l'aurait signalé avant
+      publication.
+    */
+    const actuelUsd = jours[0];
+    const referenceUsd = jours[jours.length - 1];
+    if (!actuelUsd || actuelUsd < PRIX_PLANCHER) { rejeter('sous le plancher'); continue; }
+
+    const variation = ((actuelUsd - referenceUsd) / referenceUsd) * 100;
     if (!Number.isFinite(variation)) { rejeter('variation non calculable'); continue; }
     if (variation > HAUSSE_MAX_PLAUSIBLE) { rejeter('hausse aberrante'); continue; }
     if (variation < HAUSSE_MIN) { rejeter('variation négligeable'); continue; }
@@ -129,10 +156,18 @@ for (const c of aExaminer) {
       nomFr: null, /* les personnages One Piece gardent leur nom en français */
       set: c.set,
       id: c.id,
-      actuel: Math.round(fin * 100) / 100,
-      reference: Math.round(debut * 100) / 100,
+      /*
+        Conversion en euros, à un taux FIXE et approximatif — même
+        convention que cote-hebdo.mjs pour son recoupement TCGplayer, et
+        que la conversion ajoutée le 27 septembre 2026 sur l'article
+        Dragon Ball FB11 : un ordre de grandeur, pas une conversion
+        précise. La variation en % est inchangée par le change, calculée
+        ci-dessus sur les dollars bruts.
+      */
+      actuel: Math.round(actuelUsd * TAUX_USD_EUR * 100) / 100,
+      reference: Math.round(referenceUsd * TAUX_USD_EUR * 100) / 100,
       variation: Math.round(variation),
-      devise: 'USD',
+      devise: 'EUR',
       maj: scrape,
     });
   }
@@ -152,7 +187,7 @@ if (EN_JSON) {
   } else {
     console.log('\nTop des hausses :');
     for (const [i, c] of podium.entries()) {
-      console.log(`  ${i + 1}. ${c.nom} (${c.set}) — ${c.actuel} $ (+${c.variation} %, il y a 13 j : ${c.reference} $)`);
+      console.log(`  ${i + 1}. ${c.nom} (${c.set}) — ${c.actuel} € (+${c.variation} %, il y a 13 j : ${c.reference} €)`);
     }
   }
 }

@@ -225,7 +225,10 @@ const court = (t, n) => (t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t)
 const nomCarte = (c) => c.affichage || c.nomFr || c.nom;
 /* Virgule décimale et espace insécable avant le symbole : « 96,54 € ».
    Un « 96.54 € » à l'anglaise sur un compte français fait amateur. */
-const DEVISE = MARCHE === 'op' ? '$' : '€';
+/* One Piece (marché 'op') est converti en euros à la source, dans
+   cote-one-piece.mjs (27 septembre 2026) : les deux marchés affichent
+   donc désormais le même symbole. */
+const DEVISE = '€';
 const euros = (n) => n.toFixed(2).replace('.', ',') + ' ' + DEVISE;
 
 /*
