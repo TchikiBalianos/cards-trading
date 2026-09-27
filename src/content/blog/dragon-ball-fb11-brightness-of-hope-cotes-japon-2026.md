@@ -40,7 +40,7 @@ Les faits établis par le site officiel du jeu, avant de parler de prix.
 - **3 Secret Rare** : Son Goku (FB11-121), Shallet (FB11-122) et Bardock (FB11-123), toutes trois déclinées en **Super Alt-Art**.
 - Chaque Leader et chaque Super Rare existe aussi en Alt-Art.
 - Une collaboration avec le jeu mobile DRAGON BALL LEGENDS, avec une carte collab dans chaque couleur.
-- **6 cartes par paquet pour 240 yens** au Japon, **12 cartes par paquet pour 4,99 dollars** conseillés dans la version anglaise.
+- **6 cartes par paquet pour 240 yens (environ 1,35 €)** au Japon, **12 cartes par paquet pour 4,99 dollars** conseillés dans la version anglaise.
 
 Côté nom : la fiche produit japonaise porte simplement « BRIGHTNESS OF HOPE [FB11] », sans titre japonais distinct. Le site officiel français affiche « Lueur d'espoir », mais c'est une traduction du site, qui précise lui-même contenir des textes traduits automatiquement. Il écrit d'ailleurs le nom du même Secret Rare de deux façons, « Shallet » et « Shailet ». Sur les cartes que vous achèterez, ce sera l'anglais.
 
@@ -50,9 +50,11 @@ Les chiffres qui suivent viennent du relevé de DBFW日記 (dbfw-days.com), mis 
 
 | Super Alt-Art (SCR) | Jour 1 | Jour 2 | Jour 7 | Jour 14 |
 |---|---|---|---|---|
-| Son Goku (FB11-121) | 190 000 | 102 500 | 100 000 | 105 000 |
-| Bardock (FB11-123) | 72 500 | 44 000 | 35 000 | 40 000 |
-| Shallet (FB11-122) | 70 000 | 39 500 | 30 000 | 30 000 |
+| Son Goku (FB11-121) | 190 000 (≈ 1 064 €) | 102 500 (≈ 574 €) | 100 000 (≈ 560 €) | 105 000 (≈ 588 €) |
+| Bardock (FB11-123) | 72 500 (≈ 406 €) | 44 000 (≈ 246 €) | 35 000 (≈ 196 €) | 40 000 (≈ 224 €) |
+| Shallet (FB11-122) | 70 000 (≈ 392 €) | 39 500 (≈ 221 €) | 30 000 (≈ 168 €) | 30 000 (≈ 168 €) |
+
+*Équivalents en euros indicatifs, convertis au taux du 27 septembre 2026 (environ 179 yens pour 1 euro) : ce sont des prix de rachat japonais, pas des prix de vente en Europe.*
 
 Deux constats.
 
@@ -68,8 +70,8 @@ Le schéma n'est pas nouveau. Notre article sur [Story Booster 01](/blog/dragon-
 
 Sur le même relevé, d'autres cartes ont fait le chemin inverse.
 
-- **Son Goku (FB11-121), version Alt-Art simple** : 13 500 yens le premier jour, 10 000 au 2e, 8 000 au 3e, puis 23 000 au 7e et 22 000 au 14e. Le creux du troisième jour se situe environ 65 % sous le prix du 14e jour.
-- **Bulma (FB11-094), Alt-Art**, la carte collab Legends jaune : de 5 050 à 7 250 yens entre le premier et le 14e jour.
+- **Son Goku (FB11-121), version Alt-Art simple** : 13 500 yens (≈ 76 €) le premier jour, 10 000 (≈ 56 €) au 2e, 8 000 (≈ 45 €) au 3e, puis 23 000 (≈ 129 €) au 7e et 22 000 (≈ 123 €) au 14e. Le creux du troisième jour se situe environ 64 % sous le prix du 14e jour.
+- **Bulma (FB11-094), Alt-Art**, la carte collab Legends jaune : de 5 050 (≈ 28 €) à 7 250 yens (≈ 41 €) entre le premier et le 14e jour.
 
 Le relevé ne dit pas pourquoi. Deux lectures sont possibles : les premiers vendeurs ont épuisé leur stock et l'offre s'est raréfiée, ou bien des joueurs ont découvert un deck qui marche. Aucune des deux n'est démontrée, et il serait malhonnête de prétendre le contraire.
 
@@ -79,11 +81,11 @@ Voici ce que fait chaque Leader, d'après le site officiel du jeu.
 
 - **Son Goku (FB11-001)** : il s'éveille à 4 vies ou moins, ou avec 2 énergies et une carte [Evolve] en zone de combat. Une fois éveillé, il peut rediriger une attaque vers une carte [Evolve], une fois par tour.
 - **Trunks: Future / Son Gohan: Future (FB11-025)** : il s'éveille et pioche dès que le total de [Ki] atteint 2. Ensuite, une fois par tour, il donne +1 [Ki] à une carte « Future » et peut ramener en main une carte « Future » de coût 3 ou moins.
-- **Goku Black (FB11-049)** : il s'éveille avec un Goku Black ou un Zamasu en jeu et 2 [Ki] au total. Quand il s'éveille, puis à chaque attaque, il pioche 2 cartes, peut en défausser 1, et donne +1 [Ki] à Goku Black et à Zamasu.
-- **Shallot / Giblet / Shallet (FB11-073)** : un Leader à contrainte, qui interdit de jouer des cartes [Evolve] de coût d'origine 4 ou moins pour toute la partie. En échange, il réactive 2 énergies pour poser de grosses cartes [Evolve].
-- **Bardock (FB11-097)** : il s'éveille avec 2 [Ki], puis peut retirer 1 [Ki] pour rejouer l'effet [When KO'd] d'une carte de coût 2 de la Bande de Bardock présente dans la défausse.
+- **Goku Black (FB11-049)** : il s'éveille (en piochant une carte) avec un Goku Black ou un Zamasu en jeu et 2 [Ki] au total. Une fois éveillé seulement, chaque attaque lui fait piocher 2 cartes et en défausser 1, puis donner +1 [Ki] à un Goku Black et à un Zamasu en jeu.
+- **Shallot / Giblet / Shallet (FB11-073)** : dès son entrée en jeu, il s'interdit pour toute la partie de jouer des cartes [Evolve] de coût d'origine 4 ou moins. Une fois éveillé, il peut en plus réactiver 2 énergies une fois par tour si Shallot et Giblet sont tous deux en jeu, au prix de ne jouer aucune carte de coût d'origine 4 ou moins ce tour-là.
+- **Bardock (FB11-097)** : il s'éveille dès que 2 [Ki] reposent sur lui, puis peut en retirer 1 pour rejouer l'effet [When KO'd] d'une carte de coût 2 de la Bande de Bardock présente dans la défausse, qu'il renvoie ensuite sous le deck.
 
-Côté prix, quatre de ces cinq Leaders en Alt-Art ont reculé sur les 14 jours. Le Son Goku passe de 11 000 à 8 250 yens, le Goku Black de 4 800 à 3 400, le Bardock de 3 600 à 3 100 et le Shallot / Giblet / Shallet de 3 950 à 1 900. Seul le Trunks: Future a progressé, de 2 550 à 3 250 yens. Là encore, le relevé ne permet pas de dire pourquoi, et deux semaines ne suffisent pas à juger un Leader en tournoi.
+Côté prix, quatre de ces cinq Leaders en Alt-Art ont reculé sur les 14 jours. Le Son Goku passe de 11 000 (≈ 62 €) à 8 250 yens (≈ 46 €), le Goku Black de 4 800 (≈ 27 €) à 3 400 (≈ 19 €), le Bardock de 3 600 (≈ 20 €) à 3 100 (≈ 17 €) et le Shallot / Giblet / Shallet de 3 950 (≈ 22 €) à 1 900 (≈ 11 €). Seul le Trunks: Future a progressé, de 2 550 (≈ 14 €) à 3 250 yens (≈ 18 €). Là encore, le relevé ne permet pas de dire pourquoi, et deux semaines ne suffisent pas à juger un Leader en tournoi.
 
 ## Comment s'en servir le 16 octobre
 
@@ -92,7 +94,7 @@ Cinq réflexes découlent de ces courbes.
 1. **Ne pas courir après la cote d'ouverture.** Sur les trois Super Alt-Art, le premier jour a été le point le plus haut de la période.
 2. **Laisser passer les 48 à 72 premières heures.** Les creux et les paliers sont apparus dans les trois premiers jours de vente.
 3. **Regarder aussi les cartes du milieu de tableau.** Les Alt-Art simples des Secret Rare et les cartes collab ont parfois évolué à contre-courant du sommet.
-4. **Ne pas convertir les yens en euros.** L'édition anglaise a son propre tirage, son propre prix de paquet et ses propres acheteurs : les niveaux japonais donnent une forme de courbe, pas un prix à payer.
+4. **Lire les équivalents en euros comme un ordre de grandeur, pas un prix à payer.** L'édition anglaise a son propre tirage, son propre prix de paquet et ses propres acheteurs : les niveaux japonais donnent une forme de courbe, pas un prix français à attendre.
 5. **Comparer aux prix francophones dès qu'ils existent.** Le 16 octobre, les premiers relevés de la base DBSCards.fr et des boutiques européennes donneront la vraie référence.
 
 ## Ce que ces relevés ne disent pas
@@ -110,7 +112,7 @@ Le 16 octobre 2026, en version anglaise, la seule commercialisée en Europe. La 
 
 ### Combien de cartes contient un paquet FB11 ?
 
-12 cartes dans la version anglaise, au prix conseillé de 4,99 dollars, et 6 cartes dans la version japonaise, à 240 yens. Le set compte 123 types de cartes dans les deux cas.
+12 cartes dans la version anglaise, au prix conseillé de 4,99 dollars, et 6 cartes dans la version japonaise, à 240 yens (environ 1,35 €). Le set compte 123 types de cartes dans les deux cas.
 
 ### Quelles sont les cartes les plus recherchées de FB11 ?
 
@@ -144,4 +146,4 @@ Pour acheter et vendre vos cartes Dragon Ball entre collectionneurs francophones
 
 ---
 
-*Sources : site officiel Dragon Ball Super Card Game Fusion World (fiches produit anglaise et japonaise de FB11, liste des produits), site officiel Dragon Ball (actualité du 12 septembre 2026, versions anglaise et française), DBFW日記 (dbfw-days.com) pour les prix de rachat moyens des jours 1, 2, 7 et 14 relevés au 25 septembre 2026, PRICE BASE (price-base.com) pour le classement des prix de marché du 18 septembre 2026. Les prix sont exprimés en yens et évoluent rapidement.*
+*Sources : site officiel Dragon Ball Super Card Game Fusion World (fiches produit anglaise et japonaise de FB11, liste des produits, texte des cinq Leaders), site officiel Dragon Ball (actualité du 12 septembre 2026, versions anglaise et française), DBFW日記 (dbfw-days.com) pour les prix de rachat moyens des jours 1, 2, 7 et 14 relevés au 25 septembre 2026, PRICE BASE (price-base.com) pour le classement des prix de marché du 18 septembre 2026 et la liste officielle des cinq cartes collab DRAGON BALL LEGENDS. Les prix sont exprimés en yens et évoluent rapidement ; les équivalents en euros entre parenthèses sont indicatifs, convertis au taux du 27 septembre 2026 (environ 179 yens pour 1 euro), et ne remplacent pas un prix de vente réel en Europe.*
