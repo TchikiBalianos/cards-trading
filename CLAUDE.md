@@ -377,6 +377,32 @@ node scripts/alerte-relecture.mjs --rappel --dry-run
 node scripts/alerte-relecture.mjs --branche=blog/<slug> --dry-run
 ```
 
+⚠️ **Un commit sur la branche ne fusionne rien : Julian s'y est fait
+prendre le 22 septembre 2026.** Prévenu par cette alerte, il a cliqué
+« Lire l'article » (qui ouvre le fichier sur la branche `blog/<slug>`),
+changé `draft: true` en `draft: false` dans l'éditeur GitHub, et committé
+là, en pensant qu'une fusion suivrait. Aucune pull request n'a été
+ouverte : l'article est resté deux jours hors ligne, jusqu'à ce qu'un
+contrôle manuel s'en aperçoive.
+
+Le `draft: false` posé sur la branche aggravait le risque plutôt que de
+le résoudre : fusionnée telle quelle, `publie-articles.mjs` l'aurait
+ignorée quand même, puisqu'il ne traite que les articles `draft: true`
+sur `main`. Ni vignette, ni contrôle du build ou de la FAQ, ni attente du
+200, alors que Vercel aurait déployé l'article dès le premier push.
+
+L'email porte donc, pour chaque article, un lien direct
+`compare/main...<branche>?expand=1` qui ouvre le formulaire de pull
+request en un clic, et une consigne en trois étapes : ne pas toucher au
+`draft`, ne rien committer sur la branche, ouvrir la pull request puis la
+fusionner. Une branche non fusionnée dont l'article porte `draft: false`
+est désormais signalée en rouge dans sa carte. L'email ne promet plus
+d'heure de publication précise : mesuré entre le 19 et le 24 septembre
+2026, le cron programmé à 05:12 UTC démarre en réalité vers 09:57 UTC
+(GitHub retarde ses crons programmés, sans garantie d'horaire), même si
+l'ordre avec les crons d'annonce reste largement respecté. Il dit
+seulement « le matin même ».
+
 ⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
 commits d'archivage des autres workflows. Vercel honore ce marqueur :
 l'article serait committé et jamais déployé.
