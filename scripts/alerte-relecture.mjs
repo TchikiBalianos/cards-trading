@@ -96,6 +96,17 @@ function articleDeLaBranche(ref) {
     mots: compterMots(article),
     bloquants: defauts(article, PUBLIES.filter((p) => p.slug !== slug)),
     vigilance: points_de_vigilance(article),
+    /*
+      `draft: false` posé À LA MAIN sur une branche pas encore fusionnée,
+      distinct du cas normal (draft: true en attente de fusion). Piège
+      constaté le 22 septembre 2026 : Julian a édité ce champ dans
+      l'éditeur GitHub et committé directement sur la branche, en pensant
+      qu'une fusion suivrait. Fusionnée telle quelle, publie-articles.mjs
+      l'aurait ignorée quand même (il ne traite que `draft: true`), donc
+      sans vignette ni contrôle, alors que Vercel aurait déployé l'article
+      au premier push. Voir CLAUDE.md, section Publication des articles.
+    */
+    draftFalse: article.champs.draft === 'false',
   };
 }
 
@@ -177,8 +188,18 @@ function carte(a) {
     ? `<tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.6; color:#e0b341; padding-top:8px;">À vérifier : ${echapper(a.vigilance.join(' · '))}</td></tr>`
     : '';
 
+  // Piège du 22 septembre 2026 : un `draft: false` posé sur la branche,
+  // avant fusion, se ferait ignorer par publie-articles.mjs (voir la note
+  // sur `draftFalse` plus haut). L'alerte doit sauter aux yeux.
+  const alerteDraft = a.draftFalse
+    ? `<tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.6; font-weight:bold; color:#ff8a7a; padding-top:8px;">⚠️ draft: false sur cette branche, qui n'est pas encore sur main : publie-articles.mjs l'ignorera. Remets draft: true avant de fusionner.</td></tr>`
+    : '';
+
   const lien = `https://github.com/${DEPOT}/blob/${a.branche}/${a.chemin}`;
-  const diff = `https://github.com/${DEPOT}/compare/main...${a.branche}`;
+  // `?expand=1` ouvre directement le formulaire de pull request (titre,
+  // description) plutôt que la simple page de comparaison : un clic de
+  // moins entre l'email et la fusion.
+  const fusion = `https://github.com/${DEPOT}/compare/main...${a.branche}?expand=1`;
 
   return `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#171d2b; border-radius:10px; margin-bottom:14px;" bgcolor="#171d2b">
@@ -189,10 +210,11 @@ function carte(a) {
           <tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#a9b4c7; padding-bottom:10px;">${echapper(a.description)}</td></tr>
           <tr><td style="font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.6;">${verdict}</td></tr>
           ${vigilance}
+          ${alerteDraft}
           <tr><td style="padding-top:14px;">
             <a href="${lien}" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; color:#2997ff; text-decoration:none;">Lire l'article &rarr;</a>
             &nbsp;&nbsp;
-            <a href="${diff}" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#7c879c; text-decoration:none;">voir le diff</a>
+            <a href="${fusion}" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; color:#2997ff; text-decoration:none;">Ouvrir la demande de fusion &rarr;</a>
           </td></tr>
         </table>
       </td></tr>
@@ -241,9 +263,11 @@ function composerHtml(articles, correctifs, immediat) {
     : '';
 
   const noteFusion = articles.length
-    ? `<strong style="color:#ffffff;">Pour programmer la publication</strong><br>
-       Fusionne l'article sur <span style="color:#2997ff;">main</span> en gardant <span style="color:#2997ff;">draft: true</span>, et mets la <span style="color:#2997ff;">pubDate</span> au jour voulu.
-       Le workflow <span style="color:#2997ff;">publie-articles.yml</span> le met en ligne ce matin-là à 07h12, avant les crons d'annonce, et vérifie lui-même le 200 en production.`
+    ? `<strong style="color:#ffffff;">Pour fusionner</strong><br>
+       1. Ne touche pas au champ <span style="color:#2997ff;">draft</span>, et ne committe rien depuis l'onglet « Lire l'article » : ça édite le fichier sur la branche, pas sur main, et ça n'a aucun effet tant qu'elle n'est pas fusionnée.<br>
+       2. Clique <span style="color:#2997ff;">Ouvrir la demande de fusion</span> sur l'article concerné ci-dessus, puis <span style="color:#2997ff;">Create pull request</span>.<br>
+       3. Une fois la pull request ouverte, clique <span style="color:#2997ff;">Merge pull request</span>.<br>
+       Garde <span style="color:#2997ff;">draft: true</span> et mets la <span style="color:#2997ff;">pubDate</span> au jour voulu : le workflow <span style="color:#2997ff;">publie-articles.yml</span> publie l'article le matin même, avant les crons d'annonce, et vérifie lui-même le 200 en production.`
     : `<strong style="color:#ffffff;">Pour appliquer un correctif</strong><br>
        Vérifie d'abord le diff : si la branche retire un élément présent sur <span style="color:#2997ff;">main</span> (sommaire, vignette, section ajoutée depuis), c'est elle qui est périmée, pas l'inverse, et il faut la supprimer plutôt que la fusionner. Sinon, fusionne-la sur <span style="color:#2997ff;">main</span> pour répercuter le changement au prochain déploiement.`;
 
@@ -291,7 +315,9 @@ function composerTexte(articles, correctifs) {
         : `  Structure complète, publiable en l'état`,
     ];
     if (a.vigilance.length) lignes.push(`  À vérifier : ${a.vigilance.join(' | ')}`);
-    lignes.push(`  https://github.com/${DEPOT}/blob/${a.branche}/${a.chemin}`);
+    if (a.draftFalse) lignes.push(`  ATTENTION : draft: false sur cette branche, publie-articles.mjs l'ignorera. Remets draft: true avant de fusionner.`);
+    lignes.push(`  Lire l'article : https://github.com/${DEPOT}/blob/${a.branche}/${a.chemin}`);
+    lignes.push(`  Ouvrir la demande de fusion : https://github.com/${DEPOT}/compare/main...${a.branche}?expand=1`);
     return lignes.join('\n');
   });
 
