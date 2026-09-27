@@ -6,7 +6,7 @@ category: "dragon-ball"
 tags: ["dragon-ball", "fusion-world", "fb11", "brightness-of-hope", "marché", "collection"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-dbz.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
