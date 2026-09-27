@@ -24,9 +24,9 @@ on:
   workflow_dispatch:
     inputs:
       marche:
-        description: "Marché : int (cartes internationales) ou jp (cartes japonaises)"
+        description: "Marché : int (cartes internationales), jp (cartes japonaises) ou op (One Piece)"
         type: choice
-        options: [auto, int, jp]
+        options: [auto, int, jp, op]
         default: auto
       sans_discord:
         description: "Reprise : ne pas reposter sur Discord (deja parti)"
@@ -78,26 +78,35 @@ jobs:
           git pull --rebase --autostash origin main
           git push origin HEAD:main
 
-      # Rotation sur deux marchés, une semaine chacun :
+      # Rotation sur trois marchés, une semaine chacun :
       #   int → cartes internationales, cote Cardmarket en euros
       #   jp  → cartes japonaises, cote Cardmarket en euros également
+      #   op  → One Piece, cote TCGPlayer (USD) convertie en euros
       #
-      # One Piece est SORTI de la rotation. Exigence : tendances en euros
-      # sur le marché européen. Or les trois sources One Piece testées
-      # (optcgapi, apitcg, tcgcsv) cotent toutes en DOLLARS sur le marché
-      # américain — vérifié, apitcg n'expose que « tcgplayer » sur les
-      # trois TCG testés, aucun marché européen. TCGdex est le seul à
-      # coter en euros, et il ne couvre que Pokémon.
+      # One Piece est ENTRÉ dans la rotation le 27 septembre 2026. Aucune
+      # source Cardmarket libre n'existe pour ce TCG (TCGdex ne couvre que
+      # Pokémon, Cardmarket bloque le scraping par Cloudflare), donc
+      # cote-one-piece.mjs convertit à un taux fixe et approximatif — même
+      # logique que le Dragon Ball du même jour. Corrigé au passage : ce
+      # script inversait Day1 (le plus récent) et Day13 (le plus ancien) de
+      # son historique, ce qui faisait ressortir en « hausse » des cartes
+      # ayant en réalité reculé (Zeus, -44 % annoncé +77 %).
       #
-      # Le relevé One Piece continue de tourner : il coûte peu et servira
-      # le jour où une source Cardmarket apparaîtra.
+      # ⚠️ Le japonais restant suspendu (cotes gelées, voir plus bas), la
+      # rotation réelle est aujourd'hui int/int/op sur 3 semaines, pas
+      # int/jp/op. Elle redevient un vrai tiers-tiers-tiers le jour où le
+      # japonais est réactivé, sans rien à changer ici.
       - name: Choisir le marché
         id: marche
         run: |
           CHOIX="${{ inputs.marche }}"
           if [ -z "$CHOIX" ] || [ "$CHOIX" = "auto" ]; then
             SEMAINE=$(date -u +%V)
-            if [ $((10#$SEMAINE % 2)) -eq 0 ]; then CHOIX=int; else CHOIX=jp; fi
+            case $(( 10#$SEMAINE % 3 )) in
+              0) CHOIX=int ;;
+              1) CHOIX=jp ;;
+              2) CHOIX=op ;;
+            esac
 
             # ⚠️ SUSPENSION DU MARCHÉ JAPONAIS, décidée le 19 septembre 2026.
             #
