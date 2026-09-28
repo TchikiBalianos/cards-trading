@@ -1,12 +1,24 @@
-@import url(animations.css?v=29);
-@import url(avantages.css?v=29);
-@import url(comparatif.css?v=29);
-@import url(features.css?v=29);
-@import url(hero.css?v=29);
-@import url(layout.css?v=29);
-@import url(questionnaire.css?v=29);
-@import url(seller-tools.css?v=29);
-@import url(social.css?v=29);
+@import url(animations.css?v=30);
+@import url(avantages.css?v=30);
+@import url(comparatif.css?v=30);
+@import url(features.css?v=30);
+@import url(hero.css?v=30);
+@import url(layout.css?v=30);
+@import url(questionnaire.css?v=30);
+@import url(seller-tools.css?v=30);
+@import url(social.css?v=30);
+
+/* ── SAUT DE LIGNE MOBILE (retour à la ligne choisi, pas celui du
+   navigateur) — masqué par défaut, activé sous 600px */
+.mobile-br {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .mobile-br {
+    display: inline;
+  }
+}
 
 /* ── REVEAL H2 — IntersectionObserver custom (remplace AOS) */
 .reveal-h2 {

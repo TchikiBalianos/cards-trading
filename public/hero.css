@@ -273,6 +273,13 @@
     .baseline {
       font-size: 24px !important;
       padding: 0 24px;
+      /* Le dégradé de texte (#2997ff → violet → cyan → #2997ff) repasse
+         par du bleu sur un fond de hero lui-même bleu en mobile : texte
+         illisible par moments. On repasse en couleur claire unie ici,
+         comme .subline juste en dessous. */
+      background: none;
+      -webkit-text-fill-color: #fff;
+      animation: hero-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75))
               drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
     }

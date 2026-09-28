@@ -217,6 +217,16 @@
       button {
         padding: 12px 18px;
         font-size: 14px;
+
+        /* Le fond bleu plein de l'état actif est trop appuyé en mobile.
+           On reprend la forme du survol (léger fond teinté) pour indiquer
+           la sélection, plutôt que le bleu plein réservé au desktop. */
+        &.active {
+          background: rgba(41, 151, 255, 0.2);
+          border-color: #2997ff;
+          color: #fff;
+          box-shadow: none;
+        }
       }
     }
   }
