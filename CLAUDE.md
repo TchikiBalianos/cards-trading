@@ -252,6 +252,36 @@ ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agré
   Reproduire **exactement** la commande qui échoue, options comprises,
   avant de théoriser sur sa cause.
 
+⚠️ **Le déploiement automatique sur push peut s'arrêter sans le moindre
+message d'erreur : l'app GitHub de Vercel demande parfois une validation
+de permissions.** Constaté le 28 septembre 2026 : `main` a reçu six
+commits sans qu'aucun ne se déploie, ni en production ni même en preview.
+`git push` rapportait un succès normal à chaque fois.
+
+Cause trouvée sur `github.com/settings/installations` : l'app **Vercel**
+y affichait « Permission updates requested. Review request. », en
+attente depuis un moment. Tant qu'elle n'est pas validée (passkey ou
+2FA, action qu'un agent ne peut pas faire à la place de l'humain), GitHub
+cesse d'envoyer certains événements à l'app, dont les push sur `main` —
+sans que rien ne le signale côté dépôt.
+
+Le signal qui tranche : comparer, pour un commit donné, `gh api
+repos/<owner>/<repo>/commits/<sha>/status` à l'heure du push. Une
+automatisation saine dépose un statut `Vercel` à la même minute. Une
+absence totale de statut (pas un échec, une ABSENCE) sur plusieurs
+commits d'affilée pointe vers ce blocage, pas vers un bug de build.
+
+```bash
+gh api repos/TchikiBalianos/cards-trading/commits/<sha>/status \
+  --jq '.statuses[] | "\(.context) \(.state) \(.created_at)"'
+```
+
+Le déploiement manuel via l'API Vercel (`create_deployment`, gitSource
+type `github`, `sha` explicite) reste possible en attendant que la
+permission soit validée — mais vérifier le SHA réellement déployé plutôt
+que de faire confiance à `ref: "main"`, qui peut résoudre une vieille
+position si Vercel n'a pas non plus reçu le dernier push.
+
 ---
 
 ---
