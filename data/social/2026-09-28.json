@@ -1,0 +1,43 @@
+{
+  "semaine": "2026-09-28",
+  "posts": [
+    {
+      "id": "2026-10-01-communaute",
+      "jour": "2026-10-01",
+      "pilier": "communaute",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Cette sensation quand tu ouvres ton dernier booster de la journée en te disant « allez, celui-là »… et que tu retombes sur le même Pikachu qu'hier 😅\n\nEt toi, c'est quoi ton doublon le plus fidèle ?\n\n#pokemontcg"
+      },
+      "instagram": {
+        "texte": "Cette sensation quand tu ouvres ton dernier booster de la journée en te disant « allez, celui-là »… et que tu retombes sur le même Pikachu qu'hier 😅\n\nDis-nous en commentaire : c'est quoi ton doublon le plus fidèle ?\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "titre": "Le même Pikachu qu'hier, encore",
+        "sous_titre": "Ton doublon le plus fidèle ?"
+      }
+    },
+    {
+      "id": "2026-10-04-coulisses",
+      "jour": "2026-10-04",
+      "pilier": "coulisses",
+      "licence": "mixte",
+      "twitter": {
+        "texte": "Coulisses de la semaine 🛠️\n\n• Top des hausses : One Piece rejoint la rotation, en euros\n• Une couleur par licence sur nos visuels\n• Landing retouchée sur mobile\n• 18 articles sur le blog\n\nOn construit en public.\n\n#pokemontcg #onepiececardgame"
+      },
+      "instagram": {
+        "texte": "Coulisses de la semaine sur Cards-Trading 🛠️\n\n• Le top des hausses de cotes accueille One Piece, en euros\n• Une couleur par licence sur nos visuels\n• La landing retouchée sur mobile\n• 18 articles au compteur du blog\n\nOn construit la marketplace TCG en public, une semaine après l'autre. Une idée, un retour ? Dis-le nous en commentaire.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #onepiececardgame #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Coulisses",
+        "titre": "Coulisses de la semaine",
+        "sous_titre": "One Piece dans le top des hausses, une couleur par licence, la landing retouchée sur mobile"
+      },
+      "sources": [
+        "https://cards-trading.com/blog/"
+      ]
+    }
+  ]
+}
