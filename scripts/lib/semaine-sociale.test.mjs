@@ -99,7 +99,7 @@ test('analyser : un brouillon périmé ne compte pas dans un doublon', () => {
 });
 
 test('analyser : un jour éditorial sans post est manquant, un mercredi vide ne l\'est pas', () => {
-  const a = analyser({ posts: [], maintenant: MAINTENANT, horizonJours: 3 });
+  const a = analyser({ posts: [], maintenant: MAINTENANT, horizonManquant: 3 });
   const manquants = a.filter((x) => x.service === 'twitter').map((x) => x.jour);
   /* mardi 29 → jours 30 (mer), 1er (jeu), 2 (ven) : seul le jeudi est éditorial */
   assert.deepEqual(manquants, ['2026-10-01']);
@@ -117,4 +117,11 @@ test('analyser : un post en erreur récent est signalé, un ancien ne l\'est plu
   assert.deepEqual(analyser({ posts: recent, maintenant: MAINTENANT, editorial: false }).map((x) => x.type), ['echec']);
   const ancien = [post('e2', 'instagram', 'error', '2026-09-20T09:30:00.000Z')];
   assert.deepEqual(analyser({ posts: ancien, maintenant: MAINTENANT, editorial: false }), []);
+});
+
+test('analyser : un jour éditorial à plus de 2 jours n\'est pas encore signalé manquant', () => {
+  /* mardi soir : le jeudi est à 2 jours (signalé), le lundi suivant à 6 jours (pas encore) */
+  const a = analyser({ posts: [], maintenant: MAINTENANT });
+  const jours = [...new Set(a.filter((x) => x.type === 'manquant').map((x) => x.jour))];
+  assert.deepEqual(jours, ['2026-10-01']);
 });

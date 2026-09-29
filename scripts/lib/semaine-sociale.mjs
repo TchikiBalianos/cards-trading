@@ -129,7 +129,13 @@ const PART_OU_PARTI = new Set(['scheduled', 'sending', 'sent']);
   - quota : la file approche des 10 posts, au-delà les relais automatiques
     échouent en LimitReachedError.
 */
-export function analyser({ posts, maintenant, horizonJours = 8, editorial = true }) {
+/*
+  « manquant » ne regarde que les 2 prochains jours. Plus loin, l'alerte serait
+  du bruit : la semaine suivante n'est écrite que le samedi par la routine, et
+  un vendredi soir « lundi est vide » est normal. Le samedi et le dimanche, c'est
+  l'absence du FICHIER de la semaine qui prévient (semaine-sociale.mjs).
+*/
+export function analyser({ posts, maintenant, horizonJours = 8, horizonManquant = 2, editorial = true }) {
   const anomalies = [];
   const aujourdhui = jourParis(maintenant);
   const fin = ajouterJours(aujourdhui, horizonJours);
@@ -161,7 +167,7 @@ export function analyser({ posts, maintenant, horizonJours = 8, editorial = true
     }
 
     if (editorial) {
-      for (let i = 1; i <= horizonJours; i++) {
+      for (let i = 1; i <= horizonManquant; i++) {
         const jour = ajouterJours(aujourdhui, i);
         const iso = new Date(`${jour}T12:00:00Z`).getUTCDay(); // 0 = dimanche
         const editorialJour = [1, 2, 4, 0].includes(iso);
