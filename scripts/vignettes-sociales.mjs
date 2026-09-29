@@ -30,6 +30,7 @@ import sharp from 'sharp';
 import { readFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { BLEU, FOND, ETIQUETTES, COULEURS, echapper, decouper } from './lib/charte.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOSSIER_BLOG = join(RACINE, 'src', 'content', 'blog');
@@ -38,40 +39,6 @@ const MARQUE = join(RACINE, 'public', 'assets', 'img', 'logo-icon.png');
 const FORCER = process.argv.includes('--force');
 
 const COTE = 1080;
-const BLEU = '#2997ff';
-const FOND = '#07111f';
-
-const ETIQUETTES = {
-  pokemon: 'Pokémon',
-  magic: 'Magic',
-  'one-piece': 'One Piece',
-  yugioh: 'Yu-Gi-Oh!',
-  lorcana: 'Lorcana',
-  'dragon-ball': 'Dragon Ball',
-  'star-wars': 'Star Wars',
-  guide: 'Guide',
-  actualite: 'Actualité',
-  strategie: 'Stratégie',
-};
-
-/*
-  Une couleur d'accent par TCG (halo, pastille, filet), au lieu du bleu de
-  marque partout. Choisie pour évoquer chaque licence sans en singer le
-  logo, et pour rester lisible en accent clair sur le fond bleu nuit
-  (#07111f) commun à toutes les vignettes.
-
-  guide/actualite/strategie n'ont pas de TCG : ils gardent le bleu de
-  marque, qui reste donc la couleur « par défaut » de tout le reste.
-*/
-const COULEURS = {
-  pokemon: '#f4c430',
-  magic: '#8b5cf6',
-  'one-piece': '#e5484d',
-  yugioh: '#caa14b',
-  lorcana: '#2dd4bf',
-  'dragon-ball': '#ff7a1a',
-  'star-wars': '#5ac8fa',
-};
 
 function lireFrontmatter(chemin) {
   const m = readFileSync(chemin, 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---/);
@@ -82,48 +49,6 @@ function lireFrontmatter(chemin) {
     if (p) champs[p[1]] = p[2].trim().replace(/^["']|["']$/g, '');
   }
   return champs;
-}
-
-/* XML : cinq caractères doivent être échappés, sinon le SVG est invalide et
-   sharp échoue sur un message peu parlant. */
-function echapper(texte) {
-  return texte
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
-/*
-  Découpe en lignes à partir d'une largeur de caractère ESTIMÉE.
-
-  Pas de mesure réelle : la police disponible diffère entre ma machine et
-  l'agent CI, donc une mise en page au pixel près serait fausse ailleurs.
-  On vise large (0.54 em par caractère pour du gras) et on laisse de la
-  marge — mieux vaut une ligne courte qu'un débordement.
-*/
-function decouper(texte, taillePolice, largeurMax, facteur = 0.54) {
-  const maxCar = Math.floor(largeurMax / (taillePolice * facteur));
-  const lignes = [];
-  let courante = '';
-
-  /* Typographie française : « mot : suite » place une espace avant les
-     deux-points, ce qui en fait un « mot » à part. Le laisser commencer
-     une ligne donne « : le set… ». On le recolle au mot précédent. */
-  const mots = [];
-  for (const mot of texte.split(/\s+/)) {
-    if (/^[:;!?»]$/.test(mot) && mots.length) mots[mots.length - 1] += ' ' + mot;
-    else mots.push(mot);
-  }
-
-  for (const mot of mots) {
-    if (!courante) courante = mot;
-    else if ((courante + ' ' + mot).length <= maxCar) courante += ' ' + mot;
-    else { lignes.push(courante); courante = mot; }
-  }
-  if (courante) lignes.push(courante);
-  return lignes;
 }
 
 /*
