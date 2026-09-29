@@ -16,6 +16,10 @@
         "type": "texte",
         "titre": "Le même Pikachu qu'hier, encore",
         "sous_titre": "Ton doublon le plus fidèle ?"
+      },
+      "buffer": {
+        "twitter": "6abbe462945e596c7035bcf9",
+        "instagram": "6abbe4639340de4c735e4273"
       }
     },
     {
@@ -37,7 +41,11 @@
       },
       "sources": [
         "https://cards-trading.com/blog/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6abbe4632c9e085adf6a7592",
+        "instagram": "6abbe464f9bc1204bdedc187"
+      }
     }
   ]
 }
