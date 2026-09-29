@@ -6,7 +6,7 @@ category: "one-piece"
 tags: ["one-piece", "opcg", "op18", "actualite", "precommande"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-onepiece.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
