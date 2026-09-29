@@ -1,0 +1,58 @@
+# Vérifie chaque jour que la programmation X et Instagram tient, et prévient
+# Julian par email SEULEMENT s'il y a quelque chose à faire.
+#
+# Ce qu'il attrape :
+#   - un brouillon daté de demain (ou déjà passé) jamais programmé dans Buffer :
+#     il ne partira pas sans le clic « Schedule Post », c'est le piège du circuit
+#     « validation dans Buffer » ;
+#   - un jour éditorial (lundi, mardi, jeudi, dimanche) sans post ;
+#   - deux posts le même jour sur un réseau ;
+#   - un post en erreur dans Buffer ;
+#   - une file qui approche des 10 posts du plan gratuit ;
+#   - le samedi et le dimanche : le fichier de la semaine suivante absent, seul
+#     signe que la routine de rédaction n'a pas tourné (rien n'aura échoué).
+#
+# 15:30 UTC = 17:30 à Paris en été : le soir, pour laisser le temps de valider
+# les brouillons du lendemain. GitHub retarde ses crons de plusieurs heures
+# parfois, ce qui reste utile tant que ça tombe avant l'heure du post.
+#
+# Aucune dépendance à installer : le script n'utilise que `fetch`.
+
+name: Controle social
+
+on:
+  schedule:
+    - cron: '30 15 * * *'
+  workflow_dispatch:
+    inputs:
+      essai:
+        description: "Composer sans envoyer l'email"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  controler:
+    name: Programmation X et Instagram
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Contrôler la programmation
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          if [ -z "$BUFFER_API_KEY" ]; then
+            echo "::error::Secret BUFFER_API_KEY absent."
+            exit 1
+          fi
+          node scripts/semaine-sociale.mjs --controle ${{ inputs.essai && '--dry-run' || '' }}

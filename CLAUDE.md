@@ -699,3 +699,76 @@ en relisant les pages en texte brut dans le navigateur.
 
 Même prudence pour la presse elle-même : un article peut citer un chiffre que sa propre
 source ne contient pas. Remonter à la source primaire, ou renoncer au chiffre.
+
+---
+
+## Posts éditoriaux X et Instagram : un par jour, validés dans Buffer
+
+Depuis le 29 septembre 2026, les réseaux ne se limitent plus au relais des articles.
+Un post par réseau et par jour, cible **Pokémon 70 % / One Piece 30 %**, inspirée de
+@ActuPokemon7 (actu, cotes, humour) et @pokeitem_ (build in public).
+
+**Grille.** Les relais automatiques tiennent le mercredi (article du mardi), le vendredi
+(cotes) et le samedi (article du vendredi). L'éditorial prend les quatre autres jours,
+calculés par `planEditorial` dans `scripts/lib/semaine-sociale.mjs` :
+
+| Jour | Pilier | Licence |
+|---|---|---|
+| Lundi | « Ça vaut combien ? » (cote sourcée) | Pokémon |
+| Mardi | Actu (révélation, calendrier, anecdote) | inverse de l'article du mardi |
+| Jeudi | Humour et communauté | inverse de l'article du mardi |
+| Dimanche | Coulisses (build in public) | mixte |
+
+Créneaux : X 10h20, Instagram 11h30 (heure de Paris, converties par `Intl`, le
+passage à l'heure d'hiver tombe le 25 octobre 2026). TikTok reste le compte personnel de
+Julian, hors périmètre.
+
+**Circuit.** La routine du samedi (tâche Desktop `social-cards-trading-semaine`) écrit
+`data/social/<lundi>.json` et le pousse sur `main`. Ce push déclenche
+`brouillons-sociaux.yml` : validation, visuels (`scripts/lib/visuel-social.mjs`, modèles
+texte, carte, photo), commit, attente du 200 en production, puis création de
+**brouillons datés** dans Buffer et email à Julian. Il relit dans Buffer et clique
+**Schedule Post**. `controle-social.yml` (quotidien, 15:30 UTC) le prévient seulement
+si quelque chose cloche.
+
+```bash
+node scripts/semaine-sociale.mjs --plan                       # grille de la semaine à préparer
+node scripts/brouillons-sociaux.mjs --valider                 # règles éditoriales, sans réseau
+node scripts/brouillons-sociaux.mjs --phase=brouillons --dry-run
+node scripts/semaine-sociale.mjs --controle --dry-run         # exige BUFFER_API_KEY
+```
+
+### Pièges de l'API Buffer, éprouvés le 29 septembre 2026
+
+- **Un brouillon daté ne part jamais tout seul.** Il apparaît au calendrier à son
+  créneau, mais seul le clic « Schedule Post » (onglet Drafts, vue All Channels ou appli
+  mobile) le programme. Un brouillon oublié est donc silencieux : c'est le premier
+  contrôle de `controle-social` (brouillon daté de demain, ou déjà passé).
+- **`editPost` refuse de changer une date seule** : « Post must have either text or
+  media ». Il faut renvoyer le contenu. C'est pourquoi il n'existe pas de rééquilibrage
+  automatique d'un relais tombé le même jour qu'un post éditorial : le contrôle le signale
+  (« doublon »), Julian déplace le post dans Buffer.
+- **Plan gratuit : 10 posts programmés par canal**, brouillons illimités. Au-delà, les
+  relais automatiques répondent `LimitReachedError`. Le contrôle alerte dès 8.
+- **L'API ne crée pas d'étiquettes** : les posts éditoriaux sont suivis par leurs
+  identifiants (`buffer` dans le fichier de semaine), pas par tag.
+- **Relancer est sans danger** : un brouillon identique (même canal, même heure, même
+  texte) est adopté au lieu d'être recréé, et les identifiants sont écrits au fur et à
+  mesure. Le commit des identifiants porte `[skip ci]`, celui des visuels **jamais** :
+  Vercel honore le marqueur et n'y déploierait pas les images.
+
+### Règles éditoriales, refusées par `valider` avant tout envoi
+
+Aucun tiret long. Un prix, un pourcentage ou une cote exige `sources` (liens lus en
+entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pondérés,
+2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
+Une photo de la communauté exige un `credit`, repris dans le texte du post.
+
+**Le post cité est notre meilleur format sur X** : le lien du post d'origine en fin de
+texte a donné nos meilleures impressions (430 et 342, contre environ 200 pour un relais
+d'article). @pokeitem_ tire son record d'une vidéo d'humour qui parle à tous, 60 fois sa
+médiane : l'humour communautaire n'est pas du remplissage.
+
+**Ce que ce système ne fait pas** : le temps réel. Les alertes de réapprovisionnement,
+premier moteur de portée d'@ActuPokemon7, ne se planifient pas une semaine à l'avance.
+Julian a choisi de ne pas les couvrir.
