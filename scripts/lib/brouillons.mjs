@@ -22,7 +22,7 @@
 */
 
 import { PILIERS, lundiDe, ajouterJours, jourParis } from './semaine-sociale.mjs';
-import { verifierSpec } from './visuel-social.mjs';
+import { verifierSpec } from './visuel-spec.mjs';
 
 export const LICENCES = ['pokemon', 'one-piece', 'mixte'];
 export const SITE = 'https://cards-trading.com';

@@ -15,6 +15,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { FOND, ETIQUETTES, accentDe, echapper, decouper } from './charte.mjs';
+import { verifierSpec } from './visuel-spec.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const MARQUE = join(RACINE, 'public', 'assets', 'img', 'logo-icon.png');
@@ -218,13 +219,6 @@ async function modelePhoto(spec, licence, format) {
 /* ── Point d'entrée ────────────────────────────────────────── */
 
 const MODELES = { texte: modeleTexte, carte: modeleCarte, photo: modelePhoto };
-
-export function verifierSpec(spec) {
-  if (!spec || !MODELES[spec.type]) throw new Error(`Type de visuel inconnu : ${spec && spec.type}`);
-  if (spec.type === 'photo' && !spec.credit) throw new Error('Visuel photo sans crédit.');
-  if (spec.type !== 'photo' && !spec.titre) throw new Error(`Visuel « ${spec.type} » sans titre.`);
-  if ((spec.type === 'photo' || spec.type === 'carte') && !spec.image) throw new Error(`Visuel « ${spec.type} » sans image source.`);
-}
 
 /* Renvoie le PNG en mémoire ; l'appelant décide où l'écrire. */
 export async function genererVisuel(spec, licence, reseau) {

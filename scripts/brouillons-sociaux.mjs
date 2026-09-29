@@ -23,7 +23,6 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contexte, listerPosts, creerPost } from './lib/buffer.mjs';
-import { genererVisuel } from './lib/visuel-social.mjs';
 import {
   valider, construireEnvoi, fichierVisuel, urlVisuel, texteX,
 } from './lib/brouillons.mjs';
@@ -114,6 +113,9 @@ if (travail.length === 0) {
 }
 
 if (PHASE === 'visuels') {
+  /* Import DYNAMIQUE : sharp n'est nécessaire qu'ici. La validation doit tourner
+     dans un worktree nu, sans node_modules (routine du samedi). */
+  const { genererVisuel } = await import('./lib/visuel-social.mjs');
   mkdirSync(join(DOSSIER_IMAGES, 'semaine'), { recursive: true });
   let faits = 0;
   for (const { post } of travail) {
