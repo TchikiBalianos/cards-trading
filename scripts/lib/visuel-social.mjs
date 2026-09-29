@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { FOND, ETIQUETTES, accentDe, echapper, decouper } from './charte.mjs';
 import { verifierSpec } from './visuel-spec.mjs';
+import { motif, choisirMotif, hachage } from './motifs.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const MARQUE = join(RACINE, 'public', 'assets', 'img', 'logo-icon.png');
@@ -51,6 +52,12 @@ async function enTete(L, H, marge) {
   return { marque, svg, posMarque: { left: marge, top: Math.round(H * 0.057) } };
 }
 
+/* Deux posts au titre différent n'ont ni la même famille de motif ni le même dessin. */
+function dessinPour(spec, accent, L, H) {
+  const graine = hachage(spec.titre || spec.credit || 'cards-trading');
+  return motif(choisirMotif(graine), { graine, accent, largeur: L, hauteur: H });
+}
+
 function pastille(x, y, H, accent, libelle, tailleRef) {
   if (!libelle) return '';
   const largeur = Math.round(18 + libelle.length * (tailleRef * 0.32));
@@ -81,7 +88,7 @@ function bloc(lignes, x, yDepart, taille, interligne, extra) {
         font-family="${POLICE}" font-size="${taille}" ${extra}>${echapper(l)}</text>`).join(SAUT);
 }
 
-function fondEtHalo(L, H, accent, cx = '78%', cy = '18%') {
+function fondEtHalo(L, H, accent, cx = '78%', cy = '18%', dessin = '') {
   return `<defs>
     <radialGradient id="halo" cx="${cx}" cy="${cy}" r="62%">
       <stop offset="0%" stop-color="${accent}" stop-opacity="0.34"/>
@@ -93,6 +100,7 @@ function fondEtHalo(L, H, accent, cx = '78%', cy = '18%') {
     </linearGradient>
   </defs>
   <rect width="${L}" height="${H}" fill="${FOND}"/>
+  ${dessin}
   <rect width="${L}" height="${H}" fill="url(#halo)"/>`;
 }
 
@@ -123,7 +131,7 @@ async function modeleTexte(spec, licence, format) {
   const t = await enTete(L, H, marge);
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
-  ${fondEtHalo(L, H, accent)}
+  ${fondEtHalo(L, H, accent, '78%', '18%', dessinPour(spec, accent, L, H))}
   ${t.svg}
   ${pastille(marge, Math.round(H * (paysage ? 0.235 : 0.21)), H, accent, etiquetteDe(spec, licence), taille)}
   ${bloc(lignes, marge, hautTitre, taille, interligne, 'font-weight="700" fill="#ffffff"')}
@@ -162,7 +170,7 @@ async function modeleCarte(spec, licence, format) {
   const t = await enTete(L, H, marge);
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
-  ${fondEtHalo(L, H, accent, paysage ? '30%' : '50%', '45%')}
+  ${fondEtHalo(L, H, accent, paysage ? '30%' : '50%', '45%', dessinPour(spec, accent, L, H))}
   ${t.svg}
   ${paysage ? pastille(xTexte, Math.round(H * 0.25), H, accent, etiquetteDe(spec, licence), taille) : ''}
   ${bloc(lignes, xTexte, hautTitre, taille, interligne, 'font-weight="700" fill="#ffffff"')}

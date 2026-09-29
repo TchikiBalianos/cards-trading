@@ -772,3 +772,19 @@ médiane : l'humour communautaire n'est pas du remplissage.
 **Ce que ce système ne fait pas** : le temps réel. Les alertes de réapprovisionnement,
 premier moteur de portée d'@ActuPokemon7, ne se planifient pas une semaine à l'avance.
 Julian a choisi de ne pas les couvrir.
+
+### Fonds des visuels : des motifs dessinés, plus d'IA
+
+Le fond IA de Pollinations.ai est tombé le 29 septembre 2026 (HTTP 402 depuis l'accès
+anonyme, puis 500 sur limite de débit en amont, le nouvel accès `gen.pollinations.ai`
+exigeant une clé). `scripts/lib/motifs.mjs` le remplace : huit familles en SVG (rayons,
+hexagones, courbes de niveau, demi-teinte, constellation, vagues, diagonales, orbites),
+choisies et déclinées par le slug de l'article ou le titre du post, à la couleur
+d'accent de la licence. Sans réseau, sans clé, et le même slug redonne toujours la
+même image.
+
+⚠️ **Ne jamais `--force` sur l'existant.** Régénérer une vignette publiée change l'image
+sous la même URL, alors que `/assets/` est servi en cache immuable d'un an : personne ne
+la reverrait. Seules les vignettes créées après le 30 septembre 2026 portent un motif,
+les autres gardent leur fond d'origine. `VIGNETTES_SORTIE=<dossier>` permet de juger un
+rendu sans toucher à `public/`.

@@ -7,20 +7,21 @@
  *   - 1080×1080 pour Instagram et TikTok ;
  *   - 1200×630 pour og:image, format attendu par X et Facebook.
  *
- * Le fond est THÉMATIQUE, généré par Pollinations.ai selon le TCG de
- * l'article (sans clé, licence MIT, usage commercial permis). Le texte,
- * lui, reste vectoriel et posé par-dessus : un modèle génératif rend mal
- * une typographie et invente des logos — constaté.
+ * Le fond est un MOTIF GÉNÉRATIF dessiné en SVG (scripts/lib/motifs.mjs) : huit
+ * familles, choisies et déclinées par le slug de l'article, à la couleur d'accent
+ * de la licence. Deux articles d'un même TCG n'ont donc pas le même dessin.
  *
- * ⚠️ Le fond est un CONFORT, jamais une dépendance. Toute panne, lenteur
- * ou limite de débit retombe sur un dégradé déterministe et la vignette
- * est produite quand même. Éprouvé en conditions réelles : une série de
- * HTTP 429 a fait basculer les 7 articles sur le dégradé, sans qu'aucune
- * vignette ne manque.
+ * Il remplace le fond IA de Pollinations.ai, tombé en 402 puis en 500 le
+ * 29 septembre 2026 (et son successeur exige une clé). Aucun réseau, aucune
+ * clé, et le même slug redonne toujours la même image : une chaîne de
+ * publication ne doit pas dépendre d'un service tiers pour un simple fond.
  *
  *   node scripts/vignettes-sociales.mjs            # ne génère que le manquant
  *   node scripts/vignettes-sociales.mjs --force    # tout régénérer
- *   node scripts/vignettes-sociales.mjs --sans-ia  # dégradé seul, hors ligne
+ *
+ * ⚠️ Régénérer un article DÉJÀ publié change l'image sous la même URL, alors que
+ * /assets/ est servi en cache immuable d'un an : personne ne la reverrait. Ne
+ * pas utiliser --force sur l'existant sans changer l'URL (voir CLAUDE.md).
  *
  * Sortie : public/assets/social/<slug>[-og].png, servi en URL publique —
  * ce dont Buffer a besoin pour récupérer le média.
@@ -31,10 +32,13 @@ import { readFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BLEU, FOND, ETIQUETTES, COULEURS, echapper, decouper } from './lib/charte.mjs';
+import { motif, choisirMotif, hachage } from './lib/motifs.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOSSIER_BLOG = join(RACINE, 'src', 'content', 'blog');
-const SORTIE = join(RACINE, 'public', 'assets', 'social');
+/* VIGNETTES_SORTIE : pour juger un rendu ailleurs que dans public/, sans écraser
+   une vignette publiée (cache immuable d'un an). */
+const SORTIE = process.env.VIGNETTES_SORTIE || join(RACINE, 'public', 'assets', 'social');
 const MARQUE = join(RACINE, 'public', 'assets', 'img', 'logo-icon.png');
 const FORCER = process.argv.includes('--force');
 
@@ -72,104 +76,14 @@ const FORMATS = [
   { suffixe: '-og', largeur: 1200, hauteur: 630, maxLignesTitre: 3, maxLignesChapo: 2 },
 ];
 
-/* ── Fond thématique généré ────────────────────────────────
-   Pollinations.ai : sans clé, licence MIT donc usage commercial permis,
-   1 requête / 15 s sur le palier anonyme. Vérifié le 20 août 2026. */
-
-const SANS_IA = process.argv.includes('--sans-ia');
-
-/*
-  Une ambiance par TCG. Volontairement SANS personnage ni carte : les
-  marques Pokémon, Bandai et consorts ne doivent pas être imitées, et un
-  modèle génératif rend mal un personnage identifiable de toute façon.
-
-  Consigne « no text, no letters » systématique — le texte est posé en
-  vectoriel par-dessus. Un premier essai sans cette séparation avait
-  produit une forme pseudo-logo malgré la consigne.
-*/
-const AMBIANCES = {
-  pokemon: 'lush green forest clearing at dawn, warm golden light through leaves, misty',
-  'one-piece': 'vast ocean horizon at sunset, tall waves, warm orange and deep blue sky',
-  magic: 'ancient stone library, arcane purple glow, floating dust, candlelight',
-  yugioh: 'egyptian sandstone temple interior, golden torchlight, deep shadows',
-  lorcana: 'enchanted castle hall, soft teal and gold light, sparkling motes',
-  'dragon-ball': 'desert canyon under an orange sky, energy shockwave, dramatic light',
-  'star-wars': 'deep space nebula, distant stars, cold blue and violet',
-  guide: 'clean abstract geometry, deep navy and electric blue, soft light rays',
-  actualite: 'clean abstract geometry, deep navy and electric blue, soft light rays',
-  strategie: 'clean abstract geometry, deep navy and electric blue, soft light rays',
-};
-
-/*
-  Le fond est un CONFORT, jamais une dépendance : toute panne, lenteur ou
-  réponse inattendue retombe sur le dégradé déterministe. Une chaîne de
-  publication ne doit pas devenir muette parce qu'un service tiers tousse.
-*/
-/*
-  Cadence imposée par le palier anonyme : 1 requête toutes les 15 s.
-  Générer les 7 articles d'affilée déclenche un HTTP 429 dès le deuxième —
-  constaté. On attend donc entre deux appels, sauf pour le premier.
-
-  En usage normal c'est invisible : 1 à 2 nouveaux articles par semaine.
-  Seule une régénération complète (--force) prend quelques minutes.
-*/
-const PAUSE_POLLINATIONS_MS = 16000;
-let dernierAppel = 0;
-
-async function fondThematique(categorie, graine) {
-  if (SANS_IA) return null;
-
-  const attente = PAUSE_POLLINATIONS_MS - (Date.now() - dernierAppel);
-  if (dernierAppel && attente > 0) {
-    await new Promise((r) => setTimeout(r, attente));
-  }
-  dernierAppel = Date.now();
-  const ambiance = AMBIANCES[categorie] || AMBIANCES.guide;
-  const invite = encodeURIComponent(
-    `${ambiance}, cinematic, atmospheric, no text, no letters, no logo, no people, no characters, no cards`
-  );
-  const url =
-    `https://image.pollinations.ai/prompt/${invite}` +
-    `?width=1400&height=1400&nologo=true&seed=${graine}`;
-
-  /*
-    Deux tentatives, 45 s chacune.
-
-    Mesuré : le service met 25 à 28 s à rendre une image, et renvoie
-    parfois un 429 immédiat avant de répondre normalement au coup
-    suivant. Un délai de 25 s coupait donc des appels qui allaient
-    aboutir, et un échec sur 429 abandonnait sans raison.
-  */
-  for (let essai = 1; essai <= 2; essai++) {
-    try {
-      const rep = await fetch(url, { signal: AbortSignal.timeout(45000) });
-      if (!rep.ok) throw new Error(`HTTP ${rep.status}`);
-      const buf = Buffer.from(await rep.arrayBuffer());
-      /* Une réponse minuscule est une page d'erreur, pas une image. */
-      if (buf.length < 5000) throw new Error(`réponse de ${buf.length} octets`);
-      return buf;
-    } catch (e) {
-      if (essai === 1) {
-        await new Promise((r) => setTimeout(r, PAUSE_POLLINATIONS_MS));
-        continue;
-      }
-      console.warn(`   ⚠️  fond IA indisponible (${e.message}), dégradé déterministe.`);
-      return null;
-    }
-  }
-  return null;
-}
-
 /* Graine dérivée du slug : la même vignette régénérée donne le même fond,
    deux articles différents en donnent deux. Sans ça, chaque exécution
    produirait une image différente pour un contenu identique. */
 function graineDe(slug) {
-  let h = 0;
-  for (const c of slug) h = (h * 31 + c.charCodeAt(0)) % 100000;
-  return h;
+  return hachage(slug);
 }
 
-async function vignette(slug, fm, format, fond) {
+async function vignette(slug, fm, format) {
   const { largeur: L, hauteur: H, suffixe, maxLignesTitre, maxLignesChapo } = format;
   const categorie = ETIQUETTES[fm.category] || fm.category || '';
   const accent = COULEURS[fm.category] || BLEU;
@@ -203,6 +117,9 @@ async function vignette(slug, fm, format, fond) {
   const hautPastille = Math.round(H * 0.21);
   const hautPied = Math.round(H * 0.86);
 
+  const graine = graineDe(slug);
+  const dessin = motif(choisirMotif(graine), { graine, accent, largeur: L, hauteur: H });
+
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
   <defs>
     <radialGradient id="halo" cx="78%" cy="18%" r="62%">
@@ -215,8 +132,9 @@ async function vignette(slug, fm, format, fond) {
     </linearGradient>
   </defs>
 
-  <rect width="${L}" height="${H}" fill="${FOND}" fill-opacity="${fond ? 0.62 : 1}"/>
-  <rect width="${L}" height="${H}" fill="url(#halo)" fill-opacity="${fond ? 0.5 : 1}"/>
+  <rect width="${L}" height="${H}" fill="${FOND}"/>
+  ${dessin}
+  <rect width="${L}" height="${H}" fill="url(#halo)"/>
 
   <text x="${marge + Math.round(H * 0.113)}" y="${Math.round(H * 0.122)}"
         font-family="Arial, Helvetica, sans-serif" font-size="${Math.round(H * 0.037)}"
@@ -252,25 +170,8 @@ async function vignette(slug, fm, format, fond) {
     .resize({ height: Math.round(H * 0.085) })
     .toBuffer();
 
-  /*
-    Le fond généré sert de socle, le SVG et la marque se posent dessus.
-    Recadrage explicite : Pollinations renvoie des dimensions APPROXIMATIVES
-    (1400 demandé, autre chose reçu). Léger flou et assombrissement pour que
-    le texte reste lisible quelle que soit l'image produite — on ne contrôle
-    pas ce que le modèle va rendre.
-  */
-  const socle = fond
-    ? await sharp(fond)
-        .resize(L, H, { fit: 'cover', position: 'centre' })
-        .modulate({ brightness: 0.62 })
-        .blur(2)
-        .toBuffer()
-    : null;
-
-  const calques = [{ input: Buffer.from(svg) }, { input: marque, left: marge, top: Math.round(H * 0.057) }];
-
-  await (socle ? sharp(socle) : sharp(Buffer.from(svg)))
-    .composite(socle ? calques : [calques[1]])
+  await sharp(Buffer.from(svg))
+    .composite([{ input: marque, left: marge, top: Math.round(H * 0.057) }])
     .png({ compressionLevel: 9 })
     .toFile(join(SORTIE, `${slug}${suffixe}.png`));
 }
@@ -289,14 +190,9 @@ for (const a of articles) {
   const aFaire = FORMATS.filter((fo) => FORCER || !existsSync(join(SORTIE, `${a.slug}${fo.suffixe}.png`)));
   if (aFaire.length === 0) continue;
 
-  /* UN seul appel réseau par article : le même fond sert au carré et au
-     paysage, recadré différemment. Deux appels donneraient deux ambiances
-     distinctes pour un même article. */
-  const fond = await fondThematique(a.fm.category, graineDe(a.slug));
-
   for (const format of aFaire) {
-    await vignette(a.slug, a.fm, format, fond);
-    console.log(`✅ ${a.slug}${format.suffixe}.png (${format.largeur}×${format.hauteur})${fond ? '' : ' — dégradé'}`);
+    await vignette(a.slug, a.fm, format);
+    console.log(`✅ ${a.slug}${format.suffixe}.png (${format.largeur}×${format.hauteur}) motif ${choisirMotif(graineDe(a.slug))}`);
     faites++;
   }
 }
