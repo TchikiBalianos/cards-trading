@@ -26,7 +26,7 @@ dépôt, qui est public.
 
 ### 1. Mesure du trafic
 
-**Web Analytics est actif et collecte** depuis la création du projet. Le « introuvable » relevé
+**Web Analytics est actif et collecte** depuis le 1er août. Le « introuvable » relevé
 le matin du 30 septembre venait d'un mauvais cadrage de l'appel (identifiant d'équipe passé à
 l'API), pas d'une désactivation : voir « Mesure du trafic » dans `CLAUDE.md`. Le visiteur, la
 source, la page et l'appareil se lisent donc, et un taux de conversion se calcule.

@@ -245,8 +245,8 @@ source, un seul angle, et « observé » plutôt que « voulu ».
 
 La liste de la matinée donnait Web Analytics pour « introuvable » et renvoyait vers le tableau
 de bord. Rejouée le soir sans l'identifiant d'équipe, la même requête répondait : le service
-collecte depuis la création du projet. Le faux diagnostic venait du cadrage de l'appel, et
-l'erreur aurait pu coûter un abonnement ou une réinstallation inutiles. La leçon (appeler sans
+collecte depuis le 1er août. Le faux diagnostic venait du cadrage de l'appel, et
+l'erreur aurait pu faire dépenser du temps, voire de l'argent, à réparer un service qui marchait. La leçon (appeler sans
 `teamId`, 31 jours de détail en plan Hobby, UTM payants, « visiteurs » additionnés d'un jour à
 l'autre) est dans `CLAUDE.md`, section « Mesure du trafic ».
 

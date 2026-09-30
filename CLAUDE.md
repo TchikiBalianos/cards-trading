@@ -588,8 +588,8 @@ croire que le garde-fou est aveugle.
 
 ### Mesure du trafic : Vercel Web Analytics
 
-Actif et collecteur depuis la création du projet, le 25 avril 2026. Trois pièges, tous
-rencontrés le 30 septembre 2026 :
+Actif et collecteur depuis le 1er août 2026 (commit `3fa51b3`, script posé sur toutes les
+pages). Trois pièges, tous rencontrés le 30 septembre 2026 :
 
 - **Interroger l'API SANS identifiant d'équipe.** Le projet `cards-trading` répond dans le
   scope personnel : avec `teamId`, Vercel renvoie 404 (« Project not found ») ou « Web
