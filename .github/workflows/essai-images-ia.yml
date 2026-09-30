@@ -1,0 +1,88 @@
+# Essai des illustrations par IA (niveau 2). DÉCLENCHEMENT MANUEL UNIQUEMENT.
+#
+# Génère cinq images d'ambiance par fournisseur (aucune carte réelle, aucun
+# personnage, aucun texte), en tire une planche contact et dépose le tout dans
+# l'artefact `images-ia-test`, conservé 7 jours. Rien n'est committé, rien n'est
+# publié : une image générée n'entre dans le site qu'après décision de Julian,
+# sur la planche.
+#
+# Secrets (Settings > Secrets and variables > Actions) :
+#   GEMINI_API_KEY          déjà présent. Facturé à l'image : avec l'accès gratuit,
+#                           l'API répondait 429 le 20 août 2026 (quota d'image nul).
+#   CLOUDFLARE_ACCOUNT_ID   à créer, avec CLOUDFLARE_API_TOKEN (jeton « Workers AI »,
+#   CLOUDFLARE_API_TOKEN    niveau gratuit de 10 000 neurones par jour).
+#
+# En mode « tous », un fournisseur dont les secrets manquent est ignoré et signalé.
+# Coût maximal d'un passage : cinq images par fournisseur, sans relance, et arrêt
+# du fournisseur au premier 401, 403 ou 429.
+#
+# Essai à blanc : affiche les scènes et le plan, n'appelle aucune API.
+
+name: Essai illustrations IA
+
+on:
+  workflow_dispatch:
+    inputs:
+      fournisseur:
+        description: "Fournisseur à essayer"
+        type: choice
+        options: [tous, gemini, cloudflare]
+        default: tous
+      nombre:
+        description: "Nombre de scènes (1 à 5)"
+        type: string
+        default: '5'
+      essai:
+        description: "Essai à blanc : afficher le plan, n'appeler aucune API"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: essai-images-ia
+  cancel-in-progress: false
+
+jobs:
+  essai:
+    name: Images d'ambiance et planche contact
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # `sharp` arrive avec Astro : sans installation, la planche contact échouerait.
+      - name: Installer les dépendances
+        run: npm ci --omit=dev --ignore-scripts=false
+
+      # Les entrées passent par l'environnement, jamais interpolées dans le script.
+      - name: Générer les images
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FOURNISSEUR: ${{ inputs.fournisseur }}
+          NOMBRE: ${{ inputs.nombre }}
+          ESSAI: ${{ inputs.essai }}
+        run: |
+          if [ "$ESSAI" = "true" ]; then
+            node scripts/essai-images-ia.mjs --dry-run --fournisseur="$FOURNISSEUR" --nombre="$NOMBRE"
+          else
+            node scripts/essai-images-ia.mjs --fournisseur="$FOURNISSEUR" --nombre="$NOMBRE"
+          fi
+
+      # `always()` : même si un fournisseur a échoué, ce qui a réussi est à voir.
+      - name: Déposer l'artefact
+        if: ${{ always() && !inputs.essai }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: images-ia-test
+          path: images-ia-test/
+          retention-days: 7
+          if-no-files-found: ignore

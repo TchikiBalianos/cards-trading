@@ -41,12 +41,22 @@ tout validé. Niveau 1 : photos réelles et visuels officiels (modèle `photo` e
 crédit obligatoire). Niveau 2 : images IA d'ambiance dans un nouveau modèle de visuel
 `scene`, éprouvé sur 5 images. Niveau 3 : moteur de veille de visuels.
 
-**Bloqué par un accès**, au choix : un compte Cloudflare gratuit avec un jeton Workers AI
+**Niveau 2 : l'outil d'essai est prêt** (`scripts/essai-images-ia.mjs`, workflow manuel
+`Essai illustrations IA`). Cinq scènes d'ambiance (table de jeu, boutique de nuit, échange
+de cartes, classeur, salle de tournoi), sans carte réelle, sans personnage, sans texte, et
+une planche contact où chaque image porte un titre d'exemple aux couleurs de la charte. Rien
+n'est committé ni publié : les images vivent dans l'artefact du run, 7 jours. Le modèle de
+visuel `scene` ne se construit qu'après lecture de la planche.
+
+**Il manque un accès pour le lancer**, au choix : un compte Cloudflare gratuit avec un jeton Workers AI
 (secrets `CLOUDFLARE_ACCOUNT_ID` et `CLOUDFLARE_API_TOKEN`), ou la facturation activée sur la
 clé Gemini (`GEMINI_API_KEY` existe, mais la génération d'image y était à quota zéro le 20
 août, HTTP 429). Tarifs lus le 30 septembre : FLUX-1-schnell sur Cloudflare tient dans le
-quota gratuit de 10 000 neurons par jour ; Gemini 3.1 Flash-Lite Image coûte 0,0336 $ l'image.
-Ne rien bâtir sur `gemini-2.5-flash-image`, arrêté le 2 octobre 2026.
+quota gratuit de 10 000 neurons par jour ; Gemini 3.1 Flash-Lite Image coûte 0,0336 $ l'image,
+soit environ 0,17 $ les cinq. Ne rien bâtir sur `gemini-2.5-flash-image`, arrêté le 2 octobre 2026.
+
+**Niveau 1 : il faut trois photos** déjà publiques, avec le nom de leur auteur, pour éprouver
+le modèle `photo` sur du réel.
 
 ### 3. Branche et poste de travail
 

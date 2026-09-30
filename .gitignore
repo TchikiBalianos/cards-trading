@@ -16,3 +16,6 @@ node_modules/
 # OS
 .DS_Store
 .cote-cache.json
+
+# Essai des illustrations IA : images générées, jamais committées
+images-ia-test/
