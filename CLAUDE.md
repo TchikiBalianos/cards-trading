@@ -462,6 +462,17 @@ d'heure de publication précise : mesuré entre le 19 et le 24 septembre
 l'ordre avec les crons d'annonce reste largement respecté. Il dit
 seulement « le matin même ».
 
+⚠️ **Les corrections d'articles déjà en ligne sont signalées à part** (cartes « Correctif »,
+`correctifsDeLaBranche`) : un article corrigé reste servi faux en production tant que sa branche
+n'est pas fusionnée, et deux correctifs sont restés trois et dix-huit jours sans email avant le
+20 septembre 2026. **Piège si un jour une pull request est fusionnée en *squash*** : la branche
+garde des commits absents de `main` et un contenu différent, donc elle repasse pour un correctif
+en attente et le rappel repart chaque matin pour une branche morte. Le test d'ancêtre commun ne
+sert alors à rien ; celui qui tranche est « `main` a-t-il touché cet article depuis que la
+branche s'en est séparée ? » (`git rev-list --count <branche>..origin/main -- <chemin>`, plus de
+0 = branche périmée). Non appliqué aujourd'hui, les pull requests étant fusionnées en commit de
+fusion ; l'implémentation complète est gardée sous le tag `archive/alerte-relecture-squash`.
+
 ⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
 commits d'archivage des autres workflows. Vercel honore ce marqueur :
 l'article serait committé et jamais déployé.
@@ -574,6 +585,30 @@ avant de comparer, sans quoi chaque « 3 % » signale une fausse divergence.
 seule ligne** : `sed` travaille ligne par ligne et ne remplacera jamais un
 texte que le formatage a coupé en deux. Un test qui ne modifie rien laisse
 croire que le garde-fou est aveugle.
+
+### Mesure du trafic : Vercel Web Analytics
+
+Actif et collecteur depuis la création du projet, le 25 avril 2026. Trois pièges, tous
+rencontrés le 30 septembre 2026 :
+
+- **Interroger l'API SANS identifiant d'équipe.** Le projet `cards-trading` répond dans le
+  scope personnel : avec `teamId`, Vercel renvoie 404 (« Project not found ») ou « Web
+  Analytics not found ». Le matin du 30 septembre, `RESTE-A-FAIRE.md` a consigné à tort
+  « l'API répond introuvable, à vérifier dans le tableau de bord » : c'était un mauvais
+  cadrage de l'appel, pas une désactivation. Même famille que le `curl` sans `-L` plus haut :
+  reproduire l'appel autrement avant de théoriser sur la cause.
+- **Le plan Hobby ne donne que les 31 derniers jours** pour toute ventilation (source, page,
+  appareil) : au-delà, l'API répond 400. Le compteur global depuis l'activation reste lisible,
+  pas son détail. Sans relevé en début de mois, le passé se perd.
+- **Les UTM sont payants** (Web Analytics Plus, réponse 402) : la source se lit dans
+  `referrerHostname`, jamais dans `utmSource`.
+
+⚠️ **« Visiteurs » sur plusieurs jours est une somme de visiteurs quotidiens.** Un lecteur revenu
+trois jours compte trois fois : mesuré le 30 septembre, le total du mois est égal à la somme
+des totaux de chaque jour. C'est donc un majorant des personnes distinctes, et un taux de
+conversion calculé dessus est une borne basse.
+
+Les chiffres de trafic et d'inscrits n'ont pas leur place ici : le dépôt est public.
 
 ### Limites de l'environnement de test
 - Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne

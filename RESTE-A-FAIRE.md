@@ -14,7 +14,7 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Jeu 1er oct. | Premier **rapport mensuel** d'inscriptions, vers 04h UTC : vérifier qu'il arrive en **un seul** exemplaire (section « Rapport mensuel » de `CLAUDE.md`). | Julian |
+| Jeu 1er oct. | Premier **rapport mensuel** d'inscriptions, vers 04h UTC : vérifier qu'il arrive en **un seul** exemplaire (section « Rapport mensuel » de `CLAUDE.md`). Relever aussi le trafic du mois écoulé, dont le détail ne reste lisible que 31 jours (chantier 1). | Julian, Claude |
 | Ven 2 oct. | La routine du vendredi (09:09) écrit l'article **Star Wars** sur une branche `blog/…` : relire, ouvrir la pull request, fusionner. Vérifier aussi en magasin la sortie du Bundle, des Mini-Tins et du Coffret Classeur (voir « Veille du calendrier »). | Julian |
 | Sam 3 oct. | **Première exécution réelle** de la routine `social-cards-trading-semaine` : elle n'a jamais tourné, le premier lot a été écrit à la main. Contrôler la durée du passage (quelques minutes sans fichier écrit, c'est un échec silencieux), `data/social/2026-10-05.json`, le workflow `Brouillons sociaux`, puis cliquer **Schedule Post** dans Buffer. | Julian, Claude |
 | Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
@@ -26,13 +26,21 @@ dépôt, qui est public.
 
 ### 1. Mesure du trafic
 
-Le script Vercel Insights est servi en production (HTTP 200) mais l'API de Web
-Analytics répond « introuvable » pour le projet `cards-trading` (30 septembre). À
-vérifier dans le tableau de bord Vercel, onglet Analytics : activé ou non.
+**Web Analytics est actif et collecte** depuis la création du projet. Le « introuvable » relevé
+le matin du 30 septembre venait d'un mauvais cadrage de l'appel (identifiant d'équipe passé à
+l'API), pas d'une désactivation : voir « Mesure du trafic » dans `CLAUDE.md`. Le visiteur, la
+source, la page et l'appareil se lisent donc, et un taux de conversion se calcule.
 
-Sans nombre de visiteurs, aucun taux de conversion : on ne connaît que les inscrits
-par source, moteurs IA et Google en tête. Les extensions du Chrome de Julian bloquent
-le script, ses propres visites ne comptent jamais.
+Ce qui manque n'est plus la mesure mais deux choses :
+
+- **La mémoire.** Le plan Hobby ne garde que 31 jours de détail (source, page, appareil). Sans
+  relevé en début de mois, le passé se perd. À consigner chaque 1er du mois dans un endroit
+  **privé** : le dépôt est public et les chiffres de trafic n'y ont pas leur place.
+- **Le trafic lui-même**, très faible, à lire avec le taux d'inscription avant de choisir où
+  mettre l'effort (blog, lives WhatNot, réseaux).
+
+Les UTM sont payants (Web Analytics Plus) : la source se lit dans le référent. Les extensions du
+Chrome de Julian bloquent le script, ses propres visites ne comptent jamais.
 
 ### 2. Illustrations réalistes pour les posts
 
@@ -58,15 +66,7 @@ soit environ 0,17 $ les cinq. Ne rien bâtir sur `gemini-2.5-flash-image`, arrê
 **Niveau 1 : il faut trois photos** déjà publiques, avec le nom de leur auteur, pour éprouver
 le modèle `photo` sur du réel.
 
-### 3. Branche et poste de travail
-
-- `fix/alerte-relecture-articles-modifies` : un commit du 17 septembre (alerter aussi pour
-  les corrections d'articles déjà en ligne), jamais fusionné, en **conflit** avec
-  `scripts/alerte-relecture.mjs` depuis les correctifs du 22 septembre. À rebaser puis
-  fusionner, ou à abandonner.
-- `.claude/settings.json` est non suivi dans le dépôt : à committer ou à ignorer.
-
-### 4. Cotes : marché japonais et historique One Piece
+### 3. Cotes : marché japonais et historique One Piece
 
 - **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous sont posés et
   mesurés (49 candidats ramenés à 4, les trois cartes gelées écartées), mais aucun passage
@@ -75,7 +75,7 @@ le modèle `photo` sur du réel.
   séries passées n'étant pas réattribuables. Les variations redeviennent calculables après
   deux relevés, soit début octobre : à contrôler.
 
-### 5. Veille du calendrier 30e Anniversaire
+### 4. Veille du calendrier 30e Anniversaire
 
 Quatre produits n'ont pas de date certaine en France, et l'article
 `pokemon-30e-anniversaire-sortie-mondiale-2026` le dit :
@@ -101,17 +101,18 @@ disponibles dès le 16, alors que Julian ne les a vues dans aucun magasin et que
 officielle place la Collection autocollant au 4e trimestre. Le constat de Julian prime, ce
 communiqué ne doit pas servir à dater les produits.
 
-### 6. File d'annonces : résorbée, à surveiller
+### 5. File d'annonces : résorbée, à surveiller
 
 Depuis le créneau du dimanche (27 septembre), la file ne prend plus de retard. Au 30
 septembre, Buffer a relayé les 18 articles publiés et Discord n'attend qu'un article (OP-18).
 Le relais ne sort qu'un article par passage, les dimanches, mardis et vendredis.
 
-### 7. Validation mobile sur un vrai téléphone
+### 6. Validation mobile sur un vrai téléphone
 
-Le navigateur d'audit **ne défile pas** et **ne compose pas de frames** : aucune transition CSS
-ne s'exécute. Tout ce qui a été affirmé sur la navigation mobile repose sur des valeurs
-**cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les ancres du menu, la
+**Le mobile est la majorité du trafic** (mesure Vercel de septembre), ce qui fait de ce point un
+risque réel et non un détail. Le navigateur d'audit **ne défile pas** et **ne compose pas de
+frames** : aucune transition CSS ne s'exécute. Tout ce qui a été affirmé sur la navigation
+mobile repose sur des valeurs **cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les ancres du menu, la
 fermeture du panneau, les carrousels, le rendu des images après les correctifs de ratio et les
 quatre corrections d'affichage mobile du 28 septembre.
 
@@ -119,7 +120,7 @@ quatre corrections d'affichage mobile du 28 septembre.
 
 ## 🟡 Améliorations identifiées, non appliquées
 
-### 8. Cote One Piece en euros : une piste rouverte le 30 septembre
+### 7. Cote One Piece en euros : une piste rouverte le 30 septembre
 
 One Piece reste **hors de la rotation du top des hausses** : `optcgapi`, `apitcg` et `tcgcsv` sont
 adossés à TCGplayer, donc en **dollars sur le marché américain**, et TCGdex ne couvre que
@@ -141,7 +142,7 @@ Cardmarket par nom et extension. Même piste pour le prix de référence de la s
 Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la cote One Piece, indexée par
 impression.
 
-### 9. Durcir la gestion des secrets
+### 8. Durcir la gestion des secrets
 
 Décision assumée : les webhooks Discord et les clés d'API ont transité en clair dans une
 conversation, l'enjeu étant jugé faible à ce stade. Ils sont en secrets GitHub, **jamais
@@ -149,18 +150,18 @@ committés** : le dépôt est public et l'historique git est définitif. À repr
 l'audience ou l'équipe grandira : faire tourner les webhooks et les clés, et envisager un dépôt
 privé pour l'automatisation.
 
-### 10. Webhook de bounce Resend
+### 9. Webhook de bounce Resend
 
 Optionnel. Détecterait les adresses invalides côté serveur plutôt qu'a posteriori dans le
 dashboard. Le validateur Damerau-Levenshtein couvre déjà les fautes de frappe courantes.
 
-### 11. Aucun salon Discord interne
+### 10. Aucun salon Discord interne
 
 Les 7 webhooks configurés pointent tous vers des **salons publics** de la communauté. Il
 n'existe aucun canal interne pour la coordination d'équipe, ni d'identifiant Discord de Valérian
 côté projet. À créer si les échanges d'équipe doivent passer par Discord.
 
-### 12. Pipeline vidéo TikTok par Seedance : reporté, pas abandonné
+### 11. Pipeline vidéo TikTok par Seedance : reporté, pas abandonné
 
 Plan complet dans `docs/plans/2026-09-08-pipeline-video-tiktok.md` : un clip de 7 à 10 s généré
 en image-to-video depuis la vignette existante, avec repli automatique sur l'image. **Reporté le
@@ -185,6 +186,7 @@ TikTok reste **volontairement personnel** (décision du 19 septembre).
 | `newsletter-hebdo` | samedi 13h37 | ✅ |
 | `brouillons-sociaux` | à chaque dépôt de `data/social/*.json` | ✅ |
 | `controle-social` | quotidien 15:30 UTC | ✅ |
+| `essai-images-ia` | manuel | ✅ essai à blanc vérifié en CI le 30 septembre ; Gemini répond 429 (quota d'image nul sans facturation), premier passage réel en attente d'un accès (chantier 2) |
 | Routines Claude Desktop | mardi (article Pokémon ou One Piece), vendredi (autres TCG), samedi (posts de la semaine), lundi (veille du calendrier) | ✅ sauf celle du samedi, jamais exécutée |
 | Pages hub par TCG | statique | ✅ 7 en ligne, au sitemap |
 

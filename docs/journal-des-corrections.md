@@ -236,3 +236,32 @@ source, un seul angle, et « observé » plutôt que « voulu ».
 | Vignettes sociales | Les quatre fichiers des deux articles de septembre répondent 200 en production. |
 | Chaîne Buffer | Essai en mode brouillon après correctif : twitter, instagram et tiktok acceptés. |
 | Compte TikTok | Reste **volontairement personnel** (`tchikibalianos`). Décision du 19 septembre : pas de rebrand, pas de tournage. La ligne « à convertir » était caduque. |
+
+---
+
+## ✅ Clos le 30 septembre (soir)
+
+### La mesure du trafic n'était pas en panne
+
+La liste de la matinée donnait Web Analytics pour « introuvable » et renvoyait vers le tableau
+de bord. Rejouée le soir sans l'identifiant d'équipe, la même requête répondait : le service
+collecte depuis la création du projet. Le faux diagnostic venait du cadrage de l'appel, et
+l'erreur aurait pu coûter un abonnement ou une réinstallation inutiles. La leçon (appeler sans
+`teamId`, 31 jours de détail en plan Hobby, UTM payants, « visiteurs » additionnés d'un jour à
+l'autre) est dans `CLAUDE.md`, section « Mesure du trafic ».
+
+### La branche `fix/alerte-relecture-articles-modifies`, abandonnée
+
+Un commit du 17 septembre donnait à `alerte-relecture.mjs` la faculté de signaler les
+corrections d'articles déjà en ligne. `main` l'a fait depuis, autrement (cartes « Correctif »,
+`correctifsDeLaBranche`, après l'incident du 20 septembre), et le rappel à blanc ne remonte rien.
+Le seul apport restant de la branche, le garde-fou contre les fusions en squash, ne sert pas
+tant que les pull requests sont fusionnées en commit de fusion : il est décrit dans `CLAUDE.md`,
+et le commit est conservé sous le tag `archive/alerte-relecture-squash` avant suppression de la
+branche.
+
+### `.claude/settings.json`, exclu en local
+
+Fichier de configuration généré par Claude Code pour ce poste, qui décrit le dépôt avec des
+affirmations fausses (« aucun remote », « visibilité non vérifiée »). Pas un actif du projet :
+ignoré via `.git/info/exclude`, sans rien changer au dépôt partagé.
