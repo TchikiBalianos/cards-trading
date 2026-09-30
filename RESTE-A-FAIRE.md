@@ -1,377 +1,150 @@
-# Reste à faire — Cards-Trading
+# Reste à faire : Cards-Trading
 
-État au **19 septembre 2026**. Les règles durables vivent dans `CLAUDE.md` ;
-ce fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle
-est traitée.
+État au **30 septembre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
+fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle est
+traitée. Les chantiers clos (incidents du 19 au 22 septembre, fiabilité des
+cotes, SEO, vérifications) sont archivés dans `docs/journal-des-corrections.md`.
+
+Le MVP, le recrutement de vendeurs et le financement se suivent hors de ce
+dépôt, qui est public.
 
 ---
 
-## 📊 Ce que disent les chiffres (19 septembre)
+## 🔴 Cette semaine
 
-**28 inscrits**, dont **2 seulement depuis le 2 septembre**. La croissance
-constatée début septembre (7 en une semaine) s'est arrêtée net.
-
-Provenance, relevée directement en base :
-
-| Source | Inscriptions | Dernière |
+| Quand | Quoi | Qui |
 |---|---|---|
-| (non renseignée, avant le traçage) | 15 | 8 août |
-| `chatgpt.com` | 4 | 10 sept |
-| `direct` | 4 | 31 août |
-| `google.com` | 2 | 30 août |
-| **`l.instagram.com`** | **1** | **13 sept** |
-| `perplexity.ai` | 1 | 20 août |
-| `verif-manuelle` | 1 | 25 août |
-
-Deux corrections par rapport à l'état du 2 septembre :
-
-1. **Les réseaux sociaux ont produit leur première inscription**, via
-   Instagram le 13 septembre. L'affirmation « aucune ne vient des réseaux »
-   n'est plus vraie. Une seule sur treize tracées, mais elle existe.
-2. **Le SEO et les moteurs IA restent le canal dominant** : 7 des 13
-   inscriptions tracées, dont 5 de moteurs IA. Le constat d'arbitrage tient
-   donc toujours, mais sur une base qui a cessé de croître.
-
-⚠️ Le compteur « joueurs déjà inscrits » de la landing est **délibérément
-artificiel** (`api/views.js` : base 263, plus 1 à 3 par jour, déterministe).
-Ne pas le confondre avec le nombre réel d'inscrits ci-dessus.
+| Jeu 1er oct. | Premier **rapport mensuel** d'inscriptions, vers 04h UTC : vérifier qu'il arrive en **un seul** exemplaire (section « Rapport mensuel » de `CLAUDE.md`). | Julian |
+| Ven 2 oct. | La routine du vendredi (09:09) écrit l'article **Star Wars** sur une branche `blog/…` : relire, ouvrir la pull request, fusionner. Vérifier aussi en magasin la sortie du Bundle, des Mini-Tins et du Coffret Classeur (voir « Veille du calendrier »). | Julian |
+| Sam 3 oct. | **Première exécution réelle** de la routine `social-cards-trading-semaine` : elle n'a jamais tourné, le premier lot a été écrit à la main. Contrôler la durée du passage (quelques minutes sans fichier écrit, c'est un échec silencieux), `data/social/2026-10-05.json`, le workflow `Brouillons sociaux`, puis cliquer **Schedule Post** dans Buffer. | Julian, Claude |
+| Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
+| Mar 6 oct. | L'article `pokemon-mcdonalds-happy-meal-cartes-2026` passe en ligne (`publie-articles`, vers 11h UTC). La routine du mardi doit s'arrêter à son étape 0, la semaine étant couverte : c'est attendu. Vérifier le 200 en production. | Claude |
 
 ---
 
-## 🔴 Chaîne de publication — cassée huit jours, réparée le 19 septembre
+## 🟠 Chantiers ouverts
 
-### A. Le build refusait Node 20, et personne ne l'a vu
+### 1. Mesure du trafic
 
-`publie-articles.yml` a **échoué tous les jours du 11 au 18 septembre**,
-toujours au même endroit :
+Le script Vercel Insights est servi en production (HTTP 200) mais l'API de Web
+Analytics répond « introuvable » pour le projet `cards-trading` (30 septembre). À
+vérifier dans le tableau de bord Vercel, onglet Analytics : activé ou non.
 
-```
-Node.js v20.20.2 is not supported by Astro!
-Please upgrade Node.js to a supported version: ">=22.12.0"
-```
+Sans nombre de visiteurs, aucun taux de conversion : on ne connaît que les inscrits
+par source, moteurs IA et Google en tête. Les extensions du Chrome de Julian bloquent
+le script, ses propres visites ne comptent jamais.
 
-Astro 6.3.1 exige Node 22.12 minimum ; les workflows étaient épinglés sur
-Node 20. Les six sont passés en Node 22.
+### 2. Illustrations réalistes pour les posts
 
-**Ce que la panne a coûté**, et c'est la partie instructive :
+Décision de Julian (30 septembre) : niveaux 1 et 2 en test, puis le niveau 3 une fois
+tout validé. Niveau 1 : photos réelles et visuels officiels (modèle `photo` existant,
+crédit obligatoire). Niveau 2 : images IA d'ambiance dans un nouveau modèle de visuel
+`scene`, éprouvé sur 5 images. Niveau 3 : moteur de veille de visuels.
 
-- L'article Star Wars, dû le 10 septembre et jugé complet par les contrôles,
-  est resté en brouillon **neuf jours**.
-- Les vignettes des deux articles de septembre étaient générées à chaque
-  passage puis **perdues**, le workflow mourant au build juste avant l'étape
-  de commit. Elles répondaient 404 en production.
-- D'où l'échec en cascade d'`annonce-buffer` les 15 et 18 septembre :
-  « InvalidInputError : Image could not be read from its URL » sur les trois
-  réseaux.
-- Et aucun aperçu de lien social sur ces deux articles.
+**Bloqué par un accès**, au choix : un compte Cloudflare gratuit avec un jeton Workers AI
+(secrets `CLOUDFLARE_ACCOUNT_ID` et `CLOUDFLARE_API_TOKEN`), ou la facturation activée sur la
+clé Gemini (`GEMINI_API_KEY` existe, mais la génération d'image y était à quota zéro le 20
+août, HTTP 429). Tarifs lus le 30 septembre : FLUX-1-schnell sur Cloudflare tient dans le
+quota gratuit de 10 000 neurons par jour ; Gemini 3.1 Flash-Lite Image coûte 0,0336 $ l'image.
+Ne rien bâtir sur `gemini-2.5-flash-image`, arrêté le 2 octobre 2026.
 
-⚠️ **La leçon à retenir.** Le contrôle local répondait « PUBLIE » sans rien
-signaler, parce que le poste tourne déjà en Node 22. C'est l'écart entre le
-local et la CI qui a rendu la panne invisible, pas son silence : les huit
-passages étaient rouges dans l'onglet Actions. Personne ne les regardait.
+### 3. Branche et poste de travail
 
-### B. Ce qui reste ouvert de cette histoire
+- `fix/alerte-relecture-articles-modifies` : un commit du 17 septembre (alerter aussi pour
+  les corrections d'articles déjà en ligne), jamais fusionné, en **conflit** avec
+  `scripts/alerte-relecture.mjs` depuis les correctifs du 22 septembre. À rebaser puis
+  fusionner, ou à abandonner.
+- `.claude/settings.json` est non suivi dans le dépôt : à committer ou à ignorer.
 
-- ~~Rien n'alerte quand un workflow échoue~~ **posé le 19 septembre.**
-  `alerte-automatisations.yml` tourne chaque jour à 06:02 UTC, après la
-  publication et l'alerte de relecture. Il signale l'état COURANT et non
-  « des échecs cette nuit » : un workflow n'apparaît que si son dernier
-  passage terminé est un échec, et l'email dit depuis combien de passages.
-  Éprouvé en CI sur l'état réel : « Publie les articles dus échoue depuis
-  10 passages, depuis le 2026-09-09 ». Rien n'est envoyé quand tout est au
-  vert.
-- **L'article Star Wars n'est pas encore publié** : le prochain passage du
-  cron (05:12 UTC) devrait le sortir maintenant que le build passe. À
-  vérifier en production.
-- **Deux articles attendent d'être annoncés** sur Buffer. Le relais ne sort
-  qu'un article par passage, les dimanches, mardis et vendredis.
+### 4. Cotes : marché japonais et historique One Piece
 
----
+- **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous sont posés et
+  mesurés (49 candidats ramenés à 4, les trois cartes gelées écartées), mais aucun passage
+  réel ne les a validés. À rouvrir après un déclenchement manuel concluant.
+- **L'historique One Piece repart de zéro** pour 46 identifiants à variantes multiples, leurs
+  séries passées n'étant pas réattribuables. Les variations redeviennent calculables après
+  deux relevés, soit début octobre : à contrôler.
 
-## 🟠 Fiabilité des cotes — traité le 19 septembre
-
-Le détail est dans les messages de commit et les commentaires de
-`scripts/cote-hebdo.mjs`, `publie-cote.mjs` et `releve-cotes.mjs`. En
-résumé : nom de carte réellement publié, référence d'impression ajoutée,
-garde-fous de liquidité et de non-stagnation, mention factuelle, lien X en
-réponse, phase de publication rendue indépendante de l'API, archive One Piece
-réindexée par impression.
-
-**Ajouté le 20 septembre, après la relecture du digest du 19 :** la
-newsletter lit l'archive du podium, et celle du 17 septembre avait été
-écrite avant l'ajout des références. Le digest annonçait « Héros
-Transcendants » là où le post du jeudi disait « ASC 294/217 ». L'archive est
-complétée (ASC 286/217, ASC 294/217, POR 120/088) et trois protections
-sont posées :
-
-- le total imprimé est **recoupé sur pokemontcg.io** au moment du
-  classement (`scripts/lib/reference-carte.mjs`). Par extension et non par
-  carte, car l'API répond souvent 500 sur les cartes. Divergence avérée : la
-  référence retombe sur la forme courte. Base injoignable : valeur de TCGdex
-  conservée, sans faire échouer le classement. Le résultat est archivé
-  avec la carte (`refVerifiee`) ;
-- la newsletter **avertit** (journal du workflow et email de notification)
-  quand une carte du podium n'a pas de référence, au lieu de retomber en
-  silence sur la seule extension ;
-- relancer `newsletter-hebdo.yml` suffit à régénérer un brouillon : le
-  script remplace lui-même le brouillon non envoyé « Digest hebdo » précédent.
-
-**Ce qui reste ouvert :**
-
-- ~~Le post X des cotes n’a pas de visuel~~ **fait le 19 septembre.**
-  `vignetteCote()` prend un format, et produit une variante 1200×630 en
-  plus du carré. Les coordonnées ne sont pas dérivées les unes des autres :
-  le podium carré respire sur 165 px d’interligne, transposé tel quel dans
-  630 px il déborderait de 200 px. La vignette paysage est attachée au post
-  X et au premier message du thread, et le workflow attend que LES DEUX
-  images soient servies avant de publier.
-- **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous
-  sont posés et mesurés (49 candidats ramenés à 4, les trois cartes gelées
-  écartées), mais aucun passage réel ne les a validés. À rouvrir après un
-  déclenchement manuel concluant.
-- **L'historique One Piece repart de zéro** pour 46 identifiants à variantes
-  multiples, leurs séries passées n'étant pas réattribuables. Les variations
-  redeviendront calculables pour eux après deux relevés, soit début octobre.
-
----
-
-## ✅ SEO : volume, maillage interne et pages hub — fait le 19 septembre
-
-Plan suivi : `docs/plans/2026-09-08-seo-volume-maillage-hubs.md`.
-
-**Volet 1, volume.** L'article du vendredi passe d'optionnel à obligatoire
-dans `scripts/prochain-article.mjs`. Le volume indexable double, et deux
-articles par semaine pour deux créneaux d'annonce font que la file
-d'annonce cesse de prendre du retard structurellement.
-
-**Volet 2, maillage interne.** Un lien vers un article du MÊME TCG devient
-un critère bloquant, contrôlé à la publication dans
-`scripts/lib/article.mjs`. Le contrôle existait mais était non bloquant et
-sans notion de jeu : il signalait « aucun lien croisé » même quand le lien
-pointait vers un TCG sans rapport.
-
-Calibrage mesuré sur le corpus réel, 14 articles publiés : 7 déjà
-conformes, 4 seuls de leur TCG donc non concernés, 3 sans lien. Le premier
-article d'un jeu n'est jamais bloqué, sans quoi l'ouverture de chaque
-nouveau TCG serait impossible.
-
-**Volet 3, pages hub.** Sept pages en ligne (`/tcg/pokemon/` et consorts),
-présentes au sitemap, avec l'appel à rejoindre la bêta et une navigation
-par jeu depuis l'index du blog.
-
-`star-wars` a rejoint les autres le 19 septembre, à la publication de son
-article : la page est apparue d'elle-même, sans rien faire.
-
-**Ce qui restait sur ce chantier, traité le 20 septembre :**
-
-- **Le vendredi ne s'écrivait pas, et ce n'était pas le mot « optionnel ».**
-  Les deux routines Claude Desktop sortaient en une minute à leur étape 0,
-  qui s'arrêtait dès qu'une branche `blog/*` portait la catégorie de la
-  semaine. Or cinq branches fusionnées n'avaient jamais été supprimées, et
-  elles couvraient quatre des cinq catégories du vendredi. Trois créneaux
-  perdus (mardi 15, vendredis 11 et 18 septembre) sans aucun signal : les
-  routines rendaient compte d'un arrêt légitime. Les branches sont
-  supprimées, et les deux consignes ignorent désormais toute branche dont
-  l'article est déjà sur `main`.
-- **Les trois articles fondateurs sont reliés à leur propre TCG**
-  (`a422e41`). Un lien contextuel chacun, placé dans le corps du texte et
-  non dans la liste de fin, dont l'intitulé annonce « les autres TCG ».
-- **Le mini sommaire manquait sur 11 des 15 articles publiés.** Le correctif
-  attendait depuis le 2 septembre sur `blog/sommaires-articles`, invisible
-  pour `alerte-relecture` qui ne cherche que des brouillons, jamais une
-  correction d'articles déjà en ligne. Fusionné, avec `scripts/sommaire.mjs`
-  que les deux consignes invoquaient déjà sans qu'il existe sur `main`.
-- **Une correction fausse du calendrier du 30e Anniversaire a été fusionnée
-  le 20 septembre, puis annulée le jour même.** La branche
-  `blog/fix-30e-anniversaire-calendrier` (17 septembre) affirmait que la
-  Pokébox et les Tripacks étaient sortis le 16 septembre. Faux : Julian a
-  constaté en magasin, à l'ouverture, ETB, Collection poster, duopack et deux
-  coffrets ex, rien d'autre, et la liste officielle de Pokémon France du 1er
-  septembre ne cite ni Pokébox, ni Tripack, ni Mini-Tin. La fusion avait été
-  faite sans revérifier le fait, puis défendue sur des sources secondaires.
-  La hiérarchie de sources qui en découle est dans `CLAUDE.md`, section
-  « Dates de sortie de produits ».
-- **16 tests** couvrent le calendrier et les critères de publication
-  (`npm test`, runner intégré de Node, aucune dépendance ajoutée).
-
-Corpus vérifié article par article avec `defauts()`, sur les critères réels
-de publication : **15 articles publiés, 0 défaut bloquant.**
-
-Les trois branches périmées (`blog/op17-scelle-flambe-...`,
-`blog/pokemon-storm-emeralda-...`, `blog/star-wars-unlimited-...`) ont été
-supprimées le 20 septembre, sur décision de Julian, après vérification que
-chaque article est publié sur `main` (`draft: false`) et en production (200,
-titre identique). SHA de secours : `55d5f18`, `8e277f2` et `26a2047`.
-
-Leur examen avait révélé que la branche Star Wars portait `logo-starwars.png`,
-jamais fusionné, donc absent de la production (image de l'article et de la
-page `/tcg/star-wars/` en 404). Restauré sur `main`.
-
----
-
-## 🟠 À observer
-
-### 1. Validation mobile sur un vrai téléphone
-
-Le navigateur d'audit **ne défile pas** et **ne compose pas de frames** :
-aucune transition CSS ne s'exécute.
-
-Tout ce qui a été affirmé sur la navigation mobile repose sur des valeurs
-**cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les
-ancres du menu, la fermeture du panneau, les carrousels, et le rendu des
-images après les correctifs de ratio.
-
-### 1 bis. Veille du calendrier du 30e Anniversaire
+### 5. Veille du calendrier 30e Anniversaire
 
 Quatre produits n'ont pas de date certaine en France, et l'article
 `pokemon-30e-anniversaire-sortie-mondiale-2026` le dit :
 
-- **Collection K.O.** : annoncée au T3 2026, sans date précise, absente des
-  rayons à l'ouverture (ligne « Sans date précise »).
-- **Coffret Classeur** : deux dates affichées dans l'article, 2 octobre selon les
-  revendeurs français et 4 décembre aux États-Unis, faute de date française confirmée.
+- **Collection K.O.** : annoncée au T3 2026, sans date précise, absente des rayons à l'ouverture.
+- **Coffret Classeur** : deux dates affichées, 2 octobre selon les revendeurs français et 4
+  décembre aux États-Unis, faute de date française confirmée.
 - **Tripack** : T4 2026, 13 novembre ou fin novembre selon les sources.
-- **Pokébox** : 4 décembre selon les distributeurs, absente de la liste
-  officielle de septembre.
+- **Pokébox** : 4 décembre selon les distributeurs, absente de la liste officielle de septembre.
 
 Bundle et Mini-Tins (2 octobre) sont à vérifier en rayon ce jour-là.
 
-Cette relecture est faite chaque lundi à 8h par la tâche planifiée
-`veille-calendrier-pokemon-30-ans` (de septembre à décembre 2026). Elle ne
-modifie rien : elle signale un changement et Julian décide. Elle se
-désactive d'elle-même à partir du 1er janvier 2027. Le résultat se lit dans
-le volet des exécutions de l'app, et une notification part si une date change.
+La tâche planifiée `veille-calendrier-pokemon-30-ans` relit chaque lundi à 8h les pages
+officielles de Pokémon France jusqu'au 31 décembre 2026. Elle ne modifie rien : elle signale un
+changement et Julian décide. N'ajuster l'article qu'à partir de ces pages ou d'un constat en
+magasin, jamais d'un blog seul (règle dans `CLAUDE.md`, « Dates de sortie de produits »). La
+veille lit aussi les fiches 30 ans de La Maison du TCG, signal secondaire qui donnait encore le 16
+septembre pour le Tripack et la Pokébox le 20 septembre, alors qu'aucun n'était sorti.
 
-À relire périodiquement : les deux pages de Pokémon France (« produits du
-JCC qui sortiront en septembre 2026 », puis les pages équivalentes des mois
-suivants, et « produits 30ᵉ Anniversaire »). N'ajuster l'article qu'à partir de
-ces pages ou d'un constat en magasin, jamais d'un blog seul. Règle dans
-`CLAUDE.md`, section « Dates de sortie de produits ».
+**Contradiction officielle connue** : le communiqué de Pokémon France du 16 septembre (agence
+Reset PR) liste la Collection autocollant et la « Boîte 30ᵉ Anniversaire » parmi les produits
+disponibles dès le 16, alors que Julian ne les a vues dans aucun magasin et que la page produits
+officielle place la Collection autocollant au 4e trimestre. Le constat de Julian prime, ce
+communiqué ne doit pas servir à dater les produits.
 
-La veille lit aussi les fiches 30 ans de La Maison du TCG, signal secondaire à
-croiser avec Pokémon France : un changement de date sur l'une d'elles est un
-bon indice qu'une date a bougé. Ses fiches Tripack et Pokébox donnaient encore
-le 16 septembre le 20 septembre, alors qu'aucun des deux n'était sorti.
+### 6. File d'annonces : résorbée, à surveiller
 
-**Contradiction officielle connue** : le communiqué de presse de Pokémon France du 16
-septembre (agence Reset PR, the-pokemon-company-international.prezly.com) liste la
-Collection autocollant et la « Boîte 30ᵉ Anniversaire » parmi les produits disponibles
-dès le 16, alors que Julian ne les a vues dans aucun magasin et que la page produits
-officielle place la Collection autocollant au 4e trimestre. Le constat de Julian prime ;
-ce communiqué ne doit pas servir à dater les produits.
+Depuis le créneau du dimanche (27 septembre), la file ne prend plus de retard. Au 30
+septembre, Buffer a relayé les 18 articles publiés et Discord n'attend qu'un article (OP-18).
+Le relais ne sort qu'un article par passage, les dimanches, mardis et vendredis.
 
-### 1 ter. File d'annonces : un retard qui ne se résorbe pas
+### 7. Validation mobile sur un vrai téléphone
 
-`annonce-buffer` et `annonce-discord` relaient **un seul article par passage, le
-plus ancien en attente**, le mardi et le vendredi. Avec deux articles publiés par
-semaine (le vendredi est obligatoire depuis le 19 septembre), la file reste à
-trois : chaque article part une dizaine de jours après sa publication.
-
-Le 21 septembre, Buffer attend Star Wars (pubDate 10/09), le 30e Anniversaire
-(12/09) et Monstres Fantastiques (14/09) ; Discord attend Star Wars et Monstres
-Fantastiques. Le passage du mardi 15 a échoué lui aussi (même cause que le 18 :
-Node 20), ce que le rapport de la routine de vérification supprimée n'avait pas
-relevé.
-
-Décidé le 22 septembre : un **troisième créneau, le dimanche** (les posts partent
-le lundi). Pas le mercredi : la file Buffer fait partir un post au prochain créneau
-libre, donc le lendemain du passage, et un article du jeudi rejoindrait les cotes
-sur TikTok à trois heures d'écart. Dimanche, mardi et vendredi ne sont jamais
-consécutifs. Le 30e Anniversaire sera annoncé normalement, sans être sauté.
-Premier passage du dimanche : le 27 septembre.
-
-Le même jour, `alerte-automatisations` a été corrigée : pour `annonce-buffer` et
-`publie-articles`, seuls les passages planifiés comptent, car un test manuel en
-mode brouillon avait effacé l'échec réel du 18 septembre.
-
-### 1 quater. Article Pokémon du 22 septembre : dossier préparé
-
-Julian a demandé qu'un prochain article Pokémon s'inspire d'un papier du Journal du
-Geek (21 septembre, stratégie anti-scalpers de l'extension 30 ans) pour l'améliorer et
-l'augmenter. Le dossier est dans `docs/briefs/2026-09-22-pokemon-scalpers-sortie-mondiale.md`
-et la routine du mardi (`blog-cards-trading-article-hebdo`) a reçu la consigne de le suivre
-pour cette semaine seulement.
-
-Ce que le dossier corrige dans la source : aucune déclaration officielle ne parle d'une
-stratégie ni de taux de tirage, les chiffres des tiers ne coïncident pas (1 sur 18 pour
-Kotaku, 5,24 % sur 420 boosters pour Collider, un booster sur deux avec une carte ex pour
-DigitalTQ), et rien n'est dit des produits scellés, là où se joue la pénurie.
-
-Revu le même jour après une seconde consigne de Julian : aucun chiffre ni prix inventé,
-le vocabulaire qualitatif plutôt qu'un chiffre fragile. Le dossier contient désormais
-une liste fermée de faits chiffrés, relus un à un dans le navigateur, et la routine doit
-lister en compte-rendu chaque chiffre de son article avec sa ligne d'origine. À la
-relecture de la branche : aucun chiffre hors de cette liste, aucune phrase reprise de la
-source, un seul angle, et « observé » plutôt que « voulu ».
+Le navigateur d'audit **ne défile pas** et **ne compose pas de frames** : aucune transition CSS
+ne s'exécute. Tout ce qui a été affirmé sur la navigation mobile repose sur des valeurs
+**cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les ancres du menu, la
+fermeture du panneau, les carrousels, le rendu des images après les correctifs de ratio et les
+quatre corrections d'affichage mobile du 28 septembre.
 
 ---
 
 ## 🟡 Améliorations identifiées, non appliquées
 
-### 2. Cote One Piece en euros — abandonnée en l'état
+### 8. Cote One Piece en euros : abandonnée en l'état
 
-One Piece reste **hors de la rotation du top des hausses**, et c'est
-définitif tant qu'aucune source gratuite ne cote en euros.
+One Piece reste **hors de la rotation du top des hausses**, et c'est définitif tant qu'aucune
+source gratuite ne cote en euros. `optcgapi`, `apitcg` et `tcgcsv` sont adossés à TCGplayer, donc
+en **dollars sur le marché américain**. TCGdex cote en euros via Cardmarket mais ne couvre que
+Pokémon. **L'accès Cardmarket est écarté** : il exige un compte professionnel, décision du 20
+août, ne pas y revenir. Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la
+cote One Piece, indexée par impression.
 
-`optcgapi`, `apitcg` et `tcgcsv` sont tous adossés à TCGplayer, donc en
-**dollars sur le marché américain**. TCGdex est le seul à coter en euros via
-Cardmarket, et ne couvre que Pokémon. **L'accès Cardmarket est écarté** : il
-exige un compte professionnel, décision prise le 20 août, ne pas y revenir.
+### 9. Durcir la gestion des secrets
 
-Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la cote
-One Piece, désormais indexée par impression.
+Décision assumée : les webhooks Discord et les clés d'API ont transité en clair dans une
+conversation, l'enjeu étant jugé faible à ce stade. Ils sont en secrets GitHub, **jamais
+committés** : le dépôt est public et l'historique git est définitif. À reprendre quand
+l'audience ou l'équipe grandira : faire tourner les webhooks et les clés, et envisager un dépôt
+privé pour l'automatisation.
 
-### 3. Durcir la gestion des secrets
+### 10. Webhook de bounce Resend
 
-Décision assumée : les webhooks Discord et les clés d'API ont transité en
-clair dans une conversation, l'enjeu étant jugé faible à ce stade. Ils sont
-en secrets GitHub, **jamais committés** — le dépôt est public et l'historique
-git est définitif. Vérifié : aucune fuite.
+Optionnel. Détecterait les adresses invalides côté serveur plutôt qu'a posteriori dans le
+dashboard. Le validateur Damerau-Levenshtein couvre déjà les fautes de frappe courantes.
 
-À reprendre quand l'audience ou l'équipe grandira : faire tourner les
-webhooks et les clés, et envisager un dépôt privé pour l'automatisation.
+### 11. Aucun salon Discord interne
 
-### 4. Webhook de bounce Resend
+Les 7 webhooks configurés pointent tous vers des **salons publics** de la communauté. Il
+n'existe aucun canal interne pour la coordination d'équipe, ni d'identifiant Discord de Valérian
+côté projet. À créer si les échanges d'équipe doivent passer par Discord.
 
-Optionnel. Détecterait les adresses invalides côté serveur plutôt qu'a
-posteriori dans le dashboard. Le validateur Damerau-Levenshtein couvre déjà
-les fautes de frappe courantes.
+### 12. Pipeline vidéo TikTok par Seedance : reporté, pas abandonné
 
-### 5. Aucun salon Discord interne
-
-Les 7 webhooks configurés pointent tous vers des **salons publics** de la
-communauté. Il n'existe aucun canal interne pour la coordination d'équipe, ni
-d'identifiant Discord de Valérian côté projet.
-
-À créer si les échanges d'équipe doivent passer par Discord plutôt que par un
-autre canal.
-
-### 6. Pipeline vidéo TikTok par Seedance — reporté, pas abandonné
-
-Plan complet écrit et committé :
-`docs/plans/2026-09-08-pipeline-video-tiktok.md`. Il remplace l'image fixe des
-posts TikTok par un clip de 7 à 10 s généré en image-to-video depuis la
-vignette existante, avec repli automatique sur l'image.
-
-**Reporté le 19 septembre** : implémentation jugée lourde au regard du gain
-attendu à ce stade.
-
-Ce qui est déjà tranché et n'a pas à être réinstruit : Seedance en
-image-to-video (un text-to-video inventerait un visuel de carte inexistant),
-Kling et Grok Imagine écartés au prix à qualité comparable, CapCut écarté
-faute d'API de montage et d'export côté serveur.
-
----
-
-## ✅ Vérifié le 19 septembre
-
-| Point | Preuve |
-|---|---|
-| Format X « image + lien en réponse » | Post OP-17 du 9 sept : `threadCount: 2`, vignette 1200×630 sur le message principal, lien en réponse, aucune erreur. 239 impressions et 2,09 % d'engagement, contre 151 et 0 % pour le post de cotes sans visuel. |
-| Débordement de « Cardmarket » | Mesuré au pire cas (981 px) après correctif : 3,5 px de réserve, 4,2 px de la cellule voisine, aucun débordement du document. Les 15 px annoncés jusqu'ici étaient périmés. |
-| Vignettes sociales | Les quatre fichiers des deux articles de septembre répondent 200 en production. |
-| Chaîne Buffer | Essai en mode brouillon après correctif : twitter, instagram et tiktok acceptés. |
-| Compte TikTok | Reste **volontairement personnel** (`tchikibalianos`). Décision du 19 septembre : pas de rebrand, pas de tournage. La ligne « à convertir » était caduque. |
+Plan complet dans `docs/plans/2026-09-08-pipeline-video-tiktok.md` : un clip de 7 à 10 s généré
+en image-to-video depuis la vignette existante, avec repli automatique sur l'image. **Reporté le
+19 septembre** : implémentation jugée lourde au regard du gain attendu. Déjà tranché : Seedance en
+image-to-video (un text-to-video inventerait un visuel de carte inexistant), Kling et Grok
+Imagine écartés au prix à qualité comparable, CapCut écarté faute d'API côté serveur. Le compte
+TikTok reste **volontairement personnel** (décision du 19 septembre).
 
 ---
 
@@ -379,16 +152,19 @@ faute d'API de montage et d'export côté serveur.
 
 | Automatisation | Rythme | État |
 |---|---|---|
-| `keep-alive` | 6 h | ✅ les deux bases Supabase |
-| `annonce-discord` | dimanche, mardi, vendredi | ✅ routé par TCG |
-| `annonce-buffer` | dimanche, mardi, vendredi | ✅ après correctif des vignettes |
+| `keep-alive` | 6 h, plus le cron Vercel quotidien | ✅ les deux bases Supabase |
+| Rapport mensuel d'inscriptions | le 1er du mois, dans `/api/keep-alive` | ✅ un seul envoi (idempotence Resend), premier le 1er octobre |
+| `publie-articles` | quotidien, démarre vers 11h UTC | ✅ |
+| `alerte-relecture` | push sur `blog/**`, rappel quotidien 05:32 UTC | ✅ |
+| `alerte-automatisations` | quotidien 06:02 UTC | ✅ |
+| `annonce-discord`, `annonce-buffer` | dimanche, mardi, vendredi | ✅ file résorbée |
 | `cote-hebdo` | jeudi | ✅ marché international, japonais suspendu |
-| `newsletter-hebdo` | samedi 13h37 | ✅ digests envoyés |
-| `publie-articles` | quotidien 05:12 UTC | ✅ après passage en Node 22 |
-| `alerte-automatisations` | quotidien 06:02 UTC | ✅ éprouvé en CI |
-| pages hub par TCG | statique | ✅ 6 en ligne, au sitemap |
+| `newsletter-hebdo` | samedi 13h37 | ✅ |
+| `brouillons-sociaux` | à chaque dépôt de `data/social/*.json` | ✅ |
+| `controle-social` | quotidien 15:30 UTC | ✅ |
+| Routines Claude Desktop | mardi (article Pokémon ou One Piece), vendredi (autres TCG), samedi (posts de la semaine), lundi (veille du calendrier) | ✅ sauf celle du samedi, jamais exécutée |
+| Pages hub par TCG | statique | ✅ 7 en ligne, au sitemap |
 
-Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien
-social, flux RSS, vignettes par article, balisage FAQPage, `llms.txt`,
-robots.txt ouvert aux moteurs IA, traduction des cartes Dresseur japonaises,
-recoupement des prix contre TCGplayer.
+Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien social, flux RSS,
+vignettes par article, balisage FAQPage, `llms.txt`, robots.txt ouvert aux moteurs IA,
+traduction des cartes Dresseur japonaises, recoupement des prix contre TCGplayer.
