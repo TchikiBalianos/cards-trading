@@ -215,6 +215,35 @@ longue pause du projet, penser à réactiver le workflow.
 RLS : INSERT anonyme autorisé, SELECT réservé aux authentifiés. La clé anon
 ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agrégats.
 
+### Rapport mensuel : un seul envoi, malgré les appels multiples
+
+Le 1er de chaque mois (jour UTC), `/api/keep-alive` envoie à `contact@cards-trading.com` un
+rapport de santé : inscriptions du mois écoulé, total, dernière inscription, base joignable.
+Il vaut aussi test de la chaîne d'email : un mois sans rapport est un signal. Avant le
+30 septembre 2026 il était hebdomadaire, envoyé « le lundi ».
+
+⚠️ **Ce endpoint est appelé plusieurs fois par jour** : une fois par le cron Vercel, et toutes
+les 6 h par `keep-alive.yml` (avec du retard). Tout ce qu'on y greffe s'exécute donc plusieurs
+fois. Le rapport du lundi partait en **quatre exemplaires identiques** (constatés les 7, 14, 21
+et 28 septembre 2026, entre 04h et 23h UTC). Le rapport mensuel passe par l'API HTTP de Resend
+avec un en-tête `Idempotency-Key` (`rapport-mensuel/AAAA-MM`) : les appels suivants du même
+jour reçoivent la même réponse, sans renvoyer d'email. Le SDK `resend` installé (3.5.0) ne
+connaît pas cette option, d'où un `fetch` direct. Le texte du rapport ne dépend que du jour
+civil, sans quoi Resend refuserait le second appel pour « charge utile différente » (409,
+traité comme « déjà envoyé »).
+
+Le chiffre du mois vient de la fonction SQL `beta_stats_mois_precedent()` (mois calendaire
+Europe/Paris, définition dans `supabase/migrations/`). **`beta_stats()` n'a pas été touchée** :
+c'est celle du ping qui empêche la pause de Supabase. Si la nouvelle fonction manque, le
+rapport part quand même, sans le chiffre du mois.
+
+Test à la demande : `GET /api/keep-alive?rapport=1` envoie un rapport, au plus un par heure
+(clé d'idempotence horaire, distincte de celle du vrai rapport). Tests hors réseau :
+`node --test scripts/lib/rapport-mensuel.test.mjs`.
+
+Le « total » du rapport compte **toutes les soumissions** du formulaire, doublons et tests
+compris : ce n'est pas le nombre de personnes inscrites.
+
 ---
 
 ## Vercel — contraintes du plan Hobby
