@@ -186,6 +186,8 @@ export function composerRapportMensuel({ stats, mensuel, maintenant = new Date()
     ? mensuel.mois
     : moisPrecedentParis(maintenant);
   const libelle = libelleMois(moisCompte);
+  /* « d'août », « d'avril », « d'octobre » : l'élision devant une voyelle. */
+  const deLibelle = /^[aeiouyéèêàâîôû]/i.test(libelle) ? `d'${libelle}` : `de ${libelle}`;
   const compteMois = mensuel && typeof mensuel.mois_precedent === 'number'
     ? mensuel.mois_precedent
     : null;
@@ -205,7 +207,7 @@ export function composerRapportMensuel({ stats, mensuel, maintenant = new Date()
   if (!totalDispo) {
     sujet = '⚠️ Cards Trading : rapport mensuel incomplet (statistiques illisibles)';
   } else if (compteMois === null) {
-    sujet = `📊 Cards Trading : rapport mensuel de ${libelle}`;
+    sujet = `📊 Cards Trading : rapport mensuel ${deLibelle}`;
   } else {
     sujet = `📊 Cards Trading : ${compteMois} inscription${compteMois > 1 ? 's' : ''} en ${libelle}`;
   }
@@ -242,7 +244,7 @@ export function composerRapportMensuel({ stats, mensuel, maintenant = new Date()
   const html = `
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px">
   <h2 style="color:#2997ff;margin:0 0 4px">📊 Rapport mensuel</h2>
-  <p style="color:#888;font-size:13px;margin:0 0 24px">Mois de ${libelle}, envoyé le ${dateEnvoi}</p>
+  <p style="color:#888;font-size:13px;margin:0 0 24px">Mois ${deLibelle}, envoyé le ${dateEnvoi}</p>
 
   ${tuiles}
 

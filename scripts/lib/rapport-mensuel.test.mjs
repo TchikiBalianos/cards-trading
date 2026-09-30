@@ -100,6 +100,21 @@ test("rapport : le texte ne dépend que du jour, donc deux appels du même jour 
   assert.equal(matin.html, soir.html, "sinon Resend refuserait le second appel pour « charge utile différente »");
 });
 
+test("rapport : « d'août », « d'avril », « d'octobre », « de septembre »", () => {
+  const rapport = (maintenant, mensuel) => composerRapportMensuel({ stats: STATS, mensuel, maintenant });
+
+  const aout = rapport(new Date('2026-09-01T04:09:00Z'), { mois: '2026-08', mois_precedent: 12 });
+  assert.match(aout.html, /Mois d'août 2026, envoyé le 01\/09\/2026/);
+  assert.equal(aout.sujet, '📊 Cards Trading : 12 inscriptions en août 2026');
+
+  /* sans le compteur, le sujet reprend le mois déduit de la date */
+  assert.equal(rapport(new Date('2026-09-01T04:09:00Z'), null).sujet, "📊 Cards Trading : rapport mensuel d'août 2026");
+  assert.equal(rapport(new Date('2026-05-01T04:09:00Z'), null).sujet, "📊 Cards Trading : rapport mensuel d'avril 2026");
+  assert.equal(rapport(new Date('2026-11-01T04:09:00Z'), null).sujet, "📊 Cards Trading : rapport mensuel d'octobre 2026");
+  assert.equal(rapport(new Date('2027-01-01T04:09:00Z'), null).sujet, '📊 Cards Trading : rapport mensuel de décembre 2026');
+  assert.match(rapport(PREMIER_OCTOBRE, MENSUEL).html, /Mois de septembre 2026/);
+});
+
 test('rapport sans le compteur du mois : il part quand même, en le disant', () => {
   const r = composerRapportMensuel({ stats: STATS, mensuel: null, maintenant: PREMIER_OCTOBRE });
   assert.equal(r.sujet, '📊 Cards Trading : rapport mensuel de septembre 2026');
