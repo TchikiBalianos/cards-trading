@@ -109,14 +109,27 @@ quatre corrections d'affichage mobile du 28 septembre.
 
 ## 🟡 Améliorations identifiées, non appliquées
 
-### 8. Cote One Piece en euros : abandonnée en l'état
+### 8. Cote One Piece en euros : une piste rouverte le 30 septembre
 
-One Piece reste **hors de la rotation du top des hausses**, et c'est définitif tant qu'aucune
-source gratuite ne cote en euros. `optcgapi`, `apitcg` et `tcgcsv` sont adossés à TCGplayer, donc
-en **dollars sur le marché américain**. TCGdex cote en euros via Cardmarket mais ne couvre que
-Pokémon. **L'accès Cardmarket est écarté** : il exige un compte professionnel, décision du 20
-août, ne pas y revenir. Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la
-cote One Piece, indexée par impression.
+One Piece reste **hors de la rotation du top des hausses** : `optcgapi`, `apitcg` et `tcgcsv` sont
+adossés à TCGplayer, donc en **dollars sur le marché américain**, et TCGdex ne couvre que
+Pokémon. La décision du 20 août écartait l'**API** Cardmarket (compte professionnel exigé) : elle
+tient toujours.
+
+**Mais Cardmarket publie des guides de prix publics, sans compte ni clé** :
+`downloads.s3.cardmarket.com/productCatalog/priceGuide/price_guide_<jeu>.json` et
+`productList/products_singles_<jeu>.json` (identifiants de jeu : Pokémon 6, One Piece 18, Dragon
+Ball 13, Magic 1, Yu-Gi-Oh 3, Lorcana 19). Prix en euros : le moins cher en ligne, la moyenne, la
+tendance, et les moyennes de ventes constatées sur 1, 7 et 30 jours. Trouvé dans les notes de
+recherche de PokéGator (5 août), **revérifié le 30 septembre** : HTTP 200, fichier One Piece de
+2,7 Mo mis à jour le jour même.
+
+À instruire avant d'y toucher : ces adresses ne sont **pas contractualisées** (elles peuvent
+disparaître, et leurs conditions d'usage sont à faire valider, d'autant que Cards-Trading est un
+concurrent de Cardmarket) ; il faut rapprocher les cartes One Piece d'OPTCG API des produits
+Cardmarket par nom et extension. Même piste pour le prix de référence de la story 3.6 du MVP.
+Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la cote One Piece, indexée par
+impression.
 
 ### 9. Durcir la gestion des secrets
 
