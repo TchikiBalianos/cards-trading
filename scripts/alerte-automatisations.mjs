@@ -34,8 +34,15 @@ const DESTINATAIRE = 'julian.schmerkin@gmail.com';
 const SEC = process.argv.includes('--dry-run');
 
 /* Ce workflow-ci est exclu : s'il échoue, il ne peut pas s'alerter
-   lui-même, et le signaler créerait une boucle sans intérêt. */
-const EXCLUS = new Set(['Alerte automatisations']);
+   lui-même, et le signaler créerait une boucle sans intérêt.
+
+   « Essai illustrations IA » aussi : ce n'est pas une automatisation mais
+   un outil lancé à la main, dont celui qui le lance lit le résultat. Son
+   échec est souvent attendu (accès ou quota pas encore en place) : la sonde
+   du 30 septembre 2026, refusée par Gemini en 429 comme prévu, a déclenché
+   le lendemain un « échoue depuis 1 passage » qui se serait répété chaque
+   jour. */
+const EXCLUS = new Set(['Alerte automatisations', 'Essai illustrations IA']);
 
 /* Nombre de passages remontés par workflow. Au-delà, on ne cherche plus à
    dater précisément le début d'une panne : « cassé depuis plus de 15
