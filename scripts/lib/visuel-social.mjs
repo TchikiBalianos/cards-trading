@@ -17,6 +17,7 @@ import sharp from 'sharp';
 import { FOND, ETIQUETTES, accentDe, echapper, decouper } from './charte.mjs';
 import { verifierSpec } from './visuel-spec.mjs';
 import { motif, choisirMotif, hachage } from './motifs.mjs';
+import { svgBip, miseEnPage } from './carte-bip.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const MARQUE = join(RACINE, 'public', 'assets', 'img', 'logo-icon.png');
@@ -226,7 +227,17 @@ async function modelePhoto(spec, licence, format) {
 
 /* ── Point d'entrée ────────────────────────────────────────── */
 
-const MODELES = { texte: modeleTexte, carte: modeleCarte, photo: modelePhoto };
+/* ── Modèle « bip » (Build in Public) ──────────────────────── */
+
+/* La carte numérotée du set, dessinée par carte-bip.mjs ; seule l'incrustation
+   du logo demande sharp, d'où ce court relais. */
+async function modeleBip(spec, licence, format) {
+  const m = miseEnPage(format);
+  const t = await enTete(format.largeur, format.hauteur, m.xEntete);
+  return sharp(Buffer.from(svgBip(spec, format, t.svg))).composite([{ input: t.marque, ...t.posMarque }]);
+}
+
+const MODELES = { texte: modeleTexte, carte: modeleCarte, photo: modelePhoto, bip: modeleBip };
 
 /* Renvoie le PNG en mémoire ; l'appelant décide où l'écrire. */
 export async function genererVisuel(spec, licence, reseau) {

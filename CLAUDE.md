@@ -849,6 +849,16 @@ médiane : l'humour communautaire n'est pas du remplissage.
 premier moteur de portée d'@ActuPokemon7, ne se planifient pas une semaine à l'avance.
 Julian a choisi de ne pas les couvrir.
 
+### Build in Public : les cartes « Set de base »
+
+Le post « coulisses » du dimanche est une carte numérotée d'un set (visuel `type: "bip"`,
+`scripts/lib/carte-bip.mjs`), tirée d'une banque d'épisodes **privée**, hors de ce dépôt.
+Charte complète : `docs/build-in-public/charte.md`. Le numéro compte les posts de la
+saison, jamais l'avancement du MVP. La validation refuse toute fuite (clé, IP, email,
+chemin) dans les textes de la carte, et les lignes trop longues plutôt que de les couper.
+La police DejaVu Sans Mono est installée par `brouillons-sociaux.yml` : sans elle, les
+bordereaux en chasse fixe débordent.
+
 ### Fonds des visuels : des motifs dessinés, plus d'IA
 
 Le fond IA de Pollinations.ai est tombé le 29 septembre 2026 (HTTP 402 depuis l'accès

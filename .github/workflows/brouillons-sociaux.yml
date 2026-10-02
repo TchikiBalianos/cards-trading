@@ -61,6 +61,14 @@ jobs:
       - name: Installer les dépendances
         run: npm ci --omit=dev --ignore-scripts=false
 
+      # Les cartes Build in Public écrivent en chasse fixe (DejaVu Sans Mono). Sans
+      # elle, librsvg substitue une autre police et les lignes du bordereau, dont
+      # la largeur est calculée à 0,6 em, peuvent déborder du ticket.
+      - name: Installer la police à chasse fixe
+        run: |
+          fc-list | grep -qi "DejaVu Sans Mono" || (sudo apt-get update -qq && sudo apt-get install -y -qq fonts-dejavu-core)
+          fc-match "DejaVu Sans Mono"
+
       - name: Valider les fichiers de semaine
         run: node scripts/brouillons-sociaux.mjs --valider ${{ inputs.fichier && format('--fichier={0}', inputs.fichier) || '' }}
 
