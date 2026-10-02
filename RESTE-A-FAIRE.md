@@ -14,7 +14,7 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Jeu 1er oct. | Premier **rapport mensuel** d'inscriptions, vers 04h UTC : vérifier qu'il arrive en **un seul** exemplaire (section « Rapport mensuel » de `CLAUDE.md`). Relever aussi le trafic du mois écoulé, dont le détail ne reste lisible que 31 jours (chantier 1). | Julian, Claude |
+| Jusqu'au jeu. 8 oct. | L'alerte quotidienne signale « Cote hebdomadaire » en échec : **faux positif**. Le 1er octobre, Discord a répondu 504 mais le message est bien publié sur `#général-pokémon`, et X, Instagram et TikTok sont programmés. Ne rien relancer (voir « Un 504 de Discord » dans `CLAUDE.md`) : le passage du jeudi 8 fera taire l'alerte. | Julian |
 | Ven 2 oct. | La routine du vendredi (09:09) écrit l'article **Star Wars** sur une branche `blog/…` : relire, ouvrir la pull request, fusionner. Vérifier aussi en magasin la sortie du Bundle, des Mini-Tins et du Coffret Classeur (voir « Veille du calendrier »). | Julian |
 | Sam 3 oct. | **Première exécution réelle** de la routine `social-cards-trading-semaine` : elle n'a jamais tourné, le premier lot a été écrit à la main. Contrôler la durée du passage (quelques minutes sans fichier écrit, c'est un échec silencieux), `data/social/2026-10-05.json`, le workflow `Brouillons sociaux`, puis cliquer **Schedule Post** dans Buffer. | Julian, Claude |
 | Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
@@ -34,8 +34,10 @@ source, la page et l'appareil se lisent donc, et un taux de conversion se calcul
 Ce qui manque n'est plus la mesure mais deux choses :
 
 - **La mémoire.** Le plan Hobby ne garde que 31 jours de détail (source, page, appareil). Sans
-  relevé en début de mois, le passé se perd. À consigner chaque 1er du mois dans un endroit
-  **privé** : le dépôt est public et les chiffres de trafic n'y ont pas leur place.
+  relevé en début de mois, le passé se perd. Les relevés vivent dans un dossier Google Drive
+  **privé** de Julian (« Cards-Trading · Suivi trafic (privé) »), un document par mois : le dépôt
+  est public et les chiffres de trafic n'y ont pas leur place. Septembre est relevé ; **prochain
+  relevé le 1er novembre**, sur demande à Claude.
 - **Le trafic lui-même**, très faible, à lire avec le taux d'inscription avant de choisir où
   mettre l'effort (blog, lives WhatNot, réseaux).
 
@@ -62,6 +64,13 @@ clé Gemini (`GEMINI_API_KEY` existe, mais la génération d'image y était à q
 août, HTTP 429). Tarifs lus le 30 septembre : FLUX-1-schnell sur Cloudflare tient dans le
 quota gratuit de 10 000 neurons par jour ; Gemini 3.1 Flash-Lite Image coûte 0,0336 $ l'image,
 soit environ 0,17 $ les cinq. Ne rien bâtir sur `gemini-2.5-flash-image`, arrêté le 2 octobre 2026.
+
+Relu le 2 octobre dans les deux documentations, et instructions données à Julian. **Cloudflare
+est la voie conseillée** : Workers AI est inclus dans l'offre gratuite, au-delà du quota les
+appels échouent sans rien facturer, et FLUX n'est pas parmi les modèles qui exigent un moyen de
+paiement. **Gemini exige désormais un prépaiement de 5 $ minimum**, et la facturation se rattache
+à un projet Google : passer par un projet dédié « Cards-Trading » et une clé neuve, jamais par
+un projet qui porte déjà d'autres clés, dont la consommation puiserait dans le même crédit.
 
 **Niveau 1 : il faut trois photos** déjà publiques, avec le nom de leur auteur, pour éprouver
 le modèle `photo` sur du réel.

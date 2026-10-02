@@ -610,6 +610,18 @@ conversion calculé dessus est une borne basse.
 
 Les chiffres de trafic et d'inscrits n'ont pas leur place ici : le dépôt est public.
 
+### Un 504 de Discord n'est pas un échec certain
+
+Le 1er octobre 2026, `publie-cote.mjs` a reçu HTTP 504 du webhook Discord et a marqué le
+passage en échec, alors que le message était bien publié sur `#général-pokémon` : Discord
+traite la requête puis rate sa réponse. Avant de relancer quoi que ce soit, **regarder le
+salon**. `cote-hebdo.yml` n'a pas d'option « Discord seul » (seulement `sans_discord`, pour
+le cas inverse) : le relancer tel quel reprogrammerait X, Instagram et TikTok en double.
+
+Tant que le passage suivant n'a pas réussi, `alerte-automatisations` renvoie chaque jour
+« Cote hebdomadaire échoue » : c'est le comportement voulu, il suffit de l'ignorer jusqu'au
+jeudi suivant. Mieux vaut cet email de trop qu'un échec réel passé sous silence.
+
 ### Limites de l'environnement de test
 - Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
   compose pas de frames → **transitions et animations CSS ne s'exécutent pas**.
