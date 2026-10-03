@@ -6,7 +6,7 @@ category: "star-wars"
 tags: ["star-wars", "swu", "homeworlds", "fortify", "sortie"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-starwars.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
