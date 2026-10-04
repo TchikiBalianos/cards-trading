@@ -1,6 +1,6 @@
 # Reste à faire : Cards-Trading
 
-État au **30 septembre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
+État au **5 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
 fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle est
 traitée. Les chantiers clos (incidents du 19 au 22 septembre, fiabilité des
 cotes, SEO, vérifications) sont archivés dans `docs/journal-des-corrections.md`.
@@ -14,9 +14,13 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Jusqu'au jeu. 8 oct. | L'alerte quotidienne signale « Cote hebdomadaire » en échec : **faux positif**. Le 1er octobre, Discord a répondu 504 mais le message est bien publié sur `#général-pokémon`, et X, Instagram et TikTok sont programmés. Ne rien relancer (voir « Un 504 de Discord » dans `CLAUDE.md`) : le passage du jeudi 8 fera taire l'alerte. | Julian |
-| Ven 2 oct. | La routine du vendredi (09:09) écrit l'article **Star Wars** sur une branche `blog/…` : relire, ouvrir la pull request, fusionner. Vérifier aussi en magasin la sortie du Bundle, des Mini-Tins et du Coffret Classeur (voir « Veille du calendrier »). | Julian |
-| Sam 3 oct. | **Première exécution réelle** de la routine `social-cards-trading-semaine` : elle n'a jamais tourné, le premier lot a été écrit à la main. Contrôler la durée du passage (quelques minutes sans fichier écrit, c'est un échec silencieux), `data/social/2026-10-05.json`, le workflow `Brouillons sociaux`, puis cliquer **Schedule Post** dans Buffer. Le post du dimanche 11 doit être la **carte 01/20** du build in public, recopiée de la banque privée (`docs/build-in-public/charte.md`), et `publie_le` doit être rempli dans la banque. | Julian, Claude |
+| Jusqu'au jeu. 8 oct. | L'alerte quotidienne signale « Cote hebdomadaire » en échec : **faux positif**. Le 1er octobre, Discord a répondu 504 mais le message est bien publié, en un seul exemplaire, et X, Instagram et TikTok sont partis le 2. **Ne pas cliquer « Re-run »** depuis l'email : on est en semaine One Piece, la relance publierait un autre top. Le correctif du 5 octobre (`84abc3e`) évite que ça se reproduise ; le passage du jeudi 8 fera taire l'alerte. | Julian |
+| Avant envoi | Brouillon de newsletter du 3 octobre (Resend) : il reprend les **+56 %, +41 % et +36 %** du top du 1er octobre, calculés contre une moyenne sur 30 jours restée figée une dizaine de jours chez Cardmarket. Probablement gonflés. Décider avant d'envoyer : formulation qualitative, ou retrait des pourcentages. | Julian |
+| Dès que possible | Discord, salon Pokémon : l'annonce de l'article « 30ᵉ Anniversaire » du 15 septembre est **en double** (republiée le 18 après un 504). Supprimer la seconde à la main. | Julian |
+| Mar 6, jeu 8, dim 11 oct. | Posts de la semaine en **brouillons Buffer** (actu One Piece, communauté One Piece, carte 01/20 du build in public) : relire et cliquer **Schedule Post**. Le post « cote » du lundi 5 n'a pas pu passer par le pipeline (il refuse le jour même) : texte et visuels prêts, à poster à la main si voulu. | Julian |
+| Sam 10 oct. | La routine `social-cards-trading-semaine` du 3 octobre est restée **bloquée deux jours** sur une demande de permission (sa première commande créait un dossier temporaire). Consignes corrigées le 5 octobre (chemin fixe, commandes séparées) ; au prochain passage, **autoriser une fois pour toutes** les commandes `git worktree` si l'app le demande, puis fermer l'ancienne session bloquée. | Julian |
+| En magasin | Vérifier la sortie du Bundle, des Mini-Tins et du Coffret Classeur du 30e Anniversaire (voir « Veille du calendrier »). | Julian |
+| Avant le jeu. 15 oct. | Méthode du top des hausses (marché international, prochain passage le 15) : la moyenne sur 30 jours de Cardmarket peut rester figée, ce qui gonfle les hausses. Proposition : exiger aussi la confirmation par la moyenne sur 7 jours pour les cartes recoupées sur TCGplayer, et archiver avg1, avg7 et le prix bas pour les audits. À trancher. | Julian, Claude |
 | Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
 | Mar 6 oct. | L'article `pokemon-mcdonalds-happy-meal-cartes-2026` passe en ligne (`publie-articles`, vers 11h UTC). La routine du mardi doit s'arrêter à son étape 0, la semaine étant couverte : c'est attendu. Vérifier le 200 en production. | Claude |
 
