@@ -25,6 +25,7 @@ import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { envoyerDiscord, signalerIncertain } from './lib/discord.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SORTIE = join(RACINE, 'public', 'assets', 'social');
@@ -187,14 +188,18 @@ const mentionSource =
       ? 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, cartes japonaises'
       : 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, toutes langues confondues';
 
-/* Version courte pour le pied de vignette, où la ligne est unique. */
+/* Version courte pour le pied de vignette (sa propre ligne dans le carré). */
 const mentionCourte =
   MARCHE === 'op'
     ? 'Évolution sur 13 jours'
     : 'Cote du jour contre moyenne des ventes sur 30 jours · Cardmarket';
 
 const motsCles = MARCHE === 'op' ? '#onepiececardgame #opcg' : '#pokemontcg #cartespokemon';
-const semaine = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+/* « 1er octobre » et non « 1 octobre » : Intl ne connaît pas l'ordinal
+   français du premier jour du mois (vignette du 1er octobre 2026). */
+const semaine = new Date()
+  .toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', timeZone: 'Europe/Paris' })
+  .replace(/^1 /, '1er ');
 console.log(`${donnees.podium.length} carte(s) au podium sur ${donnees.examinees} examinées.`);
 
 /* ── 2. Vignette ───────────────────────────────────────── */
@@ -222,7 +227,8 @@ const court = (t, n) => (t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t)
   que newsletter-hebdo.mjs, qui la faisait déjà correctement : elle couvre
   One Piece, où `affichage` n’existe pas.
 */
-const nomCarte = (c) => c.affichage || c.nomFr || c.nom;
+/* Les podiums japonais archivés avant le 5 octobre 2026 séparent le nom français du nom japonais par un tiret long : il ne doit plus ressortir dans un texte public. */
+const nomCarte = (c) => (c.affichage || c.nomFr || c.nom).replace(/\s[\u2013\u2014]\s/g, ' · ');
 /* Virgule décimale et espace insécable avant le symbole : « 96,54 € ».
    Un « 96.54 € » à l'anglaise sur un compte français fait amateur. */
 /* One Piece (marché 'op') est converti en euros à la source, dans
@@ -255,7 +261,10 @@ const FORMATS_COTE = [
     rangTaille: 46, nomDx: 52, nomTaille: 40, nomMax: 36,
     prixDy: 46, prixTaille: 32, variationDx: 240,
     situeDy: 84, situeTaille: 26, situeMax: 46,
-    piedY: 972, piedTaille: 26,
+    /* Deux lignes : sur une seule, la mention et le site dépassaient les
+       900 px utiles et le carré se terminait par « cards-trading.con »
+       (vignettes du 24 septembre et du 1er octobre 2026). */
+    piedY: 972, piedTaille: 26, piedInterligne: 36,
   },
   {
     suffixe: '-og',
@@ -315,8 +324,13 @@ async function vignetteCote(f) {
   <text x="${marge}" y="${f.sousTitreY}" font-family="Arial, Helvetica, sans-serif" font-size="${f.sousTitreTaille}"
         fill="${BLEU}">${echapper(titreMarche)} · semaine du ${echapper(semaine)}</text>
 ${lignes}
+${f.piedInterligne ? `
+  <text x="${marge}" y="${f.piedY - f.piedInterligne}" font-family="Arial, Helvetica, sans-serif" font-size="${f.piedTaille}"
+        fill="#ffffff" fill-opacity="0.5">${echapper(mentionCourte)}</text>
   <text x="${marge}" y="${f.piedY}" font-family="Arial, Helvetica, sans-serif" font-size="${f.piedTaille}"
-        fill="#ffffff" fill-opacity="0.5">${echapper(mentionCourte)} · cards-trading.com</text>
+        fill="#ffffff" fill-opacity="0.5">cards-trading.com</text>` : `
+  <text x="${marge}" y="${f.piedY}" font-family="Arial, Helvetica, sans-serif" font-size="${f.piedTaille}"
+        fill="#ffffff" fill-opacity="0.5">${echapper(mentionCourte)} · cards-trading.com</text>`}
 </svg>`;
 
   const marque = await sharp(MARQUE)
@@ -569,27 +583,49 @@ const echecs = [];
 /* Le salon suit le TCG : un top One Piece dans le salon Pokemon serait
    hors sujet pour ses lecteurs. Repli sur le salon general si le salon
    dedie n'est pas configure. */
-const webhook =
-  (MARCHE === 'op' ? process.env.DISCORD_WEBHOOK_ONE_PIECE : process.env.DISCORD_WEBHOOK_POKEMON) ||
-  process.env.DISCORD_WEBHOOK_DEFAUT;
+const dedie = MARCHE === 'op' ? process.env.DISCORD_WEBHOOK_ONE_PIECE : process.env.DISCORD_WEBHOOK_POKEMON;
+const webhook = dedie || process.env.DISCORD_WEBHOOK_DEFAUT;
+const salon = dedie ? `le salon ${MARCHE === 'op' ? 'One Piece' : 'Pokémon'}` : 'le salon par défaut';
 if (SANS_DISCORD) {
-  console.log('—  Discord : sauté (--sans-discord), reprise après échec partiel.');
+  console.log('-  Discord : sauté (--sans-discord), reprise après échec partiel.');
 } else if (webhook) {
-  try {
-    const r = await fetch(webhook, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: 'Cards-Trading', content: textes.discord }),
-    });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    console.log('✅ Discord');
+  /*
+    Trois issues (voir scripts/lib/discord.mjs). Un 504 n'est plus un
+    échec : les passages #8 et #11 étaient sortis en rouge alors que le
+    message était publié. Il reste signalé par un email unique, et
+    l'étape échoue quand même si cet email ne part pas.
+
+    Dans tous les cas non confirmés, le texte prévu est écrit dans le
+    journal : c'est la seule reprise « Discord seul » sûre, puisque
+    relancer le workflow recalculerait un autre podium et reposterait
+    sur Buffer.
+  */
+  const envoi = await envoyerDiscord(webhook, { username: 'Cards-Trading', content: textes.discord });
+  if (envoi.etat === 'ok') {
+    console.log(`✅ Discord (${envoi.detail})`);
     partis++;
-  } catch (e) {
-    console.error(`❌ Discord : ${e.message}`);
-    echecs.push('discord');
+  } else {
+    if (envoi.etat === 'incertain') {
+      console.log(
+        `::warning::Discord : ${envoi.detail}, issue inconnue. Message très probablement publié : ` +
+        `vérifier ${salon}. Ne pas relancer le workflow.`
+      );
+      const signale = await signalerIncertain({
+        script: 'publie-cote',
+        salon,
+        detail: envoi.detail,
+        contenu: textes.discord,
+        consigne: 'Ne relance PAS le workflow « Cote hebdomadaire » : il recalculerait un autre podium et le reposterait aussi sur X, Instagram et TikTok.',
+      });
+      if (!signale) echecs.push('discord (incertain, email de vérification non envoyé)');
+    } else {
+      console.error(`❌ Discord : ${envoi.detail}`);
+      echecs.push('discord');
+    }
+    console.log(`Texte prévu pour ${salon} (vérifier d'abord le salon, coller seulement s'il manque) :\n${textes.discord}`);
   }
 } else {
-  console.log('—  Discord : aucun webhook configuré, ignoré.');
+  console.log('-  Discord : aucun webhook configuré, ignoré.');
 }
 
 const cle = process.env.BUFFER_API_KEY;
@@ -626,7 +662,7 @@ if (cle) {
   /* Même forme que dans le corps du post : Buffer attend l'asset aux DEUX
      endroits, sur le post et dans le premier message du thread. */
   const imageX = {
-    image: { url: urlVignetteOg, metadata: { altText: `Top des hausses — ${titreMarche}` } },
+    image: { url: urlVignetteOg, metadata: { altText: `Top des hausses : ${titreMarche}` } },
   };
 
   const envois = [
@@ -656,7 +692,7 @@ if (cle) {
   ];
 
   for (const [service, texte, image, metadata] of envois) {
-    if (!canaux[service]) { console.log(`—  ${service} : non connecté.`); continue; }
+    if (!canaux[service]) { console.log(`-  ${service} : non connecté.`); continue; }
     try {
       /*
         `createPost` renvoie une UNION depuis août 2026 : un refus du
@@ -682,7 +718,7 @@ if (cle) {
           input: {
             channelId: canaux[service],
             text: texte,
-            assets: image ? [{ image: { url: image, metadata: { altText: `Top des hausses — ${titreMarche}` } } }] : [],
+            assets: image ? [{ image: { url: image, metadata: { altText: `Top des hausses : ${titreMarche}` } } }] : [],
             mode: 'addToQueue',
             needsApproval: false,
             schedulingType: 'automatic',
@@ -702,7 +738,7 @@ if (cle) {
     }
   }
 } else {
-  console.log('—  Buffer : BUFFER_API_KEY absente, ignoré.');
+  console.log('-  Buffer : BUFFER_API_KEY absente, ignoré.');
 }
 
 console.log(`\n${partis} publication(s) partie(s).`);

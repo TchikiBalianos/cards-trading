@@ -7,8 +7,15 @@
 #
 # Le jeudi, entre l'article du mardi et celui du vendredi.
 #
-# Rotation sur deux marchés, une semaine chacun : cartes internationales
-# et cartes japonaises — les deux cotées en euros sur Cardmarket.
+# Rotation sur trois marchés selon la semaine ISO (voir « Choisir le
+# marché ») : cartes Pokémon internationales, japonaises (suspendues,
+# repli sur internationales) et One Piece. Pokémon est coté en euros sur
+# Cardmarket ; One Piece est relevé en dollars chez optcgapi puis converti
+# en euros à taux fixe.
+#
+# ⚠️ Ne jamais cliquer « Re-run » sur un passage raté : le marché et le
+# podium sont recalculés à la date du jour, et la relance publierait un
+# autre top sur Discord ET Buffer. Voir CLAUDE.md, « Un 504 de Discord ».
 #
 # ⚠️ Découpage en deux phases : Buffer récupère la vignette par URL
 # publique, donc l'image doit être committée ET déployée par Vercel avant
@@ -29,7 +36,7 @@ on:
         options: [auto, int, jp, op]
         default: auto
       sans_discord:
-        description: "Reprise : ne pas reposter sur Discord (deja parti)"
+        description: "Reprise le jour meme si Discord est parti et Buffer non (le podium est recalcule : verifier avant)"
         type: boolean
         default: false
 
@@ -207,6 +214,8 @@ jobs:
           DISCORD_WEBHOOK_ONE_PIECE: ${{ secrets.DISCORD_WEBHOOK_ONE_PIECE }}
           DISCORD_WEBHOOK_DEFAUT: ${{ secrets.DISCORD_WEBHOOK_DEFAUT }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          # Un 504 de Discord n'échoue plus l'étape : il envoie un email unique à vérifier.
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=publier ${{ inputs.sans_discord && '--sans-discord' || '' }}
 
       # La newsletter du samedi lit ce fichier. Commit indépendant du

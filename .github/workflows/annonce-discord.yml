@@ -55,6 +55,8 @@ jobs:
           DISCORD_WEBHOOK_LORCANA: ${{ secrets.DISCORD_WEBHOOK_LORCANA }}
           DISCORD_WEBHOOK_YUGIOH: ${{ secrets.DISCORD_WEBHOOK_YUGIOH }}
           DISCORD_WEBHOOK_DEFAUT: ${{ secrets.DISCORD_WEBHOOK_DEFAUT }}
+          # Un 504 de Discord n'échoue plus l'étape : il envoie un email unique à vérifier.
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           if [ -z "$DISCORD_WEBHOOK_POKEMON$DISCORD_WEBHOOK_ONE_PIECE$DISCORD_WEBHOOK_MAGIC$DISCORD_WEBHOOK_DRAGON_BALL$DISCORD_WEBHOOK_LORCANA$DISCORD_WEBHOOK_YUGIOH$DISCORD_WEBHOOK_DEFAUT" ]; then
             echo "::error::Aucun webhook Discord configuré."
@@ -67,7 +69,11 @@ jobs:
           fi
           node scripts/annonce-discord.mjs
 
+      # if: always() : sur un 504 dont l'email de vérification n'a pas pu
+      # partir, l'étape précédente échoue APRÈS avoir noté l'article. Sans
+      # cette mémorisation, le passage suivant le reposterait en double.
       - name: Mémoriser ce qui a été annoncé
+        if: always()
         run: |
           if git diff --quiet -- .github/etat-annonces-discord.json; then
             echo "Aucune annonce ce coup-ci, rien à committer."

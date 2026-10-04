@@ -21,9 +21,9 @@
 # pubDate tombe un autre jour doit sortir ce jour-là, et un rattrapage
 # après incident ne doit pas attendre le prochain créneau éditorial.
 #
-# ⚠️ PAS de `[skip ci]` dans le commit de publication, contrairement aux
-# commits d'archivage des autres workflows : Vercel honore ce marqueur et
-# l'article ne serait jamais déployé.
+# ⚠️ PAS de `[skip ci]` dans le commit de publication, par prudence : on
+# l'a cru honoré par Vercel (l'article ne serait jamais déployé). Constaté
+# le 5 octobre 2026 : il ne l'est pas dans ce dépôt, voir CLAUDE.md.
 
 name: Publie les articles dus
 

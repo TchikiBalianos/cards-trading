@@ -499,7 +499,7 @@ for (const c of retenues) {
      situe la version. Pour un Dresseur en revanche, le nom français EST
      le nom officiel de la carte — accoler le japonais n'apporterait
      qu'une ligne illisible. */
-  c.affichage = !fr || enLatin ? c.nom : estDresseur ? fr : `${fr} — ${c.nom}`;
+  c.affichage = !fr || enLatin ? c.nom : estDresseur ? fr : `${fr} · ${c.nom}`;
 
   /*
     Référence courte de l'impression : « POR 120/088 ».

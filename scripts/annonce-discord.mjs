@@ -19,6 +19,7 @@
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { envoyerDiscord, signalerIncertain } from './lib/discord.mjs';
 
 const RACINE = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const DOSSIER_BLOG = join(RACINE, 'src', 'content', 'blog');
@@ -141,7 +142,7 @@ async function poster(article) {
       },
     ],
     content:
-      `📰 **Nouvel article** — ${categorie}\n${url}\n\n` +
+      `📰 **Nouvel article** · ${categorie}\n${url}\n\n` +
       `Vous voulez acheter et vendre vos cartes en quelques secondes, ` +
       `paiement bloqué jusqu'à réception ? La bêta ouvre bientôt : ` +
       `<${SITE}/?utm_source=discord#beta>`,
@@ -151,10 +152,10 @@ async function poster(article) {
 
   if (SEC) {
     console.log(
-      `[dry-run] salon : ${salon ? salon.via : 'AUCUN — ni dédié ni défaut'}\n` +
+      `[dry-run] salon : ${salon ? salon.via : 'AUCUN, ni dédié ni défaut'}\n` +
         JSON.stringify(charge, null, 2)
     );
-    return true;
+    return { annonce: true };
   }
 
   if (!salon) {
@@ -164,18 +165,41 @@ async function poster(article) {
   }
   console.log(`Salon visé : ${salon.via}`);
 
-  const rep = await fetch(salon.url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(charge),
-  });
+  const envoi = await envoyerDiscord(salon.url, charge);
 
-  if (!rep.ok) {
-    console.error(`::error::Discord a répondu ${rep.status} — ${await rep.text()}`);
-    return false;
+  if (envoi.etat === 'incertain') {
+    /*
+      Mémorisé quand même, avec un signal. Le 15 septembre 2026, un 504
+      reçu alors que l'annonce était publiée l'a laissée hors de l'état :
+      le passage du 18 l'a republiée, et le doublon est resté dans le
+      salon. Une annonce manquée se rattrape à la main, une annonce
+      doublée ne se rattrape pas.
+    */
+    console.log(
+      `::warning::Discord : ${envoi.detail}, issue inconnue pour « ${fm.title} ». ` +
+      `Mémorisé comme annoncé : vérifier le salon (${salon.via}).`
+    );
+    /* L'email part APRÈS l'écriture de l'état (voir plus bas) : un Resend
+       lent ne doit pas faire tuer le job avant la mémorisation. */
+    return {
+      annonce: true,
+      aSignaler: {
+        script: 'annonce-discord',
+        salon: salon.via === 'DISCORD_WEBHOOK_DEFAUT' ? 'le salon par défaut' : `le salon ${categorie}`,
+        detail: envoi.detail,
+        contenu: `${charge.content}\n\n(article : ${fm.title}, ${url})`,
+        consigne:
+          "L'article est déjà noté comme annoncé : relancer le workflow posterait l'article suivant, " +
+          'pas celui-ci. Seul un collage à la main le rattrape.',
+      },
+    };
   }
-  console.log(`✅ Annoncé : ${fm.title}`);
-  return true;
+  if (envoi.etat === 'echec') {
+    console.error(`::error::Discord : ${envoi.detail}`);
+    return { annonce: false };
+  }
+  console.log(`✅ Annoncé : ${fm.title} (${envoi.detail})`);
+  return { annonce: true };
 }
 
 /* ── Exécution ─────────────────────────────────────────── */
@@ -193,12 +217,18 @@ if (candidats.length === 0) {
 const article = candidats[0];
 console.log(`${candidats.length} article(s) en attente, on poste le plus ancien.`);
 
-if (await poster(article)) {
-  if (!SEC) {
-    etat.annonces.push(article.slug);
-    writeFileSync(FICHIER_ETAT, JSON.stringify(etat, null, 2) + '\n');
-    console.log(`État mis à jour (${etat.annonces.length} annonce(s) au total).`);
-  }
-} else {
-  process.exit(1);
+const resultat = await poster(article);
+if (!resultat.annonce) process.exit(1);
+
+if (!SEC) {
+  etat.annonces.push(article.slug);
+  writeFileSync(FICHIER_ETAT, JSON.stringify(etat, null, 2) + '\n');
+  console.log(`État mis à jour (${etat.annonces.length} annonce(s) au total).`);
+}
+
+/* Un « incertain » non signalé serait une panne possible passée sous
+   silence : l'étape échoue alors, et le workflow mémorise quand même
+   l'état (étape suivante en if: always()) pour ne pas reposter. */
+if (resultat.aSignaler && !(await signalerIncertain(resultat.aSignaler))) {
+  process.exitCode = 1;
 }

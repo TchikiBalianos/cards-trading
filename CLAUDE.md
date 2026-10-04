@@ -474,8 +474,13 @@ branche s'en est séparée ? » (`git rev-list --count <branche>..origin/main --
 fusion ; l'implémentation complète est gardée sous le tag `archive/alerte-relecture-squash`.
 
 ⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
-commits d'archivage des autres workflows. Vercel honore ce marqueur :
-l'article serait committé et jamais déployé.
+commits d'archivage des autres workflows. On a longtemps cru que Vercel
+honorait ce marqueur (l'article serait committé et jamais déployé). **Il ne
+l'honore pas dans ce dépôt** : vérifié le 5 octobre 2026, les 42 commits
+`[skip ci]` de `main` depuis le 27 août portent tous un statut Vercel
+« success », et `cote-hebdo` en dépend depuis sa création (sa vignette est
+committée avec le marqueur, puis l'étape suivante attend qu'elle soit
+servie). La règle reste par prudence : elle ne coûte rien.
 
 ⚠️ Le créneau de 05:12 UTC est **avant** les deux crons d'annonce, et
 c'est le seul point qui compte dans le choix de l'heure. Le déplacer
@@ -612,15 +617,52 @@ Les chiffres de trafic et d'inscrits n'ont pas leur place ici : le dépôt est p
 
 ### Un 504 de Discord n'est pas un échec certain
 
-Le 1er octobre 2026, `publie-cote.mjs` a reçu HTTP 504 du webhook Discord et a marqué le
-passage en échec, alors que le message était bien publié sur `#général-pokémon` : Discord
-traite la requête puis rate sa réponse. Avant de relancer quoi que ce soit, **regarder le
-salon**. `cote-hebdo.yml` n'a pas d'option « Discord seul » (seulement `sans_discord`, pour
-le cas inverse) : le relancer tel quel reprogrammerait X, Instagram et TikTok en double.
+Trois 504 constatés, trois messages pourtant publiés : `publie-cote.mjs` le 10 septembre et le
+1er octobre 2026, `annonce-discord.mjs` le 15 septembre. Chaque fois, le message est créé en
+moins de 3 s, puis la passerelle de Discord abandonne la réponse au bout de 30 s (l'identifiant
+d'un message Discord contient sa date de création, c'est ce qui l'a prouvé). Comptés comme des
+échecs, ils ont fait passer deux tops pour ratés (celui du 1er octobre avec un email d'alerte
+par jour jusqu'au jeudi suivant, l'alerte n'existant pas encore le 10 septembre), et surtout
+**fait republier le 18 septembre une annonce déjà en ligne** : `annonce-discord` ne mémorisait
+un article qu'en cas de succès.
 
-Tant que le passage suivant n'a pas réussi, `alerte-automatisations` renvoie chaque jour
-« Cote hebdomadaire échoue » : c'est le comportement voulu, il suffit de l'ignorer jusqu'au
-jeudi suivant. Mieux vaut cet email de trop qu'un échec réel passé sous silence.
+Depuis le 5 octobre 2026, les deux scripts passent par `scripts/lib/discord.mjs`, qui classe un
+envoi en trois issues :
+
+- **ok** : 2xx, identifiant du message journalisé grâce à `?wait=true` ;
+- **incertain** : 504, délai de 60 s dépassé, connexion coupée, et par prudence toute erreur
+  réseau qu'on ne sait pas situer avant l'envoi ;
+- **échec** : 4xx, 500, 502, 503 (présumés sans publication : seuls des 504 ont été observés),
+  URL de webhook invalide, redirection, ou connexion jamais établie (DNS, refus, réseau
+  injoignable, délai de connexion, certificat).
+
+Un « incertain » ne fait plus échouer l'étape, mais il n'est pas un succès : avertissement dans
+le journal et **un email** (clé d'idempotence par script, jour et texte : un rejeu ne le renvoie
+pas, un second incident du jour si) qui dit quel salon regarder et donne le texte à coller s'il
+manque. **Si cet email ne part pas, l'étape échoue** : un avertissement dans un passage vert,
+personne ne le lit. `annonce-discord` mémorise l'article avant d'envoyer l'email (étape
+« Mémoriser » en `if: always()`) : une annonce manquée se rattrape à la main, une annonce
+doublée non. Tests, dont trois sur un vrai serveur local : `node --test
+scripts/lib/discord.test.mjs`.
+
+⚠️ **Aucune nouvelle tentative automatique**, jamais : les webhooks Discord n'ont pas de clé
+d'idempotence, et les trois 504 auraient tous donné un doublon.
+
+⚠️ **Ne jamais cliquer « Re-run » sur un passage de `cote-hebdo` raté**, ni le relancer à la
+main un autre jour. Le marché est recalculé à la date du jour : relancé une autre semaine, un
+passage Pokémon peut publier un top One Piece (semaine ISO 41, par exemple), et la phase
+« préparer » recalcule de toute façon un autre podium avec une autre vignette. L'option
+`sans_discord` ne sert que le jour même, quand Discord est parti et Buffer non, en sachant que
+le podium sera recalculé. Le
+garde-fou « un seul top par jour » ne protège pas de ce cas, ni d'un Re-run du jour même (il
+reprend le commit d'origine, où le podium du jour n'est pas encore archivé), ni jamais du
+marché One Piece, qui n'est pas archivé. Quand Discord n'a pas confirmé, le journal affiche le
+texte prévu : vérifier d'abord le salon, le coller seulement s'il manque.
+
+⚠️ `alerte-automatisations` ne regarde que le **dernier passage terminé** de chaque workflow.
+Le passage #11 du 1er octobre reste rouge jusqu'au suivant (jeudi 8 octobre) : l'email
+« Cote hebdomadaire échoue » continue d'ici là, même avec ce correctif en place. L'ignorer,
+et surtout ne pas cliquer « Re-run » depuis le lien qu'il contient.
 
 ### Limites de l'environnement de test
 - Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
@@ -830,8 +872,8 @@ node scripts/semaine-sociale.mjs --controle --dry-run         # exige BUFFER_API
   identifiants (`buffer` dans le fichier de semaine), pas par tag.
 - **Relancer est sans danger** : un brouillon identique (même canal, même heure, même
   texte) est adopté au lieu d'être recréé, et les identifiants sont écrits au fur et à
-  mesure. Le commit des identifiants porte `[skip ci]`, celui des visuels **jamais** :
-  Vercel honore le marqueur et n'y déploierait pas les images.
+  mesure. Le commit des identifiants porte `[skip ci]`, celui des visuels **jamais**, par
+  prudence (Vercel ne l'honore pas dans ce dépôt, voir plus haut).
 
 ### Règles éditoriales, refusées par `valider` avant tout envoi
 

@@ -10,9 +10,10 @@
 # récupère les visuels par URL publique, donc ils doivent être committés ET
 # déployés par Vercel avant qu'on puisse les référencer.
 #
-# ⚠️ Le commit des visuels ne porte PAS `[skip ci]` : Vercel honore ce marqueur
-# et n'y déploierait jamais les images. Seul le commit des identifiants Buffer
-# en porte un, il ne change rien au site.
+# ⚠️ Le commit des visuels ne porte PAS `[skip ci]`, par prudence : on l'a cru
+# honoré par Vercel (les images ne seraient jamais déployées). Constaté le
+# 5 octobre 2026 : il ne l'est pas dans ce dépôt, voir CLAUDE.md. Seul le
+# commit des identifiants Buffer en porte un, il ne change rien au site.
 #
 # Idempotent : un post dont les brouillons existent déjà n'est pas retraité, et
 # un brouillon identique déjà présent dans Buffer est adopté au lieu d'être
