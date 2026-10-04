@@ -22,7 +22,11 @@
         "https://fr.onepiece-cardgame.com/products/op18.html",
         "https://fr.onepiece-cardgame.com/products/eb05.html",
         "https://fr.onepiece-cardgame.com/products/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ac2e024fe1389e41346083a",
+        "instagram": "6ac2e02563761da98b615c87"
+      }
     },
     {
       "id": "2026-10-08-communaute",
@@ -39,6 +43,10 @@
         "type": "texte",
         "titre": "Son tout premier booster. Ta carte.",
         "sous_titre": "Quelle carte One Piece t'a le plus fait courir ?"
+      },
+      "buffer": {
+        "twitter": "6ac2e025fe1389e413460870",
+        "instagram": "6ac2e026ca1380ada83c4b87"
       }
     },
     {
@@ -91,6 +99,10 @@
             ]
           ]
         }
+      },
+      "buffer": {
+        "twitter": "6ac2e02669a169193a510307",
+        "instagram": "6ac2e0265de5ee424c1bd8d0"
       }
     }
   ]
