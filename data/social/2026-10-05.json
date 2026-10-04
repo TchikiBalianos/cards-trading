@@ -1,0 +1,97 @@
+{
+  "semaine": "2026-10-05",
+  "posts": [
+    {
+      "id": "2026-10-06-actu",
+      "jour": "2026-10-06",
+      "pilier": "actu",
+      "licence": "one-piece",
+      "twitter": {
+        "texte": "📅 Les prochaines sorties One Piece Card Game en français, selon le site officiel :\n\n• 30 octobre : EB-05, Heroines Edition vol.2\n• 20 novembre : OP-18, La Domination de Dieu\n\nOP-18 a enfin son nom français. Au menu : Water Seven et les chevaliers divins.\n\n#OnePieceCardGame"
+      },
+      "instagram": {
+        "texte": "📅 Le calendrier One Piece Card Game de l'automne, en français\n\n• 30 octobre : EB-05, ONE PIECE Heroines Edition vol.2, le deuxième Extra Booster consacré aux héroïnes\n• 20 novembre : OP-18, La Domination de Dieu\n\nOP-18 a désormais son nom français et sa date sur le site officiel du jeu. Ce 18e booster met à l'honneur Water Seven et l'ordre des chevaliers divins, avec les débuts de Saint Shamrock et de Gunko.\n\nTu attends lequel des deux ? Dis-le en commentaire 👇 Et enregistre ce post pour garder les dates sous la main.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#onepiececardgame #onepiecetcg #op18 #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Calendrier",
+        "titre": "OP-18 sort le 20 novembre en français",
+        "sous_titre": "EB-05 le 30 octobre. Dates du site officiel One Piece Card Game."
+      },
+      "sources": [
+        "https://fr.onepiece-cardgame.com/products/op18.html",
+        "https://fr.onepiece-cardgame.com/products/eb05.html",
+        "https://fr.onepiece-cardgame.com/products/"
+      ]
+    },
+    {
+      "id": "2026-10-08-communaute",
+      "jour": "2026-10-08",
+      "pilier": "communaute",
+      "licence": "one-piece",
+      "twitter": {
+        "texte": "Cette sensation quand tu cherches la carte de ton perso préféré depuis des semaines… et que ton pote la sort de son tout premier booster 😤\n\nEt toi, quelle carte One Piece t'a le plus fait courir ?\n\n#OnePieceCardGame"
+      },
+      "instagram": {
+        "texte": "Cette sensation quand tu cherches la carte de ton perso préféré depuis des semaines… et que ton pote la sort de son tout premier booster 😤\n\nOn est tous passés par là. Raconte-nous en commentaire : quelle carte One Piece t'a le plus fait courir ? Et tu as fini par l'avoir ?\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#onepiececardgame #onepiecetcg #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "titre": "Son tout premier booster. Ta carte.",
+        "sous_titre": "Quelle carte One Piece t'a le plus fait courir ?"
+      }
+    },
+    {
+      "id": "2026-10-11-coulisses",
+      "jour": "2026-10-11",
+      "pilier": "coulisses",
+      "licence": "mixte",
+      "twitter": {
+        "texte": "On ouvre l'atelier 🛠️\n\nCards-Trading, la marketplace TCG, se construit à deux : Julian au produit, Val au code. Autour d'eux, une équipe d'agents IA qui analyse, code, teste et se relit.\n\nChaque semaine, une carte du chantier. Voici la 01/20.\n\n#buildinpublic #TCG"
+      },
+      "instagram": {
+        "texte": "On ouvre l'atelier 🛠️\n\nCards-Trading, c'est la marketplace qu'on construit pour acheter et vendre tes cartes simplement. Derrière, il y a deux humains : Julian au produit et à la communauté, Val au développement.\n\nEt une équipe d'agents IA, chacun dans son rôle : Mary l'analyste, Winston l'architecte, Sally pour l'expérience, Amelia pour le code. Ils proposent, codent et se relisent. Les commandes sensibles attendent toujours le clic d'un humain.\n\nChaque semaine, on te montre une carte du chantier : ce qu'on construit, ce qui casse, ce qu'on apprend. Voici la carte 01 du set.\n\nUne question sur notre façon de construire ? Pose-la en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+      },
+      "visuel": {
+        "type": "bip",
+        "numero": 1,
+        "total": 20,
+        "rarete": "holo",
+        "nom": "L'équipe du chantier",
+        "titre": "On construit Cards-Trading à deux, avec une équipe d'agents IA",
+        "sous_titre": "Une carte du chantier par semaine. Voici la première.",
+        "effet": "Deux humains, une équipe d'agents IA. Les humains gardent le dernier mot.",
+        "illustration": {
+          "gabarit": "bordereau",
+          "entete": "L'ÉQUIPE",
+          "lignes": [
+            [
+              "Produit",
+              "Julian"
+            ],
+            [
+              "Dev",
+              "Val"
+            ],
+            [
+              "Analyste",
+              "Mary (IA)"
+            ],
+            [
+              "Archi",
+              "Winston (IA)"
+            ],
+            [
+              "UX",
+              "Sally (IA)"
+            ],
+            [
+              "Code",
+              "Amelia (IA)"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}
