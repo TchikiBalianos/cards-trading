@@ -8,8 +8,10 @@
  *
  * Contenu : les articles publiés dans les 7 derniers jours (frontmatter,
  * aucune rédaction supplémentaire) + le podium de prix le plus récent
- * archivé par cote-hebdo (déjà recoupé contre TCGplayer à ce stade, voir
- * scripts/cote-hebdo.mjs). L'un des deux peut manquer sans faire échouer
+ * archivé par cote-hebdo (déjà passé par ses garde-fous à ce stade, dont un
+ * contrôle d'ordre de grandeur contre TCGplayer, voir scripts/cote-hebdo.mjs).
+ * L'email ne dit pas « recoupé » : il donne la date du relevé et ce que le
+ * pourcentage mesure. L'un des deux peut manquer sans faire échouer
  * le script — seule l'absence des DEUX annule la création du brouillon.
  *
  * Le SDK `resend` installé (3.5.0) ne sait pas créer de broadcasts —
@@ -199,9 +201,27 @@ function sectionPrix(podiumEntry) {
         </tr>
         <tr>
           <td style="padding:10px 28px 0; font-family:Arial,Helvetica,sans-serif; font-size:11px; line-height:1.5; color:#5c6a82;">
-            Variations calculées sur Cardmarket, recoupées contre TCGplayer avant publication. Informatif, ne constitue pas un conseil d'achat.
+            ${echapper(mentionPrix(podiumEntry))} Informatif, ne constitue pas un conseil d'achat.
           </td>
         </tr>`;
+}
+
+/*
+  Ce que le pourcentage mesure, daté. Ne plus écrire « recoupées contre
+  TCGplayer » : le contrôle de TCGplayer n'écarte que les ordres de grandeur
+  absurdes (rapport de 3 au plus), il ne confirme pas le prix. Le 5 octobre
+  2026, le Méga-Dracaufeu Y-ex était à 539 € sur Cardmarket et à environ
+  293 € sur TCGplayer : « recoupé » laissait croire à une concordance.
+*/
+function dateLongue(iso) {
+  const [a, m, j] = String(iso).slice(0, 10).split('-').map(Number);
+  return new Date(Date.UTC(a, m - 1, j))
+    .toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', timeZone: 'UTC' })
+    .replace(/^1 /, '1er ');
+}
+
+function mentionPrix(podiumEntry) {
+  return `Écart entre la cote Cardmarket relevée le ${dateLongue(podiumEntry.date)} et la moyenne des ventes sur 30 jours affichée par Cardmarket.`;
 }
 
 function composerHtml(articles, podiumEntry) {
@@ -213,7 +233,7 @@ function composerHtml(articles, podiumEntry) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Cards Trading — Le récap de la semaine</title>
+<title>Cards Trading, le récap de la semaine</title>
 </head>
 <body style="margin:0; padding:0; background-color:#0a0e17;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0a0e17;">
@@ -265,7 +285,7 @@ function composerHtml(articles, podiumEntry) {
     beta_submissions (Supabase) retient tous les inscrits à la bêta,
     le segment Resend ne reçoit un contact QUE si la case newsletter a
     été cochée (voir api/submit-form.js). Un destinataire de cet email
-    a donc toujours consenti à la newsletter — annoncer la liste
+    a donc toujours consenti à la newsletter : annoncer la liste
     d'attente à la place décrivait mal la base légale de l'envoi.
 
     Corrigé le 27 août 2026, après le premier envoi réel.
@@ -273,7 +293,7 @@ function composerHtml(articles, podiumEntry) {
   <tr>
     <td style="padding:28px 28px 24px; border-top:1px solid #1c2333; font-family:Arial,Helvetica,sans-serif; font-size:11px; line-height:1.6; color:#5c6a82; text-align:center;">
       Vous recevez cet email parce que vous vous êtes inscrit à la newsletter Cards Trading.<br>
-      Cards Trading — édité par Thugz Labs.<br>
+      Cards Trading, édité par Thugz Labs.<br>
       <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#7c879c; text-decoration:underline;">Se désinscrire</a>
     </td>
   </tr>
@@ -297,6 +317,8 @@ function composerTexte(articles, podiumEntry) {
     for (const c of podiumEntry.podium) {
       lignes.push(`- ${c.affichage || c.nomFr || c.nom} (${situeCarte(c)}) : +${c.variation} %`);
     }
+    lignes.push('');
+    lignes.push(mentionPrix(podiumEntry));
     lignes.push('');
   }
   lignes.push(`Voir le site : ${SITE}/`);
@@ -415,7 +437,7 @@ if (articles.length === 0 && !podiumEntry) {
 
 console.log(`${articles.length} article(s) de la semaine, podium ${podiumEntry ? `présent (${podiumEntry.podium.length} carte(s), marché ${podiumEntry.marche})` : 'absent'}.`);
 
-const sujet = `Le récap Cards Trading — semaine du ${periodeSemaine()}`;
+const sujet = `Le récap Cards Trading : semaine du ${periodeSemaine()}`;
 const previewText = articles[0]?.fm.title || 'Les nouveautés de la semaine sur Cards Trading';
 const html = composerHtml(articles, podiumEntry);
 const texte = composerTexte(articles, podiumEntry);
