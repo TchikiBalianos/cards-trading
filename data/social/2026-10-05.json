@@ -55,10 +55,10 @@
       "pilier": "coulisses",
       "licence": "mixte",
       "twitter": {
-        "texte": "On ouvre l'atelier 🛠️\n\nCards-Trading, la marketplace TCG, se construit à deux : Julian au produit, Val au code. Autour d'eux, une équipe d'agents IA qui analyse, code, teste et se relit.\n\nChaque semaine, une carte du chantier. Voici la 01/20.\n\n#buildinpublic #TCG"
+        "texte": "On ouvre l'atelier 🛠️\n\nCards-Trading, la marketplace TCG, se construit à deux : Valerian au produit, Julian sur la Tech.\nAutour d'eux, une équipe d'agents IA qui analyse, code, teste et review.\n\nChaque semaine, un aperçu du chantier.\nVoici la carte n°01/20.\n\n#BuildInPublic #TCG"
       },
       "instagram": {
-        "texte": "On ouvre l'atelier 🛠️\n\nCards-Trading, c'est la marketplace qu'on construit pour acheter et vendre tes cartes simplement. Derrière, il y a deux humains : Julian au produit et à la communauté, Val au développement.\n\nEt une équipe d'agents IA, chacun dans son rôle : Mary l'analyste, Winston l'architecte, Sally pour l'expérience, Amelia pour le code. Ils proposent, codent et se relisent. Les commandes sensibles attendent toujours le clic d'un humain.\n\nChaque semaine, on te montre une carte du chantier : ce qu'on construit, ce qui casse, ce qu'on apprend. Voici la carte 01 du set.\n\nUne question sur notre façon de construire ? Pose-la en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+        "texte": "On ouvre l'atelier 🛠️\n\nCards-Trading, c'est la marketplace qu'on construit pour acheter et vendre tes cartes simplement. Derrière, il y a deux humains : Julian sur la tech, la gestion et le marketing, Val sur le produit et l'UX/UI.\n\nEt une équipe d'agents IA, chacun dans son rôle : Mary l'analyste, Winston l'architecte, Sally pour l'expérience, Amelia pour le code. Ils proposent, codent et se relisent. Les commandes sensibles attendent toujours le clic d'un humain.\n\nChaque semaine, on te montre une carte du chantier : ce qu'on construit, ce qui casse, ce qu'on apprend. Voici la carte 01 du set.\n\nUne question sur notre façon de construire ? Pose-la en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
       },
       "visuel": {
         "type": "bip",
@@ -74,11 +74,11 @@
           "entete": "L'ÉQUIPE",
           "lignes": [
             [
-              "Produit",
+              "Lead Tech",
               "Julian"
             ],
             [
-              "Dev",
+              "Produit & UX",
               "Val"
             ],
             [
