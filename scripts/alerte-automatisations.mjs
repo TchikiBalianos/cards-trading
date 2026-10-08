@@ -66,6 +66,23 @@ const PROFONDEUR = 15;
 */
 const SEULS_PLANIFIES = new Set(['annonce-buffer.yml', 'publie-articles.yml']);
 
+/*
+  Consigne propre à un workflow, affichée sous sa ligne. Le lien « Voir le
+  dernier passage » mène droit au bouton « Re-run » : pour la cote
+  hebdomadaire, c'est le geste à ne pas faire. Du 2 au 8 octobre 2026, six
+  emails « Cote hebdomadaire échoue » sont partis sans le dire.
+*/
+const CONSIGNES = {
+  'cote-hebdo.yml':
+    'Ne clique pas « Re-run » : le podium serait recalculé à la date du jour et un second top partirait sur Discord et sur X. ' +
+    'Ce workflow ne tourne que le jeudi : l’alerte s’arrête d’elle-même au prochain passage vert.',
+};
+
+/* Le rappel de la cascade blog, vignettes puis annonces ne concerne que ces
+   workflows. Sous une alerte de cote, il faisait chercher des images en 404
+   qui n'existaient pas. */
+const CHAINE_PUBLICATION = new Set(['publie-articles.yml', 'annonce-buffer.yml', 'annonce-discord.yml']);
+
 async function github(chemin) {
   const entetes = { Accept: 'application/vnd.github+json' };
   if (process.env.GITHUB_TOKEN) entetes.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
@@ -135,6 +152,7 @@ for (const w of workflows) {
     lien: dernier.html_url,
     conclusion: dernier.conclusion,
     masqueLe: masque ? masque.created_at : null,
+    consigne: CONSIGNES[fichier] || null,
   });
 }
 
@@ -170,6 +188,8 @@ const ligne = (c) => {
   return { duree, note };
 };
 
+const cascade = casses.some((c) => CHAINE_PUBLICATION.has(c.fichier));
+
 const texte = [
   casses.length === 1
     ? 'Une automatisation est cassée :'
@@ -179,12 +199,17 @@ const texte = [
     `- ${c.nom} (${c.fichier})`,
     `  ${ligne(c).duree}`,
     ...(ligne(c).note ? [`  ${ligne(c).note}`] : []),
+    ...(c.consigne ? [`  ${c.consigne}`] : []),
     `  ${c.lien}`,
     '',
   ]),
-  'Rappel : un échec de publication se propage. Le blog qui ne publie pas',
-  'prive les annonces de leurs vignettes, et les annonces échouent ensuite',
-  'sur des images en 404.',
+  ...(cascade
+    ? [
+        'Rappel : un échec de publication se propage. Le blog qui ne publie pas',
+        'prive les annonces de leurs vignettes, et les annonces échouent ensuite',
+        'sur des images en 404.',
+      ]
+    : []),
 ].join('\n');
 
 const html = `<!doctype html><html lang="fr"><body style="margin:0;background:#0b0f1a;padding:24px;font-family:Arial,Helvetica,sans-serif;">
@@ -200,15 +225,16 @@ const html = `<!doctype html><html lang="fr"><body style="margin:0;background:#0
       <div style="font-size:12px;color:#7c879c;padding-top:2px;">${c.fichier}</div>
       <div style="font-size:13px;color:#ffb454;padding-top:8px;">${ligne(c).duree}</div>
       ${ligne(c).note ? `<div style="font-size:12px;color:#7c879c;padding-top:4px;">${ligne(c).note}</div>` : ''}
+      ${c.consigne ? `<div style="font-size:13px;color:#e6ebf5;padding-top:8px;line-height:1.5;">${c.consigne}</div>` : ''}
       <div style="padding-top:10px;"><a href="${c.lien}" style="font-size:13px;color:#2997ff;">Voir le dernier passage</a></div>
     </td></tr>`
       )
       .join('')}
-    <tr><td style="padding:18px 24px;font-size:12px;color:#7c879c;line-height:1.6;">
+    ${cascade ? `<tr><td style="padding:18px 24px;font-size:12px;color:#7c879c;line-height:1.6;">
       Un échec de publication se propage : le blog qui ne publie pas prive les
       annonces de leurs vignettes, et les annonces échouent ensuite sur des
       images en 404.
-    </td></tr>
+    </td></tr>` : ''}
   </table>
 </body></html>`;
 

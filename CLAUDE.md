@@ -664,6 +664,14 @@ Le passage #11 du 1er octobre reste rouge jusqu'au suivant (jeudi 8 octobre) : l
 « Cote hebdomadaire échoue » continue d'ici là, même avec ce correctif en place. L'ignorer,
 et surtout ne pas cliquer « Re-run » depuis le lien qu'il contient.
 
+Depuis le 8 octobre 2026, l'email le dit lui-même : `CONSIGNES` (dans
+`scripts/alerte-automatisations.mjs`) ajoute sous un workflow sa consigne propre, et le rappel
+« images en 404 » ne s'affiche plus que si la chaîne blog puis annonces est en cause. Sous
+l'alerte de la cote, il faisait chercher des images qui n'existaient pas. Le chemin du 504 a été
+rejoué de bout en bout ce jour-là (phase « publier », faux Discord et faux Resend sur
+127.0.0.1, tout autre réseau bloqué) : 504 et email parti, passage vert ; Resend en panne,
+passage rouge ; 400, rouge ; 200, vert.
+
 ### Limites de l'environnement de test
 - Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
   compose pas de frames → **transitions et animations CSS ne s'exécutent pas**.

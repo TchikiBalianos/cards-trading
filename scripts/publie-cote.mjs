@@ -460,8 +460,10 @@ const lien = `${SITE}/?utm_source=`;
 /* Plus de « de la semaine » : la mesure compare la cote du JOUR a la
    moyenne des ventes du MOIS, elle ne dit rien de la semaine ecoulee.
    La cadence hebdomadaire reste portee par le sous-titre de la vignette,
-   qui date la publication et non le mouvement. */
-const accroche = `📈 Top des hausses · ${titreMarche.toLowerCase()}`;
+   qui date la publication et non le mouvement.
+   Sans toLowerCase : « cartes pokémon » et « one piece card game » en bas de
+   casse, sur un compte de marque, faisaient amateur (relevé le 8 octobre 2026). */
+const accroche = `📈 Top des hausses · ${titreMarche}`;
 const socle = `${accroche}\n\n${classementRiche}\n\n${mentionSource}.`;
 
 /*
