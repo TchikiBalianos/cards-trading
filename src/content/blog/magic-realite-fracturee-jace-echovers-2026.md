@@ -6,7 +6,7 @@ category: "magic"
 tags: ["magic", "realite-fracturee", "jace", "extension", "echovers"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-magic.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
