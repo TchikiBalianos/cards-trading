@@ -17,6 +17,7 @@
 
 import { readFileSync } from 'node:fs';
 import { referenceCarte, corroborerExtension } from './lib/reference-carte.mjs';
+import { PALIERS, PALIER_LE_PLUS_SOUPLE, confirmationAvg7, passeLePalier, motifReferenceFigee } from './lib/cote-paliers.mjs';
 
 const API = 'https://api.tcgdex.net/v2';
 
@@ -36,10 +37,9 @@ const FRAICHEUR_MAX_JOURS = 4;
   décrédibilisait l'ensemble : le lecteur compare des montants sans
   rapport et finit par douter des deux.
 
-  ⚠️ Contrepartie assumée : sur une semaine calme, le podium peut compter
-  moins de trois cartes, voire aucune. Le script publie alors ce qu'il a,
-  et RIEN du tout si la liste est vide, ce qui reste le comportement voulu
-  depuis l'origine : un marché calme est un marché calme.
+  Sur une semaine calme, ce plancher réduit le nombre de candidats : ce
+  sont les paliers (scripts/lib/cote-paliers.mjs) qui assouplissent alors
+  le seuil de hausse, jamais le plancher de prix.
 */
 const PRIX_PLANCHER_EUR = 10;
 
@@ -133,9 +133,6 @@ function motifStagnation(id, actuel, reference) {
   return null;
 }
 
-/* En dessous, ce n'est pas une hausse, c'est du bruit de marché. */
-const HAUSSE_MIN_INTERESSANTE = 12;
-
 /*
   Recoupement contre TCGplayer (marché américain, USD) — présent dans la
   MÊME réponse TCGdex que Cardmarket, donc sans appel ni dépendance
@@ -159,13 +156,6 @@ const HAUSSE_MIN_INTERESSANTE = 12;
 const TAUX_USD_EUR = 0.92;
 const RATIO_MARCHES_MAX = 3;
 
-/* Repli quand TCGplayer ne cote pas la carte (toutes les japonaises) :
-   `avg7` doit dépasser `avg30` d'au moins 15 % pour que la hausse soit
-   considérée confirmée sur la semaine, et non portée par une vente
-   isolée. Seuil bas à dessein — il écarte les artefacts sans exiger que
-   la hausse hebdomadaire égale la hausse instantanée. */
-const CONFIRMATION_AVG7 = 1.15;
-
 /* Le nom de la variante (holofoil, normal, reverseHolofoil…) change selon
    les cartes ; on prend la première qui a un prix plutôt que de viser un
    nom précis. */
@@ -188,6 +178,8 @@ async function api(chemin) {
   if (!rep.ok) throw new Error(`TCGdex ${rep.status} sur ${chemin}`);
   return rep.json();
 }
+
+const AUJOURDHUI = new Date().toISOString().slice(0, 10);
 
 function joursDepuis(iso) {
   return Math.round((Date.now() - new Date(iso).getTime()) / 86400000);
@@ -213,7 +205,7 @@ function examiner(carte, cm, tp) {
   const variation = ((actuel - reference) / reference) * 100;
   if (!Number.isFinite(variation)) return { ok: false, motif: 'variation non calculable' };
   if (variation > HAUSSE_MAX_PLAUSIBLE) return { ok: false, motif: `hausse aberrante (${Math.round(variation)} %)` };
-  if (variation < HAUSSE_MIN_INTERESSANTE) return { ok: false, motif: 'variation négligeable' };
+  if (variation < PALIER_LE_PLUS_SOUPLE.variation) return { ok: false, motif: 'variation négligeable' };
 
   /* Liquidité : une cote sans échanges derrière elle n'est pas publiable.
      Placé APRÈS le seuil de variation pour que les motifs de rejet
@@ -231,21 +223,14 @@ function examiner(carte, cm, tp) {
     Math.round(reference * 100) / 100,
   );
   if (fige) return { ok: false, motif: fige };
+  const figee = motifReferenceFigee(dejaPublie.get(carte.id), Math.round(reference * 100) / 100, AUJOURDHUI);
+  if (figee) return { ok: false, motif: figee };
 
   /*
-    Deux recoupements possibles, et il en faut TOUJOURS un.
-
-    Le recoupement TCGplayer ne s'applique qu'aux cartes internationales :
-    vérifié le 27 août 2026, TCGdex n'expose aucun prix TCGplayer sur les
-    cartes japonaises. Or la rotation alterne int/jp — le garde-fou posé
-    la veille était donc inopérant une semaine sur deux, sans que rien ne
-    le signale.
-
-    Repli pour ces cartes : exiger que la moyenne à 7 jours confirme la
-    hausse. Une flambée réelle tire `avg7` au-dessus d'`avg30` ; une vente
-    isolée à prix fort gonfle `trend` en laissant `avg7` collé à `avg30`.
-    Sur un marché peu liquide comme le japonais, c'est précisément la
-    confusion à éviter.
+    TCGplayer écarte les ordres de grandeur absurdes, quand il cote la carte
+    (jamais les japonaises, vérifié le 27 août 2026). Il ne confirme pas une
+    hausse : le 1er octobre, le Méga-Dracaufeu Y-ex était à 539 € chez
+    Cardmarket et vers 293 € chez TCGplayer, dans le rapport de 3 toléré.
   */
   const tcgplayerEur = prixTcgplayerEur(tp);
   const recoupe = tcgplayerEur !== null;
@@ -257,15 +242,23 @@ function examiner(carte, cm, tp) {
         motif: `incohérent avec TCGplayer (${actuel} € contre ~${tcgplayerEur.toFixed(2)} € converti)`,
       };
     }
-  } else {
-    const a7 = cm.avg7;
-    if (!a7) return { ok: false, motif: 'ni TCGplayer ni avg7 pour recouper' };
-    if (a7 < reference * CONFIRMATION_AVG7) {
-      return {
-        ok: false,
-        motif: `pic isolé, avg7 (${a7} €) ne confirme pas la hausse sur 30 j (${reference} €)`,
-      };
-    }
+  }
+
+  /*
+    La moyenne des ventes sur 7 jours doit confirmer la hausse, pour TOUTES
+    les cartes depuis le 13 octobre 2026 (voir scripts/lib/cote-paliers.mjs).
+    Une flambée réelle tire `avg7` au-dessus d'`avg30` ; une vente isolée à
+    prix fort gonfle `trend` en laissant `avg7` collé à `avg30`, voire
+    en dessous. Ici on n'écarte que ce qu'AUCUN palier n'accepterait : le
+    choix du palier se fait sur l'ensemble des candidats.
+  */
+  const confirmation = confirmationAvg7(cm.avg7, reference);
+  if (confirmation === null) return { ok: false, motif: 'avg7 manquant, hausse non vérifiable sur 7 jours' };
+  if (confirmation < PALIER_LE_PLUS_SOUPLE.confirmation) {
+    return {
+      ok: false,
+      motif: `pic isolé, avg7 (${cm.avg7} €) ne confirme pas la hausse sur 30 j (${reference} €)`,
+    };
   }
 
   return {
@@ -276,6 +269,15 @@ function examiner(carte, cm, tp) {
     actuel: Math.round(actuel * 100) / 100,
     reference: Math.round(reference * 100) / 100,
     variation: Math.round(variation),
+    /* Valeurs exactes, pour choisir le palier ; retirées avant l'archivage. */
+    variationBrute: variation,
+    confirmationBrute: confirmation,
+    /* Archivés pour les audits (proposition du 5 octobre 2026) : sans eux, on
+       ne pouvait pas dire après coup si une hausse publiée était confirmée. */
+    confirmation: Math.round(confirmation * 10) / 10,
+    avg7: cm.avg7,
+    avg1: cm.avg1 ?? null,
+    low: cm.low ?? null,
     image: carte.image ? `${carte.image}/high.png` : null,
     /* Numéro de collection imprimé sur la carte. Déjà dans la réponse de
        /cards/{id}, jeté jusqu'ici : sans lui, « Méga-Zygarde-ex » désigne
@@ -466,10 +468,19 @@ async function nomFrancaisDresseur(carte) {
   On s'arrête dès qu'on a trois cartes nommables : au pire on parcourt
   toutes les retenues, mais l'appel PokéAPI reste rare.
 */
-const podium = [];
-for (const c of retenues) {
-  if (podium.length >= 3) break;
+/*
+  Préparation d'une carte pour le podium : nom français, référence
+  d'impression, recoupement du dénominateur. Faux si son nom reste
+  intraduisible. Mémorisée : une carte peut être examinée par plusieurs
+  paliers, ses appels réseau ne partent qu'une fois.
+*/
+const preparees = new Map();
+async function preparerCarte(c) {
+  if (!preparees.has(c.id)) preparees.set(c.id, await preparerCarteUneFois(c));
+  return preparees.get(c.id);
+}
 
+async function preparerCarteUneFois(c) {
   /* Le nom d'espèce n'est ajouté que si le nom de la carte n'est PAS
      en alphabet latin. Sur « Méga-Méganium-ex », préfixer « Méganium »
      est redondant ; sur « エリカのモンジャラ », c'est indispensable. */
@@ -489,7 +500,7 @@ for (const c of retenues) {
        après vérification manuelle : sans ce nom, impossible de savoir
        quoi ajouter. */
     console.error(`  ↳ nom non traduisible, à ajouter à la table : ${c.nom} (${c.id})`);
-    continue;
+    return false;
   }
 
   /* On garde le nom d'origine à côté : sur une carte japonaise il situe
@@ -571,26 +582,48 @@ for (const c of retenues) {
   }
   for (const note of recoupement.notes || []) console.error(`::notice::${c.setCode} : ${note}`);
 
-  podium.push(c);
+  return true;
 }
 
 /*
-  Aucun résultat n'est un échec ACCEPTABLE, pas une erreur : un marché
-  calme est un marché calme. On sort en 0 sans rien publier — mieux vaut
-  le silence qu'un classement inventé.
+  Le palier le plus strict qui donne trois cartes nommables. S'il n'y en a
+  aucun, le podium reste incomplet : publie-cote.mjs ne publie pas, et le
+  workflow passe à l'autre marché.
+*/
+let podium = [];
+let palier = null;
+for (const p of PALIERS) {
+  const essai = [];
+  for (const c of retenues) {
+    if (essai.length >= 3) break;
+    if (passeLePalier(c, p) && (await preparerCarte(c))) essai.push(c);
+  }
+  podium = essai;
+  palier = p;
+  if (essai.length >= 3) break;
+}
+for (const c of podium) c.palier = palier.nom;
+const sousLePalier = retenues.filter((c) => !passeLePalier(c, palier)).length;
+if (sousLePalier) rejets[`sous le palier ${palier.nom}`] = sousLePalier;
+const podiumArchivable = podium.map(({ variationBrute, confirmationBrute, ...c }) => c);
+
+/*
+  Un podium incomplet n'est pas une erreur du script : il sort en 0, et c'est
+  le workflow qui tente l'autre marché. Jamais de classement inventé : un
+  palier assouplit le seuil de hausse, jamais la confirmation sur 7 jours.
 */
 if (EN_JSON) {
-  console.log(JSON.stringify({ marche: MARCHE, examinees, retenues: retenues.length, podium, rejets }, null, 2));
+  console.log(JSON.stringify({ marche: MARCHE, examinees, retenues: retenues.length, palier: palier.nom, podium: podiumArchivable, rejets }, null, 2));
 } else {
   console.log(`Marché : ${MARCHE === 'jp' ? 'cartes japonaises (cote EUR)' : 'international'}`);
-  console.log(`Cartes examinées : ${examinees} — retenues : ${retenues.length}`);
+  console.log(`Cartes examinées : ${examinees} · candidates : ${retenues.length} · palier : ${palier.nom}`);
   console.log('Rejets :', Object.entries(rejets).map(([m, n]) => `${m} ×${n}`).join(', ') || 'aucun');
   if (podium.length === 0) {
     console.log('\nAucune hausse significative cette semaine. Rien à publier.');
   } else {
     console.log('\nTop des hausses :');
     for (const [i, c] of podium.entries()) {
-      console.log(`  ${i + 1}. ${c.affichage} — ${c.set} ${c.refLongue || '?'} — ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €)`);
+      console.log(`  ${i + 1}. ${c.affichage} · ${c.set} ${c.refLongue || '?'} · ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €, avg7 +${c.confirmation} %)`);
     }
   }
 }

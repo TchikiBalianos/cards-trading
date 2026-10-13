@@ -148,16 +148,30 @@ jobs:
           echo "valeur=$CHOIX" >> "$GITHUB_OUTPUT"
           echo "Marché retenu : $CHOIX"
 
+      # Jamais de semaine sans top (décision de Julian du 5 octobre 2026) :
+      # cote-hebdo.mjs assouplit d'abord le seuil de hausse par paliers, et si
+      # même le dernier palier ne donne pas trois cartes, on tente l'autre
+      # marché. Le garde-fou « un seul top par jour » de publie-cote.mjs
+      # (archive des podiums ET vignette du jour) empêche un second top si le
+      # premier marché a déjà publié.
       - name: Calculer le classement et générer la vignette
         id: preparer
         run: |
-          node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=preparer
-          if [ -f .cote-cache.json ]; then
-            echo "a_publier=oui" >> "$GITHUB_OUTPUT"
-          else
-            echo "a_publier=non" >> "$GITHUB_OUTPUT"
-            echo "Marché calme, rien à publier."
-          fi
+          CHOIX="${{ steps.marche.outputs.valeur }}"
+          if [ "$CHOIX" = "op" ]; then REPLI=int; else REPLI=op; fi
+          for M in "$CHOIX" "$REPLI"; do
+            node scripts/publie-cote.mjs --marche=$M --phase=preparer
+            if [ -f .cote-cache.json ]; then
+              if [ "$M" != "$CHOIX" ]; then
+                echo "::warning::Pas de podium complet sur le marché $CHOIX, même au dernier palier : repli sur $M."
+              fi
+              echo "marche=$M" >> "$GITHUB_OUTPUT"
+              echo "a_publier=oui" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done
+          echo "a_publier=non" >> "$GITHUB_OUTPUT"
+          echo "::warning::Aucun podium complet ni sur $CHOIX ni sur $REPLI, ou top déjà publié aujourd'hui : rien à publier."
 
       # `git commit` sort en 1 quand il n'y a rien à committer, ce qui
       # cassait toute REPRISE APRÈS ÉCHEC : la vignette du run précédent
@@ -216,7 +230,7 @@ jobs:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           # Un 504 de Discord n'échoue plus l'étape : il envoie un email unique à vérifier.
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-        run: node scripts/publie-cote.mjs --marche=${{ steps.marche.outputs.valeur }} --phase=publier ${{ inputs.sans_discord && '--sans-discord' || '' }}
+        run: node scripts/publie-cote.mjs --marche=${{ steps.preparer.outputs.marche }} --phase=publier ${{ inputs.sans_discord && '--sans-discord' || '' }}
 
       # La newsletter du samedi lit ce fichier. Commit indépendant du
       # succès Discord/Buffer (if: always()) : un raté social ne doit pas

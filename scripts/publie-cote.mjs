@@ -21,7 +21,7 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -78,15 +78,27 @@ const FOND = '#07111f';
 */
 if (PHASE !== 'publier' && !SEC) {
   const FICHIER = join(RACINE, 'data', 'cotes', 'podiums-hebdo.json');
+  const aujourdhui = new Date().toISOString().slice(0, 10);
   try {
     const historique = JSON.parse(readFileSync(FICHIER, 'utf8'));
-    const aujourdhui = new Date().toISOString().slice(0, 10);
     if (Array.isArray(historique) && historique.some((e) => e.date === aujourdhui)) {
       console.log(`Un top des hausses a déjà été publié aujourd'hui (${aujourdhui}). Rien à faire.`);
       process.exit(0);
     }
   } catch {
     /* Fichier absent ou illisible : premier passage, on continue. */
+  }
+  /* Le marché One Piece n'est pas archivé (la newsletter le présenterait
+     comme Pokémon) : sa vignette du jour, committée avant toute
+     publication, est la seule trace qu'un top est déjà parti. Depuis le
+     repli d'un marché sur l'autre (13 octobre 2026), un jeudi Pokémon peut
+     publier du One Piece. */
+  let vignettes = [];
+  try { vignettes = readdirSync(SORTIE); } catch { /* dossier absent */ }
+  const dejaDessinee = vignettes.find((f) => new RegExp(`^cote-[a-z]+-${aujourdhui}(-og)?\\.png$`).test(f));
+  if (dejaDessinee) {
+    console.log(`Une vignette de cote existe déjà pour aujourd'hui (${dejaDessinee}). Rien à faire.`);
+    process.exit(0);
   }
 }
 
@@ -143,20 +155,22 @@ const donnees = cache
   400 examinées. Un « top des hausses » à une ligne n'est pas un top, et la
   vignette comme les textes sont dessinés pour trois entrées.
 
-  C'est la même doctrine que le cas vide, déjà en place depuis l'origine :
-  un marché calme est un marché calme, et le silence vaut mieux qu'un
-  classement bancal. On le dit dans les journaux pour que la semaine sans
-  publication soit lisible, et non prise pour une panne.
+  Depuis le 13 octobre 2026, ce n'est plus un silence pour la semaine :
+  cote-hebdo.mjs assouplit d'abord le seuil de hausse par paliers (jamais la
+  confirmation sur 7 jours), et si même le dernier palier ne donne pas trois
+  cartes, le workflow tente l'autre marché. Ce script, lui, ne publie
+  toujours rien d'incomplet.
 */
 const PODIUM_MINIMUM = 3;
 
 if (!donnees.podium || donnees.podium.length < PODIUM_MINIMUM) {
   console.log(
     `Podium incomplet : ${donnees.podium?.length || 0} carte(s) retenue(s) sur ` +
-    `${donnees.examinees} examinées, ${PODIUM_MINIMUM} minimum. Rien à publier.`
+    `${donnees.examinees} examinées, ${PODIUM_MINIMUM} minimum. Rien à publier sur ce marché.`
   );
   process.exit(0);
 }
+if (donnees.palier && !cache) console.log(`Palier retenu : ${donnees.palier}.`);
 
 const titreMarche =
   MARCHE === 'jp' ? 'Cartes japonaises' : MARCHE === 'op' ? 'One Piece Card Game' : 'Cartes Pokémon';
