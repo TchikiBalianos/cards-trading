@@ -1,6 +1,6 @@
 # Reste à faire : Cards-Trading
 
-État au **5 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
+État au **14 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
 fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle est
 traitée. Les chantiers clos (incidents du 19 au 22 septembre, fiabilité des
 cotes, SEO, vérifications) sont archivés dans `docs/journal-des-corrections.md`.
@@ -14,16 +14,12 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Avant envoi | Brouillon de newsletter du 3 octobre (Resend) : il reprend les **+56 %, +41 % et +36 %** du top du 1er octobre, calculés contre une moyenne sur 30 jours restée figée une dizaine de jours chez Cardmarket. Probablement gonflés. Décider avant d'envoyer : formulation qualitative, ou retrait des pourcentages. | Julian |
 | Dès que possible | Discord, salon Pokémon : l'annonce de l'article « 30ᵉ Anniversaire » du 15 septembre est **en double** (republiée le 18 après un 504). Supprimer la seconde à la main. | Julian |
-| Mar 6, jeu 8, dim 11 oct. | Posts de la semaine en **brouillons Buffer** (actu One Piece, communauté One Piece, carte 01/20 du build in public) : relire et cliquer **Schedule Post**. Le post « cote » du lundi 5 n'a pas pu passer par le pipeline (il refuse le jour même) : texte et visuels prêts, à poster à la main si voulu. | Julian |
-| Sam 10 oct. | La routine `social-cards-trading-semaine` du 3 octobre est restée **bloquée deux jours** sur une demande de permission (sa première commande créait un dossier temporaire). Consignes corrigées le 5 octobre (chemin fixe, commandes séparées) ; au prochain passage, **autoriser une fois pour toutes** les commandes `git worktree` si l'app le demande, puis fermer l'ancienne session bloquée. | Julian |
 | Ven 16 oct., en magasin | Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) présentes ? Annoncées pour ce jour par Play-in, Universtcg et un calendrier publié sur X, absentes de la liste officielle d'octobre. L'article les donne au 16 octobre « annoncé » : confirmer ou corriger après le constat (voir « Veille du calendrier »). | Julian |
 | Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
 | Jeu. 15 oct., après le passage | Premier top des hausses avec la nouvelle méthode (13 octobre : chaque hausse confirmée par la moyenne sur 7 jours, paliers du plus strict au plus souple, repli sur l'autre marché, base sur 30 jours figée écartée, avg1, avg7 et prix bas archivés ; voir `scripts/lib/cote-paliers.mjs`). Lire dans le journal le palier retenu et les trois cartes, et signaler un éventuel repli sur One Piece. | Claude |
 | Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
-| Mar 6 oct. | L'article `pokemon-mcdonalds-happy-meal-cartes-2026` passe en ligne (`publie-articles`, vers 11h UTC). La routine du mardi doit s'arrêter à son étape 0, la semaine étant couverte : c'est attendu. Vérifier le 200 en production. | Claude |
 
 ---
 
@@ -209,12 +205,12 @@ TikTok reste **volontairement personnel** (décision du 19 septembre).
 | `alerte-relecture` | push sur `blog/**`, rappel quotidien 05:32 UTC | ✅ |
 | `alerte-automatisations` | quotidien 06:02 UTC | ✅ |
 | `annonce-discord`, `annonce-buffer` | dimanche, mardi, vendredi | ✅ file résorbée |
-| `cote-hebdo` | jeudi | ✅ marché international, japonais suspendu |
+| `cote-hebdo` | jeudi | ✅ international et One Piece en rotation, japonais suspendu ; confirmation sur 7 jours, paliers et repli de marché depuis le 13 octobre |
 | `newsletter-hebdo` | samedi 13h37 | ✅ |
 | `brouillons-sociaux` | à chaque dépôt de `data/social/*.json` | ✅ |
 | `controle-social` | quotidien 15:30 UTC | ✅ |
 | `essai-images-ia` | manuel | ✅ essai à blanc vérifié en CI le 30 septembre ; Gemini répond 429 (quota d'image nul sans facturation), premier passage réel en attente d'un accès (chantier 2) |
-| Routines Claude Desktop | mardi (article Pokémon ou One Piece), vendredi (autres TCG), samedi (posts de la semaine), lundi (veille du calendrier) | ✅ sauf celle du samedi, jamais exécutée |
+| Routines Claude Desktop | mardi (article Pokémon ou One Piece), vendredi (autres TCG), samedi (posts de la semaine), lundi (veille du calendrier) | ✅ toutes exécutées ; app fermée, elles partent au lancement suivant (celle du samedi 10 a tourné le 13) |
 | Pages hub par TCG | statique | ✅ 7 en ligne, au sitemap |
 
 Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien social, flux RSS,
