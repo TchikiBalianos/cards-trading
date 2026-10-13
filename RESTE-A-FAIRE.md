@@ -14,12 +14,13 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Dès que possible | Discord, salon Pokémon : l'annonce de l'article « 30ᵉ Anniversaire » du 15 septembre est **en double** (republiée le 18 après un 504). Supprimer la seconde à la main. | Julian |
+| Dès que possible | Fusionner la pull request n°9 : correctif de l'article McDonald's. Des dates françaises circulent depuis le 3 octobre (4 décembre 2026 au 21 janvier 2027), issues d'une fuite et non confirmées ; les deux phrases au présent sont datées du 14 octobre. La fusionner telle quelle, sans toucher au `draft`. | Julian |
 | Ven 16 oct., en magasin | Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) présentes ? Annoncées pour ce jour par Play-in, Universtcg et un calendrier publié sur X, absentes de la liste officielle d'octobre. L'article les donne au 16 octobre « annoncé » : confirmer ou corriger après le constat (voir « Veille du calendrier »). | Julian |
 | Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
 | Jeu. 15 oct., après le passage | Premier top des hausses avec la nouvelle méthode (13 octobre : chaque hausse confirmée par la moyenne sur 7 jours, paliers du plus strict au plus souple, repli sur l'autre marché, base sur 30 jours figée écartée, avg1, avg7 et prix bas archivés ; voir `scripts/lib/cote-paliers.mjs`). Lire dans le journal le palier retenu et les trois cartes, et signaler un éventuel repli sur One Piece. | Claude |
-| Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
+| Mer. 21 oct., 10h | Tâche `rappel-marche-japonais-cote` : essai à blanc du marché japonais du top des hausses, pour décider de le rouvrir (chantier 3). Rien n'est modifié. | Claude (app ouverte) |
+| Début novembre | Article McDonald's : annonce officielle de McDonald's France ou de Pokémon ? L'opération américaine est annoncée pour le 5 novembre ; une confirmation française ferait réécrire la section « Et la France ? ». | Claude, sur demande |
 
 ---
 
@@ -37,8 +38,11 @@ Ce qui manque n'est plus la mesure mais deux choses :
 - **La mémoire.** Le plan Hobby ne garde que 31 jours de détail (source, page, appareil). Sans
   relevé en début de mois, le passé se perd. Les relevés vivent dans un dossier Google Drive
   **privé** de Julian (« Cards-Trading · Suivi trafic (privé) »), un document par mois : le dépôt
-  est public et les chiffres de trafic n'y ont pas leur place. Septembre est relevé ; **prochain
-  relevé le 1er novembre**, sur demande à Claude.
+  est public et les chiffres de trafic n'y ont pas leur place. Septembre est relevé. **Relevé
+  automatique le 28 de chaque mois à 10h** (tâche Claude Desktop `releve-trafic-mensuel-cards-trading`,
+  premier passage le 28 octobre) : le mois en cours jusqu'à la veille, et les derniers jours du
+  mois précédent, que la fenêtre de 31 jours couvre encore. Le 28 existe chaque mois. L'app doit
+  être ouverte, sinon la tâche part au lancement suivant.
 - **Le trafic lui-même**, très faible, à lire avec le taux d'inscription avant de choisir où
   mettre l'effort (blog, lives WhatNot, réseaux).
 
@@ -59,7 +63,12 @@ une planche contact où chaque image porte un titre d'exemple aux couleurs de la
 n'est committé ni publié : les images vivent dans l'artefact du run, 7 jours. Le modèle de
 visuel `scene` ne se construit qu'après lecture de la planche.
 
-**Il manque un accès pour le lancer**, au choix : un compte Cloudflare gratuit avec un jeton Workers AI
+**Julian a choisi Cloudflare le 14 octobre.** Il crée le compte gratuit et le jeton Workers AI, puis
+pose les secrets GitHub `CLOUDFLARE_ACCOUNT_ID` et `CLOUDFLARE_API_TOKEN` (un agent ne peut ni créer
+de compte ni manipuler un jeton). Ensuite, Claude lance
+`gh workflow run essai-images-ia.yml --ref main -f fournisseur=cloudflare` et montre la planche.
+
+Contexte de ce choix : il manquait un accès pour le lancer, au choix un compte Cloudflare gratuit avec un jeton Workers AI
 (secrets `CLOUDFLARE_ACCOUNT_ID` et `CLOUDFLARE_API_TOKEN`), ou la facturation activée sur la
 clé Gemini (`GEMINI_API_KEY` existe, mais la génération d'image y était à quota zéro le 20
 août, HTTP 429). Tarifs lus le 30 septembre : FLUX-1-schnell sur Cloudflare tient dans le
@@ -73,8 +82,23 @@ paiement. **Gemini exige désormais un prépaiement de 5 $ minimum**, et la fact
 à un projet Google : passer par un projet dédié « Cards-Trading » et une clé neuve, jamais par
 un projet qui porte déjà d'autres clés, dont la consommation puiserait dans le même crédit.
 
-**Niveau 1 : il faut trois photos** déjà publiques, avec le nom de leur auteur, pour éprouver
-le modèle `photo` sur du réel.
+**Niveau 1 : trois photos trouvées le 14 octobre et passées dans le modèle `photo`**, sur
+Unsplash (licence Unsplash : usage commercial permis, crédit non exigé mais toujours donné ;
+les visuels de cartes ou de figurines qu'elles montrent restent la propriété de leurs éditeurs) :
+
+- Thimo Pedersen, cartes Pokémon anciennes en vrac : `unsplash.com/photos/TWCnHKKhqSo`
+- Branden Skeli, une carte Pokémon tenue à la main : `unsplash.com/photos/c4RrAt0MMNc`
+- Rajesh Rajput, figurine de Luffy (aucune photo libre de cartes One Piece trouvée) :
+  `unsplash.com/photos/5b-TBvF7_5M`
+
+En réserve, deux photos de salon de collection d'Aaron Douglas (`928CzCJk1_w`, `i0plIFWUOAo`),
+où l'on voit surtout des jeux vidéo rétro.
+
+**Ce que l'essai a montré** : sur X, le rendu est propre. **Sur Instagram (portrait), une photo en
+paysage n'occupe que le haut du cadre** et laisse près de la moitié de l'image en fond flou :
+le modèle garde la photo entière pour ne couper ni visage ni carte. À trancher avant tout usage
+réel : centrer la photo verticalement, ou recadrer en remplissant le cadre autour d'un point
+choisi à la main. Une photo en portrait remplit bien les deux formats.
 
 ### 3. Cotes : marché japonais et historique One Piece
 
@@ -130,24 +154,21 @@ Depuis le créneau du dimanche (27 septembre), la file ne prend plus de retard. 
 septembre, Buffer a relayé les 18 articles publiés et Discord n'attend qu'un article (OP-18).
 Le relais ne sort qu'un article par passage, les dimanches, mardis et vendredis.
 
-### 6. Validation mobile sur un vrai téléphone
+### 6. Carte BiP : l'équipe d'agents IA (priorité de Julian, 14 octobre)
 
-**Le mobile est la majorité du trafic** (mesure Vercel de septembre), ce qui fait de ce point un
-risque réel et non un détail. Le navigateur d'audit **ne défile pas** et **ne compose pas de
-frames** : aucune transition CSS ne s'exécute. Tout ce qui a été affirmé sur la navigation
-mobile repose sur des valeurs **cibles**, pas sur un rendu observé. À valider sur le Solanaphone : les ancres du menu, la
-fermeture du panneau, les carrousels, le rendu des images après les correctifs de ratio et les
-quatre corrections d'affichage mobile du 28 septembre.
+La carte 01/20 « Set de base » ne montre que quatre agents IA (Mary, Winston, Sally, Amelia) ;
+Julian en veut **six à huit**, tirés de la liste BMAD réellement installée, jamais inventés. Le
+gabarit du bordereau s'arrête à six lignes de douze caractères par clé : il faut un autre
+gabarit, ou une carte dédiée à l'équipe d'agents. Rôles humains à reprendre tels quels : Julian,
+gestion, marketing et lead tech ; Val, produit et UX/UI. La banque d'épisodes est privée, hors de
+ce dépôt.
 
----
+### 7. Cote One Piece en euros (priorité de Julian, 14 octobre)
 
-## 🟡 Améliorations identifiées, non appliquées
-
-### 7. Cote One Piece en euros : une piste rouverte le 30 septembre
-
-One Piece reste **hors de la rotation du top des hausses** : `optcgapi`, `apitcg` et `tcgcsv` sont
-adossés à TCGplayer, donc en **dollars sur le marché américain**, et TCGdex ne couvre que
-Pokémon. La décision du 20 août écartait l'**API** Cardmarket (compte professionnel exigé) : elle
+One Piece est dans la rotation du top des hausses, mais **coté en dollars sur le marché
+américain** (`scripts/cote-one-piece.mjs` relève optcgapi, converti en euros à taux fixe) :
+`optcgapi`, `apitcg` et `tcgcsv` sont adossés à TCGplayer, et TCGdex ne couvre que Pokémon.
+Pour un public français, une hausse américaine n'est pas une hausse de son marché. La décision du 20 août écartait l'**API** Cardmarket (compte professionnel exigé) : elle
 tient toujours.
 
 **Mais Cardmarket publie des guides de prix publics, sans compte ni clé** :
@@ -164,6 +185,15 @@ concurrent de Cardmarket) ; il faut rapprocher les cartes One Piece d'OPTCG API 
 Cardmarket par nom et extension. Même piste pour le prix de référence de la story 3.6 du MVP.
 Repli en place : `scripts/releve-cotes.mjs` archive chaque semaine la cote One Piece, indexée par
 impression.
+
+Consigne de Julian (14 octobre) : passer par Cardmarket **ou une autre source fiable** en euros.
+Toute autre source se juge sur les mêmes critères : prix en euros du marché européen, ventes
+réellement constatées (pas seulement des offres), mise à jour quotidienne, accès sans contrat
+fragile.
+
+---
+
+## 🟡 Améliorations identifiées, non appliquées
 
 ### 8. Durcir la gestion des secrets
 
@@ -210,7 +240,8 @@ TikTok reste **volontairement personnel** (décision du 19 septembre).
 | `brouillons-sociaux` | à chaque dépôt de `data/social/*.json` | ✅ |
 | `controle-social` | quotidien 15:30 UTC | ✅ |
 | `essai-images-ia` | manuel | ✅ essai à blanc vérifié en CI le 30 septembre ; Gemini répond 429 (quota d'image nul sans facturation), premier passage réel en attente d'un accès (chantier 2) |
-| Routines Claude Desktop | mardi (article Pokémon ou One Piece), vendredi (autres TCG), samedi (posts de la semaine), lundi (veille du calendrier) | ✅ toutes exécutées ; app fermée, elles partent au lancement suivant (celle du samedi 10 a tourné le 13) |
+| Routines Claude Desktop | mardi (article Pokémon ou One Piece), vendredi (autres TCG), samedi (posts de la semaine), lundi (veille du calendrier), le 28 (relevé du trafic, depuis le 14 octobre) | ✅ toutes exécutées ; app fermée, elles partent au lancement suivant (celle du samedi 10 a tourné le 13) |
+| Validation mobile | testée par Julian sur son téléphone, le 14 octobre | ✅ « tout est ok » (menu, ancres, carrousels, images : la liste de contrôle de l'ancien chantier 6) |
 | Pages hub par TCG | statique | ✅ 7 en ligne, au sitemap |
 
 Plus : provenance des inscriptions, CTA en fin d'article, aperçu de lien social, flux RSS,
