@@ -1,0 +1,54 @@
+{
+  "semaine": "2026-10-12",
+  "posts": [
+    {
+      "id": "2026-10-15-communaute",
+      "jour": "2026-10-15",
+      "pilier": "communaute",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Ta toute première carte Pokémon, tu t'en souviens ? 👀\n\nCelle qui a tout lancé. Même cornée, même échangée dans la cour de récré.\n\nDis-nous laquelle en réponse 👇\n\n#PokemonTCG #TCG"
+      },
+      "instagram": {
+        "texte": "Ta toute première carte Pokémon, tu t'en souviens ? 👀\n\nCelle qui a tout lancé. Trouvée dans un booster, offerte par un grand frère ou échangée dans la cour de récré. Peu importe son état aujourd'hui : c'est elle qui t'a fait commencer.\n\nRaconte-nous en commentaire : c'était laquelle, et tu l'as encore ? On veut voir les classeurs 📒\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Question",
+        "titre": "Ta toute première carte Pokémon ?",
+        "sous_titre": "Celle qui a tout lancé. Dis-nous laquelle."
+      }
+    },
+    {
+      "id": "2026-10-18-coulisses",
+      "jour": "2026-10-18",
+      "pilier": "coulisses",
+      "licence": "mixte",
+      "twitter": {
+        "texte": "Une carte, un seul exemplaire, deux acheteurs qui cliquent en même temps. Qui l'a ?\n\nChez nous : le premier qui paie. L'autre est prévenu qu'il a été devancé, et il n'est jamais débité. Pas de débit puis remboursement : son argent ne bouge pas.\n\nCarte 02/20 #buildinpublic #TCG"
+      },
+      "instagram": {
+        "texte": "Deux acheteurs, une seule carte : qui l'emporte ? 🃏\n\nC'est le cas qu'on redoute tous : la dernière carte en vente, et quelqu'un d'autre qui clique en même temps que toi.\n\nDans la marketplace qu'on construit, la règle est simple : premier payé, premier servi. Le second est prévenu qu'il a été devancé, et son paiement n'est jamais encaissé. Pas de « débité puis remboursé dans quelques jours » : son argent ne bouge pas.\n\nTechniquement, on bloque le paiement, on réserve la carte, et on n'encaisse qu'après. On a même écrit des tests qui rejouent la course entre deux acheteurs.\n\nÇa t'est déjà arrivé de perdre une carte au dernier moment ? Raconte 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+      },
+      "visuel": {
+        "type": "bip",
+        "numero": 2,
+        "total": 20,
+        "rarete": "holo",
+        "nom": "Le dernier exemplaire",
+        "titre": "Deux acheteurs, une seule carte : qui l'emporte ?",
+        "sous_titre": "Premier payé, premier servi. Le second n'est jamais débité.",
+        "effet": "Une seule carte en vente, deux acheteurs : le premier qui paie l'emporte, l'autre ne paie rien.",
+        "illustration": {
+          "gabarit": "plan",
+          "etapes": [
+            "2 acheteurs, 1 carte",
+            "Le premier paie",
+            "Le second est prévenu",
+            "Jamais débité"
+          ]
+        }
+      }
+    }
+  ]
+}
