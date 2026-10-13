@@ -2,7 +2,7 @@
 title: "30ᵉ Anniversaire : l'extension sort partout le même jour, et ça change tout !"
 description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, nouvelle rareté et ce que ça change."
 pubDate: 2026-09-12
-updatedDate: 2026-09-20
+updatedDate: 2026-10-13
 category: "pokemon"
 tags: ["pokemon", "30e-anniversaire", "sortie-mondiale", "collection", "marche"]
 author: "Cards Trading"
@@ -18,7 +18,7 @@ draft: false
 - [Ce que contient réellement un booster](#ce-que-contient-réellement-un-booster)
 - [Les 30 Pikachu : la vraie mécanique du set](#les-30-pikachu--la-vraie-mécanique-du-set)
 - [La Collection Classique : à collectionner, pas à jouer](#la-collection-classique--à-collectionner-pas-à-jouer)
-- [Des sorties jusqu'en décembre, pas une seule date](#des-sorties-jusquen-décembre-pas-une-seule-date)
+- [Des sorties jusqu'en novembre, pas une seule date](#des-sorties-jusquen-novembre-pas-une-seule-date)
 - [Le prix conseillé en euros n'existe pas](#le-prix-conseillé-en-euros-nexiste-pas)
 - [Questions fréquentes](#questions-fréquentes)
 - [Découvrez les autres articles du moment](#découvrez-les-autres-articles-du-moment)
@@ -77,28 +77,28 @@ La logique est celle des marques de réglementation. Pour la saison 2026, seules
 
 Si vous achetez ce set en pensant renforcer un deck compétitif, vous vous trompez de produit. Les seules cartes de l'extension susceptibles d'être jouées en Standard sont les nouveautés, Amphinobi-ex et Nymphali-ex en tête.
 
-## Des sorties jusqu'en décembre, pas une seule date
+## Des sorties jusqu'en novembre, pas une seule date
 
-Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'étale sur près de trois mois, et les produits les plus fournis en boosters arrivent en dernier.
+Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'étale sur près de deux mois, et les produits les plus fournis en boosters arrivent parmi les derniers.
 
 | Date | Produits |
 |---|---|
 | **16 septembre** | ETB (Coffret Dresseur d'élite), Collection poster, coffrets Amphinobi-ex et Nymphali-ex, blister 2 boosters Évoli |
 | **2 octobre** | Lot de boosters (Bundle), Mini-Tins |
-| **2 octobre ou 4 décembre** *(à confirmer)* | Coffret Collection Classeur : 2 octobre selon les revendeurs français, 4 décembre aux États-Unis |
+| **16 octobre** *(annoncé)* | Les deux Pokébox (boîtes métal) Amphinobi-ex et Nymphali-ex |
+| **23 octobre** *(annoncé)* | Coffret Collection Classeur : placé en octobre par Pokémon France, sans jour précis, et annoncé pour le 23 par Play-in et Universtcg |
 | **30 octobre** | Decks Combat Mentali-ex et Noctali-ex |
 | **6 novembre** | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, les deux Ultra-Premium Collection (UPC), Journée et Soirée |
 | **13 novembre** *(à confirmer)* | Tripacks autocollants Noadkoko d'Alola et Lucario |
-| **4 décembre** *(à confirmer)* | Les deux PokéBox (boîtes métal) |
 | **Sans date précise** *(annoncée au T3 2026)* | Collection K.O. |
 
 Les deux bornes décideront de votre budget. L'**ETB du 16 septembre** (neuf boosters, promo Nidorina pleine illustration, 65 protège-cartes, 16 Énergies brillantes, rangement à six séparateurs) est le produit d'entrée sérieux, et celui qui partira le plus vite. L'**UPC du 6 novembre** concentre de loin le plus de boosters par boîte.
 
 Attention à ne pas payer deux fois la même chose : le **blister de 2 boosters Évoli**, sorti le 16 septembre, et la **Collection K.O.**, annoncée sans date précise, ont un contenu quasi identique : deux boosters et une carte Évoli brillante accompagnée d'une pièce. Seuls la référence et le packaging changent. C'est pensé pour les collectionneurs de scellé, pas pour ceux qui veulent des cartes.
 
-Autre confusion à éviter, celle des « boîtes métal » et des « Pokébox ». Les **coffrets Amphinobi-ex et Nymphali-ex** du 16 septembre ne sont pas des boîtes métal : quatre boosters, une carte promo brillante et une carte géante. La **Pokébox**, la boîte métal aux mêmes Pokémon, ne figure pas sur la liste officielle de septembre : les distributeurs la datent du 4 décembre. La **Mini-Tin** du 2 octobre est la petite boîte métal, avec deux boosters, une planche d'autocollants et une carte art. Plusieurs sites appellent « Pokébox » les coffrets déjà sortis : faites préciser le contenu exact avant de payer.
+Autre confusion à éviter, celle des « boîtes métal » et des « Pokébox ». Les **coffrets Amphinobi-ex et Nymphali-ex** du 16 septembre ne sont pas des boîtes métal : quatre boosters, une carte promo brillante et une carte géante. La **Pokébox**, la boîte métal aux mêmes Pokémon, est annoncée pour le 16 octobre : quatre boosters et une carte promo brillante selon les fiches des revendeurs, sans carte géante. La **Mini-Tin** du 2 octobre est la petite boîte métal, avec deux boosters, une planche d'autocollants et une carte art. Plusieurs sites appellent « Pokébox » les coffrets du 16 septembre : faites préciser le contenu exact avant de payer, une carte géante signale un coffret.
 
-Une nuance importante : la communication officielle française ne donne que des trimestres. Pokémon France a placé au **T3 2026** la première vague (ETB, coffrets Amphinobi-ex et Nymphali-ex, Collection poster, blister de 2 boosters et Collection K.O.) et au **T4 2026** tout le reste, Tripack compris. Les dates précises viennent des revendeurs et des calendriers spécialisés, et elles bougent : certains sites plaçaient la Pokébox et les Tripacks au 16 septembre, or ni l'un ni l'autre ne figure sur la liste officielle de septembre. La Collection K.O. y figure, mais sans date précise à ce jour. Le Coffret Classeur est donné au 2 octobre par les calendriers et les revendeurs français, mais annoncé au 4 décembre aux États-Unis : aucune date française n'est confirmée, les deux sont affichées. Les échéances du Classeur, du 13 novembre et du 4 décembre restent les plus incertaines : ne les tenez pas pour acquises avant confirmation.
+Une nuance importante : la communication officielle française ne donne jamais de jour. Pokémon France a placé au **T3 2026** la première vague (ETB, coffrets Amphinobi-ex et Nymphali-ex, Collection poster, blister de 2 boosters et Collection K.O.) et au **T4 2026** tout le reste, Tripack compris, puis a publié en septembre et en octobre la liste des produits du mois, toujours sans jour. Les dates précises viennent des revendeurs et des calendriers spécialisés, et elles bougent : certains sites plaçaient la Pokébox et les Tripacks au 16 septembre, or ni l'un ni l'autre ne figure sur la liste officielle de septembre. La Collection K.O. y figure, mais sans date précise à ce jour. La Pokébox n'apparaît pas non plus sur celle d'octobre : son 16 octobre vient des revendeurs. Le Coffret Classeur, lui, figure sur la liste officielle d'octobre : longtemps donné au 2 octobre par les revendeurs, il n'était pas en rayon ce jour-là, et Play-in comme Universtcg l'annoncent désormais pour le 23 octobre. L'échéance du 13 novembre reste la plus incertaine : ne la tenez pas pour acquise avant confirmation.
 
 Enfin, la particularité habituelle des sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus, ce qui concentre la demande sur les ETB et les UPC.
 
@@ -155,6 +155,6 @@ La sortie mondiale simultanée du 16 septembre est une bonne nouvelle sur le fon
 
 Concrètement : précommandez à prix ferme si vous voulez du scellé, comparez au moins trois vendeurs puisqu'aucun prix conseillé officiel n'existe en euros, et complétez la série des 30 Pikachu en singles plutôt qu'au booster.
 
-C'est exactement pour ce genre d'arbitrage que nous construisons **Cards-Trading.com** : une place de marché française où comparer les prix réels entre vendeurs, avec 0 % de commission pendant la bêta pour ceux qui vendent. [Rejoignez la liste d'attente](https://cards-trading.com/#beta) avant la vague du 16 septembre.
+C'est exactement pour ce genre d'arbitrage que nous construisons **Cards-Trading.com** : une place de marché française où comparer les prix réels entre vendeurs, avec 0 % de commission pendant la bêta pour ceux qui vendent. [Rejoignez la liste d'attente](https://cards-trading.com/#beta) avant la vague de novembre.
 
 Et vous, vous êtes plutôt ETB le jour J, ou vous attendez les UPC de novembre ?
