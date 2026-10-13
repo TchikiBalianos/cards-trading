@@ -19,7 +19,9 @@ dépôt, qui est public.
 | Dès que possible | Discord, salon Pokémon : l'annonce de l'article « 30ᵉ Anniversaire » du 15 septembre est **en double** (republiée le 18 après un 504). Supprimer la seconde à la main. | Julian |
 | Mar 6, jeu 8, dim 11 oct. | Posts de la semaine en **brouillons Buffer** (actu One Piece, communauté One Piece, carte 01/20 du build in public) : relire et cliquer **Schedule Post**. Le post « cote » du lundi 5 n'a pas pu passer par le pipeline (il refuse le jour même) : texte et visuels prêts, à poster à la main si voulu. | Julian |
 | Sam 10 oct. | La routine `social-cards-trading-semaine` du 3 octobre est restée **bloquée deux jours** sur une demande de permission (sa première commande créait un dossier temporaire). Consignes corrigées le 5 octobre (chemin fixe, commandes séparées) ; au prochain passage, **autoriser une fois pour toutes** les commandes `git worktree` si l'app le demande, puis fermer l'ancienne session bloquée. | Julian |
-| En magasin | Vérifier la sortie du Bundle, des Mini-Tins et du Coffret Classeur du 30e Anniversaire (voir « Veille du calendrier »). | Julian |
+| Ven 16 oct., en magasin | Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) présentes ? Annoncées pour ce jour par Play-in, Universtcg et un calendrier publié sur X, absentes de la liste officielle d'octobre. L'article les donne au 16 octobre « annoncé » : confirmer ou corriger après le constat (voir « Veille du calendrier »). | Julian |
+| Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
+| Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
 | Avant le jeu. 15 oct. | Méthode du top des hausses (marché international, prochain passage le 15) : la moyenne sur 30 jours de Cardmarket peut rester figée, ce qui gonfle les hausses. Proposition : exiger aussi la confirmation par la moyenne sur 7 jours pour les cartes recoupées sur TCGplayer, et archiver avg1, avg7 et le prix bas pour les audits. À trancher. | Julian, Claude |
 | Lun 5 oct. | La veille du calendrier 30e Anniversaire (08:00) rend son rapport. **Le soir, recontrôler l'article McDonald's** : annonce officielle ? date française ? Deux phrases de l'article sont au présent (voir `docs/briefs/2026-09-30-pokemon-mcdonalds-happy-meal.md`). | Claude, sur demande |
 | Mar 6 oct. | L'article `pokemon-mcdonalds-happy-meal-cartes-2026` passe en ligne (`publie-articles`, vers 11h UTC). La routine du mardi doit s'arrêter à son étape 0, la semaine étant couverte : c'est attendu. Vérifier le 200 en production. | Claude |
@@ -90,16 +92,23 @@ le modèle `photo` sur du réel.
 
 ### 4. Veille du calendrier 30e Anniversaire
 
-Quatre produits n'ont pas de date certaine en France, et l'article
-`pokemon-30e-anniversaire-sortie-mondiale-2026` le dit :
+Point au 13 octobre 2026, pages relues en texte brut et constat de Julian en magasin le 2
+octobre (Bundle et Mini-Tins en rayon, Classeur absent). Ces produits n'ont pas de date certaine
+en France, et l'article `pokemon-30e-anniversaire-sortie-mondiale-2026` le dit :
 
-- **Collection K.O.** : annoncée au T3 2026, sans date précise, absente des rayons à l'ouverture.
-- **Coffret Classeur** : deux dates affichées, 2 octobre selon les revendeurs français et 4
-  décembre aux États-Unis, faute de date française confirmée.
-- **Tripack** : T4 2026, 13 novembre ou fin novembre selon les sources.
-- **Pokébox** : 4 décembre selon les distributeurs, absente de la liste officielle de septembre.
-
-Bundle et Mini-Tins (2 octobre) sont à vérifier en rayon ce jour-là.
+- **Pokébox** : annoncée pour le vendredi 16 octobre par Play-in (fiches « Pokébox 30 Ans »,
+  4 boosters et 1 promo), Universtcg (11 octobre) et un calendrier publié sur X ; absente des
+  listes officielles de septembre et d'octobre. La fiche « Pokébox » de La Maison du TCG, en
+  stock, annonce une carte jumbo : c'est le contenu d'un coffret, pas d'une boîte métal.
+- **Coffret Classeur** : absent des rayons le 2 octobre. Pokémon France le place en octobre
+  (liste du 1er octobre, sans jour) ; Play-in et Universtcg l'annoncent pour le vendredi 23
+  octobre. La Maison du TCG affichait encore « sortie le 2 octobre » le 13.
+- **Decks Combat** : 30 octobre selon Play-in, mois confirmé par la liste officielle d'octobre ;
+  le calendrier publié sur X les met au 6 novembre.
+- **Tripack** : T4 2026 selon Pokémon France ; 13 novembre selon Play-in et le calendrier publié
+  sur X, fin novembre selon Universtcg.
+- **Collection K.O.** : annoncée au T3 2026, sans date précise, absente des rayons à l'ouverture
+  et de la liste officielle d'octobre.
 
 La tâche planifiée `veille-calendrier-pokemon-30-ans` relit chaque lundi à 8h les pages
 officielles de Pokémon France jusqu'au 31 décembre 2026. Elle ne modifie rien : elle signale un
@@ -107,6 +116,12 @@ changement et Julian décide. N'ajuster l'article qu'à partir de ces pages ou d
 magasin, jamais d'un blog seul (règle dans `CLAUDE.md`, « Dates de sortie de produits »). La
 veille lit aussi les fiches 30 ans de La Maison du TCG, signal secondaire qui donnait encore le 16
 septembre pour le Tripack et la Pokébox le 20 septembre, alors qu'aucun n'était sorti.
+
+**Play-in, un signal à lire en plus** : chaque fiche porte « Sortie prévue le … ». Le 13 octobre,
+elle donnait le 23 octobre pour le Classeur quand La Maison du TCG gardait le 2. **Un résumé de
+moteur de recherche n'est pas une lecture** : le rapport de la veille du 13 octobre prêtait à
+Play-in un « 2 octobre » absent de sa fiche, et voyait une confusion dans une description de
+Pokébox (4 boosters et 1 promo) qui est bien celle de la boîte métal.
 
 **Contradiction officielle connue** : le communiqué de Pokémon France du 16 septembre (agence
 Reset PR) liste la Collection autocollant et la « Boîte 30ᵉ Anniversaire » parmi les produits
