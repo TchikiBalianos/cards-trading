@@ -890,6 +890,13 @@ entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pond�
 2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
 Une photo de la communauté exige un `credit`, repris dans le texte du post.
 
+Une photo dont la licence n'exige pas de crédit (aujourd'hui Unsplash seul,
+`HOTES_CREDIT_FACULTATIF` dans `visuel-spec.mjs`) garde son `credit` dans la spec, mais il
+quitte le visuel X ; il reste sur celui d'Instagram, où la photo est centrée entre deux
+bandes de flou (décisions de Julian, 14 octobre 2026). Le contrôle du texte ne change pas :
+le crédit doit figurer dans le texte X **ou** Instagram, la légende Instagram suffit. Ajouter
+un hébergeur à la liste seulement après avoir lu sa licence à la source.
+
 **Le post cité est notre meilleur format sur X** : le lien du post d'origine en fin de
 texte a donné nos meilleures impressions (430 et 342, contre environ 200 pour un relais
 d'article). @pokeitem_ tire son record d'une vidéo d'humour qui parle à tous, 60 fois sa

@@ -5,7 +5,8 @@
   Trois modèles, choisis par `spec.type` :
     texte   titre et sous-titre sur fond de charte (annonces, humour, coulisses)
     carte   scan d'une carte à côté du texte (cotes, révélations)
-    photo   image de la communauté ou d'un éditeur, crédit obligatoire
+    photo   image de la communauté ou d'un éditeur, crédit obligatoire (sauf sur
+            le visuel X d'une photo dont la licence ne l'exige pas)
 
   Deux formats : `twitter` en paysage 1200×675 (la timeline X rogne un carré),
   `instagram` en portrait 1080×1350 (le format qui occupe le plus d'écran).
@@ -15,7 +16,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { FOND, ETIQUETTES, accentDe, echapper, decouper } from './charte.mjs';
-import { verifierSpec } from './visuel-spec.mjs';
+import { verifierSpec, creditObligatoire } from './visuel-spec.mjs';
 import { motif, choisirMotif, hachage } from './motifs.mjs';
 import { svgBip, miseEnPage } from './carte-bip.mjs';
 
@@ -187,25 +188,55 @@ async function modeleCarte(spec, licence, format) {
 
 /* ── Modèle « photo » ──────────────────────────────────────── */
 
-async function modelePhoto(spec, licence, format) {
+/* Placement du modèle photo, séparé du rendu pour se tester sans image.
+
+   Instagram : la photo est centrée verticalement, avec du flou au-dessus et en
+   dessous (choix de Julian, 14/10/2026), sans jamais descendre dans la bande du
+   texte ; le voile commence sous la photo, qu'il n'assombrit plus. Une photo en
+   portrait remplit la hauteur et reste donc collée en haut. X : la photo en
+   haut, le voile mord sur son bas, comme avant.
+
+   La légende remonte si sa dernière ligne descendrait sur celle du crédit : un
+   titre de deux lignes sur X chevauchait le crédit (vu le 14/10/2026). */
+const tailleCreditPhoto = (format) => Math.round(format.hauteur * (format.paysage ? 0.04 : 0.026));
+
+export function dispositionPhoto(format, hPhoto, nLignes) {
+  const { hauteur: H, paysage } = format;
+  const bande = Math.round(H * 0.16);
+  const tailleCredit = tailleCreditPhoto(format);
+  const interligne = Math.round(tailleCredit * 1.4);
+  const yPhoto = paysage ? 0 : Math.min(Math.round((H - hPhoto) / 2), H - bande - hPhoto);
+  const debutVoile = paysage ? H - bande * 2 : yPhoto + hPhoto;
+  const yBas = H - Math.round(bande * 0.2);
+  const yLegendeHabituel = H - bande + Math.round(tailleCredit * 1.9);
+  const plafond = yBas - Math.round(tailleCredit * 1.2);
+  const yLegende = Math.min(yLegendeHabituel, plafond - Math.max(0, nLignes - 1) * interligne);
+  const yFilet = H - bande + 4 - (yLegendeHabituel - yLegende);
+  return { bande, tailleCredit, interligne, yPhoto, debutVoile, yBas, yLegende, yFilet };
+}
+
+async function modelePhoto(spec, licence, format, reseau) {
   const { largeur: L, hauteur: H } = format;
   const accent = accentDe(licence);
   const marge = Math.round(L * 0.05);
   if (!spec.credit) throw new Error('Visuel photo sans crédit : refusé (règle : toujours créditer).');
+  const credit = reseau === 'twitter' && !creditObligatoire(spec) ? '' : spec.credit;
 
   /* Une photo de la communauté peut avoir n'importe quel ratio. Recadrer d'office
      coupe les visages ou la carte : on garde l'image ENTIÈRE, posée sur une
      version floutée d'elle-même qui remplit le cadre. */
   const source = await telecharger(spec.image);
   const arriere = await sharp(source).resize(L, H, { fit: 'cover' }).modulate({ brightness: 0.45 }).blur(24).toBuffer();
-  const devant = await sharp(source).resize(L, Math.round(H * 0.84), { fit: 'inside' }).toBuffer();
-  const fond = await sharp(arriere).composite([{ input: devant, gravity: 'north' }]).png().toBuffer();
+  const devant = await sharp(source).resize(L, Math.round(H * 0.84), { fit: 'inside' }).toBuffer({ resolveWithObject: true });
 
-  const bande = Math.round(H * 0.16);
-  const tailleCredit = Math.round(H * (format.paysage ? 0.04 : 0.026));
   const legende = spec.titre
-    ? decouper(spec.titre, tailleCredit * 1.15, L - marge * 2).slice(0, 2)
+    ? decouper(spec.titre, tailleCreditPhoto(format) * 1.15, L - marge * 2).slice(0, 2)
     : [];
+  const d = dispositionPhoto(format, devant.info.height, legende.length);
+  const fond = await sharp(arriere)
+    .composite([{ input: devant.data, top: d.yPhoto, left: Math.round((L - devant.info.width) / 2) }])
+    .png().toBuffer();
+
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${L}" height="${H}">
   <defs>
     <linearGradient id="voile" x1="0" y1="0" x2="0" y2="1">
@@ -213,13 +244,13 @@ async function modelePhoto(spec, licence, format) {
       <stop offset="100%" stop-color="${FOND}" stop-opacity="0.92"/>
     </linearGradient>
   </defs>
-  <rect y="${H - bande * 2}" width="${L}" height="${bande * 2}" fill="url(#voile)"/>
-  <rect x="${marge}" y="${H - bande + 4}" width="${Math.round(L * 0.12)}" height="4" rx="2" fill="${accent}"/>
-  ${bloc(legende, marge, H - bande + Math.round(tailleCredit * 1.9), Math.round(tailleCredit * 1.15), Math.round(tailleCredit * 1.4), 'font-weight="700" fill="#ffffff"')}
-  <text x="${marge}" y="${H - Math.round(bande * 0.2)}" font-family="${POLICE}"
-        font-size="${tailleCredit}" fill="#ffffff" fill-opacity="0.78">Photo : ${echapper(spec.credit)}</text>
-  <text x="${L - marge}" y="${H - Math.round(bande * 0.2)}" text-anchor="end" font-family="${POLICE}"
-        font-size="${tailleCredit}" font-weight="700" fill="#ffffff" fill-opacity="0.9">cards-trading.com</text>
+  <rect y="${d.debutVoile}" width="${L}" height="${H - d.debutVoile}" fill="url(#voile)"/>
+  <rect x="${marge}" y="${d.yFilet}" width="${Math.round(L * 0.12)}" height="4" rx="2" fill="${accent}"/>
+  ${bloc(legende, marge, d.yLegende, Math.round(d.tailleCredit * 1.15), d.interligne, 'font-weight="700" fill="#ffffff"')}
+  ${credit ? `<text x="${marge}" y="${d.yBas}" font-family="${POLICE}"
+        font-size="${d.tailleCredit}" fill="#ffffff" fill-opacity="0.78">Photo : ${echapper(credit)}</text>` : ''}
+  <text x="${L - marge}" y="${d.yBas}" text-anchor="end" font-family="${POLICE}"
+        font-size="${d.tailleCredit}" font-weight="700" fill="#ffffff" fill-opacity="0.9">cards-trading.com</text>
 </svg>`;
 
   return sharp(fond).composite([{ input: Buffer.from(svg) }]);
@@ -244,6 +275,6 @@ export async function genererVisuel(spec, licence, reseau) {
   verifierSpec(spec);
   const format = FORMATS[reseau];
   if (!format) throw new Error(`Réseau inconnu : ${reseau}`);
-  const image = await MODELES[spec.type](spec, licence, format);
+  const image = await MODELES[spec.type](spec, licence, format, reseau);
   return image.png({ compressionLevel: 9 }).toBuffer();
 }
