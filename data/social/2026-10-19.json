@@ -1,0 +1,102 @@
+{
+  "semaine": "2026-10-19",
+  "posts": [
+    {
+      "id": "2026-10-19-cote",
+      "jour": "2026-10-19",
+      "pilier": "cote",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Ça vaut combien ? 💰\n\nMéga-Dracaufeu X-ex, Flammes Fantasmagoriques. Même Pokémon, deux versions rares :\n\n• Illustration spéciale rare (125) : 707 €\n• Méga Hyper Rare (130) : 215 €\n\nTendance Cardmarket au 17 octobre, via TCGdex.\n\nTu aurais misé sur laquelle ?\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "texte": "Ça vaut combien ? 💰 Méga-Dracaufeu X-ex\n\nDans Flammes Fantasmagoriques, Méga-Dracaufeu X-ex existe en plusieurs versions. Deux de ses versions rares ne jouent pas du tout dans la même catégorie :\n\n• Illustration spéciale rare (125), illustrée par danciao : 707 €\n• Méga Hyper Rare (130), illustrée par Takuyoa : 215 €\n\nCe sont les prix tendance relevés sur Cardmarket le 17 octobre, via TCGdex. Une cote bouge vite : regarde toujours la tendance du jour avant d'acheter ou de vendre.\n\nEt toi, tu préfères laquelle des deux, l'illustration ou la dorée ? Dis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #dracaufeu #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "carte",
+        "image": "https://assets.tcgdex.net/fr/me/me02/125/high.png",
+        "titre": "Méga-Dracaufeu X-ex : 707 €",
+        "sous_titre": "Illustration spéciale rare 125. Prix tendance Cardmarket au 17 octobre."
+      },
+      "sources": [
+        "https://api.tcgdex.net/v2/fr/cards/me02-125",
+        "https://api.tcgdex.net/v2/fr/cards/me02-130"
+      ]
+    },
+    {
+      "id": "2026-10-20-actu",
+      "jour": "2026-10-20",
+      "pilier": "actu",
+      "licence": "one-piece",
+      "twitter": {
+        "texte": "📅 Alabasta débarque en decks de démarrage, selon le site officiel One Piece Card Game :\n\n• ST-37 : Les Pirates et la Princesse du Désert (rouge et bleu)\n• ST-38 : Baroque Works (bleu et noir)\n\nSortie le 18 décembre, deux packs bonus par deck.\n\nTon camp ?\n\n#OnePieceCardGame"
+      },
+      "instagram": {
+        "texte": "📅 Alabasta arrive en decks de démarrage le 18 décembre\n\nLe site officiel One Piece Card Game a mis en ligne deux nouveaux decks de démarrage, qui se font face :\n\n• ST-37, Les Pirates et la Princesse du Désert : un deck rouge et bleu avec l'équipage de Chapeau de paille et le royaume d'Alabasta\n• ST-38, Baroque Works : un deck bleu et noir qui renouvelle sa main et met K.O. les personnages adverses\n\nChaque deck contient 51 cartes prêtes à jouer, 10 cartes DON!!, une feuille de jeu et deux packs bonus.\n\nTu pars avec Luffy ou avec Baroque Works ? Dis-le en commentaire 👇 Et enregistre ce post pour garder la date sous la main.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#onepiececardgame #onepiecetcg #alabasta #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Calendrier",
+        "titre": "Alabasta en decks de démarrage le 18 décembre",
+        "sous_titre": "ST-37 et ST-38, selon le site officiel One Piece Card Game."
+      },
+      "sources": [
+        "https://fr.onepiece-cardgame.com/products/st37.html",
+        "https://fr.onepiece-cardgame.com/products/st38.html",
+        "https://fr.onepiece-cardgame.com/products/"
+      ]
+    },
+    {
+      "id": "2026-10-22-communaute",
+      "jour": "2026-10-22",
+      "pilier": "communaute",
+      "licence": "one-piece",
+      "twitter": {
+        "texte": "Moi : « Juste un booster, pour voir. »\n\nMoi, vingt minutes plus tard : 🫠📦📦📦\n\nAvoue, ça t'est déjà arrivé. C'était sur quelle extension One Piece ? 👇\n\n#OnePieceCardGame"
+      },
+      "instagram": {
+        "texte": "Moi : « Juste un booster, pour voir. »\nMoi, vingt minutes plus tard : 🫠📦📦📦\n\nOn connaît tous ce moment. Le premier booster ne donne rien, le deuxième non plus, et au troisième on se dit que la bonne carte est forcément dans le suivant.\n\nAvoue en commentaire : c'était sur quelle extension One Piece, et tu l'as eue, ta carte ? 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#onepiececardgame #onepiecetcg #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Humour",
+        "titre": "« Juste un booster, pour voir. »",
+        "sous_titre": "Vingt minutes plus tard…"
+      }
+    },
+    {
+      "id": "2026-10-25-coulisses",
+      "jour": "2026-10-25",
+      "pilier": "coulisses",
+      "licence": "mixte",
+      "twitter": {
+        "texte": "Où vit notre équipe d'agents IA ? Sur un petit serveur loué chez OVH : 6 cœurs, 12 Go de mémoire, sous Debian.\n\nVal l'a commandé et préparé en mai. Dessus : Claude Code, la méthode BMAD et le bot qui relie tout ça à notre Discord.\n\nCarte 03/20 #buildinpublic #IA"
+      },
+      "instagram": {
+        "texte": "L'atelier qui ne dort pas 🌙\n\nPourquoi on te parle d'un serveur ? Parce que c'est là que se construit l'appli sur laquelle tu achèteras et vendras tes cartes.\n\nC'est un petit serveur loué, que Val a commandé et préparé en mai. Il fait tourner notre équipe d'agents IA jour et nuit, et on le pilote depuis un simple fil Discord.\n\nUn serveur, deux fondateurs, et beaucoup de méthode.\n\nTu veux qu'on te montre une journée type dans l'atelier ? Dis-le en commentaire.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+      },
+      "visuel": {
+        "type": "bip",
+        "numero": 3,
+        "total": 20,
+        "rarete": "commune",
+        "nom": "L'atelier qui ne dort pas",
+        "titre": "Notre équipe d'agents IA vit sur un petit serveur",
+        "sous_titre": "Commandé et préparé par Val en mai, piloté depuis Discord.",
+        "effet": "Un serveur loué fait tourner l'équipe d'agents jour et nuit. On le pilote depuis Discord.",
+        "illustration": {
+          "gabarit": "bordereau",
+          "entete": "L'ATELIER",
+          "lignes": [
+            ["Serveur", "VPS OVH"],
+            ["Cœurs", "6"],
+            ["Mémoire", "12 Go"],
+            ["Système", "Debian 12"],
+            ["Allumé", "jour et nuit"],
+            ["Pilotage", "Discord"]
+          ]
+        }
+      }
+    }
+  ]
+}
