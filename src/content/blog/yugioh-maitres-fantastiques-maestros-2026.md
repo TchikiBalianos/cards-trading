@@ -6,7 +6,7 @@ category: "yugioh"
 tags: ["yugioh", "magnificent-maestros", "grand-master-rare", "toon", "nouveaute"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-yugiho.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
