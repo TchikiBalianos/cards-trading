@@ -21,7 +21,11 @@
       "sources": [
         "https://api.tcgdex.net/v2/fr/cards/me02-125",
         "https://api.tcgdex.net/v2/fr/cards/me02-130"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad386af0a208cb32324c9e7",
+        "instagram": "6ad386b0dd83363c4dd7267a"
+      }
     },
     {
       "id": "2026-10-20-actu",
@@ -44,7 +48,11 @@
         "https://fr.onepiece-cardgame.com/products/st37.html",
         "https://fr.onepiece-cardgame.com/products/st38.html",
         "https://fr.onepiece-cardgame.com/products/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad386b10b0d72757adf3ec0",
+        "instagram": "6ad386b1938409f1d08d1430"
+      }
     },
     {
       "id": "2026-10-22-communaute",
@@ -62,6 +70,10 @@
         "etiquette": "Humour",
         "titre": "« Juste un booster, pour voir. »",
         "sous_titre": "Vingt minutes plus tard…"
+      },
+      "buffer": {
+        "twitter": "6ad386b2938409f1d08d146c",
+        "instagram": "6ad386b3dd83363c4dd72754"
       }
     },
     {
@@ -88,14 +100,36 @@
           "gabarit": "bordereau",
           "entete": "L'ATELIER",
           "lignes": [
-            ["Serveur", "VPS OVH"],
-            ["Cœurs", "6"],
-            ["Mémoire", "12 Go"],
-            ["Système", "Debian 12"],
-            ["Allumé", "jour et nuit"],
-            ["Pilotage", "Discord"]
+            [
+              "Serveur",
+              "VPS OVH"
+            ],
+            [
+              "Cœurs",
+              "6"
+            ],
+            [
+              "Mémoire",
+              "12 Go"
+            ],
+            [
+              "Système",
+              "Debian 12"
+            ],
+            [
+              "Allumé",
+              "jour et nuit"
+            ],
+            [
+              "Pilotage",
+              "Discord"
+            ]
           ]
         }
+      },
+      "buffer": {
+        "twitter": "6ad386b3dd83363c4dd72781",
+        "instagram": "6ad386b4ae173d6e00be224b"
       }
     }
   ]
