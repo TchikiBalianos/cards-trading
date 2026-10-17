@@ -44,11 +44,47 @@ export function compterHashtags(texte) {
   return (String(texte).match(/#[\p{L}\p{N}_]+/gu) || []).length;
 }
 
+/* Une phrase par ligne (demande de Julian, 18/10/2026) : une majuscule qui suit
+   un point, un point d'exclamation ou d'interrogation, ou des points de
+   suspension, éventuellement suivis d'emojis, passe à la ligne. Un emoji en
+   fin de phrase (« Dis-le en commentaire 👇 Et… ») vaut fin de phrase, sauf en
+   début de ligne (« 📅 Alabasta »). Prudent par construction : un numéro de
+   liste (« 1. Dracaufeu »), une abréviation suivie d'une minuscule (« K.O. les »)
+   et un guillemet fermant (« pour voir. » ») restent sur leur ligne. Une espace
+   devient un saut de ligne : le poids X ne change pas. */
+const ESPACES = '[ \\t\\u00a0\\u202f]+';
+const EMOJIS = '(?:\\p{Extended_Pictographic}[\\p{Extended_Pictographic}\\u200d\\ufe0f\\p{Emoji_Modifier}]*)';
+const RE_FIN_PHRASE = new RegExp(`(?<!(?:^|\\n)[ \\t]*\\d{1,3})([.!?…](?:${ESPACES}${EMOJIS})*)${ESPACES}(?=[\\p{Lu}«])`, 'gu');
+const RE_FIN_EMOJI = new RegExp(`(?<=\\S${ESPACES})(${EMOJIS}(?:${ESPACES}${EMOJIS})*)${ESPACES}(?=[\\p{Lu}«])`, 'gu');
+
+export function unePhraseParLigne(texte) {
+  return String(texte).replace(RE_FIN_PHRASE, '$1\n').replace(RE_FIN_EMOJI, '$1\n');
+}
+
 /* Le texte réellement envoyé à X : la citation se place EN FIN de texte, c'est
    ce qui fait de X un post cité (nos meilleurs chiffres viennent de là). */
 export function texteX(post) {
-  const t = post.twitter.texte.trim();
+  const t = unePhraseParLigne(post.twitter.texte.trim());
   return post.twitter.citation ? `${t}\n\n${post.twitter.citation}` : t;
+}
+
+export function texteInstagram(post) {
+  return unePhraseParLigne(post.instagram.texte.trim());
+}
+
+/* Lexique des raretés Pokémon (Julian, 18/10/2026) : les fans français disent
+   AR (une étoile dorée), ALT (deux) et GOLD (trois), pas les noms officiels
+   que renvoie TCGdex. Refusé dans les textes comme sur le visuel. */
+const LEXIQUE_RARETES = [
+  [/illustration\s+sp[ée]ciale\s+rare/i, 'ALT (deux étoiles dorées)'],
+  [/hyper\s+rare/i, 'GOLD (trois étoiles dorées)'],
+  [/illustration\s+rare/i, 'AR (une étoile dorée)'],
+];
+
+export function ecartsDeLexique(texte) {
+  return LEXIQUE_RARETES
+    .filter(([re]) => re.test(texte))
+    .map(([re, terme]) => `« ${texte.match(re)[0]} » s'écrit ${terme}`);
 }
 
 export function fichierVisuel(post, reseau) {
@@ -108,6 +144,8 @@ export function valider(donnees, { maintenant } = {}) {
 
     const tout = `${x ? x.texte : ''}\n${ig ? ig.texte : ''}`;
     if (/[\u2014\u2013]/.test(tout)) err(post, 'tiret long interdit (virgule, deux-points ou parenthèses à la place)');
+    const visible = `${tout}\n${post.visuel ? `${post.visuel.titre || ''}\n${post.visuel.sous_titre || ''}` : ''}`;
+    for (const e of ecartsDeLexique(visible)) err(post, `lexique : ${e}`);
 
     /* Règle de Julian (22/09/2026) : un chiffre n'entre que s'il a été lu à sa
        source et attribué. Un prix ou un pourcentage sans source est refusé. */
@@ -138,7 +176,7 @@ export function construireEnvoi(post, reseau, dueAt) {
     return { texte: texteX(post), image: urlVisuel(post, reseau), alt, dueAt, metadata: undefined };
   }
   return {
-    texte: post.instagram.texte.trim(),
+    texte: texteInstagram(post),
     image: urlVisuel(post, reseau),
     alt,
     dueAt,

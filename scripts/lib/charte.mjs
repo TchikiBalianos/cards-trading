@@ -64,7 +64,7 @@ export function decouper(texte, taillePolice, largeurMax, facteur = 0.54) {
      jamais ouvrir une ligne par « : ». */
   const mots = [];
   for (const mot of String(texte).split(/\s+/).filter(Boolean)) {
-    if (/^[:;!?»]$/.test(mot) && mots.length) mots[mots.length - 1] += ' ' + mot;
+    if (/^[:;!?»€%]$/.test(mot) && mots.length) mots[mots.length - 1] += ' ' + mot;
     else mots.push(mot);
   }
 

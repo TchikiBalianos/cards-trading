@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { valider, poidsX, compterHashtags, texteX, construireEnvoi, urlVisuel } from './brouillons.mjs';
+import { valider, poidsX, compterHashtags, texteX, construireEnvoi, urlVisuel, unePhraseParLigne } from './brouillons.mjs';
+import { decouper } from './charte.mjs';
 
 const MAINTENANT = '2026-09-29T14:00:00Z';
 
@@ -150,4 +151,42 @@ test('la signature « 100 % TCG » n\'est pas un pourcentage à sourcer', () => 
   assert.deepEqual(erreursDe(d), []);
   d.posts[0].instagram.texte += '\n\nUne hausse de 20 %';
   assert.ok(erreursDe(d).some((e) => /sans « sources »/.test(e)));
+});
+
+test('une phrase par ligne, sans casser les listes, les abréviations ni les citations', () => {
+  assert.equal(unePhraseParLigne('Flammes Fantasmagoriques. Même Pokémon, deux versions :'),
+    'Flammes Fantasmagoriques.\nMême Pokémon, deux versions :');
+  assert.equal(unePhraseParLigne('Ça vaut combien ? 💰 Méga-Dracaufeu X-ex'), 'Ça vaut combien ? 💰\nMéga-Dracaufeu X-ex');
+  assert.equal(unePhraseParLigne('Tu pars ? Dis-le en commentaire 👇 Et enregistre.'),
+    'Tu pars ?\nDis-le en commentaire 👇\nEt enregistre.');
+  for (const intact of ['1. Dracaufeu\n2. Pikachu', 'met K.O. les personnages', 'Moi : « Juste un booster, pour voir. »',
+    '📅 Alabasta débarque', 'Sortie en 2026. 2 packs', 'Cards-Trading.com, la marketplace']) {
+    assert.equal(unePhraseParLigne(intact), intact);
+  }
+});
+
+test('le texte envoyé passe à la ligne après chaque phrase, sur X comme sur Instagram', () => {
+  const d = bon();
+  d.posts[0].twitter.texte = 'Première phrase. Deuxième phrase.';
+  d.posts[0].instagram.texte = 'Une. Deux.';
+  assert.equal(texteX(d.posts[0]), 'Première phrase.\nDeuxième phrase.');
+  assert.equal(construireEnvoi(d.posts[0], 'instagram', '2026-10-01T09:30:00.000Z').texte, 'Une.\nDeux.');
+});
+
+test('lexique des raretés : ALT, AR et GOLD, jamais les noms officiels', () => {
+  const d = bon();
+  d.posts[0].twitter.texte = '• Illustration spéciale rare (125) : 707 €';
+  assert.ok(erreursDe(d).some((e) => /lexique : .*ALT/.test(e)));
+  d.posts[0].twitter.texte = '• ALT (125) : 707 €';
+  d.posts[0].visuel.titre = 'Méga Hyper Rare 130';
+  assert.ok(erreursDe(d).some((e) => /lexique : .*GOLD/.test(e)));
+  d.posts[0].visuel.titre = 'GOLD 130';
+  d.posts[0].instagram.texte += '\n\nUne Illustration rare';
+  assert.ok(erreursDe(d).some((e) => /lexique : .*AR /.test(e)));
+});
+
+test('le prix et son symbole restent sur la même ligne du visuel', () => {
+  const lignes = decouper('Méga-Dracaufeu X-ex : 707 €', 40, 560);
+  assert.ok(lignes.every((l) => l !== '€'), JSON.stringify(lignes));
+  assert.ok(lignes.some((l) => l.endsWith('707 €')));
 });

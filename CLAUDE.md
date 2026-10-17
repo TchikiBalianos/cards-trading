@@ -890,6 +890,14 @@ entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pond�
 2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
 Une photo de la communauté exige un `credit`, repris dans le texte du post.
 
+**Lexique des raretés Pokémon** (Julian, 18 octobre 2026) : les fans français disent **AR**
+(une étoile dorée, « Illustration rare »), **ALT** (deux étoiles dorées, « Illustration
+spéciale rare ») et **GOLD** (trois étoiles dorées, « Méga Hyper Rare »). TCGdex renvoie les
+noms officiels : les traduire. `valider` refuse les noms officiels dans les textes comme sur
+le visuel. **Une phrase par ligne** : `unePhraseParLigne` (dans `brouillons.mjs`) passe à la
+ligne après chaque fin de phrase au moment de l'envoi à Buffer, sans toucher aux listes
+numérotées, aux abréviations ni aux citations.
+
 Une photo dont la licence n'exige pas de crédit (aujourd'hui Unsplash seul,
 `HOTES_CREDIT_FACULTATIF` dans `visuel-spec.mjs`) garde son `credit` dans la spec, mais il
 quitte le visuel X ; il reste sur celui d'Instagram, où la photo est centrée entre deux

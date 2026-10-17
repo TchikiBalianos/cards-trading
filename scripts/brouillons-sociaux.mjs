@@ -24,7 +24,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contexte, listerPosts, creerPost } from './lib/buffer.mjs';
 import {
-  valider, construireEnvoi, fichierVisuel, urlVisuel, texteX,
+  valider, construireEnvoi, fichierVisuel, urlVisuel, texteX, texteInstagram,
 } from './lib/brouillons.mjs';
 import {
   CRENEAUX, PILIERS, heureParisVersIso, jourParis, ajouterJours, repartition,
@@ -220,7 +220,7 @@ if (PHASE === 'brouillons') {
       <div style="font-size:12px;color:#7c879c;padding:2px 0 10px;">${echapperHtml(post.licence)}</div>
       <img src="${urlVisuel(post, 'twitter')}" width="480" style="max-width:100%;border-radius:8px;" alt="">
       <div style="font-size:13px;color:#c9d2e6;padding-top:10px;white-space:pre-wrap;"><b>X</b> : ${echapperHtml(texteX(post))}</div>
-      <div style="font-size:13px;color:#c9d2e6;padding-top:8px;white-space:pre-wrap;"><b>Instagram</b> : ${echapperHtml(post.instagram.texte)}</div>
+      <div style="font-size:13px;color:#c9d2e6;padding-top:8px;white-space:pre-wrap;"><b>Instagram</b> : ${echapperHtml(texteInstagram(post))}</div>
     </td></tr>`).join('');
     const liens = RESEAUX.filter((r) => canaux[r]).map((r) => `<a href="https://publish.buffer.com/channels/${canaux[r]}/drafts" style="color:#2997ff;">${r === 'twitter' ? 'Brouillons X' : 'Brouillons Instagram'}</a>`).join(' · ');
     const corps = `${cartes}<tr><td style="padding:18px 24px;font-size:13px;color:#c9d2e6;line-height:1.6;">
