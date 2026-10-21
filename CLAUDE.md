@@ -894,7 +894,10 @@ Une photo de la communauté exige un `credit`, repris dans le texte du post.
 (une étoile dorée, « Illustration rare »), **ALT** (deux étoiles dorées, « Illustration
 spéciale rare ») et **GOLD** (trois étoiles dorées, « Méga Hyper Rare »). TCGdex renvoie les
 noms officiels : les traduire. `valider` refuse les noms officiels dans les textes comme sur
-le visuel. **Une phrase par ligne** : `unePhraseParLigne` (dans `brouillons.mjs`) passe à la
+le visuel. Depuis le 21 octobre 2026, la règle vaut aussi pour les **articles Pokémon** : le
+nom officiel n'y est admis qu'entre parenthèses juste après le terme des fans, et l'email de
+relecture signale tout écart (`points_de_vigilance`, lexique partagé dans `lexique.mjs`).
+**Une phrase par ligne** : `unePhraseParLigne` (dans `brouillons.mjs`) passe à la
 ligne après chaque fin de phrase au moment de l'envoi à Buffer, sans toucher aux listes
 numérotées, aux abréviations ni aux citations.
 

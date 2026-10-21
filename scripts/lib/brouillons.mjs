@@ -23,6 +23,7 @@
 
 import { PILIERS, lundiDe, ajouterJours, jourParis } from './semaine-sociale.mjs';
 import { verifierSpec } from './visuel-spec.mjs';
+import { ecartsDeLexique } from './lexique.mjs';
 
 export const LICENCES = ['pokemon', 'one-piece', 'mixte'];
 export const SITE = 'https://cards-trading.com';
@@ -70,21 +71,6 @@ export function texteX(post) {
 
 export function texteInstagram(post) {
   return unePhraseParLigne(post.instagram.texte.trim());
-}
-
-/* Lexique des raretés Pokémon (Julian, 18/10/2026) : les fans français disent
-   AR (une étoile dorée), ALT (deux) et GOLD (trois), pas les noms officiels
-   que renvoie TCGdex. Refusé dans les textes comme sur le visuel. */
-const LEXIQUE_RARETES = [
-  [/illustration\s+sp[ée]ciale\s+rare/i, 'ALT (deux étoiles dorées)'],
-  [/hyper\s+rare/i, 'GOLD (trois étoiles dorées)'],
-  [/illustration\s+rare/i, 'AR (une étoile dorée)'],
-];
-
-export function ecartsDeLexique(texte) {
-  return LEXIQUE_RARETES
-    .filter(([re]) => re.test(texte))
-    .map(([re, terme]) => `« ${texte.match(re)[0]} » s'écrit ${terme}`);
 }
 
 export function fichierVisuel(post, reseau) {

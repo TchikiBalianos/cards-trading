@@ -11,6 +11,7 @@
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { ecartsDeLexique } from './lexique.mjs';
 
 /** Catégories acceptées par src/content.config.ts. Une valeur hors liste casse le build. */
 export const CATEGORIES = [
@@ -99,6 +100,11 @@ export function points_de_vigilance(article) {
   if (duree) points.push(`durée de commission chiffrée : « ${duree[1]} » — la formule est « pendant toute la bêta »`);
 
   if (!/cards-trading\.com|\/#beta/i.test(article.corps)) points.push('aucun appel à rejoindre la bêta');
+
+  // Raretés Pokémon : AR, ALT, GOLD ; le nom officiel seulement entre parenthèses après.
+  if (article.champs.category === 'pokemon') {
+    for (const e of ecartsDeLexique(article.corps, { explicationsPermises: true })) points.push(`lexique : ${e}`);
+  }
 
   const mots = article.corps.trim().split(/\s+/).length;
   if (mots < 900) points.push(`article court (${mots} mots)`);

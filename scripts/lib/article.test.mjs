@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { defauts } from './article.mjs';
+import { defauts, points_de_vigilance } from './article.mjs';
 
 /* Corps minimal qui passe tous les autres controles : sommaire, FAQ de
    trois questions, et plus de 2000 signes. */
@@ -78,4 +78,11 @@ test('une FAQ trop courte reste refusee', () => {
 test('une categorie hors enumeration reste refusee', () => {
   const m = defauts(article(CORPS_COMPLET, 'flipo'), []);
   assert.ok(m.some((d) => /hors énumération/.test(d)));
+});
+
+test('lexique des raretés : signalé dans un article Pokémon, sauf en explication après le terme des fans', () => {
+  const lexique = (corps, cat) => points_de_vigilance(article(corps, cat)).filter((p) => p.startsWith('lexique'));
+  assert.equal(lexique('Six cartes en illustration spéciale rare.').length, 1);
+  assert.deepEqual(lexique('Six cartes en **ALT** (« illustration spéciale rare », deux étoiles dorées).'), []);
+  assert.deepEqual(lexique('Une Special Illustration Rare de Magic.', 'magic'), []);
 });
