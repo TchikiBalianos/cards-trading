@@ -45,7 +45,7 @@ Un booster qui contient une carte Stade Légendaire contient toujours les deux m
 
 ## Ce que contiennent les boosters et les coffrets
 
-Règne Delta proposera plus de 135 cartes différentes à collectionner, avec plus de 20 cartes Dresseur et plus de 35 cartes dotées d'illustrations spéciales. Le communiqué officiel, précise la répartition des cartes les plus recherchées : 4 Pokémon-ex Méga-Évolution, 6 Pokémon-ex, 6 cartes Stade (nos trois Stades Légendaires), 14 Pokémon en **AR** (illustration rare, une étoile dorée), 17 Pokémon et cartes Dresseur en ultra rare, et 6 Pokémon et cartes Supporter en **ALT** (illustration spéciale rare, deux étoiles dorées).
+Règne Delta proposera plus de 135 cartes différentes à collectionner, avec plus de 20 cartes Dresseur et plus de 35 cartes dotées d'illustrations spéciales. Le communiqué officiel précise la répartition des cartes les plus recherchées : 4 Pokémon-ex Méga-Évolution, 6 Pokémon-ex, 6 cartes Stade (nos trois Stades Légendaires), 14 Pokémon en **AR** (illustration rare, une étoile dorée), 17 Pokémon et cartes Dresseur en ultra rare, et 6 Pokémon et cartes Supporter en **ALT** (illustration spéciale rare, deux étoiles dorées).
 
 La gamme de produits annoncée couvre plusieurs formats :
 
