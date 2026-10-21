@@ -79,7 +79,11 @@
         "https://www.galatcg.com/",
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/",
         "https://www.instagram.com/asmodee_fr/p/Detn6xGiUun/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad9351e609a35b9f95fa6e8",
+        "instagram": "6ad9351e6dae13f2cbe3add1"
+      }
     },
     {
       "id": "2026-10-22-communaute",
@@ -125,7 +129,11 @@
       "sources": [
         "https://en.onepiece-cardgame.com/events/02_514.html",
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad9351f609a35b9f95fa731",
+        "instagram": "6ad93520a9337c3f97c17ab1"
+      }
     },
     {
       "id": "2026-10-23-actu",
@@ -149,7 +157,11 @@
       "sources": [
         "https://www.pokemon.com/fr/actualites/participez-a-un-evenement-davant-premiere-pour-lextension-mega-evolution-regne-delta-du-jcc-pokemon",
         "https://www.pokebip.com/news/7489/jcc-pokemon-nouvelle-extension-mega-evolution-regne-delta"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad93521609a35b9f95fa780",
+        "instagram": "6ad93522a9337c3f97c17acf"
+      }
     },
     {
       "id": "2026-10-24-communaute",
@@ -175,7 +187,11 @@
         "https://www.instagram.com/legalatcg/p/DehYPe0uMWL/",
         "https://www.instagram.com/legalatcg/p/DejKjr_Osl2/",
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad93522a9337c3f97c17aed",
+        "instagram": "6ad935220d51f8b17ef1d573"
+      }
     },
     {
       "id": "2026-10-25-communaute",
@@ -199,7 +215,11 @@
       "sources": [
         "https://www.parisgamesweek.com/fr",
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ad935236dae13f2cbe3ae67",
+        "instagram": "6ad93524bcb71c33f31c4c6a"
+      }
     },
     {
       "id": "2026-10-25-coulisses",
