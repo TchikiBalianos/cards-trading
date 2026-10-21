@@ -51,11 +51,14 @@ export function compterHashtags(texte) {
    fin de phrase (« Dis-le en commentaire 👇 Et… ») vaut fin de phrase, sauf en
    début de ligne (« 📅 Alabasta »). Prudent par construction : un numéro de
    liste (« 1. Dracaufeu »), une abréviation suivie d'une minuscule (« K.O. les »)
-   et un guillemet fermant (« pour voir. » ») restent sur leur ligne. Une espace
-   devient un saut de ligne : le poids X ne change pas. */
+   et un guillemet fermant (« pour voir. » ») restent sur leur ligne, tout comme
+   les marques qui finissent par un point d'exclamation (« Play! Pokémon Stores »
+   a été coupé en deux le 21/10/2026). Une espace devient un saut de ligne : le
+   poids X ne change pas. */
 const ESPACES = '[ \\t\\u00a0\\u202f]+';
 const EMOJIS = '(?:\\p{Extended_Pictographic}[\\p{Extended_Pictographic}\\u200d\\ufe0f\\p{Emoji_Modifier}]*)';
-const RE_FIN_PHRASE = new RegExp(`(?<!(?:^|\\n)[ \\t]*\\d{1,3})([.!?…](?:${ESPACES}${EMOJIS})*)${ESPACES}(?=[\\p{Lu}«])`, 'gu');
+const MARQUES_EXCLAMATIVES = '(?<!Play|Yu-Gi-Oh|DON|DON!)';
+const RE_FIN_PHRASE = new RegExp(`(?<!(?:^|\\n)[ \\t]*\\d{1,3})${MARQUES_EXCLAMATIVES}([.!?…](?:${ESPACES}${EMOJIS})*)${ESPACES}(?=[\\p{Lu}«])`, 'gu');
 const RE_FIN_EMOJI = new RegExp(`(?<=\\S${ESPACES})(${EMOJIS}(?:${ESPACES}${EMOJIS})*)${ESPACES}(?=[\\p{Lu}«])`, 'gu');
 
 export function unePhraseParLigne(texte) {

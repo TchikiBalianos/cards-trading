@@ -160,7 +160,8 @@ test('une phrase par ligne, sans casser les listes, les abréviations ni les cit
   assert.equal(unePhraseParLigne('Tu pars ? Dis-le en commentaire 👇 Et enregistre.'),
     'Tu pars ?\nDis-le en commentaire 👇\nEt enregistre.');
   for (const intact of ['1. Dracaufeu\n2. Pikachu', 'met K.O. les personnages', 'Moi : « Juste un booster, pour voir. »',
-    '📅 Alabasta débarque', 'Sortie en 2026. 2 packs', 'Cards-Trading.com, la marketplace']) {
+    '📅 Alabasta débarque', 'Sortie en 2026. 2 packs', 'Cards-Trading.com, la marketplace',
+    'Dans les Play! Pokémon Stores participants', 'Le nouveau Yu-Gi-Oh! Les Maîtres Fantastiques', '10 cartes DON!! Et un deck']) {
     assert.equal(unePhraseParLigne(intact), intact);
   }
 });
