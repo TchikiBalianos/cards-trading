@@ -2,7 +2,7 @@
 title: "30ᵉ Anniversaire : l'extension sort partout le même jour, et ça change tout !"
 description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, nouvelle rareté et ce que ça change."
 pubDate: 2026-09-12
-updatedDate: 2026-10-13
+updatedDate: 2026-10-21
 category: "pokemon"
 tags: ["pokemon", "30e-anniversaire", "sortie-mondiale", "collection", "marche"]
 author: "Cards Trading"
@@ -54,7 +54,7 @@ Attention à ne pas confondre finition et rareté, parce que c'est exactement l�
 Les nouveautés qui portent réellement la valeur du set sont ailleurs :
 
 - **La rareté « futuriste rare »**, inédite dans le JCC, inaugurée par **Mewtwo et Mew** illustrés par l'artiste japonais **YOSHIROTTEN**, dans un style chromé très éloigné de l'esthétique habituelle du jeu.
-- **Les cartes « illustration rare »**, sur lesquelles apparaissent Mentali, Noctali, Lokhlass, Baudrive, Zorua et Lougaroc.
+- **Les cartes AR** (« illustration rare »), sur lesquelles apparaissent Mentali, Noctali, Lokhlass, Baudrive, Zorua et Lougaroc.
 - **Amphinobi-ex et Nymphali-ex**, les deux nouveaux Pokémon-ex de l'extension, qui donnent aussi leur nom à deux coffrets.
 
 Côté taille, le set principal tourne autour de 128 cartes numérotées en version occidentale, avec des cartes secrètes au-delà. Le décompte final des secrètes n'était pas confirmé à la date de cet article.

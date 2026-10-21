@@ -2,6 +2,7 @@
 title: "Guide du débutant : bien démarrer au Pokémon TCG en 2026"
 description: "Commencer le Pokémon TCG en 2026 : règles, decks meta, premiers achats et erreurs à éviter. Le guide complet pour débutants."
 pubDate: 2026-05-08
+updatedDate: 2026-10-21
 category: "pokemon"
 tags: ["guide", "débutant", "pokémon", "deck-building", "meta"]
 author: "Cards Trading"
@@ -117,7 +118,7 @@ Le **deck-roi** qui survit à la rotation et reste l'archétype dominant du form
 
 ### Mega Lucario ex
 
-![Mega Lucario ex Special Illustration Rare set Mega Evolution — l'un des grands gagnants de la rotation Standard 2026](https://images.pokemontcg.io/me1/179_hires.png)
+![Mega Lucario ex en ALT, set Mega Evolution : l'un des grands gagnants de la rotation Standard 2026](https://images.pokemontcg.io/me1/179_hires.png)
 
 L'un des grands gagnants de la rotation : un archétype Combat qui devient l'un des decks les plus joués du nouveau format. Frappe lourd dès le tour 2 et profite du retour en force des stratégies Combat avec moins de contre-jeu Psy disponible.
 
@@ -191,13 +192,13 @@ Une carte *holo* commune ne vaut pas 5 € sous prétexte qu'elle brille. Vérif
 
 ### 5. Ignorer la *condition* des cartes
 
-![Charizard ex Special Illustration Rare Pokémon TCG Scarlet & Violet 151 — exemple emblématique de carte SIR à forte valeur de collection](https://images.pokemontcg.io/sv3pt5/199_hires.png)
+![Charizard ex en ALT, Pokémon TCG Scarlet & Violet 151 : exemple emblématique de carte à forte valeur de collection](https://images.pokemontcg.io/sv3pt5/199_hires.png)
 
-Le grading **Near Mint / Lightly Played / Moderately Played** affecte radicalement la valeur. Une Charizard ex Special Illustration en *Near Mint* peut valoir 180 €, la même en *Played* tombe à 90 €.
+Le grading **Near Mint / Lightly Played / Moderately Played** affecte radicalement la valeur. Une Charizard ex ALT en *Near Mint* peut valoir 180 €, la même en *Played* tombe à 90 €.
 
 ## Comprendre le marché secondaire
 
-La rareté d'une carte se lit dans le coin inférieur droit (un cercle, un losange, une étoile, ou la mention SR/UR/SAR). Voici la hiérarchie 2026 :
+La rareté d'une carte se lit à côté de son numéro, en bas de la carte : un cercle, un losange, une étoile, et pour les plus rares une, deux ou trois étoiles dorées. Voici la hiérarchie 2026 :
 
 - **Common (cercle noir)** : valeur unitaire ~0,10 €
 - **Uncommon (losange)** : 0,20-1 €
@@ -205,13 +206,13 @@ La rareté d'une carte se lit dans le coin inférieur droit (un cercle, un losan
 - **Holo Rare** : 1-8 €
 - **ex / V / VMAX** : 3-30 €
 - **Full Art** : 15-80 €
-- **Special Illustration Rare (SIR / SAR)** : 60-400 €
-- **Hyper Rare / Gold** : 30-150 €
-- **Illustration Rare alternative** : 50-600 € voire plus
+- **AR** (« illustration rare », une étoile dorée) : de quelques euros à bien plus pour les Pokémon les plus demandés
+- **ALT** (« illustration spéciale rare », deux étoiles dorées) : 60-400 €
+- **GOLD** (« hyper rare », trois étoiles dorées) : 30-150 €
 
-La logique de prix combine trois facteurs : **playabilité méta** (la carte est-elle dans les decks compétitifs ?), **artwork** (la communauté l'apprécie-t-elle ?), et **scarcité d'impression** (combien d'exemplaires existent ?). Les cartes qui cumulent les trois — comme certaines Illustration Rare alternatives de Charizard ou Pikachu — atteignent rapidement les **plusieurs centaines d'euros**.
+La logique de prix combine trois facteurs : **playabilité méta** (la carte est-elle dans les decks compétitifs ?), **artwork** (la communauté l'apprécie-t-elle ?), et **scarcité d'impression** (combien d'exemplaires existent ?). Les cartes qui cumulent les trois (comme certaines ALT de Charizard ou de Pikachu) atteignent rapidement les **plusieurs centaines d'euros**.
 
-> **Conseil de pro** : suivez les *pull rates* officiels publiés à chaque sortie. Une SIR avec un *pull rate* d'1 sur 250 boosters explique mathématiquement son prix.
+> **Conseil de pro** : suivez les *pull rates* officiels publiés à chaque sortie. Une ALT avec un *pull rate* d'1 sur 250 boosters explique mathématiquement son prix.
 
 ## Tournois et jeu organisé
 
