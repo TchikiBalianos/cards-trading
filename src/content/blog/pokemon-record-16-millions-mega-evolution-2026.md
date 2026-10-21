@@ -2,6 +2,7 @@
 title: "Pokémon TCG en 2026 : record à 16,5 M$ et nouvelle ère Méga-Évolution"
 description: "Pokémon TCG en 2026 : la carte à 16,5 millions de dollars, les cartes chase modernes et vintage, et l'arrivée de l'ère Méga-Évolution. Le point complet."
 pubDate: 2026-08-16
+updatedDate: 2026-10-21
 category: "pokemon"
 tags: ["pokemon", "marche", "collection", "mega-evolution", "grading"]
 author: "Cards Trading"
@@ -39,7 +40,7 @@ Pour le collectionneur, ces deux références — Pikachu Illustrator et Chariza
 
 ## Les chase cards modernes n'ont rien à envier au vintage
 
-Le marché moderne, lui, a trouvé son propre langage de rareté avec les **Special Illustration Rare (SIR)**, ces cartes à l'illustration alternative pleine page qui font désormais office de graal dans chaque extension récente. La référence 2025-2026 reste **Umbreon ex #161/131**, issue de l'extension *Prismatic Evolutions* (sortie le 17 janvier 2025). Mi-2026, elle se négociait autour de **1 500 $** en état proche du neuf non gradé, avec une tendance clairement haussière — +11 % sur le seul mois de juillet 2026 selon les agrégateurs de prix.
+Le marché moderne, lui, a trouvé son propre langage de rareté avec les **ALT** (« Special Illustration Rare », deux étoiles dorées), ces cartes à l'illustration alternative pleine page qui font désormais office de graal dans chaque extension récente. La référence 2025-2026 reste **Umbreon ex #161/131**, issue de l'extension *Prismatic Evolutions* (sortie le 17 janvier 2025). Mi-2026, elle se négociait autour de **1 500 $** en état proche du neuf non gradé, avec une tendance clairement haussière : +11 % sur le seul mois de juillet 2026 selon les agrégateurs de prix.
 
 Ce type de carte illustre une mécanique désormais bien identifiée : une illustration exceptionnelle sur un Pokémon populaire (ici l'un des Éeveelutions, très prisés des collectionneurs) suffit à faire d'une carte non-Légendaire l'une des plus chères de toute une génération.
 
@@ -53,7 +54,7 @@ Le calendrier 2026 de cette nouvelle ère est déjà quasiment bouclé :
 - **Nuit Noire** (ME05 ; japonais *Abyss Eye*, M5 ; anglais *Pitch Black*) — sortie le 17 juillet 2026, cinquième extension de l'ère, aux tonalités plus sombres. Plus de 115 cartes, avec **Méga-Darkrai-ex** comme carte vedette aux côtés de Méga-Zeraora-ex, Méga-Chandelure-ex et Méga-Excavaroc-ex.
 - **Règne Delta** (ME06 ; japonais *Storm Emeralda*, M6 ; anglais *Delta Reign*) — sortie le 6 novembre 2026, dernière extension principale de l'ère. Carte vedette : **Méga-Rayquaza-ex**, en résonance avec l'épisode Delta historique de la franchise.
 
-Pour les joueurs comme pour les collectionneurs, cette bascule d'ère a un effet mécanique connu : les sets *Scarlet & Violet* sortent progressivement de rotation compétitive tandis que leurs pièces les plus recherchées (dont les SIR comme Umbreon ex) basculent définitivement côté collection, avec une offre qui ne se renouvellera plus.
+Pour les joueurs comme pour les collectionneurs, cette bascule d'ère a un effet mécanique connu : les sets *Scarlet & Violet* sortent progressivement de rotation compétitive tandis que leurs pièces les plus recherchées (dont les ALT comme Umbreon ex) basculent définitivement côté collection, avec une offre qui ne se renouvellera plus.
 
 ## Grading et marché : ce qui a changé en 2026
 
@@ -63,7 +64,7 @@ Autre évolution notable : la **traçabilité des ventes** s'est professionnalis
 
 ## Conseils pour aborder le marché Pokémon en 2026
 
-- **Distinguez collection et jeu.** Une carte SIR ou Illustration Rare achetée pour sa beauté n'a pas vocation à finir dans un deck compétitif : traitez-la comme une pièce de collection dès l'achat (sleeve, toploader, conservation).
+- **Distinguez collection et jeu.** Une carte ALT ou AR achetée pour sa beauté n'a pas vocation à finir dans un deck compétitif : traitez-la comme une pièce de collection dès l'achat (sleeve, toploader, conservation).
 - **Le grading se justifie au-delà d'un certain seuil.** En dessous de quelques dizaines d'euros, le coût du service dépasse souvent le gain de valeur. Au-delà de quelques centaines d'euros, il devient quasi systématique sur le marché sérieux.
 - **Suivez les transitions d'ère.** Le passage *Scarlet & Violet* → *Méga-Évolution* fige l'offre des sets sortants : c'est souvent à ce moment précis que leurs meilleures pièces amorcent leur appréciation à long terme.
 - **Méfiez-vous des à-coups spéculatifs.** Un record comme celui du Pikachu Illustrator fait les gros titres, mais il concerne un objet unique en son genre — il ne dit rien du marché des cartes ordinaires, où la prudence et la comparaison de plusieurs sources de prix restent de mise.
@@ -78,9 +79,9 @@ Parce que ce n'est pas une carte de jeu mais un objet promotionnel distribué à
 
 Le Pikachu Illustrator PSA 10, vendu 16 492 000 $ le 15 février 2026. Il détient à la fois le record Pokémon et le record toutes cartes à collectionner confondues, devant une carte Michael Jordan/Kobe Bryant vendue 12,93 millions de dollars.
 
-### Qu'est-ce qu'une carte Special Illustration Rare (SIR) ?
+### Qu'est-ce qu'une carte ALT (Special Illustration Rare) ?
 
-C'est une rareté moderne à illustration alternative pleine page, introduite dans les extensions récentes de l'ère *Scarlet & Violet*. Umbreon ex (extension *Prismatic Evolutions*) en est l'exemple le plus recherché, autour de 1 500 $ mi-2026.
+C'est une rareté moderne à illustration alternative pleine page, reconnaissable à ses deux étoiles dorées, introduite dans les extensions récentes de l'ère *Scarlet & Violet*. Umbreon ex (extension *Prismatic Evolutions*) en est l'exemple le plus recherché, autour de 1 500 $ mi-2026.
 
 ### Quelles sont les extensions de l'ère Méga-Évolution sorties en 2026 ?
 
@@ -105,7 +106,7 @@ Le marché Pokémon n'est qu'une pièce de l'écosystème TCG. Retrouvez nos aut
 
 ## Conclusion : un marché à deux vitesses, mais une seule direction
 
-2026 aura montré un marché Pokémon TCG à deux vitesses : d'un côté, des sommets spéculatifs inédits portés par des pièces uniques comme le Pikachu Illustrator ; de l'autre, un marché moderne structuré autour de mécaniques de rareté lisibles (SIR, Illustration Rare) et d'un calendrier de sorties prévisible avec l'ère Méga-Évolution. Dans les deux cas, la tendance de fond est la même : professionnalisation, traçabilité, et exigence croissante d'authentification.
+2026 aura montré un marché Pokémon TCG à deux vitesses : d'un côté, des sommets spéculatifs inédits portés par des pièces uniques comme le Pikachu Illustrator ; de l'autre, un marché moderne structuré autour de mécaniques de rareté lisibles (ALT, AR) et d'un calendrier de sorties prévisible avec l'ère Méga-Évolution. Dans les deux cas, la tendance de fond est la même : professionnalisation, traçabilité, et exigence croissante d'authentification.
 
 C'est précisément dans cet environnement que **Cards-Trading.com** construit sa proposition : une marketplace francophone avec vendeurs vérifiés et sécurisation des transactions, pensée pour ce marché devenu exigeant.
 
