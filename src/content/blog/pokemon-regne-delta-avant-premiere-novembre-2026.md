@@ -31,7 +31,7 @@ Pour les collectionneurs français, deux dates comptent avant même la sortie of
 
 ## Méga-Rayquaza-ex, de retour plus de dix ans après Origines Antiques
 
-La vedette de Règne Delta, c'est le retour de Méga-Rayquaza-ex. Selon le communiqué, Méga-Rayquaza n'était pas réapparu dans le JCC depuis l'extension **XY Origines Antiques** : plus de dix ans d'absence, selon Playin. Pour une partie des joueurs français qui ont découvert le jeu avec ce Pokémon légendaire de Hoenn, c'est un retour attendu.
+La vedette de Règne Delta, c'est le retour de Méga-Rayquaza-ex. Selon le communiqué, Méga-Rayquaza n'était pas réapparu dans le JCC depuis l'extension **XY Origines Antiques** : plus de dix ans d'absence. Pour une partie des joueurs français qui ont découvert le jeu avec ce Pokémon légendaire de Hoenn, c'est un retour attendu.
 
 Nous avions déjà détaillé sa fiche complète (280 PV, son talent qui accélère l'accrochage d'Énergie dès sa mise en jeu, et son attaque Storm Emeralda qui frappe en fonction de toutes les Énergies Feu et Électrique sur le terrain) dans notre article sur [la sortie japonaise de ce Pokémon](/blog/pokemon-storm-emeralda-m6-mega-rayquaza-ex), un mois avant son arrivée en France. Méga-Rayquaza-ex n'arrive pas seul : Règne Delta met aussi à l'honneur trois autres Méga-Évolutions ex, Méga-Golemastoc-ex, Méga-Sepiatroce-ex et Méga-Sarmuraï-ex, qui occupent chacune l'illustration de l'un des quatre visuels de booster.
 
@@ -39,15 +39,15 @@ L'ambiance générale de l'extension penche nettement du côté de Hoenn : plusi
 
 ## Les Stades Légendaires : une carte en deux parties, à assembler
 
-La vraie nouveauté de règles de Règne Delta, ce sont les **cartes Stade Légendaire**. Selon le communiqué repris par Pokébip, il s'agit en réalité de deux cartes Stade distinctes qui, traitées comme une seule carte en jeu, forment une illustration de grande taille lorsqu'on les place côte à côte. L'extension compte six de ces cartes Stade, qui se combinent pour recréer trois Stades Légendaires au total. Selon Playin, certains sont directement liés à l'univers de Hoenn et à Méga-Rayquaza.
+La vraie nouveauté de règles de Règne Delta, ce sont les **cartes Stade Légendaire**. Il s'agirait en réalité de deux cartes Stade distinctes qui, traitées comme une seule carte en jeu, forment une illustration de grande taille lorsqu'on les place côte à côte. L'extension compte six de ces cartes Stade, qui se combinent pour recréer trois Stades Légendaires au total. Certains sont directement liés à l'univers de Hoenn et à Méga-Rayquaza.
 
-Un booster qui contient une carte Stade Légendaire contient toujours les deux moitiés nécessaires pour la reconstituer. Au-delà de l'effet visuel, ces Stades apportent de nouvelles possibilités stratégiques selon Playin, sans que le communiqué n'en détaille encore les effets de jeu précis.
+Un booster qui contient une carte Stade Légendaire contient toujours les deux moitiés nécessaires pour la reconstituer. Au-delà de l'effet visuel, ces Stades apporteraient de nouvelles possibilités stratégiques, sans que le communiqué n'en détaille encore les effets de jeu précis.
 
 ## Ce que contiennent les boosters et les coffrets
 
-Selon Playin, Règne Delta proposera plus de 135 cartes différentes à collectionner, avec plus de 20 cartes Dresseur et plus de 35 cartes dotées d'illustrations spéciales. Le communiqué officiel, relayé par Pokébip, précise la répartition des cartes les plus recherchées : 4 Pokémon-ex Méga-Évolution, 6 Pokémon-ex, 6 cartes Stade (nos trois Stades Légendaires), 14 Pokémon en **AR** (« illustration rare », une étoile dorée), 17 Pokémon et cartes Dresseur en ultra rare, et 6 Pokémon et cartes Supporter en **ALT** (« illustration spéciale rare », deux étoiles dorées).
+Règne Delta proposera plus de 135 cartes différentes à collectionner, avec plus de 20 cartes Dresseur et plus de 35 cartes dotées d'illustrations spéciales. Le communiqué officiel, précise la répartition des cartes les plus recherchées : 4 Pokémon-ex Méga-Évolution, 6 Pokémon-ex, 6 cartes Stade (nos trois Stades Légendaires), 14 Pokémon en **AR** (illustration rare, une étoile dorée), 17 Pokémon et cartes Dresseur en ultra rare, et 6 Pokémon et cartes Supporter en **ALT** (illustration spéciale rare, deux étoiles dorées).
 
-La gamme de produits annoncée par Playin couvre plusieurs formats :
+La gamme de produits annoncée couvre plusieurs formats :
 
 - **Le booster**, disponible avec quatre illustrations différentes (une par Méga-Évolution vedette).
 - **Le display**, qui regroupe 36 boosters, pour les collectionneurs qui veulent ouvrir en volume.
@@ -77,7 +77,7 @@ Si vous comptez ouvrir des boosters de Règne Delta pour revendre vos doubles, o
 
 ### Quand sort l'extension Règne Delta ?
 
-Le 6 novembre 2026, dans tous les magasins participants du monde, selon le communiqué de The Pokémon Company International relayé par Pokébip. La version numérique sur JCC Pokémon Live arrive un jour plus tôt, le 5 novembre.
+Le 6 novembre 2026, dans tous les magasins participants du monde, selon le communiqué de The Pokémon Company International. La version numérique sur JCC Pokémon Live arrive un jour plus tôt, le 5 novembre.
 
 ### Qu'est-ce qu'une carte Stade Légendaire ?
 
