@@ -13,7 +13,7 @@ draft: true
 **Au sommaire**
 
 - [Règne Delta, la sixième extension Méga-Évolution, débarque le 6 novembre](#règne-delta-la-sixième-extension-méga-évolution-débarque-le-6-novembre)
-- [Méga-Rayquaza-ex, de retour onze ans après Origines Antiques](#méga-rayquaza-ex-de-retour-onze-ans-après-origines-antiques)
+- [Méga-Rayquaza-ex, de retour plus de dix ans après Origines Antiques](#méga-rayquaza-ex-de-retour-plus-de-dix-ans-après-origines-antiques)
 - [Les Stades Légendaires : une carte en deux parties, à assembler](#les-stades-légendaires--une-carte-en-deux-parties-à-assembler)
 - [Ce que contiennent les boosters et les coffrets](#ce-que-contiennent-les-boosters-et-les-coffrets)
 - [Les avant-premières du 24 octobre : comment ça marche](#les-avant-premières-du-24-octobre--comment-ça-marche)
@@ -25,13 +25,13 @@ draft: true
 
 ## Règne Delta, la sixième extension Méga-Évolution, débarque le 6 novembre
 
-The Pokémon Company International l'a annoncé par communiqué de presse : **Méga-Évolution – Règne Delta (ME06)** sera disponible le **6 novembre 2026** dans tous les magasins participants du monde, selon [Pokébip](https://www.pokebip.com/news/7489/jcc-pokemon-nouvelle-extension-mega-evolution-regne-delta). C'est la sixième extension de la série Méga-Évolution lancée en 2025, et elle vient conclure, selon [Playin](https://www.play-in.com/fr/articles/3-pokemon/tout-savoir-sur-l-extension-pokemon-me06-mega-evolution-regne-delta), une année entière consacrée au retour des Méga-Évolutions dans le Jeu de Cartes à Collectionner (JCC) Pokémon, après l'extension anniversaire des 30 ans.
+The Pokémon Company International l'a annoncé par communiqué de presse : **Règne Delta (ME06)**, nouvelle extension de la série Méga-Évolution, sera disponible le **6 novembre 2026** dans tous les magasins participants du monde, selon [Pokébip](https://www.pokebip.com/news/7489/jcc-pokemon-nouvelle-extension-mega-evolution-regne-delta). C'est la sixième extension de cette série lancée en 2025, et elle vient conclure, selon [Playin](https://www.play-in.com/fr/articles/3-pokemon/tout-savoir-sur-l-extension-pokemon-me06-mega-evolution-regne-delta), une année entière consacrée au retour des Méga-Évolutions dans le Jeu de Cartes à Collectionner (JCC) Pokémon, après l'extension anniversaire des 30 ans.
 
-Pour les collectionneurs français, deux dates comptent avant même la sortie officielle : les tournois d'avant-première, qui commencent le **24 octobre 2026**, soit dans quelques jours, et l'arrivée de l'extension en version numérique sur Pokémon TCG Live le **5 novembre**, la veille de la sortie en boutique.
+Pour les collectionneurs français, deux dates comptent avant même la sortie officielle : les avant-premières, qui commencent le **24 octobre 2026**, soit dans quelques jours, et l'arrivée de l'extension en version numérique sur JCC Pokémon Live le **5 novembre**, la veille de la sortie en boutique.
 
-## Méga-Rayquaza-ex, de retour onze ans après Origines Antiques
+## Méga-Rayquaza-ex, de retour plus de dix ans après Origines Antiques
 
-La vedette de Règne Delta, c'est le retour de Méga-Rayquaza-ex. Le Pokémon Cieux n'était pas réapparu dans le JCC depuis l'extension **XY – Origines Antiques**, en 2015 : plus de dix ans d'absence, selon Playin. Pour une partie des joueurs français qui ont découvert le jeu avec ce Pokémon légendaire de Hoenn, c'est un retour attendu.
+La vedette de Règne Delta, c'est le retour de Méga-Rayquaza-ex. Selon le communiqué, Méga-Rayquaza n'était pas réapparu dans le JCC depuis l'extension **XY Origines Antiques** : plus de dix ans d'absence, selon Playin. Pour une partie des joueurs français qui ont découvert le jeu avec ce Pokémon légendaire de Hoenn, c'est un retour attendu.
 
 Nous avions déjà détaillé sa fiche complète (280 PV, son talent qui accélère l'accrochage d'Énergie dès sa mise en jeu, et son attaque Storm Emeralda qui frappe en fonction de toutes les Énergies Feu et Électrique sur le terrain) dans notre article sur [la sortie japonaise de ce Pokémon](/blog/pokemon-storm-emeralda-m6-mega-rayquaza-ex), un mois avant son arrivée en France. Méga-Rayquaza-ex n'arrive pas seul : Règne Delta met aussi à l'honneur trois autres Méga-Évolutions ex, Méga-Golemastoc-ex, Méga-Sepiatroce-ex et Méga-Sarmuraï-ex, qui occupent chacune l'illustration de l'un des quatre visuels de booster.
 
@@ -39,13 +39,13 @@ L'ambiance générale de l'extension penche nettement du côté de Hoenn : plusi
 
 ## Les Stades Légendaires : une carte en deux parties, à assembler
 
-La vraie nouveauté de règles de Règne Delta, ce sont les **cartes Stade Légendaire**. Selon le communiqué repris par Pokébip, il s'agit en réalité de deux cartes Stade distinctes qui, traitées comme une seule carte en jeu, forment une illustration panoramique de grande taille lorsqu'on les place côte à côte. L'extension en compte six, qui se combinent pour recréer trois Stades Légendaires au total, dont certains directement liés à l'univers de Hoenn et à Méga-Rayquaza.
+La vraie nouveauté de règles de Règne Delta, ce sont les **cartes Stade Légendaire**. Selon le communiqué repris par Pokébip, il s'agit en réalité de deux cartes Stade distinctes qui, traitées comme une seule carte en jeu, forment une illustration de grande taille lorsqu'on les place côte à côte. L'extension compte six de ces cartes Stade, qui se combinent pour recréer trois Stades Légendaires au total. Selon Playin, certains sont directement liés à l'univers de Hoenn et à Méga-Rayquaza.
 
-Un booster qui contient une carte Stade Légendaire contient toujours les deux moitiés nécessaires pour la reconstituer. Au-delà de l'effet visuel, très recherché par les collectionneurs qui aiment aligner les deux cartes sur une étagère, ces Stades apportent de nouvelles possibilités stratégiques, sans que le communiqué n'en détaille encore les effets de jeu précis.
+Un booster qui contient une carte Stade Légendaire contient toujours les deux moitiés nécessaires pour la reconstituer. Au-delà de l'effet visuel, ces Stades apportent de nouvelles possibilités stratégiques selon Playin, sans que le communiqué n'en détaille encore les effets de jeu précis.
 
 ## Ce que contiennent les boosters et les coffrets
 
-Selon Playin, Règne Delta proposera plus de 135 cartes différentes à collectionner, avec plus de 20 cartes Dresseur et plus de 35 cartes à illustration spéciale. Le communiqué officiel, relayé par Pokébip, précise la répartition des cartes les plus recherchées : 4 Pokémon-ex Méga-Évolution, 6 Pokémon-ex, 6 cartes Stade (nos trois Stades Légendaires), 14 Pokémon en illustration rare, 17 Pokémon et cartes Dresseur en ultra rare, et 6 Pokémon et cartes Supporter en illustration spéciale rare.
+Selon Playin, Règne Delta proposera plus de 135 cartes différentes à collectionner, avec plus de 20 cartes Dresseur et plus de 35 cartes dotées d'illustrations spéciales. Le communiqué officiel, relayé par Pokébip, précise la répartition des cartes les plus recherchées : 4 Pokémon-ex Méga-Évolution, 6 Pokémon-ex, 6 cartes Stade (nos trois Stades Légendaires), 14 Pokémon en **AR** (« illustration rare », une étoile dorée), 17 Pokémon et cartes Dresseur en ultra rare, et 6 Pokémon et cartes Supporter en **ALT** (« illustration spéciale rare », deux étoiles dorées).
 
 La gamme de produits annoncée par Playin couvre plusieurs formats :
 
@@ -59,13 +59,13 @@ Chaque coffret ou pack premium vient donc avec sa propre carte promotionnelle ex
 
 ## Les avant-premières du 24 octobre : comment ça marche
 
-Avant la sortie officielle, les joueurs et joueuses peuvent découvrir Règne Delta lors des tournois d'avant-première organisés dans le cadre du programme Play! Pokémon, à partir du **24 octobre 2026** dans les magasins indépendants participants, selon le communiqué relayé par Pokébip. C'est le format habituel de ces événements : chaque participant reçoit un lot de boosters scellés de la nouvelle extension, construit un deck sur place à partir de ce qu'il ouvre, puis affronte les autres joueurs présents, souvent avec des règles assouplies par rapport au format Standard compétitif.
+Avant la sortie officielle, les joueurs et joueuses peuvent découvrir Règne Delta lors des évènements d'Avant-première du programme Play! Pokémon. Selon [Pokémon France](https://www.pokemon.com/fr/actualites/participez-a-un-evenement-davant-premiere-pour-lextension-mega-evolution-regne-delta-du-jcc-pokemon), les Play! Pokémon Stores participants vendent à partir du **24 octobre 2026** le **Boîtier Stratégies et Combats** de l'extension : 4 boosters Règne Delta et un deck de 40 cartes prêt à l'emploi, avec l'une des quatre cartes promo brillantes exclusives (Maskadra, Maganon, Amovénus ou Ékaïser). On y joue avec ce deck de 40 cartes et 4 cartes Récompense, au lieu des 60 cartes et 6 cartes Récompense habituelles : des parties rapides, pensées autant pour les novices que pour les joueurs confirmés. Le Localisateur d'évènements de Pokémon permet de trouver l'avant-première la plus proche.
 
-C'est l'occasion la plus rapide de mettre la main sur des cartes de Règne Delta, avant même l'ouverture générale des ventes en boutique le 6 novembre, et de voir Méga-Rayquaza-ex sur une table de jeu réelle plutôt que sur une annonce.
+C'est l'occasion la plus rapide de mettre la main sur des cartes de Règne Delta, avant même l'ouverture générale des ventes en boutique le 6 novembre. Et si vous ne pouvez pas y aller, Pokémon précise que ces Boîtiers Stratégies et Combats seront aussi en vente à la sortie officielle.
 
 ## Et dès le 5 novembre, en version numérique
 
-Un jour avant la sortie physique, Règne Delta arrive sur **Pokémon TCG Live**, l'application du JCC Pokémon disponible sur iOS, Android, macOS et Windows. Les Dresseurs et Dresseuses pourront y collectionner les nouveaux Pokémon-ex Méga-Évolution et combattre à leurs côtés dès le 5 novembre, avec des bonus en jeu pour qui se connecte, d'après le communiqué officiel. C'est un bon moyen de se familiariser avec les nouvelles cartes et les Stades Légendaires avant de constituer sa propre collection physique.
+Un jour avant la sortie physique, Règne Delta arrive sur **JCC Pokémon Live**, l'application du jeu disponible sur iOS, Android, macOS et Windows. Les Dresseurs et Dresseuses pourront y collectionner les nouveaux Pokémon-ex Méga-Évolution et combattre à leurs côtés dès le 5 novembre, avec des bonus en jeu pour qui se connecte, d'après le communiqué officiel. C'est un bon moyen de se familiariser avec les nouvelles cartes et les Stades Légendaires avant de constituer sa propre collection physique.
 
 ## Ce que ça change pour les collectionneurs et les vendeurs
 
@@ -77,7 +77,7 @@ Si vous comptez ouvrir des boosters de Règne Delta pour revendre vos doubles, o
 
 ### Quand sort l'extension Règne Delta ?
 
-Le 6 novembre 2026, dans tous les magasins participants du monde, selon le communiqué de The Pokémon Company International relayé par Pokébip. La version numérique sur Pokémon TCG Live arrive un jour plus tôt, le 5 novembre.
+Le 6 novembre 2026, dans tous les magasins participants du monde, selon le communiqué de The Pokémon Company International relayé par Pokébip. La version numérique sur JCC Pokémon Live arrive un jour plus tôt, le 5 novembre.
 
 ### Qu'est-ce qu'une carte Stade Légendaire ?
 
@@ -85,7 +85,7 @@ C'est une carte Stade en deux parties : traitées comme une seule carte en jeu, 
 
 ### Comment participer à une avant-première Règne Delta ?
 
-En s'inscrivant à l'un des tournois organisés dans le cadre du programme Play! Pokémon, à partir du 24 octobre 2026, dans les magasins indépendants participants. Chaque participant reçoit des boosters scellés pour construire un deck sur place.
+En se rendant à un évènement d'Avant-première dans un Play! Pokémon Store participant, à partir du 24 octobre 2026 : le Localisateur d'évènements de Pokémon permet de trouver le plus proche. On y joue avec le Boîtier Stratégies et Combats de l'extension, qui contient 4 boosters et un deck de 40 cartes prêt à l'emploi.
 
 ### Quelles sont les quatre Méga-Évolutions ex de l'extension ?
 
@@ -97,7 +97,7 @@ Méga-Rayquaza-ex, qui fait son retour après plus de dix ans d'absence, accompa
 
 ### Peut-on jouer à Règne Delta avant sa sortie en boutique ?
 
-Oui, de deux façons : lors des tournois d'avant-première en magasin dès le 24 octobre, ou sur l'application Pokémon TCG Live dès le 5 novembre, la veille de la sortie physique.
+Oui, de deux façons : lors des évènements d'Avant-première en magasin dès le 24 octobre, ou sur l'application JCC Pokémon Live dès le 5 novembre, la veille de la sortie physique.
 
 ## Découvrez les autres articles du moment
 
