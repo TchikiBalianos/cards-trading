@@ -55,6 +55,33 @@
       }
     },
     {
+      "id": "2026-10-22-actu",
+      "jour": "2026-10-22",
+      "pilier": "actu",
+      "licence": "mixte",
+      "twitter": {
+        "heure": "09:10",
+        "texte": "🃏 Le Gala TCG ouvre aujourd'hui à la Paris Games Week.\nHall 1, Paris Expo Porte de Versailles, jusqu'à dimanche.\n\nCe jeudi sur la scène Asmodee : affrontements One Piece Card Game et openings multi-licences, de 10h à 12h et de 14h à 16h.\n\nTu y vas ?\n\n#GalaTCG #PGW2026"
+      },
+      "instagram": {
+        "heure": "11:30",
+        "texte": "🃏 Le Gala TCG ouvre aujourd'hui à la Paris Games Week\n\nPour la deuxième année, l'espace des cartes à collectionner s'installe au Hall 1 de Paris Expo Porte de Versailles, du jeudi 22 au dimanche 25 octobre, de 9h30 à 19h.\nCollectionneurs, joueurs, artistes, boutiques, sociétés de gradation et éditeurs y sont attendus, selon la Paris Games Week.\n\nCe jeudi sur la scène Asmodee, selon le programme publié par @legalatcg :\n• 10h-12h : Mel et Tatiana, affrontement One Piece Card Game et opening multi-licences\n• 14h-16h : Henry Tran et Samy, même formule\n• à partir de 17h : Loups-garous de Thiercelieux\n\nLes billets se prennent sur le site de la Paris Games Week.\n\nTu passes au salon cette semaine ?\nDis-nous quel jour en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#galatcg #parisgamesweek #pgw2026 #tcg #onepiececardgame"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Gala TCG · Jour 1",
+        "titre": "Le Gala TCG ouvre aujourd'hui à la Paris Games Week",
+        "sous_titre": "Hall 1, Paris Expo Porte de Versailles. Du 22 au 25 octobre, de 9h30 à 19h."
+      },
+      "sources": [
+        "https://www.parisgamesweek.com/fr",
+        "https://www.parisgamesweek.com/fr/news/15-bonnes-raisons-de-visiter-la-pgw",
+        "https://www.galatcg.com/",
+        "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/",
+        "https://www.instagram.com/asmodee_fr/p/Detn6xGiUun/"
+      ]
+    },
+    {
       "id": "2026-10-22-communaute",
       "jour": "2026-10-22",
       "pilier": "communaute",
@@ -75,6 +102,104 @@
         "twitter": "6ad386b2938409f1d08d146c",
         "instagram": "6ad386b3dd83363c4dd72754"
       }
+    },
+    {
+      "id": "2026-10-23-communaute",
+      "jour": "2026-10-23",
+      "pilier": "communaute",
+      "licence": "one-piece",
+      "twitter": {
+        "heure": "09:10",
+        "texte": "🏴‍☠️ Jour 2 à la Paris Games Week.\nBandai tient le stand F69 : parties d'essai One Piece Card Game avec deck de démo offert, carte promo dans la limite des stocks.\n\nSur la scène Asmodee du Gala TCG, affrontement One Piece de 10h à 12h.\n\n#OnePieceCardGame #PGW2026"
+      },
+      "instagram": {
+        "heure": "11:30",
+        "texte": "🏴‍☠️ Jour 2 à la Paris Games Week : cap sur One Piece\n\nBandai tient le stand F69 du salon jusqu'à dimanche, selon le site officiel du One Piece Card Game :\n• des parties d'essai, avec un deck de démonstration offert\n• une carte promo après un court sondage, dans la limite des stocks\n• un Promo Pack Straw Hat Crew à récupérer via l'appli BANDAI TCG+\n• un sticker\n\nEt sur la scène Asmodee de l'espace Gala TCG, selon le programme publié par @legalatcg :\n• 10h-12h : Hctuan et Zafeel, affrontement One Piece Card Game\n• 14h-16h : Mastu, Hctuan et Zafeel, opening Kayou\n• à partir de 17h : Loups-garous de Thiercelieux\n\nToutes ces activités demandent un billet de la Paris Games Week.\n\nTu joues quel leader en ce moment ? 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#onepiececardgame #onepiecetcg #galatcg #pgw2026 #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "PGW · Jour 2",
+        "titre": "One Piece Card Game : stand F69 et affrontements sur scène",
+        "sous_titre": "Parties d'essai, deck de démo offert, carte promo dans la limite des stocks."
+      },
+      "sources": [
+        "https://en.onepiece-cardgame.com/events/02_514.html",
+        "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
+      ]
+    },
+    {
+      "id": "2026-10-23-actu",
+      "jour": "2026-10-23",
+      "pilier": "actu",
+      "licence": "pokemon",
+      "twitter": {
+        "heure": "10:50",
+        "texte": "📅 Règne Delta en avant-première dès demain, samedi 24 octobre.\nDans les Play!\nPokémon Stores participants : le Boîtier Stratégies et Combats, avec 4 boosters et un deck de 40 cartes prêt à jouer.\n\nSortie officielle le 6 novembre, selon Pokémon France.\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "heure": "15:00",
+        "texte": "📅 Règne Delta : les avant-premières commencent ce samedi 24 octobre\n\nLa nouvelle extension de la série Méga-Évolution sort le 6 novembre, mais on peut la découvrir avant, selon Pokémon France.\nDès le 24 octobre, les Play!\nPokémon Stores participants vendent le Boîtier Stratégies et Combats Règne Delta :\n• 4 boosters de l'extension\n• un deck de 40 cartes prêt à jouer\n• l'une des 4 cartes promo brillantes exclusives : Maskadra, Maganon, Amovénus ou Ékaïser\n\nOn y joue avec 40 cartes et 4 cartes Récompense, au lieu de 60 et 6 : des parties rapides, idéales pour découvrir.\nLe Localisateur d'évènements de Pokémon donne la boutique la plus proche.\n\nLa vedette de l'extension ?\nMéga-Rayquaza-ex, de retour pour la première fois depuis l'extension Origines Antiques, selon le communiqué de The Pokémon Company.\n\nTu vises quelle promo ? 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #regnedelta #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Avant-première",
+        "titre": "Règne Delta en avant-première dès le 24 octobre",
+        "sous_titre": "Boîtier Stratégies et Combats : 4 boosters et un deck de 40 cartes."
+      },
+      "sources": [
+        "https://www.pokemon.com/fr/actualites/participez-a-un-evenement-davant-premiere-pour-lextension-mega-evolution-regne-delta-du-jcc-pokemon",
+        "https://www.pokebip.com/news/7489/jcc-pokemon-nouvelle-extension-mega-evolution-regne-delta"
+      ]
+    },
+    {
+      "id": "2026-10-24-communaute",
+      "jour": "2026-10-24",
+      "pilier": "communaute",
+      "licence": "mixte",
+      "twitter": {
+        "heure": "09:10",
+        "texte": "🎨 Jour 3 au Gala TCG.\nMasakazu Fukuda, Kouki Saitou et Sunohara y sont annoncés avec des œuvres exclusives.\n\nBon à savoir, selon les organisateurs : Fukuda et Saitou ne signent aucun objet sous licence Pokémon, Sunohara aucun sous licence One Piece.\n\n#GalaTCG #PGW2026"
+      },
+      "instagram": {
+        "heure": "11:30",
+        "texte": "🎨 Jour 3 au Gala TCG : place aux artistes\n\nTrois illustrateurs sont annoncés à l'espace Gala TCG de la Paris Games Week, selon @legalatcg :\n• Masakazu Fukuda, avec des œuvres originales créées pour l'événement\n• Kouki Saitou, avec des œuvres exclusives et une rencontre\n• Sunohara, pour sa première venue au Gala TCG\n\nBon à savoir avant de faire la queue : selon les organisateurs, Masakazu Fukuda et Kouki Saitou ne signeront aucun objet sous licence Pokémon, et Sunohara aucun objet sous licence One Piece.\n\nSur la scène Asmodee ce samedi :\n• 10h-12h : Mastu et Hctuan, battle opening multi-licences\n• 14h-16h : Kaatsup et Nikof, affrontement One Piece Card Game et opening multi-licences\n• à partir de 17h : Loups-garous de Thiercelieux\n\nQuel illustrateur rêverais-tu de rencontrer ? 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#galatcg #parisgamesweek #pgw2026 #tcg #cartesacollectionner"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Gala TCG · Jour 3",
+        "titre": "Place aux artistes au Gala TCG",
+        "sous_titre": "Masakazu Fukuda, Kouki Saitou et Sunohara annoncés à la Paris Games Week."
+      },
+      "sources": [
+        "https://www.instagram.com/legalatcg/p/DegvtdjuUKV/",
+        "https://www.instagram.com/legalatcg/p/DehYPe0uMWL/",
+        "https://www.instagram.com/legalatcg/p/DejKjr_Osl2/",
+        "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
+      ]
+    },
+    {
+      "id": "2026-10-25-communaute",
+      "jour": "2026-10-25",
+      "pilier": "communaute",
+      "licence": "mixte",
+      "twitter": {
+        "heure": "09:10",
+        "texte": "🏁 Dernier jour du Gala TCG à la Paris Games Week.\nSur la scène Asmodee : FAQ et opening avec Thomas Deseur à 13h, quiz TCG avec Doigby à 16h, puis Loups-garous à 17h30.\n\nTu as ramené quoi du salon ? 👇\n\n#GalaTCG #PGW2026"
+      },
+      "instagram": {
+        "heure": "11:30",
+        "texte": "🏁 Dernier jour du Gala TCG à la Paris Games Week\n\nCe dimanche 25 octobre, de 9h30 à 19h, au Hall 1 de Paris Expo Porte de Versailles.\nLe programme de la scène Asmodee, selon @legalatcg :\n• 13h-15h : Thomas Deseur, FAQ et opening multi-licences\n• 16h-17h : Doigby, quiz TCG et CCG\n• 17h30-18h30 : Doigby, partie de Loups-garous de Thiercelieux\n\nTu as fait un tour au salon cette semaine ?\nMontre-nous ta plus belle trouvaille en commentaire 📸👇\nUne carte achetée, échangée ou ouverte sur place : on veut tout voir.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#galatcg #parisgamesweek #pgw2026 #tcg #cartesacollectionner"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Gala TCG · Jour 4",
+        "titre": "Dernier jour du Gala TCG",
+        "sous_titre": "Dimanche 25 octobre, de 9h30 à 19h, Hall 1 de Paris Expo Porte de Versailles."
+      },
+      "sources": [
+        "https://www.parisgamesweek.com/fr",
+        "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
+      ]
     },
     {
       "id": "2026-10-25-coulisses",

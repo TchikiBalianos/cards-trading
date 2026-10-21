@@ -1,6 +1,6 @@
 # Reste à faire : Cards-Trading
 
-État au **14 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
+État au **21 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
 fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle est
 traitée. Les chantiers clos (incidents du 19 au 22 septembre, fiabilité des
 cotes, SEO, vérifications) sont archivés dans `docs/journal-des-corrections.md`.
@@ -14,7 +14,8 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Dès que possible | Fusionner la pull request n°9 : correctif de l'article McDonald's. Des dates françaises circulent depuis le 3 octobre (4 décembre 2026 au 21 janvier 2027), issues d'une fuite et non confirmées ; les deux phrases au présent sont datées du 14 octobre. La fusionner telle quelle, sans toucher au `draft`. | Julian |
+| Dès que possible | Fusionner la pull request n°12 : brouillon Règne Delta (ME06), relu et corrigé le 21 octobre (format officiel des avant-premières, lexique, tiret). La publication part le matin suivant la fusion. | Julian |
+| Dès que possible | Fusionner la pull request n°11 : lexique AR, ALT et GOLD dans les trois articles Pokémon qui employaient les noms officiels. | Julian |
 | Ven 16 oct., en magasin | Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) présentes ? Annoncées pour ce jour par Play-in, Universtcg et un calendrier publié sur X, absentes de la liste officielle d'octobre. L'article les donne au 16 octobre « annoncé » : confirmer ou corriger après le constat (voir « Veille du calendrier »). | Julian |
 | Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
