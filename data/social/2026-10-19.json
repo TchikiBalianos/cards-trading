@@ -103,7 +103,7 @@
         "sous_titre": "Vingt minutes plus tard…"
       },
       "buffer": {
-        "twitter": "6ad386b2938409f1d08d146c",
+        "twitter": "6ada9ece1dc335d347e44e63",
         "instagram": "6ad386b3dd83363c4dd72754"
       }
     },
@@ -131,8 +131,35 @@
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
       ],
       "buffer": {
-        "twitter": "6ad9351f609a35b9f95fa731",
+        "twitter": "6ada9ebc1dc335d347e44ae7",
         "instagram": "6ad93520a9337c3f97c17ab1"
+      }
+    },
+    {
+      "id": "2026-10-23-calendrier",
+      "jour": "2026-10-23",
+      "pilier": "calendrier",
+      "licence": "pokemon",
+      "twitter": {
+        "heure": "09:45",
+        "texte": "📦 Sortie du jour : la Collection classeur 30e Anniversaire arrive en boutique.\nAu programme, selon Pokémon France : un classeur à thème à 9 pochettes et 5 boosters 30e Anniversaire.\n\nTu le prends pour ranger tes ALT ? 👇\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "heure": "13:00",
+        "texte": "📦 Sortie du jour : la Collection classeur 30e Anniversaire\n\nAnnoncée un temps pour le 2 octobre, elle arrive en boutique ce vendredi 23 octobre.\nCe qu'elle contient, selon Pokémon France :\n• un classeur à thème à 9 pochettes, aux couleurs des 30 ans de Pokémon\n• 5 boosters de l'extension 30e Anniversaire\n\nDe quoi ranger ses plus belles cartes… et en ouvrir de nouvelles.\n\nTu comptes la prendre ?\nEt tu y rangerais quoi en premier ? 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #pokemon30ans #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Sortie du jour",
+        "titre": "La Collection classeur 30e Anniversaire arrive en boutique",
+        "sous_titre": "Un classeur à 9 pochettes et 5 boosters, selon Pokémon France."
+      },
+      "sources": [
+        "https://www.pokemon.com/fr/jcc-pokemon/galerie-produits/collection-classeur-30-anniversaire"
+      ],
+      "buffer": {
+        "twitter": "6ada9eb69ef33e7811aa538e",
+        "instagram": "6ada9f001dc335d347e45a38"
       }
     },
     {
@@ -159,7 +186,7 @@
         "https://www.pokebip.com/news/7489/jcc-pokemon-nouvelle-extension-mega-evolution-regne-delta"
       ],
       "buffer": {
-        "twitter": "6ad93521609a35b9f95fa780",
+        "twitter": "6ada9ebfd447d56a6468e69d",
         "instagram": "6ad93522a9337c3f97c17acf"
       }
     },
@@ -189,7 +216,7 @@
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
       ],
       "buffer": {
-        "twitter": "6ad93522a9337c3f97c17aed",
+        "twitter": "6ada9ecad447d56a6468e89e",
         "instagram": "6ad935220d51f8b17ef1d573"
       }
     },
@@ -217,7 +244,7 @@
         "https://www.instagram.com/legalatcg/p/Detpsi6DrwM/"
       ],
       "buffer": {
-        "twitter": "6ad935236dae13f2cbe3ae67",
+        "twitter": "6ada9ed1535235087b7039c1",
         "instagram": "6ad93524bcb71c33f31c4c6a"
       }
     },
@@ -227,10 +254,10 @@
       "pilier": "coulisses",
       "licence": "mixte",
       "twitter": {
-        "texte": "Où vit notre équipe d'agents IA ?\nSur un petit serveur loué chez OVH : 6 cœurs, 12 Go de mémoire, sous Debian.\n\nVal l'a commandé et préparé en mai.\nDessus : Claude Code, la méthode BMAD et le bot qui relie tout ça à notre Discord.\n\nCarte 03/20 #buildinpublic #IA"
+        "texte": "Où vit notre équipe d'agents IA ?\nSur un petit serveur loué chez OVH : 6 cœurs, 12 Go de mémoire, sous Debian.\n\nOn l'a commandé et préparé en mai.\nDessus : Claude Code, la méthode BMAD et le bot qui relie tout ça à notre Discord.\n\nCarte 03/20 #buildinpublic #IA"
       },
       "instagram": {
-        "texte": "L'atelier qui ne dort pas 🌙\n\nPourquoi on te parle d'un serveur ?\nParce que c'est là que se construit l'appli sur laquelle tu achèteras et vendras tes cartes.\n\nC'est un petit serveur loué, que Val a commandé et préparé en mai.\nIl fait tourner notre équipe d'agents IA jour et nuit, et on le pilote depuis un simple fil Discord.\n\nUn serveur, deux fondateurs, et beaucoup de méthode.\n\nTu veux qu'on te montre une journée type dans l'atelier ?\nDis-le en commentaire.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+        "texte": "L'atelier qui ne dort pas 🌙\n\nPourquoi on te parle d'un serveur ?\nParce que c'est là que se construit l'appli sur laquelle tu achèteras et vendras tes cartes.\n\nC'est un petit serveur loué, qu'on a préparé et configuré en mai.\nIl fait tourner toute notre équipe d'agents IA jour et nuit, et on le pilote depuis un simple fil de discussion sur Discord.\n\nUn serveur, deux fondateurs, et beaucoup de méthode.\n\nTu veux qu'on te montre une journée type dans l'atelier ?\nDis-le en commentaire.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
       },
       "visuel": {
         "type": "bip",
@@ -273,7 +300,7 @@
         }
       },
       "buffer": {
-        "twitter": "6ad386b3dd83363c4dd72781",
+        "twitter": "6ada9ed3cc1b7cdc08bf70d9",
         "instagram": "6ad386b4ae173d6e00be224b"
       }
     }
