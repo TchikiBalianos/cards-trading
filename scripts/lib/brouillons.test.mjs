@@ -153,6 +153,14 @@ test('la signature « 100 % TCG » n\'est pas un pourcentage à sourcer', () => 
   assert.ok(erreursDe(d).some((e) => /sans « sources »/.test(e)));
 });
 
+test('une photo Unsplash peut se passer du crédit dans le texte, une photo de la communauté non', () => {
+  const d = bon();
+  d.posts[0].visuel = { type: 'photo', image: 'https://images.unsplash.com/photo-1708032563840-e77e426411dd', credit: 'Branden Skeli / Unsplash' };
+  assert.deepEqual(erreursDe(d), []);
+  d.posts[0].visuel.image = 'https://exemple.com/photo.jpg';
+  assert.ok(erreursDe(d).some((e) => /crédit doit aussi figurer/.test(e)));
+});
+
 test('une phrase par ligne, sans casser les listes, les abréviations ni les citations', () => {
   assert.equal(unePhraseParLigne('Flammes Fantasmagoriques. Même Pokémon, deux versions :'),
     'Flammes Fantasmagoriques.\nMême Pokémon, deux versions :');

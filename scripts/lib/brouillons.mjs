@@ -22,7 +22,7 @@
 */
 
 import { PILIERS, lundiDe, ajouterJours, jourParis } from './semaine-sociale.mjs';
-import { verifierSpec } from './visuel-spec.mjs';
+import { verifierSpec, creditObligatoire } from './visuel-spec.mjs';
 import { ecartsDeLexique } from './lexique.mjs';
 
 export const LICENCES = ['pokemon', 'one-piece', 'mixte'];
@@ -149,7 +149,9 @@ export function valider(donnees, { maintenant } = {}) {
       err(post, 'visuel manquant (Instagram exige une image)');
     } else {
       try { verifierSpec(post.visuel); } catch (e) { err(post, e.message); }
-      if (post.visuel.type === 'photo' && post.visuel.credit) {
+      /* Le crédit dans le texte n'est exigé que si la licence l'exige : Julian l'a
+         retiré d'une légende pour une photo Unsplash le 23/10/2026, à bon droit. */
+      if (post.visuel.type === 'photo' && post.visuel.credit && creditObligatoire(post.visuel)) {
         const cr = String(post.visuel.credit).replace(/^@/, '').toLowerCase();
         if (!tout.toLowerCase().includes(cr)) err(post, `photo de ${post.visuel.credit} : le crédit doit aussi figurer dans le texte du post`);
       }
