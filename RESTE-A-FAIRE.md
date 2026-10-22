@@ -17,7 +17,6 @@ dépôt, qui est public.
 | Aujourd'hui | Valider dans Buffer les 10 brouillons du Gala TCG et de Règne Delta (22 au 25 octobre) avec « Schedule Post », jamais « Add to queue » (le post partirait au prochain créneau libre). | Julian |
 | D'ici samedi | Relire et valider les brouillons de la semaine du 26 octobre, préparés le 22 (6 posts, dont 2 sur les nouveaux piliers « À noter » et « Le bon geste »). La routine du samedi n'écrira rien pour cette semaine, le fichier existant déjà. | Julian |
 | Dès que possible | Résultat du constat du 16 octobre : Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) en rayon ou non ? L'article les donne au 16 octobre « annoncé » : confirmer ou corriger (voir « Veille du calendrier »). | Julian |
-| Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
 | Quand tu veux | Tâche `rappel-marche-japonais-cote` : figée depuis le 21 au soir sur une demande de permission (même piège pour le contrôle du 15 et la vérification des posts du 20, dont les passages n'ont rien fait). La relancer avec « Run now », ou me demander l'essai à blanc en session. | Julian |
 | Début novembre | Article McDonald's : annonce officielle de McDonald's France ou de Pokémon ? L'opération américaine est annoncée pour le 5 novembre ; une confirmation française ferait réécrire la section « Et la France ? ». | Claude, sur demande |
@@ -121,7 +120,7 @@ en France, et l'article `pokemon-30e-anniversaire-sortie-mondiale-2026` le dit :
   4 boosters et 1 promo), Universtcg (11 octobre) et un calendrier publié sur X ; absente des
   listes officielles de septembre et d'octobre. La fiche « Pokébox » de La Maison du TCG, en
   stock, annonce une carte jumbo : c'est le contenu d'un coffret, pas d'une boîte métal.
-- **Coffret Classeur** : absent des rayons le 2 octobre. Pokémon France le place en octobre
+- **Coffret Classeur** : sortie le 23 octobre confirmée par Julian le 22 (un contact chez Smyths Toys a déjà reçu les cartons). Absent des rayons le 2 octobre. Pokémon France le place en octobre
   (liste du 1er octobre, sans jour) ; Play-in et Universtcg l'annoncent pour le vendredi 23
   octobre. La Maison du TCG affichait encore « sortie le 2 octobre » le 13.
 - **Decks Combat** : 30 octobre selon Play-in, mois confirmé par la liste officielle d'octobre ;
@@ -156,14 +155,9 @@ Depuis le créneau du dimanche (27 septembre), la file ne prend plus de retard. 
 septembre, Buffer a relayé les 18 articles publiés et Discord n'attend qu'un article (OP-18).
 Le relais ne sort qu'un article par passage, les dimanches, mardis et vendredis.
 
-### 6. Carte BiP : l'équipe d'agents IA (priorité de Julian, 14 octobre)
+### 6. Carte BiP : l'équipe d'agents IA, réglée le 22 octobre
 
-La carte 01/20 « Set de base » ne montre que quatre agents IA (Mary, Winston, Sally, Amelia) ;
-Julian en veut **six à huit**, tirés de la liste BMAD réellement installée, jamais inventés. Le
-gabarit du bordereau s'arrête à six lignes de douze caractères par clé : il faut un autre
-gabarit, ou une carte dédiée à l'équipe d'agents. Rôles humains à reprendre tels quels : Julian,
-gestion, marketing et lead tech ; Val, produit et UX/UI. La banque d'épisodes est privée, hors de
-ce dépôt.
+Carte holo « L'équipe IA » placée en **05/20** dans la banque privée, à la demande de Julian : les six agents BMAD réellement installés (Mary, John, Winston, Sally, Amelia, Paige). Les anciennes 05 à 15 passent en 06 à 16 ; l'ancienne 16 « Le top des hausses » sort en réserve, son fait n'étant plus vrai (un top chaque semaine depuis le 13 octobre). Publication prévue le dimanche 8 novembre par la routine du samedi. Chantier à retirer une fois la carte publiée.
 
 ### 7. Cote One Piece en euros (priorité de Julian, 14 octobre)
 
