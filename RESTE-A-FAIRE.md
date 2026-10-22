@@ -1,6 +1,6 @@
 # Reste à faire : Cards-Trading
 
-État au **21 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
+État au **22 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
 fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle est
 traitée. Les chantiers clos (incidents du 19 au 22 septembre, fiabilité des
 cotes, SEO, vérifications) sont archivés dans `docs/journal-des-corrections.md`.
@@ -14,13 +14,12 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Dès que possible | Fusionner la pull request n°12 : brouillon Règne Delta (ME06), relu et corrigé le 21 octobre (format officiel des avant-premières, lexique, tiret). La publication part le matin suivant la fusion. | Julian |
-| Dès que possible | Fusionner la pull request n°11 : lexique AR, ALT et GOLD dans les trois articles Pokémon qui employaient les noms officiels. | Julian |
-| Ven 16 oct., en magasin | Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) présentes ? Annoncées pour ce jour par Play-in, Universtcg et un calendrier publié sur X, absentes de la liste officielle d'octobre. L'article les donne au 16 octobre « annoncé » : confirmer ou corriger après le constat (voir « Veille du calendrier »). | Julian |
+| Aujourd'hui | Valider dans Buffer les 10 brouillons du Gala TCG et de Règne Delta (22 au 25 octobre) avec « Schedule Post », jamais « Add to queue » (le post partirait au prochain créneau libre). | Julian |
+| D'ici samedi | Relire et valider les brouillons de la semaine du 26 octobre, préparés le 22 (6 posts, dont 2 sur les nouveaux piliers « À noter » et « Le bon geste »). La routine du samedi n'écrira rien pour cette semaine, le fichier existant déjà. | Julian |
+| Dès que possible | Résultat du constat du 16 octobre : Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) en rayon ou non ? L'article les donne au 16 octobre « annoncé » : confirmer ou corriger (voir « Veille du calendrier »). | Julian |
 | Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
-| Jeu. 15 oct., après le passage | Premier top des hausses avec la nouvelle méthode (13 octobre : chaque hausse confirmée par la moyenne sur 7 jours, paliers du plus strict au plus souple, repli sur l'autre marché, base sur 30 jours figée écartée, avg1, avg7 et prix bas archivés ; voir `scripts/lib/cote-paliers.mjs`). Lire dans le journal le palier retenu et les trois cartes, et signaler un éventuel repli sur One Piece. | Claude |
-| Mer. 21 oct., 10h | Tâche `rappel-marche-japonais-cote` : essai à blanc du marché japonais du top des hausses, pour décider de le rouvrir (chantier 3). Rien n'est modifié. | Claude (app ouverte) |
+| Quand tu veux | Tâche `rappel-marche-japonais-cote` : figée depuis le 21 au soir sur une demande de permission (même piège pour le contrôle du 15 et la vérification des posts du 20, dont les passages n'ont rien fait). La relancer avec « Run now », ou me demander l'essai à blanc en session. | Julian |
 | Début novembre | Article McDonald's : annonce officielle de McDonald's France ou de Pokémon ? L'opération américaine est annoncée pour le 5 novembre ; une confirmation française ferait réécrire la section « Et la France ? ». | Claude, sur demande |
 
 ---
@@ -82,6 +81,8 @@ appels échouent sans rien facturer, et FLUX n'est pas parmi les modèles qui ex
 paiement. **Gemini exige désormais un prépaiement de 5 $ minimum**, et la facturation se rattache
 à un projet Google : passer par un projet dédié « Cards-Trading » et une clé neuve, jamais par
 un projet qui porte déjà d'autres clés, dont la consommation puiserait dans le même crédit.
+
+**Vivier de photos réutilisables, amorcé le 22 octobre** : `data/visuels/vivier.json` (liens, auteur, licence, sujets ; le dépôt ne garde jamais les images d'autrui), contrôlé par `vivier.test.mjs`, et consulté par la routine du samedi. Cinq photos Unsplash pour commencer. Pistes pour l'enrichir, par ordre de valeur : **tes propres photos** (lives WhatNot, salons, boutiques, cartes de ta collection : authentiques et sans question de droits), les **photos de la communauté** avec accord écrit et crédit, le **post cité** sur X (on réutilise le visuel d'un autre sans le copier), puis Unsplash. Les kits presse des éditeurs restent hors du vivier (usage éditorial seulement). Le contrôle anti-robot d'Unsplash bloque désormais la recherche automatique : les ajouts se font à la main, page source lue.
 
 **Niveau 1 : trois photos trouvées le 14 octobre et passées dans le modèle `photo`**, sur
 Unsplash (licence Unsplash : usage commercial permis, crédit non exigé mais toujours donné ;

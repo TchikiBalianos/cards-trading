@@ -1,0 +1,63 @@
+{
+  "_lisez_moi": "Photos réutilisables pour les visuels « photo » des posts. Le dépôt est public : on n'y garde que des liens, l'image est téléchargée au rendu. Licences admises : unsplash (attribution facultative, crédit gardé sur Instagram), propre (photo de Cards-Trading, publiée sous public/assets/social/photos/), autorisation (photo de la communauté : accord écrit obligatoire, lien vers l'accord dans « preuve », crédit @compte repris dans le texte du post). Vérifier l'auteur et la licence sur la page source avant tout ajout.",
+  "photos": [
+    {
+      "id": "pedersen-cartes-anciennes",
+      "image": "https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=2400&q=85&fm=jpg",
+      "credit": "Thimo Pedersen / Unsplash",
+      "licence": "unsplash",
+      "page": "https://unsplash.com/photos/TWCnHKKhqSo",
+      "format": "paysage",
+      "licences_tcg": ["pokemon"],
+      "sujets": ["cartes anciennes en vrac", "nostalgie", "collection", "valeur d'un vieux classeur"],
+      "verifie_le": "2026-10-14"
+    },
+    {
+      "id": "skeli-carte-en-main",
+      "image": "https://images.unsplash.com/photo-1708032563840-e77e426411dd?w=2400&q=85&fm=jpg",
+      "credit": "Branden Skeli / Unsplash",
+      "licence": "unsplash",
+      "page": "https://unsplash.com/photos/c4RrAt0MMNc",
+      "format": "portrait",
+      "licences_tcg": ["pokemon"],
+      "sujets": ["carte tenue en main", "pull", "fierté", "humour"],
+      "verifie_le": "2026-10-14"
+    },
+    {
+      "id": "douglas-salon",
+      "image": "https://images.unsplash.com/photo-1785123379818-3b77b1f5426c?w=2400&q=85&fm=jpg",
+      "credit": "Aaron Douglas / Unsplash",
+      "licence": "unsplash",
+      "page": "https://unsplash.com/photos/928CzCJk1_w",
+      "format": "paysage",
+      "licences_tcg": ["mixte"],
+      "sujets": ["salon de collection", "foule", "stands"],
+      "remarque": "Surtout des jeux vidéo rétro, aucune carte lisible : jamais pour illustrer un salon précis.",
+      "verifie_le": "2026-10-14"
+    },
+    {
+      "id": "douglas-bacs",
+      "image": "https://images.unsplash.com/photo-1785123379822-8e008ef46637?w=2400&q=85&fm=jpg",
+      "credit": "Aaron Douglas / Unsplash",
+      "licence": "unsplash",
+      "page": "https://unsplash.com/photos/i0plIFWUOAo",
+      "format": "paysage",
+      "licences_tcg": ["mixte"],
+      "sujets": ["fouiller les bacs", "chasse aux bonnes affaires", "salon"],
+      "remarque": "Même salon que douglas-salon : mêmes réserves.",
+      "verifie_le": "2026-10-14"
+    },
+    {
+      "id": "rajput-luffy",
+      "image": "https://images.unsplash.com/photo-1765633358974-cde0829a0e42?w=2400&q=85&fm=jpg",
+      "credit": "Rajesh Rajput / Unsplash",
+      "licence": "unsplash",
+      "page": "https://unsplash.com/photos/5b-TBvF7_5M",
+      "format": "paysage",
+      "licences_tcg": ["one-piece"],
+      "sujets": ["Luffy", "figurine", "univers One Piece"],
+      "remarque": "Une figurine, pas une carte : aucune photo libre de cartes One Piece trouvée le 14 octobre.",
+      "verifie_le": "2026-10-14"
+    }
+  ]
+}

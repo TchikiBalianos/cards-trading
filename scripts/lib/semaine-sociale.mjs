@@ -27,6 +27,12 @@ export const PILIERS = {
   actu: { libelle: 'Actu', consigne: 'révélation, calendrier, anecdote cachée, avec source' },
   communaute: { libelle: 'Humour et communauté', consigne: 'post cité, question, « cette sensation quand… »' },
   coulisses: { libelle: 'Coulisses', consigne: 'build in public : ce qui avance sur Cards-Trading, chiffres vérifiés' },
+  /* Piliers d'appoint (22/10/2026) : hors de la grille de planEditorial, pour un
+     post en plus un jour de relais, à une heure qui évite les créneaux pris. */
+  calendrier: { libelle: 'À noter', consigne: 'sorties datées, source officielle de l’éditeur, annoncé et sorti toujours distingués' },
+  guide: { libelle: 'Le bon geste', consigne: 'conseil pratique de collectionneur (protéger, ranger, expédier, juger un état), sans chiffre inventé' },
+  duel: { libelle: 'Duel', consigne: 'deux cartes ou deux illustrations face à face, vote en commentaire, cotes sourcées si citées' },
+  retro: { libelle: 'Rétro', consigne: 'anniversaire d’une extension ou d’une carte culte, date lue à la source' },
 };
 
 /* ── Fuseau de Paris ───────────────────────────────────────── */

@@ -1,0 +1,92 @@
+{
+  "semaine": "2026-10-26",
+  "posts": [
+    {
+      "id": "2026-10-26-cote",
+      "jour": "2026-10-26",
+      "pilier": "cote",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Ça vaut combien ? 💰\n\nPikachu-ex, Héros Transcendants.\nMême Pokémon, même rareté, deux ALT :\n\n• ALT (276), par booota : 939 €\n• ALT (277), par James Turner : 272 €\n\nTendance Cardmarket au 21 octobre, via TCGdex.\n\nTa préférée ? 👇\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "texte": "Ça vaut combien ? 💰\nPikachu-ex, Héros Transcendants\n\nDans Héros Transcendants, Pikachu-ex a deux cartes ALT (deux étoiles dorées).\nMême Pokémon, même rareté, et pourtant pas du tout le même prix :\n\n• ALT (276), illustrée par booota : 939 €\n• ALT (277), illustrée par James Turner : 272 €\n\nCe sont les prix tendance relevés sur Cardmarket le 21 octobre, via TCGdex.\nIci, c'est l'illustration qui fait la différence.\nUne cote bouge vite : regarde toujours la tendance du jour avant d'acheter ou de vendre.\n\nEt toi, tu pars sur laquelle ?\nDis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #pikachu #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "carte",
+        "image": "https://assets.tcgdex.net/fr/me/me02.5/276/high.png",
+        "titre": "Pikachu-ex : 939 €",
+        "sous_titre": "ALT n°276, par booota. Prix tendance Cardmarket au 21 octobre."
+      },
+      "sources": [
+        "https://api.tcgdex.net/v2/fr/cards/me02.5-276",
+        "https://api.tcgdex.net/v2/fr/cards/me02.5-277"
+      ]
+    },
+    {
+      "id": "2026-10-29-communaute",
+      "jour": "2026-10-29",
+      "pilier": "communaute",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Quand tu brandis ta plus belle pull devant tes potes… et que personne ne réagit. 🫠\n\nRaconte ta pull la plus sous-estimée 👇\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "texte": "Quand tu brandis ta plus belle pull devant tes potes… et que personne ne réagit. 🫠\n\nOn a tous une carte qu'on trouve magnifique et qui laisse tout le monde de marbre.\nUne commune à l'illustration superbe, une holo de ton enfance, une carte de ton Pokémon préféré.\n\nC'est quoi, ta pull la plus sous-estimée ?\nMontre-la en commentaire 👇\n\n📸 Branden Skeli / Unsplash\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "photo",
+        "image": "https://images.unsplash.com/photo-1708032563840-e77e426411dd?w=2400&q=85&fm=jpg",
+        "credit": "Branden Skeli / Unsplash",
+        "titre": "Ta plus belle pull, et personne ne réagit"
+      }
+    },
+    {
+      "id": "2026-10-31-guide",
+      "jour": "2026-10-31",
+      "pilier": "guide",
+      "licence": "mixte",
+      "twitter": {
+        "heure": "10:50",
+        "texte": "Le bon geste 📦\nExpédier une carte sans l'abîmer :\n\n1. Une pochette souple\n2. Un étui rigide (toploader)\n3. Un sachet refermable par-dessus\n4. Le tout entre deux cartons rigides\n5. Une enveloppe à bulles, en envoi suivi\n\nTu ajoutes quoi ? 👇\n\n#TCG"
+      },
+      "instagram": {
+        "heure": "15:00",
+        "texte": "Le bon geste 📦 : expédier une carte sans l'abîmer\n\nUne carte qui arrive pliée, c'est toute une vente qui tourne mal.\nLe geste des vendeurs soigneux, couche par couche :\n\n1. Une pochette souple (sleeve), contre les rayures\n2. Un étui rigide (toploader), contre les plis\n3. Un sachet refermable par-dessus (team bag), pour que la carte ne glisse pas\n4. Le tout entre deux cartons rigides\n5. Une enveloppe à bulles, et un envoi suivi\n\nEt à la réception, on photographie le colis avant de l'ouvrir.\n\nTu as une astuce en plus ?\nPartage-la en commentaire 👇\nEt enregistre ce post pour ta prochaine vente.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#tcg #cartesacollectionner #pokemontcg #onepiececardgame"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Le bon geste",
+        "titre": "Expédier une carte sans l'abîmer",
+        "sous_titre": "Pochette, étui rigide, sachet, carton, envoi suivi."
+      }
+    },
+    {
+      "id": "2026-11-01-coulisses",
+      "jour": "2026-11-01",
+      "pilier": "coulisses",
+      "licence": "mixte",
+      "twitter": {
+        "texte": "Carte erreur 🟥\n\nDu 11 au 18 septembre, notre blog n'a rien publié. 8 échecs d'affilée dans GitHub, et personne ne l'a vu.\nLa cause : une version de Node trop ancienne.\n\nDepuis, un robot vérifie chaque matin nos automatisations.\n\nCarte 04/20 #buildinpublic #dev"
+      },
+      "instagram": {
+        "texte": "Carte erreur : la panne silencieuse 🟥\n\nDu 11 au 18 septembre, notre blog n'a publié aucun article.\nLe robot de publication échouait chaque matin, et personne ne le voyait.\nUn article est resté en attente neuf jours.\n\nLa leçon : le plus dangereux, ce n'est pas la panne.\nC'est la panne que personne ne voit.\n\nDepuis, un robot vérifie chaque matin que toutes nos automatisations tournent, et nous écrit dès que l'une d'elles casse, jusqu'à ce qu'elle soit réparée.\n\nOn te montre aussi ce qui casse : c'est comme ça qu'on construit une plateforme fiable.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+      },
+      "visuel": {
+        "type": "bip",
+        "numero": 4,
+        "total": 20,
+        "rarete": "erreur",
+        "nom": "Panne silencieuse",
+        "titre": "Notre blog est resté bloqué 8 jours. Personne ne l'a vu.",
+        "sous_titre": "Depuis, un robot vérifie nos automatisations chaque matin.",
+        "effet": "Le danger n'est pas la panne. C'est la panne que personne ne voit.",
+        "illustration": {
+          "gabarit": "avant-apres",
+          "avant": "8 jours d'échecs, aucune alerte",
+          "apres": "Une alerte chaque matin si ça casse"
+        }
+      }
+    }
+  ]
+}

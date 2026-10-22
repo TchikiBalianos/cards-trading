@@ -901,6 +901,18 @@ relecture signale tout écart (`points_de_vigilance`, lexique partagé dans `lex
 ligne après chaque fin de phrase au moment de l'envoi à Buffer, sans toucher aux listes
 numérotées, aux abréviations ni aux citations.
 
+**Vivier de photos** (`data/visuels/vivier.json`, 22 octobre 2026) : le catalogue des photos
+réutilisables pour un visuel `photo`, avec auteur, licence, page source et sujets. Le dépôt
+étant public, il ne garde que des liens. Trois licences admises, contrôlées par
+`vivier.test.mjs` : `unsplash`, `propre` (photo de Cards-Trading servie sous
+`public/assets/social/photos/`, sans visage ni donnée personnelle) et `autorisation` (photo
+de la communauté, avec le lien de l'accord écrit dans `preuve`). Les visuels officiels des
+éditeurs n'y entrent pas : leurs kits presse sont réservés à un usage éditorial.
+
+**Piliers d'appoint** (22 octobre 2026) : `calendrier`, `guide`, `duel` et `retro`, hors de
+la grille de `planEditorial`, pour un post en plus un jour de relais (heure décalée, X
+10:50, Instagram 15:00). À valider par Julian avant d'en faire une règle de la routine.
+
 Une photo dont la licence n'exige pas de crédit (aujourd'hui Unsplash seul,
 `HOTES_CREDIT_FACULTATIF` dans `visuel-spec.mjs`) garde son `credit` dans la spec, mais il
 quitte le visuel X ; il reste sur celui d'Instagram, où la photo est centrée entre deux
