@@ -6,7 +6,7 @@ category: "pokemon"
 tags: ["pokemon", "regne-delta", "mega-evolution", "mega-rayquaza", "avant-premiere"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-pokemon.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
