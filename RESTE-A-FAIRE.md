@@ -16,6 +16,7 @@ dépôt, qui est public.
 |---|---|---|
 | Aujourd'hui | Valider dans Buffer les 10 brouillons du Gala TCG et de Règne Delta (22 au 25 octobre) avec « Schedule Post », jamais « Add to queue » (le post partirait au prochain créneau libre). | Julian |
 | D'ici samedi | Relire et valider les brouillons de la semaine du 26 octobre, préparés le 22 (6 posts, dont 2 sur les nouveaux piliers « À noter » et « Le bon geste »). La routine du samedi n'écrira rien pour cette semaine, le fichier existant déjà. | Julian |
+| Dès que possible | Fusionner la pull request n°13 : article 30e Anniversaire, UPC Journée Mentali décalée au 27 novembre (Soirée Noctali maintenue au 6). | Julian |
 | Dès que possible | Résultat du constat du 16 octobre : Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) en rayon ou non ? L'article les donne au 16 octobre « annoncé » : confirmer ou corriger (voir « Veille du calendrier »). | Julian |
 | Ven 23 oct., en magasin | Coffret Collection Classeur présent ? Absent le 2 octobre, annoncé pour le 23 par Play-in et Universtcg. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
