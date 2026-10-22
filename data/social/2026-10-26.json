@@ -21,7 +21,10 @@
       "sources": [
         "https://api.tcgdex.net/v2/fr/cards/me02.5-276",
         "https://api.tcgdex.net/v2/fr/cards/me02.5-277"
-      ]
+      ],
+      "buffer": {
+        "instagram": "6ad95257b086d40f572611c3"
+      }
     },
     {
       "id": "2026-10-29-communaute",
@@ -39,6 +42,9 @@
         "image": "https://images.unsplash.com/photo-1708032563840-e77e426411dd?w=2400&q=85&fm=jpg",
         "credit": "Branden Skeli / Unsplash",
         "titre": "Ta plus belle pull, et personne ne réagit"
+      },
+      "buffer": {
+        "instagram": "6ad952587dadc432f72fc0ab"
       }
     },
     {
@@ -59,6 +65,9 @@
         "etiquette": "Le bon geste",
         "titre": "Expédier une carte sans l'abîmer",
         "sous_titre": "Pochette, étui rigide, sachet, carton, envoi suivi."
+      },
+      "buffer": {
+        "instagram": "6ad952591093844846d22433"
       }
     },
     {
@@ -86,6 +95,9 @@
           "avant": "8 jours d'échecs, aucune alerte",
           "apres": "Une alerte chaque matin si ça casse"
         }
+      },
+      "buffer": {
+        "instagram": "6ad9525aecaa6cda041bd044"
       }
     }
   ]
