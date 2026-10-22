@@ -27,6 +27,57 @@
       }
     },
     {
+      "id": "2026-10-27-actu",
+      "jour": "2026-10-27",
+      "pilier": "actu",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "✨ 30e Anniversaire : 10 cartes cultes réimprimées avec une bordure dorée.\n\nTrois anecdotes, selon Pokémon France :\n• N, première carte Supporter entièrement illustrée\n• Zacian-V n'a jamais été championne du monde\n• Arceus-VSTAR a gagné les Mondiaux 2022\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "texte": "✨ 30e Anniversaire : 10 cartes cultes reviennent avec une bordure dorée\n\nLa Collection Classique de l'extension 30e Anniversaire réimprime 10 cartes qui ont marqué l'histoire du jeu.\nPokémon France raconte leur histoire, et elle est savoureuse :\n\n• N : sa version de Noir & Blanc Nobles Victoires a été la toute première carte Supporter entièrement illustrée\n• Genesect-EX : sacré aux Mondiaux 2014, aux côtés de Viridium-EX\n• Amphinobi TURBO : deuxième des Mondiaux 2016\n• Zacian-V : jamais championne du monde, les Mondiaux 2020 et 2021 ayant été suspendus, et la carte n'était plus autorisée à leur reprise en 2022\n• Arceus-VSTAR : vainqueur des Mondiaux 2022 avec Ondřej Škubal\n\nLaquelle de ces légendes tu voudrais dans ton classeur, version dorée ?\nDis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #pokemon30ans #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "30e Anniversaire",
+        "titre": "10 cartes cultes reviennent avec une bordure dorée",
+        "sous_titre": "La Collection Classique de l'extension 30e Anniversaire, selon Pokémon France."
+      },
+      "sources": [
+        "https://www.pokemon.com/fr/articles/pleins-feux-sur-10-cartes-de-la-collection-classique-de-lextension-30-anniversaire-du-jcc-pokemon"
+      ]
+    },
+    {
+      "id": "2026-10-28-calendrier",
+      "jour": "2026-10-28",
+      "pilier": "calendrier",
+      "licence": "mixte",
+      "twitter": {
+        "heure": "10:50",
+        "texte": "📅 À noter :\n• 30 oct. : One Piece EB-05 Heroines Edition vol.2\n• 6 nov. : Pokémon Règne Delta\n• 6 nov. : coffrets Ultra-Premium 30e Anniversaire, annoncés par les revendeurs\n• 20 nov. : One Piece OP-18 La Domination de Dieu\n\nTu vises quoi ? 👇\n\n#PokemonTCG #OnePieceCardGame"
+      },
+      "instagram": {
+        "heure": "15:00",
+        "texte": "📅 À noter : les sorties qui arrivent\n\nCôté One Piece Card Game, dates officielles :\n• 30 octobre : EXTRA BOOSTER Heroines Edition vol.2 (EB-05), avec un nouveau Leader Nico Robin\n• 30 octobre : Mini Case Set Luffy, Shanks et Hancock (TS-03)\n• novembre : Premium Card Collection Live Action Edition vol.2\n• 20 novembre : booster La Domination de Dieu (OP-18)\n\nCôté Pokémon :\n• 5 novembre : Règne Delta sur JCC Pokémon Live (officiel)\n• 6 novembre : Règne Delta en boutique (officiel)\n• 6 novembre : coffrets Ultra-Premium 30e Anniversaire, Journée Mentali et Soirée Noctali, annoncés par plusieurs revendeurs\n• 13 novembre : Collection autocollant 30e Anniversaire avec Lucario, annoncée par des revendeurs\n\nPokémon France ne donne souvent que le trimestre : une date de revendeur reste à confirmer.\n\nEnregistre ce post pour ne rien rater 📌\nEt dis-nous ce que tu vises 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #onepiececardgame #cartespokemon #tcg"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "À noter",
+        "titre": "Les sorties à noter jusqu'au 20 novembre",
+        "sous_titre": "Pokémon et One Piece : dates officielles et dates annoncées."
+      },
+      "sources": [
+        "https://fr.onepiece-cardgame.com/products/eb05.html",
+        "https://fr.onepiece-cardgame.com/products/ts03.html",
+        "https://fr.onepiece-cardgame.com/products/collection-drama002.html",
+        "https://fr.onepiece-cardgame.com/products/op18.html",
+        "https://www.pokebip.com/news/7489/jcc-pokemon-nouvelle-extension-mega-evolution-regne-delta",
+        "https://www.play-in.com/fr/categorie/194/coffret-pokemon",
+        "https://lamaisondutcg.com/en/p/pokemon-upc-30-ans-precommande",
+        "https://jollycards.fr/pages/calendrier-des-sorties-pokemon"
+      ]
+    },
+    {
       "id": "2026-10-29-communaute",
       "jour": "2026-10-29",
       "pilier": "communaute",
