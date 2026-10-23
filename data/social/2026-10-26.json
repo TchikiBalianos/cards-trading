@@ -69,7 +69,8 @@
         "type": "texte",
         "etiquette": "À noter",
         "titre": "Les sorties à noter jusqu'à fin novembre",
-        "sous_titre": "Pokémon et One Piece : dates officielles et dates annoncées."
+        "sous_titre": "Pokémon et One Piece : dates officielles et dates annoncées.",
+        "version": 2
       },
       "sources": [
         "https://fr.onepiece-cardgame.com/products/eb05.html",
@@ -83,7 +84,8 @@
       ],
       "buffer": {
         "instagram": "6ad95466282deeeeb2bf80ae",
-        "twitter": "6ada9ec3535235087b7036a0"
+        "twitter": "6ada9ec3535235087b7036a0",
+        "facebook": "6adac0651dc335d347ebdc74"
       }
     },
     {
@@ -101,7 +103,8 @@
         "type": "photo",
         "image": "https://images.unsplash.com/photo-1708032563840-e77e426411dd?w=2400&q=85&fm=jpg",
         "credit": "Branden Skeli / Unsplash",
-        "titre": "Ton plus beau hit, et personne ne réagit"
+        "titre": "Ton plus beau hit, et personne ne réagit",
+        "version": 2
       },
       "buffer": {
         "instagram": "6ad952587dadc432f72fc0ab",

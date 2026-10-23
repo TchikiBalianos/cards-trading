@@ -16,7 +16,8 @@
         "type": "carte",
         "image": "https://assets.tcgdex.net/fr/me/me02/125/high.png",
         "titre": "Méga-Dracaufeu X-ex : 707 €",
-        "sous_titre": "ALT n°125. Prix tendance Cardmarket au 17 octobre."
+        "sous_titre": "ALT n°125. Prix tendance Cardmarket au 17 octobre.",
+        "version": 2
       },
       "sources": [
         "https://api.tcgdex.net/v2/fr/cards/me02-125",
@@ -104,7 +105,8 @@
       },
       "buffer": {
         "twitter": "6ada9ece1dc335d347e44e63",
-        "instagram": "6ad386b3dd83363c4dd72754"
+        "instagram": "6ad386b3dd83363c4dd72754",
+        "facebook": "6adac0828d2197cb2a0e6a62"
       }
     },
     {
@@ -132,7 +134,8 @@
       ],
       "buffer": {
         "twitter": "6ada9ebc1dc335d347e44ae7",
-        "instagram": "6ad93520a9337c3f97c17ab1"
+        "instagram": "6ad93520a9337c3f97c17ab1",
+        "facebook": "6adac06d535235087b77ae7f"
       }
     },
     {
@@ -159,7 +162,8 @@
       ],
       "buffer": {
         "twitter": "6ada9eb69ef33e7811aa538e",
-        "instagram": "6ada9f001dc335d347e45a38"
+        "instagram": "6ada9f001dc335d347e45a38",
+        "facebook": "6adac072cc1b7cdc08c6af56"
       }
     },
     {
@@ -187,7 +191,8 @@
       ],
       "buffer": {
         "twitter": "6ada9ebfd447d56a6468e69d",
-        "instagram": "6ad93522a9337c3f97c17acf"
+        "instagram": "6ad93522a9337c3f97c17acf",
+        "facebook": "6adac0781dc335d347ebdf20"
       }
     },
     {
@@ -217,7 +222,8 @@
       ],
       "buffer": {
         "twitter": "6ada9ecad447d56a6468e89e",
-        "instagram": "6ad935220d51f8b17ef1d573"
+        "instagram": "6ad935220d51f8b17ef1d573",
+        "facebook": "6adac07d1dc335d347ebdfa2"
       }
     },
     {
@@ -245,7 +251,8 @@
       ],
       "buffer": {
         "twitter": "6ada9ed1535235087b7039c1",
-        "instagram": "6ad93524bcb71c33f31c4c6a"
+        "instagram": "6ad93524bcb71c33f31c4c6a",
+        "facebook": "6adac08bd447d56a64705d0e"
       }
     },
     {
@@ -301,7 +308,8 @@
       },
       "buffer": {
         "twitter": "6ada9ed3cc1b7cdc08bf70d9",
-        "instagram": "6ad386b4ae173d6e00be224b"
+        "instagram": "6ad386b4ae173d6e00be224b",
+        "facebook": "6adac08f9ef33e7811b1cf92"
       }
     }
   ]
