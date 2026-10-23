@@ -18,7 +18,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contexte, listerPosts } from './lib/buffer.mjs';
 import {
-  planEditorial, analyser, decrire, lundiDe, ajouterJours, jourParis, PILIERS, CRENEAUX,
+  planEditorial, analyser, decrire, lundiDe, ajouterJours, jourParis, PILIERS, CRENEAUX, SERVICES,
 } from './lib/semaine-sociale.mjs';
 import { envoyerEmail, echapperHtml, gabarit } from './lib/email.mjs';
 
@@ -58,17 +58,18 @@ if (!args.includes('--controle')) {
 }
 
 const { organisation, canaux } = await contexte();
-const ids = new Set([canaux.twitter, canaux.instagram].filter(Boolean));
+const servicesConnectes = SERVICES.filter((s) => canaux[s]);
+const ids = new Set(servicesConnectes.map((s) => canaux[s]));
 const tous = await listerPosts({
   organisation,
   statuts: ['draft', 'needs_approval', 'scheduled', 'sending', 'sent', 'error'],
   debut: `${ajouterJours(aujourdhui, -3)}T00:00:00Z`,
   fin: `${ajouterJours(aujourdhui, 10)}T00:00:00Z`,
 });
-/* TikTok est le compte personnel de Julian : hors périmètre. */
+/* TikTok est le compte personnel de Julian : hors périmètre. Facebook y entre le 23/10/2026. */
 const posts = tous.filter((p) => ids.has(p.channelId));
 
-const anomalies = analyser({ posts, maintenant });
+const anomalies = analyser({ posts, maintenant, services: servicesConnectes });
 
 /* Le samedi soir et le dimanche, la semaine suivante doit déjà avoir son fichier :
    c'est ce qu'écrit la routine du samedi. Son absence est le seul moyen de voir

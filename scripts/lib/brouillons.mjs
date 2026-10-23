@@ -22,7 +22,7 @@
 */
 
 import { PILIERS, lundiDe, ajouterJours, jourParis } from './semaine-sociale.mjs';
-import { verifierSpec, creditObligatoire } from './visuel-spec.mjs';
+import { verifierSpec } from './visuel-spec.mjs';
 import { ecartsDeLexique } from './lexique.mjs';
 
 export const LICENCES = ['pokemon', 'one-piece', 'mixte'];
@@ -76,8 +76,20 @@ export function texteInstagram(post) {
   return unePhraseParLigne(post.instagram.texte.trim());
 }
 
+/* Facebook (ajouté le 23/10/2026) reprend la légende Instagram : même public de
+   fil, même longueur. Seule différence, un lien y est cliquable : « lien du site
+   en bio » devient le lien lui-même. */
+export function texteFacebook(post) {
+  return texteInstagram(post).replace(/lien du site en bio\s*🔗?/gi, `👉 ${SITE}`);
+}
+
+/* Facebook affiche le visuel portrait d'Instagram. Un visuel refait après
+   publication porte `visuel.version` : l'image change d'URL (`-v2`), seule façon
+   de passer le cache immuable d'un an de /assets/. */
 export function fichierVisuel(post, reseau) {
-  return `semaine/${post.id}-${reseau}.png`;
+  const format = reseau === 'facebook' ? 'instagram' : reseau;
+  const version = post.visuel && post.visuel.version > 1 ? `-v${post.visuel.version}` : '';
+  return `semaine/${post.id}${version}-${format}.png`;
 }
 
 export function urlVisuel(post, reseau) {
@@ -148,13 +160,9 @@ export function valider(donnees, { maintenant } = {}) {
     if (!post.visuel) {
       err(post, 'visuel manquant (Instagram exige une image)');
     } else {
+      /* Le crédit d'une photo se porte sur le visuel (verifierSpec l'exige), jamais
+         dans la légende : consigne de Julian du 23/10/2026. */
       try { verifierSpec(post.visuel); } catch (e) { err(post, e.message); }
-      /* Le crédit dans le texte n'est exigé que si la licence l'exige : Julian l'a
-         retiré d'une légende pour une photo Unsplash le 23/10/2026, à bon droit. */
-      if (post.visuel.type === 'photo' && post.visuel.credit && creditObligatoire(post.visuel)) {
-        const cr = String(post.visuel.credit).replace(/^@/, '').toLowerCase();
-        if (!tout.toLowerCase().includes(cr)) err(post, `photo de ${post.visuel.credit} : le crédit doit aussi figurer dans le texte du post`);
-      }
     }
   }
   return { erreurs, avertissements };
@@ -165,6 +173,9 @@ export function construireEnvoi(post, reseau, dueAt) {
   const alt = `Cards-Trading : ${post.visuel.titre || post.visuel.credit || post.pilier}`;
   if (reseau === 'twitter') {
     return { texte: texteX(post), image: urlVisuel(post, reseau), alt, dueAt, metadata: undefined };
+  }
+  if (reseau === 'facebook') {
+    return { texte: texteFacebook(post), image: urlVisuel(post, reseau), alt, dueAt, metadata: { facebook: { type: 'post' } } };
   }
   return {
     texte: texteInstagram(post),

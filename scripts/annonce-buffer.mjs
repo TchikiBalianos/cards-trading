@@ -196,6 +196,16 @@ function texteInstagram(fm) {
   );
 }
 
+/* Facebook (depuis le 23/10/2026) : la légende d'Instagram, avec le lien de
+   l'article, cliquable sur ce réseau. */
+function texteFacebook(fm) {
+  return (
+    `${fm.title}\n\n${fm.description || ''}\n\n` +
+    `L'article complet : ${url}facebook\n\n` +
+    `${SIGNATURE}\n\n${motsCles(fm.category, 4)}`
+  );
+}
+
 /* TikTok accepte 2200 caractères de description. Le budget se calcule sur
    le texte complet, signature et mots-clés compris, et seule la description
    est rognée. La borne à 130 d'avant coupait en plein milieu d'une
@@ -303,6 +313,7 @@ const envois = [
   })],
   ['instagram', () => publier(dispo.instagram, texteInstagram(fm), vignette,
       { instagram: { type: 'post', shouldShareToFeed: true } })],
+  ['facebook', () => publier(dispo.facebook, texteFacebook(fm), vignette, { facebook: { type: 'post' } })],
   ['tiktok', () => publier(dispo.tiktok, texteTikTok(fm), vignette,
       { tiktok: { title: fm.title.slice(0, 90) } })],
 ];

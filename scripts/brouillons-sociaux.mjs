@@ -34,7 +34,9 @@ import { envoyerEmail, echapperHtml, gabarit } from './lib/email.mjs';
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOSSIER_DONNEES = join(RACINE, 'data', 'social');
 const DOSSIER_IMAGES = join(RACINE, 'public', 'assets', 'social');
-const RESEAUX = ['twitter', 'instagram'];
+/* Facebook depuis le 23/10/2026 : même légende et même visuel qu'Instagram. */
+const RESEAUX = ['twitter', 'instagram', 'facebook'];
+const FORMATS_VISUELS = ['twitter', 'instagram'];
 
 const args = process.argv.slice(2);
 const option = (nom) => (args.find((a) => a.startsWith(`--${nom}=`)) || '').split('=').slice(1).join('=');
@@ -65,7 +67,8 @@ function aTraiter(post) {
 }
 
 function heureDe(post, reseau) {
-  return heureParisVersIso(post.jour, (post[reseau] && post[reseau].heure) || CRENEAUX[reseau]);
+  const cle = reseau === 'facebook' ? 'instagram' : reseau;
+  return heureParisVersIso(post.jour, (post[cle] && post[cle].heure) || CRENEAUX[cle]);
 }
 
 /* ── Validation ────────────────────────────────────────────── */
@@ -119,7 +122,7 @@ if (PHASE === 'visuels') {
   mkdirSync(join(DOSSIER_IMAGES, 'semaine'), { recursive: true });
   let faits = 0;
   for (const { post } of travail) {
-    for (const reseau of RESEAUX) {
+    for (const reseau of FORMATS_VISUELS) {
       const sortie = join(DOSSIER_IMAGES, fichierVisuel(post, reseau));
       if (existsSync(sortie) && !drapeau('force')) continue;
       writeFileSync(sortie, await genererVisuel(post.visuel, post.licence, reseau));
@@ -134,7 +137,7 @@ if (PHASE === 'visuels') {
 if (PHASE === 'attendre') {
   /* `fetch` suit les redirections tout seul : pas de piège du 307 sur l'apex
      qui a fait échouer trois passages de cote-hebdo le 27 août 2026. */
-  const urls = travail.flatMap(({ post }) => RESEAUX.map((r) => urlVisuel(post, r)));
+  const urls = travail.flatMap(({ post }) => FORMATS_VISUELS.map((r) => urlVisuel(post, r)));
   const debut = Date.now();
   let restantes = [...urls];
   while (restantes.length && Date.now() - debut < 12 * 60 * 1000) {
@@ -222,7 +225,7 @@ if (PHASE === 'brouillons') {
       <div style="font-size:13px;color:#c9d2e6;padding-top:10px;white-space:pre-wrap;"><b>X</b> : ${echapperHtml(texteX(post))}</div>
       <div style="font-size:13px;color:#c9d2e6;padding-top:8px;white-space:pre-wrap;"><b>Instagram</b> : ${echapperHtml(texteInstagram(post))}</div>
     </td></tr>`).join('');
-    const liens = RESEAUX.filter((r) => canaux[r]).map((r) => `<a href="https://publish.buffer.com/channels/${canaux[r]}/drafts" style="color:#2997ff;">${r === 'twitter' ? 'Brouillons X' : 'Brouillons Instagram'}</a>`).join(' · ');
+    const liens = RESEAUX.filter((r) => canaux[r]).map((r) => `<a href="https://publish.buffer.com/channels/${canaux[r]}/drafts" style="color:#2997ff;">${{ twitter: 'Brouillons X', instagram: 'Brouillons Instagram', facebook: 'Brouillons Facebook' }[r]}</a>`).join(' · ');
     const corps = `${cartes}<tr><td style="padding:18px 24px;font-size:13px;color:#c9d2e6;line-height:1.6;">
       <b>À faire :</b> ouvre l'onglet Drafts de Buffer, relis, puis clique <b>Schedule Post</b> sur chaque brouillon (ou dans la vue All Channels, ou sur mobile).
       Un brouillon <b>ne part pas tout seul</b>. Tu seras prévenu si l'un d'eux approche sans avoir été programmé.<br><br>${liens}

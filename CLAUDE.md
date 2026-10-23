@@ -847,7 +847,9 @@ calculés par `planEditorial` dans `scripts/lib/semaine-sociale.mjs` :
 
 Créneaux : X 10h20, Instagram 11h30 (heure de Paris, converties par `Intl`, le
 passage à l'heure d'hiver tombe le 25 octobre 2026). TikTok reste le compte personnel de
-Julian, hors périmètre.
+Julian, hors périmètre. **Facebook** (page Cards Trading) y entre le 23 octobre 2026 : même
+légende qu'Instagram, où « lien du site en bio » devient un vrai lien (`texteFacebook`), même
+visuel portrait, même heure ; les relais d'articles et de cotes y partent aussi.
 
 **Circuit.** La routine du samedi (tâche Desktop `social-cards-trading-semaine`) écrit
 `data/social/<lundi>.json` et le pousse sur `main`. Ce push déclenche
@@ -888,7 +890,8 @@ node scripts/semaine-sociale.mjs --controle --dry-run         # exige BUFFER_API
 Aucun tiret long. Un prix, un pourcentage ou une cote exige `sources` (liens lus en
 entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pondérés,
 2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
-Une photo de la communauté exige un `credit`, repris dans le texte du post.
+Une photo exige un `credit`, porté par le visuel et **jamais dans la légende** (Julian,
+23 octobre 2026).
 
 **Lexique des raretés Pokémon** (Julian, 18 octobre 2026) : les fans français disent **AR**
 (une étoile dorée, « Illustration rare »), **ALT** (deux étoiles dorées, « Illustration
@@ -916,9 +919,10 @@ la grille de `planEditorial`, pour un post en plus un jour de relais (heure déc
 Une photo dont la licence n'exige pas de crédit (aujourd'hui Unsplash seul,
 `HOTES_CREDIT_FACULTATIF` dans `visuel-spec.mjs`) garde son `credit` dans la spec, mais il
 quitte le visuel X ; il reste sur celui d'Instagram, où la photo est centrée entre deux
-bandes de flou (décisions de Julian, 14 octobre 2026). Le contrôle du texte ne change pas :
-le crédit doit figurer dans le texte X **ou** Instagram, la légende Instagram suffit. Ajouter
-un hébergeur à la liste seulement après avoir lu sa licence à la source.
+bandes de flou (décisions de Julian, 14 octobre 2026). Ajouter un hébergeur à la liste
+seulement après avoir lu sa licence à la source. Un visuel refait après publication porte
+`visuel.version` (2, 3…) : son fichier prend le suffixe `-v2`, et le circuit l'utilise ensuite
+pour les autres réseaux.
 
 **Le post cité est notre meilleur format sur X** : le lien du post d'origine en fin de
 texte a donné nos meilleures impressions (430 et 342, contre environ 200 pour un relais

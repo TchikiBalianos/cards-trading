@@ -1,5 +1,5 @@
 {
-  "_lisez_moi": "Photos réutilisables pour les visuels « photo » des posts. Le dépôt est public : on n'y garde que des liens, l'image est téléchargée au rendu. Licences admises : unsplash (attribution facultative, crédit gardé sur Instagram), propre (photo de Cards-Trading, publiée sous public/assets/social/photos/), autorisation (photo de la communauté : accord écrit obligatoire, lien vers l'accord dans « preuve », crédit @compte repris dans le texte du post). Vérifier l'auteur et la licence sur la page source avant tout ajout.",
+  "_lisez_moi": "Photos réutilisables pour les visuels « photo » des posts. Le dépôt est public : on n'y garde que des liens, l'image est téléchargée au rendu. Licences admises : unsplash (attribution facultative, crédit gardé sur Instagram), propre (photo de Cards-Trading, publiée sous public/assets/social/photos/), autorisation (photo de la communauté : accord écrit obligatoire, lien vers l'accord dans « preuve »). Le crédit est porté par le visuel, jamais par la légende. Vérifier l'auteur et la licence sur la page source avant tout ajout.",
   "photos": [
     {
       "id": "pedersen-cartes-anciennes",

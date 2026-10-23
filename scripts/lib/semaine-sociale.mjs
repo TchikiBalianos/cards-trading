@@ -117,7 +117,7 @@ export function repartition(posts) {
 
 /* ── Contrôle ──────────────────────────────────────────────── */
 
-const SERVICES = ['twitter', 'instagram'];
+export const SERVICES = ['twitter', 'instagram', 'facebook'];
 const EN_ATTENTE = new Set(['draft', 'needs_approval']);
 const PART_OU_PARTI = new Set(['scheduled', 'sending', 'sent']);
 
@@ -141,13 +141,15 @@ const PART_OU_PARTI = new Set(['scheduled', 'sending', 'sent']);
   un vendredi soir « lundi est vide » est normal. Le samedi et le dimanche, c'est
   l'absence du FICHIER de la semaine qui prévient (semaine-sociale.mjs).
 */
-export function analyser({ posts, maintenant, horizonJours = 8, horizonManquant = 2, editorial = true }) {
+/* `services` : ceux qu'on contrôle. Le contrôle quotidien passe les canaux réellement
+   connectés dans Buffer, sans quoi un réseau absent passerait pour un jour manquant. */
+export function analyser({ posts, maintenant, horizonJours = 8, horizonManquant = 2, editorial = true, services = SERVICES }) {
   const anomalies = [];
   const aujourdhui = jourParis(maintenant);
   const fin = ajouterJours(aujourdhui, horizonJours);
   const jourSuivant = ajouterJours(aujourdhui, 1);
 
-  for (const service of SERVICES) {
+  for (const service of services) {
     const duReseau = posts.filter((p) => p.channelService === service && p.dueAt);
     const parJour = {};
     for (const p of duReseau) (parJour[jourParis(p.dueAt)] ||= []).push(p);
@@ -200,7 +202,7 @@ const LIBELLES = {
 };
 
 export function nomService(s) {
-  return s === 'twitter' ? 'X' : s === 'instagram' ? 'Instagram' : s;
+  return { twitter: 'X', instagram: 'Instagram', facebook: 'Facebook' }[s] || s;
 }
 
 export function decrire(anomalie) {

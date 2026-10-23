@@ -56,7 +56,7 @@ test('analyser : rien à signaler quand chaque jour éditorial a son post progra
     posts.push(post(`x${j}`, 'twitter', 'scheduled', heureParisVersIso(j, '10:20')));
     posts.push(post(`i${j}`, 'instagram', 'scheduled', heureParisVersIso(j, '11:30')));
   }
-  assert.deepEqual(analyser({ posts, maintenant: MAINTENANT }), []);
+  assert.deepEqual(analyser({ posts, maintenant: MAINTENANT, services: ['twitter', 'instagram'] }), []);
 });
 
 test('analyser : un brouillon daté de demain est signalé, il ne partira pas sans clic', () => {

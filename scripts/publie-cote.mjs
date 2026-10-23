@@ -548,6 +548,7 @@ const textes = {
   discord: `${socle}\n\nLa bêta Cards-Trading ouvre bientôt : <${lien}discord#beta>`,
   twitter: texteX(classementX),
   instagram: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
+  facebook: `${socle}\n\nLa bêta Cards-Trading ouvre bientôt : ${lien}facebook#beta\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
   tiktok: `${socle}\n\nCards-Trading.com, la marketplace 100 % TCG\n\n${motsCles} #tcg #cartesacollectionner`,
 };
 
@@ -704,6 +705,7 @@ if (cle) {
       },
     }],
     ['instagram', textes.instagram, urlVignette, { instagram: { type: 'post', shouldShareToFeed: true } }],
+    ['facebook', textes.facebook, urlVignette, { facebook: { type: 'post' } }],
     ['tiktok', textes.tiktok, urlVignette, { tiktok: { title: court(accroche, 90) } }],
   ];
 

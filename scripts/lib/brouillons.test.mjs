@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { valider, poidsX, compterHashtags, texteX, construireEnvoi, urlVisuel, unePhraseParLigne } from './brouillons.mjs';
+import { valider, poidsX, compterHashtags, texteX, construireEnvoi, urlVisuel, unePhraseParLigne, texteFacebook, fichierVisuel } from './brouillons.mjs';
 import { decouper } from './charte.mjs';
 
 const MAINTENANT = '2026-09-29T14:00:00Z';
@@ -89,14 +89,11 @@ test('la citation X s\'ajoute en fin de texte et doit être un lien de post', ()
   assert.ok(erreursDe(d).some((e) => /citation X/.test(e)));
 });
 
-test('une photo sans crédit est refusée, et le crédit doit figurer dans le texte', () => {
+test('une photo sans crédit est refusée, mais le crédit ne va jamais dans la légende', () => {
   const d = bon();
   d.posts[0].visuel = { type: 'photo', image: 'https://exemple.com/a.jpg' };
   assert.ok(erreursDe(d).some((e) => /sans crédit/.test(e)));
   d.posts[0].visuel.credit = '@collectionneur';
-  assert.ok(erreursDe(d).some((e) => /crédit doit aussi figurer/.test(e)));
-  d.posts[0].twitter.texte += ' 📸 @collectionneur';
-  d.posts[0].instagram.texte += ' 📸 @collectionneur';
   assert.deepEqual(erreursDe(d), []);
 });
 
@@ -153,12 +150,21 @@ test('la signature « 100 % TCG » n\'est pas un pourcentage à sourcer', () => 
   assert.ok(erreursDe(d).some((e) => /sans « sources »/.test(e)));
 });
 
-test('une photo Unsplash peut se passer du crédit dans le texte, une photo de la communauté non', () => {
+test('Facebook reprend la légende Instagram avec un vrai lien, et son visuel portrait', () => {
   const d = bon();
-  d.posts[0].visuel = { type: 'photo', image: 'https://images.unsplash.com/photo-1708032563840-e77e426411dd', credit: 'Branden Skeli / Unsplash' };
-  assert.deepEqual(erreursDe(d), []);
-  d.posts[0].visuel.image = 'https://exemple.com/photo.jpg';
-  assert.ok(erreursDe(d).some((e) => /crédit doit aussi figurer/.test(e)));
+  const p = d.posts[0];
+  assert.equal(texteFacebook(p), 'Et toi, ta plus belle surprise en ouverture ?\n\n👉 https://cards-trading.com\n\n#pokemontcg #cartespokemon #tcg');
+  const e = construireEnvoi(p, 'facebook', '2026-10-01T09:30:00.000Z');
+  assert.deepEqual(e.metadata, { facebook: { type: 'post' } });
+  assert.equal(e.image, urlVisuel(p, 'instagram'));
+});
+
+test('un visuel refait porte sa version dans son nom de fichier', () => {
+  const p = { id: '2026-10-29-communaute', visuel: { type: 'texte', titre: 'T' } };
+  assert.equal(fichierVisuel(p, 'twitter'), 'semaine/2026-10-29-communaute-twitter.png');
+  p.visuel.version = 2;
+  assert.equal(fichierVisuel(p, 'twitter'), 'semaine/2026-10-29-communaute-v2-twitter.png');
+  assert.equal(fichierVisuel(p, 'facebook'), 'semaine/2026-10-29-communaute-v2-instagram.png');
 });
 
 test('une phrase par ligne, sans casser les listes, les abréviations ni les citations', () => {
