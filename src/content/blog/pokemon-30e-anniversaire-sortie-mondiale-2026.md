@@ -2,7 +2,7 @@
 title: "30ᵉ Anniversaire : l'extension sort partout le même jour, et ça change tout !"
 description: "L'extension 30ᵉ Anniversaire sort mondialement le 16 septembre 2026 : boosters 100 % brillants, 30 Pikachu, nouvelle rareté et ce que ça change."
 pubDate: 2026-09-12
-updatedDate: 2026-10-22
+updatedDate: 2026-10-25
 category: "pokemon"
 tags: ["pokemon", "30e-anniversaire", "sortie-mondiale", "collection", "marche"]
 author: "Cards Trading"
@@ -85,10 +85,10 @@ Le 16 septembre marque la première vague, pas toute la gamme : la sortie s'éta
 |---|---|
 | **16 septembre** | ETB (Coffret Dresseur d'élite), Collection poster, coffrets Amphinobi-ex et Nymphali-ex, blister 2 boosters Évoli |
 | **2 octobre** | Lot de boosters (Bundle), Mini-Tins |
-| **16 octobre** *(annoncé)* | Les deux Pokébox (boîtes métal) Amphinobi-ex et Nymphali-ex |
-| **23 octobre** *(annoncé)* | Coffret Collection Classeur : placé en octobre par Pokémon France, sans jour précis, et annoncé pour le 23 par Play-in et Universtcg |
-| **30 octobre** | Decks Combat Mentali-ex et Noctali-ex |
-| **6 novembre** | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, Ultra-Premium Collection (UPC) Soirée Noctali |
+| **16 octobre** | Les deux Pokébox (boîtes métal) Amphinobi-ex et Nymphali-ex |
+| **23 octobre** | Coffret Collection Classeur |
+| **30 octobre** *(annoncé)* | Decks Combat Mentali-ex et Noctali-ex |
+| **6 novembre** *(annoncé)* | Coffrets Figurine Mew et Mewtwo, Collection Premium Métamorph, Ultra-Premium Collection (UPC) Soirée Noctali |
 | **13 novembre** *(à confirmer)* | Tripacks autocollants Noadkoko d'Alola et Lucario |
 | **27 novembre** *(annoncé)* | Ultra-Premium Collection (UPC) Journée Mentali, décalée du 6 novembre, en plein Black Friday |
 | **Sans date précise** *(annoncée au T3 2026)* | Collection K.O. |
@@ -97,9 +97,9 @@ Les deux bornes décideront de votre budget. L'**ETB du 16 septembre** (neuf boo
 
 Attention à ne pas payer deux fois la même chose : le **blister de 2 boosters Évoli**, sorti le 16 septembre, et la **Collection K.O.**, annoncée sans date précise, ont un contenu quasi identique : deux boosters et une carte Évoli brillante accompagnée d'une pièce. Seuls la référence et le packaging changent. C'est pensé pour les collectionneurs de scellé, pas pour ceux qui veulent des cartes.
 
-Autre confusion à éviter, celle des « boîtes métal » et des « Pokébox ». Les **coffrets Amphinobi-ex et Nymphali-ex** du 16 septembre ne sont pas des boîtes métal : quatre boosters, une carte promo brillante et une carte géante. La **Pokébox**, la boîte métal aux mêmes Pokémon, est annoncée pour le 16 octobre : quatre boosters et une carte promo brillante selon les fiches des revendeurs, sans carte géante. La **Mini-Tin** du 2 octobre est la petite boîte métal, avec deux boosters, une planche d'autocollants et une carte art. Plusieurs sites appellent « Pokébox » les coffrets du 16 septembre : faites préciser le contenu exact avant de payer, une carte géante signale un coffret.
+Autre confusion à éviter, celle des « boîtes métal » et des « Pokébox ». Les **coffrets Amphinobi-ex et Nymphali-ex** du 16 septembre ne sont pas des boîtes métal : quatre boosters, une carte promo brillante et une carte géante. La **Pokébox**, la boîte métal aux mêmes Pokémon, est sortie le 16 octobre : quatre boosters et une carte promo brillante selon les fiches des revendeurs, sans carte géante. La **Mini-Tin** du 2 octobre est la petite boîte métal, avec deux boosters, une planche d'autocollants et une carte art. Plusieurs sites appellent « Pokébox » les coffrets du 16 septembre : faites préciser le contenu exact avant de payer, une carte géante signale un coffret.
 
-Une nuance importante : la communication officielle française ne donne jamais de jour. Pokémon France a placé au **T3 2026** la première vague (ETB, coffrets Amphinobi-ex et Nymphali-ex, Collection poster, blister de 2 boosters et Collection K.O.) et au **T4 2026** tout le reste, Tripack compris, puis a publié en septembre et en octobre la liste des produits du mois, toujours sans jour. Les dates précises viennent des revendeurs et des calendriers spécialisés, et elles bougent : certains sites plaçaient la Pokébox et les Tripacks au 16 septembre, or ni l'un ni l'autre ne figure sur la liste officielle de septembre. La Collection K.O. y figure, mais sans date précise à ce jour. La Pokébox n'apparaît pas non plus sur celle d'octobre : son 16 octobre vient des revendeurs. Le Coffret Classeur, lui, figure sur la liste officielle d'octobre : longtemps donné au 2 octobre par les revendeurs, il n'était pas en rayon ce jour-là, et Play-in comme Universtcg l'annoncent désormais pour le 23 octobre. L'échéance du 13 novembre reste la plus incertaine : ne la tenez pas pour acquise avant confirmation. Dernier glissement en date : l'UPC Journée Mentali, longtemps annoncée au 6 novembre avec la Soirée Noctali, est repoussée au 27 novembre, jour du Black Friday ; la Soirée Noctali reste attendue le 6.
+Une nuance importante : la communication officielle française ne donne jamais de jour. Pokémon France a placé au **T3 2026** la première vague (ETB, coffrets Amphinobi-ex et Nymphali-ex, Collection poster, blister de 2 boosters et Collection K.O.) et au **T4 2026** tout le reste, Tripack compris, puis a publié en septembre et en octobre la liste des produits du mois, toujours sans jour. Les dates précises viennent des revendeurs et des calendriers spécialisés, et elles bougent : certains sites plaçaient la Pokébox et les Tripacks au 16 septembre, or ni l'un ni l'autre ne figure sur la liste officielle de septembre. La Collection K.O. y figure, mais sans date précise à ce jour. La Pokébox n'apparaît pas non plus sur celle d'octobre : son 16 octobre venait des revendeurs, et notre équipe l'a bien trouvée en rayon. Le Coffret Classeur, lui, figure sur la liste officielle d'octobre : longtemps donné au 2 octobre par les revendeurs, il n'était pas en rayon ce jour-là, et il est bien arrivé en boutique le 23 octobre. L'échéance du 13 novembre reste la plus incertaine : ne la tenez pas pour acquise avant confirmation. Dernier glissement en date : l'UPC Journée Mentali, longtemps annoncée au 6 novembre avec la Soirée Noctali, est repoussée au 27 novembre, jour du Black Friday ; la Soirée Noctali reste attendue le 6.
 
 Enfin, la particularité habituelle des sets anniversaire : **aucun display de 36 boosters n'est annoncé** en Occident (seulement en Asie). Les boosters ne s'obtiennent qu'à l'intérieur des produits ci-dessus, ce qui concentre la demande sur les ETB et les UPC.
 
