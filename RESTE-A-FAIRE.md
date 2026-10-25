@@ -1,6 +1,6 @@
 # Reste à faire : Cards-Trading
 
-État au **22 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
+État au **25 octobre 2026**. Les règles durables vivent dans `CLAUDE.md` ; ce
 fichier ne liste que ce qui est **ouvert**. Retirer une ligne dès qu'elle est
 traitée. Les chantiers clos (incidents du 19 au 22 septembre, fiabilité des
 cotes, SEO, vérifications) sont archivés dans `docs/journal-des-corrections.md`.
@@ -14,11 +14,9 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Aujourd'hui | Valider dans Buffer les 10 brouillons du Gala TCG et de Règne Delta (22 au 25 octobre) avec « Schedule Post », jamais « Add to queue » (le post partirait au prochain créneau libre). | Julian |
-| D'ici samedi | Relire et valider les brouillons de la semaine du 26 octobre, préparés le 22 (6 posts, dont 2 sur les nouveaux piliers « À noter » et « Le bon geste »). La routine du samedi n'écrira rien pour cette semaine, le fichier existant déjà. | Julian |
 | Dès que possible | Résultat du constat du 16 octobre : Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) en rayon ou non ? L'article les donne au 16 octobre « annoncé » : confirmer ou corriger (voir « Veille du calendrier »). | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
-| Quand tu veux | Tâche `rappel-marche-japonais-cote` : figée depuis le 21 au soir sur une demande de permission (même piège pour le contrôle du 15 et la vérification des posts du 20, dont les passages n'ont rien fait). La relancer avec « Run now », ou me demander l'essai à blanc en session. | Julian |
+| Avant le jeudi 12 novembre | Rouvrir ou non le marché japonais de la cote (prochain créneau japonais : semaine ISO 46). Essai à blanc fait en session le 25 octobre : 3 cartes au podium, toutes confirmées par la moyenne sur 7 jours, aucune déjà publiée ; réserve sur l'affichage des noms (« Dracaufeu » pour Méga-Dracaufeu X-ex, nom et extension laissés en japonais). Rouvrir, c'est retirer le bloc de suspension de `cote-hebdo.yml`. | Julian |
 | Début novembre | Article McDonald's : annonce officielle de McDonald's France ou de Pokémon ? L'opération américaine est annoncée pour le 5 novembre ; une confirmation française ferait réécrire la section « Et la France ? ». | Claude, sur demande |
 
 ---
@@ -26,6 +24,8 @@ dépôt, qui est public.
 ## 🟠 Chantiers ouverts
 
 ### 1. Mesure du trafic
+
+**Repris plus tard** (arbitrage du 25 octobre) ; le relevé automatique du 28 continue.
 
 **Web Analytics est actif et collecte** depuis le 1er août. Le « introuvable » relevé
 le matin du 30 septembre venait d'un mauvais cadrage de l'appel (identifiant d'équipe passé à
@@ -49,6 +49,8 @@ Les UTM sont payants (Web Analytics Plus) : la source se lit dans le référent.
 Chrome de Julian bloquent le script, ses propres visites ne comptent jamais.
 
 ### 2. Illustrations réalistes pour les posts
+
+**En cours côté Julian** (compte et jeton Cloudflare), dans une autre conversation.
 
 Décision de Julian (30 septembre) : niveaux 1 et 2 en test, puis le niveau 3 une fois
 tout validé. Niveau 1 : photos réelles et visuels officiels (modèle `photo` existant,
@@ -105,7 +107,9 @@ choisi à la main. Une photo en portrait remplit bien les deux formats.
 
 - **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous sont posés et
   mesurés (49 candidats ramenés à 4, les trois cartes gelées écartées), mais aucun passage
-  réel ne les a validés. À rouvrir après un déclenchement manuel concluant.
+  réel ne les a validés. À rouvrir après un déclenchement manuel concluant. L'essai à blanc du
+  25 octobre l'est sur le fond, avec une réserve sur les noms : décision de Julian (voir « Cette
+  semaine »).
 - **L'historique One Piece repart de zéro** pour 46 identifiants à variantes multiples, leurs
   séries passées n'étant pas réattribuables. Les variations redeviennent calculables après
   deux relevés, soit début octobre : à contrôler.
@@ -161,6 +165,8 @@ Carte holo « L'équipe IA » placée en **05/20** dans la banque privée, à la
 
 ### 7. Cote One Piece en euros (priorité de Julian, 14 octobre)
 
+**Repris plus tard** (arbitrage du 25 octobre).
+
 One Piece est dans la rotation du top des hausses, mais **coté en dollars sur le marché
 américain** (`scripts/cote-one-piece.mjs` relève optcgapi, converti en euros à taux fixe) :
 `optcgapi`, `apitcg` et `tcgcsv` sont adossés à TCGplayer, et TCGdex ne couvre que Pokémon.
@@ -190,6 +196,9 @@ fragile.
 ---
 
 ## 🟡 Améliorations identifiées, non appliquées
+
+Le point 8 se traite **en dernier, avant l'ouverture publique**. Les points 9 à 11 sont **en pause
+volontaire** (arbitrages du 25 octobre) : ne pas les relancer sans raison.
 
 ### 8. Durcir la gestion des secrets
 
