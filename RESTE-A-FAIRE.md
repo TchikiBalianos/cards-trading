@@ -16,7 +16,7 @@ dépôt, qui est public.
 |---|---|---|
 | Dès que possible | Résultat du constat du 16 octobre : Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) en rayon ou non ? L'article les donne au 16 octobre « annoncé » : confirmer ou corriger (voir « Veille du calendrier »). | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
-| Avant le jeudi 12 novembre | Rouvrir ou non le marché japonais de la cote (prochain créneau japonais : semaine ISO 46). Essai à blanc fait en session le 25 octobre : 3 cartes au podium, toutes confirmées par la moyenne sur 7 jours, aucune déjà publiée ; réserve sur l'affichage des noms (« Dracaufeu » pour Méga-Dracaufeu X-ex, nom et extension laissés en japonais). Rouvrir, c'est retirer le bloc de suspension de `cote-hebdo.yml`. | Julian |
+| Jeu 12 nov. | Premier top japonais depuis la réouverture (semaine ISO 46) : vérifier le passage, les noms en français complets et l'absence de valeur figée. | Claude, sur demande |
 | Début novembre | Article McDonald's : annonce officielle de McDonald's France ou de Pokémon ? L'opération américaine est annoncée pour le 5 novembre ; une confirmation française ferait réécrire la section « Et la France ? ». | Claude, sur demande |
 
 ---
@@ -105,11 +105,11 @@ choisi à la main. Une photo en portrait remplit bien les deux formats.
 
 ### 3. Cotes : marché japonais et historique One Piece
 
-- **Le marché japonais reste suspendu** dans `cote-hebdo.yml`. Les garde-fous sont posés et
-  mesurés (49 candidats ramenés à 4, les trois cartes gelées écartées), mais aucun passage
-  réel ne les a validés. À rouvrir après un déclenchement manuel concluant. L'essai à blanc du
-  25 octobre l'est sur le fond, avec une réserve sur les noms : décision de Julian (voir « Cette
-  semaine »).
+- **Le marché japonais est rouvert depuis le 25 octobre** (décision de Julian), après un essai à
+  blanc concluant et la correction des noms : une carte japonaise porte désormais son nom
+  complet en français (« Méga-Dracaufeu X-ex », plus « Dracaufeu · メガリザードンXex »), et
+  chaque post dit s'il s'agit de cartes japonaises ou françaises. Premier passage réel le jeudi
+  12 novembre.
 - **L'historique One Piece repart de zéro** pour 46 identifiants à variantes multiples, leurs
   séries passées n'étant pas réattribuables. Les variations redeviennent calculables après
   deux relevés, soit début octobre : à contrôler.
@@ -240,7 +240,7 @@ TikTok reste **volontairement personnel** (décision du 19 septembre).
 | `alerte-relecture` | push sur `blog/**`, rappel quotidien 05:32 UTC | ✅ |
 | `alerte-automatisations` | quotidien 06:02 UTC | ✅ |
 | `annonce-discord`, `annonce-buffer` | dimanche, mardi, vendredi | ✅ file résorbée |
-| `cote-hebdo` | jeudi | ✅ international et One Piece en rotation, japonais suspendu ; confirmation sur 7 jours, paliers et repli de marché depuis le 13 octobre |
+| `cote-hebdo` | jeudi | ✅ rotation marché français, japonais (rouvert le 25 octobre) et One Piece ; confirmation sur 7 jours, paliers et repli de marché depuis le 13 octobre |
 | `newsletter-hebdo` | samedi 13h37 | ✅ |
 | `brouillons-sociaux` | à chaque dépôt de `data/social/*.json` | ✅ |
 | `controle-social` | quotidien 15:30 UTC | ✅ |

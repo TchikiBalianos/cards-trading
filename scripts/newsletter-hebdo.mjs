@@ -163,7 +163,10 @@ function ligneArticle(a) {
   on retombe alors sur la seule extension, comme avant.
 */
 function situeCarte(c) {
-  return [c.set, c.refLongue].filter(Boolean).join(' · ');
+  /* `setAffiche` (« édition japonaise ») remplace le nom japonais de
+     l'extension depuis le 25 octobre 2026, comme dans le post du jeudi. */
+  const extension = c.setAffiche ? c.setAffiche[0].toUpperCase() + c.setAffiche.slice(1) : c.set;
+  return [extension, c.refLongue].filter(Boolean).join(' · ');
 }
 
 function ligneCarte(c) {
@@ -185,7 +188,7 @@ function ligneCarte(c) {
 
 function sectionPrix(podiumEntry) {
   if (!podiumEntry || !podiumEntry.podium?.length) return '';
-  const titreMarche = podiumEntry.marche === 'jp' ? 'cartes japonaises' : 'cartes internationales';
+  const titreMarche = podiumEntry.marche === 'jp' ? 'cartes japonaises' : 'cartes françaises';
   return `
         <tr>
           <td style="padding:32px 28px 4px; font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; letter-spacing:0.08em; text-transform:uppercase; color:#6b93c4;">

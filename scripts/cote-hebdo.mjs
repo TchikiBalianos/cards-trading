@@ -17,6 +17,7 @@
 
 import { readFileSync } from 'node:fs';
 import { referenceCarte, corroborerExtension } from './lib/reference-carte.mjs';
+import { nomFrancaisCarteJaponaise } from './lib/nom-japonais.mjs';
 import { PALIERS, PALIER_LE_PLUS_SOUPLE, confirmationAvg7, passeLePalier, motifReferenceFigee } from './lib/cote-paliers.mjs';
 
 const API = 'https://api.tcgdex.net/v2';
@@ -381,16 +382,39 @@ retenues.sort((a, b) => b.variation - a.variation);
   échec laisse le nom d'origine plutôt que de faire échouer le script —
   un nom en japonais vaut mieux que pas de publication.
 */
-async function nomFrancais(dexId) {
+/* Nom de l'espèce en français ET en japonais : le second sert à le
+   repérer dans le nom de la carte japonaise (scripts/lib/nom-japonais.mjs). */
+async function nomsEspece(dexId) {
   if (!dexId) return null;
   try {
     const r = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${dexId}/`);
     if (!r.ok) return null;
     const j = await r.json();
-    return j.names?.find((n) => n.language?.name === 'fr')?.name || null;
+    const nom = (langue) => j.names?.find((n) => n.language?.name === langue)?.name || null;
+    const fr = nom('fr');
+    return fr ? { fr, ja: nom('ja-hrkt') || nom('ja') } : null;
   } catch {
     return null;
   }
+}
+
+/* Un nom construit à partir d'une forme régionale, « Brillant » ou
+   « Radieux » n'est publié que s'il existe tel quel dans la base française
+   de TCGdex. Les deux apostrophes y coexistent (« Goupix d'Alola » et
+   « Goupix d’Alola »). Base injoignable : on écarte la carte. */
+async function existeEnFrancais(nom) {
+  for (const variante of new Set([nom, nom.replace(/'/g, '’')])) {
+    try {
+      const r = await fetch(`${API}/fr/cards?name=eq:${encodeURIComponent(variante)}`);
+      if (r.ok) {
+        const j = await r.json();
+        if (Array.isArray(j) && j.length > 0) return true;
+      }
+    } catch {
+      /* on tente la variante suivante */
+    }
+  }
+  return false;
 }
 
 /*
@@ -487,30 +511,46 @@ async function preparerCarteUneFois(c) {
   const enLatin = [...c.nom].every((ch) => ch.codePointAt(0) < 0x0370);
 
   /* Espèce via PokéAPI ; à défaut, carte Dresseur via TCGdex. */
-  let fr = await nomFrancais(c.dexId);
-  let estDresseur = false;
+  const espece = await nomsEspece(c.dexId);
+  let fr = espece?.fr || null;
+
+  /* Carte Pokémon japonaise : le nom COMPLET de la carte, jamais l'espèce
+     seule suivie du japonais (« Dracaufeu · メガリザードンXex » pour un
+     Méga-Dracaufeu X-ex, essai à blanc du 25 octobre 2026). Nom non
+     reconnu : la carte est écartée, comme un Dresseur intraduisible. */
+  let nomComplet = null;
+  if (!enLatin && fr) {
+    const construit = nomFrancaisCarteJaponaise(c.nom, espece);
+    if (construit && (construit.simple || (await existeEnFrancais(construit.nom)))) nomComplet = construit.nom;
+    else fr = null;
+  }
   if (!fr && !enLatin && c.category === 'Trainer') {
     fr = await nomFrancaisDresseur({ name: c.nom, illustrator: c.illustrator, rarity: c.rarity });
-    estDresseur = Boolean(fr);
   }
 
-  if (!enLatin && !fr) {
+  if (!enLatin && !fr && !nomComplet) {
     rejets['nom non traduisible'] = (rejets['nom non traduisible'] || 0) + 1;
     /* Journalisé pour pouvoir enrichir data/traductions-dresseurs.json
        après vérification manuelle : sans ce nom, impossible de savoir
        quoi ajouter. */
-    console.error(`  ↳ nom non traduisible, à ajouter à la table : ${c.nom} (${c.id})`);
+    console.error(
+      c.category === 'Trainer'
+        ? `  ↳ nom non traduisible, à ajouter à la table : ${c.nom} (${c.id})`
+        : `  ↳ nom de carte japonaise non reconnu (scripts/lib/nom-japonais.mjs) : ${c.nom} (${c.id})`,
+    );
     return false;
   }
 
-  /* On garde le nom d'origine à côté : sur une carte japonaise il situe
-     la version, sur une carte française il est déjà identique. */
+  /* `nomFr` garde l'espèce (ou le nom du Dresseur), `nom` le nom d'origine
+     pour l'archive. Ce qui se publie est `affichage` : le nom complet en
+     français pour une carte japonaise, le nom officiel français d'un
+     Dresseur, le nom de la carte telle quelle sur le marché français. */
   c.nomFr = fr;
-  /* Le nom japonais est conservé à côté pour une carte Pokémon : il
-     situe la version. Pour un Dresseur en revanche, le nom français EST
-     le nom officiel de la carte — accoler le japonais n'apporterait
-     qu'une ligne illisible. */
-  c.affichage = !fr || enLatin ? c.nom : estDresseur ? fr : `${fr} · ${c.nom}`;
+  c.affichage = nomComplet || (!fr || enLatin ? c.nom : fr);
+  /* L'extension japonaise n'a pas de nom français : on dit de quelle
+     édition il s'agit, la référence (« SM3p 079 ») situant la carte. Le nom
+     japonais de l'extension reste dans `set`, pour l'archive. */
+  if (MARCHE === 'jp') c.setAffiche = 'édition japonaise';
 
   /*
     Référence courte de l'impression : « POR 120/088 ».
@@ -615,7 +655,7 @@ const podiumArchivable = podium.map(({ variationBrute, confirmationBrute, ...c }
 if (EN_JSON) {
   console.log(JSON.stringify({ marche: MARCHE, examinees, retenues: retenues.length, palier: palier.nom, podium: podiumArchivable, rejets }, null, 2));
 } else {
-  console.log(`Marché : ${MARCHE === 'jp' ? 'cartes japonaises (cote EUR)' : 'international'}`);
+  console.log(`Marché : ${MARCHE === 'jp' ? 'cartes japonaises (cote EUR)' : 'cartes françaises (cote commune à toutes les langues)'}`);
   console.log(`Cartes examinées : ${examinees} · candidates : ${retenues.length} · palier : ${palier.nom}`);
   console.log('Rejets :', Object.entries(rejets).map(([m, n]) => `${m} ×${n}`).join(', ') || 'aucun');
   if (podium.length === 0) {
@@ -623,7 +663,7 @@ if (EN_JSON) {
   } else {
     console.log('\nTop des hausses :');
     for (const [i, c] of podium.entries()) {
-      console.log(`  ${i + 1}. ${c.affichage} · ${c.set} ${c.refLongue || '?'} · ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €, avg7 +${c.confirmation} %)`);
+      console.log(`  ${i + 1}. ${c.affichage} · ${c.setAffiche || c.set} ${c.refLongue || '?'} · ${c.actuel} € (+${c.variation} %, réf. ${c.reference} €, avg7 +${c.confirmation} %)`);
     }
   }
 }

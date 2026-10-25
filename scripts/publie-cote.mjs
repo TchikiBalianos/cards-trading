@@ -172,8 +172,10 @@ if (!donnees.podium || donnees.podium.length < PODIUM_MINIMUM) {
 }
 if (donnees.palier && !cache) console.log(`Palier retenu : ${donnees.palier}.`);
 
+/* La langue des cartes est dite partout (Julian, 25 octobre 2026) : un
+   lecteur doit savoir s'il lit la cote de cartes japonaises ou françaises. */
 const titreMarche =
-  MARCHE === 'jp' ? 'Cartes japonaises' : MARCHE === 'op' ? 'One Piece Card Game' : 'Cartes Pokémon';
+  MARCHE === 'jp' ? 'Cartes Pokémon japonaises' : MARCHE === 'op' ? 'One Piece Card Game' : 'Cartes Pokémon françaises';
 
 /*
   Mention de source : ce que la mesure EST réellement.
@@ -199,8 +201,8 @@ const mentionSource =
   MARCHE === 'op'
     ? 'Évolution sur 13 jours'
     : MARCHE === 'jp'
-      ? 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, cartes japonaises'
-      : 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, toutes langues confondues';
+      ? 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, cote propre aux cartes japonaises'
+      : 'Écart entre la cote du jour et la moyenne des ventes sur 30 jours. Cardmarket en euros, une seule cote pour la carte française et ses autres langues';
 
 /* Version courte pour le pied de vignette (sa propre ligne dans le carré). */
 const mentionCourte =
@@ -226,6 +228,12 @@ function echapper(t) {
 /* Un nom trop long casse la mise en page : on tronque plutôt que de
    laisser déborder hors de la toile. */
 const court = (t, n) => (t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t);
+
+/* Extension affichée : « édition japonaise » sur le marché japonais, dont
+   les extensions n'ont pas de nom français (cote-hebdo.mjs, `setAffiche`),
+   le nom de l'extension sinon. Majuscule quand elle ouvre une ligne. */
+const extension = (c) => c.setAffiche || c.set;
+const majuscule = (t) => (t ? t[0].toUpperCase() + t.slice(1) : t);
 
 /*
   Nom de la CARTE, pas du Pokémon.
@@ -308,7 +316,7 @@ async function vignetteCote(f) {
       carte secrète. Deux des trois cartes du podium du 17 septembre en
       étaient, et rien ne le disait.
     */
-    const situe = [c.set, c.refLongue].filter(Boolean).join(' · ');
+    const situe = [majuscule(extension(c)), c.refLongue].filter(Boolean).join(' · ');
     return `
   <text x="${marge}" y="${y}" font-family="Arial, Helvetica, sans-serif" font-size="${f.rangTaille}"
         font-weight="700" fill="${BLEU}">${i + 1}</text>
@@ -434,7 +442,7 @@ const reference = (c) => (c.refCourte ? ` (${c.refCourte})` : '');
 const SEP = ' · ';
 
 const ligne = (c, i, avecSet) =>
-  `${i + 1}. ${nomCarte(c)}${avecSet && c.set ? ', ' + c.set : ''}${reference(c)}` +
+  `${i + 1}. ${nomCarte(c)}${avecSet && extension(c) ? ', ' + extension(c) : ''}${reference(c)}` +
   `${SEP}${euros(c.actuel)} (+${c.variation} %)`;
 
 const classementRiche = donnees.podium.map((c, i) => ligne(c, i, true)).join('\n');
