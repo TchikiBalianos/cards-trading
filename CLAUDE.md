@@ -914,7 +914,9 @@ de la communauté, avec le lien de l'accord écrit dans `preuve`). Les visuels o
 
 **Piliers d'appoint** (22 octobre 2026) : `calendrier`, `guide`, `duel` et `retro`, hors de
 la grille de `planEditorial`, pour un post en plus un jour de relais (heure décalée, X
-10:50, Instagram 15:00). À valider par Julian avant d'en faire une règle de la routine.
+10:50, Instagram 15:00). **Occasionnels** (Julian, 25 octobre 2026) : au plus un par semaine,
+ajouté à la main et seulement quand il y a un vrai sujet (des sorties à dater, un vrai
+anniversaire). La routine du samedi n'en écrit jamais.
 
 Une photo dont la licence n'exige pas de crédit (aujourd'hui Unsplash seul,
 `HOTES_CREDIT_FACULTATIF` dans `visuel-spec.mjs`) garde son `credit` dans la spec, mais il
