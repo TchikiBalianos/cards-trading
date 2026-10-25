@@ -14,7 +14,7 @@ dépôt, qui est public.
 
 | Quand | Quoi | Qui |
 |---|---|---|
-| Dès que possible | Résultat du constat du 16 octobre : Pokébox 30e Anniversaire (boîtes métal Amphinobi-ex et Nymphali-ex) en rayon ou non ? L'article les donne au 16 octobre « annoncé » : confirmer ou corriger (voir « Veille du calendrier »). | Julian |
+| Dès que possible | Fusionner la pull request n° 15 (article 30e Anniversaire : Pokébox et Classeur constatés en rayon par Julian le 25 octobre, « annoncé » ajouté aux dates encore à venir), puis supprimer sa branche une fois l'article vérifié en production. | Julian |
 | Ven 30 oct., en magasin | Decks Combat Mentali-ex et Noctali-ex présents ? La liste officielle d'octobre et Play-in les placent au 30 octobre, le calendrier publié sur X au 6 novembre. | Julian |
 | Jeu 12 nov. | Premier top japonais depuis la réouverture (semaine ISO 46) : vérifier le passage, les noms en français complets et l'absence de valeur figée. | Claude, sur demande |
 | Début novembre | Article McDonald's : annonce officielle de McDonald's France ou de Pokémon ? L'opération américaine est annoncée pour le 5 novembre ; une confirmation française ferait réécrire la section « Et la France ? ». | Claude, sur demande |
@@ -115,6 +115,8 @@ choisi à la main. Une photo en portrait remplit bien les deux formats.
   deux relevés, soit début octobre : à contrôler.
 
 ### 4. Veille du calendrier 30e Anniversaire
+
+**25 octobre** : Julian confirme la Pokébox et le Coffret Classeur en rayon (correctif en pull request n° 15). Restent à constater les Decks Combat (30 octobre). Le point ci-dessous date du 13 octobre.
 
 Point au 13 octobre 2026, pages relues en texte brut et constat de Julian en magasin le 2
 octobre (Bundle et Mini-Tins en rayon, Classeur absent). Ces produits n'ont pas de date certaine
