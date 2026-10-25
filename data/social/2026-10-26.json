@@ -135,7 +135,12 @@
       },
       "sources": [
         "https://nordvpn.com/blog/fake-pokemon-card-stores/"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6add755e0b5343d070b2de26",
+        "instagram": "6add755f8b3d437ddcec6cfb",
+        "facebook": "6add755f8b3d437ddcec6d19"
+      }
     },
     {
       "id": "2026-10-30-actu",
@@ -158,7 +163,12 @@
       },
       "sources": [
         "https://fr.onepiece-cardgame.com/products/eb05.html"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6add755fbd33ce99c352b693",
+        "instagram": "6add7560e4be8a4d868b651e",
+        "facebook": "6add75606887a2efc1e74d6e"
+      }
     },
     {
       "id": "2026-10-31-guide",
