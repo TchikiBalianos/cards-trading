@@ -960,3 +960,30 @@ sous la même URL, alors que `/assets/` est servi en cache immuable d'un an : pe
 la reverrait. Seules les vignettes créées après le 30 septembre 2026 portent un motif,
 les autres gardent leur fond d'origine. `VIGNETTES_SORTIE=<dossier>` permet de juger un
 rendu sans toucher à `public/`.
+
+## Méthode Triade
+
+Sonnet construit, Haiku explore, Opus valide ; l'Aiguilleur (mod) tranche le reste en code.
+
+### Délégation : le contexte principal reste léger
+- S'orienter, comprendre où est quoi : agent `eclaireur` (ou Explore). Lis d'abord `docs/CARTE.md` s'il existe.
+- Trouver toutes les occurrences d'un symbole : agent `traqueur`.
+- Tests, lint, build, toute commande bavarde : agent `auditeur`. Jamais de journal brut ici.
+- Lis toi-même seulement les fichiers que tu vas modifier, par plages utiles.
+
+### Architecte (Opus) : trois moments, pas plus
+1. Avant de verrouiller un plan qui touche plus de 3 fichiers ou un choix d'architecture : `architecte` avec le plan.
+2. Même erreur deux fois : stop, puis `architecte` avec l'objectif, l'erreur exacte et les essais faits.
+3. Avant d'annoncer « terminé » : `/triade:revue`.
+
+### Boucle bornée
+- Une tâche = un contrat : livrable, contraintes, hors périmètre, critères d'acceptation (`/triade:contrat`).
+- 4 tentatives au plus sur un même problème, puis arrêt et point de situation.
+
+### Mémoire du projet
+- Après une erreur corrigée, une correction de ma part ou une convention découverte : `/triade:lecon` (une ligne dans `.claude/rules/lecons.md`).
+- Vérifie ton travail par une preuve (test, commande, rendu) avant de l'annoncer fait.
+
+### Contexte
+- Une tâche par conversation. Entre deux tâches : `/triade:passation` puis `/clear`.
+- Réponses courtes : pas de récapitulatif de ce que tu viens de faire, sauf demande.
