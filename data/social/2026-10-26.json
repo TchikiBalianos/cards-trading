@@ -115,13 +115,59 @@
       }
     },
     {
+      "id": "2026-10-29-actu",
+      "jour": "2026-10-29",
+      "pilier": "actu",
+      "licence": "pokemon",
+      "twitter": {
+        "heure": "09:10",
+        "texte": "🚨 Alerte arnaque : les fausses boutiques de cartes Pokémon.\n\nSelon NordVPN, elles se paient des pubs sur Google, Instagram et Facebook.\nEt au lieu de tes cartes, tu reçois parfois… une carte de remerciement 🫠\n\nDéjà croisé une boutique louche ? 👇\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "heure": "15:00",
+        "texte": "🚨 Alerte arnaque : les fausses boutiques de cartes Pokémon\n\nBeau site, belles photos, « stock limité », « précommande ouverte » : elles ont tout d'une vraie boutique.\nSelon l'équipe de veille de NordVPN, qui a enquêté sur ces sites, elles se paient des publicités sur Google, Instagram et Facebook.\nEt après le paiement, au lieu de tes cartes, certaines t'envoient une carte de remerciement, un coupon ou un booster bon marché.\nDe quoi te faire patienter et retarder ta réclamation.\n\nLes 5 signaux qui doivent t'alerter :\n1. Tu ne trouves la boutique que dans des publicités.\n2. Le prix est bien en dessous du marché.\n3. Le nom imite une enseigne connue, à une lettre près.\n4. Impossible de trouver des avis fiables.\n5. Aucune adresse, juste un formulaire ou une adresse mail gratuite.\n\nUn signal, on vérifie.\nPlusieurs, on ferme l'onglet.\n\nEnvoie ce post au pote qui précommande tout 👇\nEt enregistre-le pour la prochaine sortie.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #arnaque #tcg #cartesacollectionner"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Alerte arnaque",
+        "titre": "Fausses boutiques de cartes : les 5 signaux",
+        "sous_titre": "Publicités, prix trop beaux, avis introuvables : les signaux relevés par NordVPN."
+      },
+      "sources": [
+        "https://nordvpn.com/blog/fake-pokemon-card-stores/"
+      ]
+    },
+    {
+      "id": "2026-10-30-actu",
+      "jour": "2026-10-30",
+      "pilier": "actu",
+      "licence": "one-piece",
+      "twitter": {
+        "heure": "10:20",
+        "texte": "🏴‍☠️ Sortie du jour : EXTRA BOOSTER Heroines Edition vol.2 (EB-05).\n\nAu programme, selon le site officiel : un Leader Nico Robin, Boa Hancock, Perona…\nEt une carte parallèle illustrée par Kentaro Yabuki, l'auteur de To LOVE-Ru.\n\nTon héroïne préférée ? 👇\n\n#OnePieceCardGame"
+      },
+      "instagram": {
+        "heure": "15:00",
+        "texte": "🏴‍☠️ Sortie du jour : EXTRA BOOSTER Heroines Edition vol.2 (EB-05)\n\nLes héroïnes de One Piece reviennent en boutique ce vendredi 30 octobre.\nAu programme, selon le site officiel du One Piece Card Game :\n• un nouveau Leader Nico Robin, qui mène les personnages de l'attribut Sagesse\n• Boa Hancock, Perona, Reiju Vinsmoke, Baby 5 ou encore Miss Buckingham Stussy\n• 6 cartes SP aux designs spéciaux\n• une carte parallèle illustrée par Kentaro Yabuki, l'auteur de To LOVE-Ru\n\nEt Perona, la princesse fantôme de Thriller Bark, arrive pile la veille d'Halloween 👻\nOn n'aurait pas mieux choisi.\n\nTu ouvres quelques boosters ce week-end ?\nDis-nous quelle héroïne tu vises en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#onepiececardgame #onepiecetcg #onepiece #tcg #cartesacollectionner"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Sortie du jour",
+        "titre": "Les héroïnes de One Piece débarquent en boutique",
+        "sous_titre": "EXTRA BOOSTER Heroines Edition vol.2 (EB-05), le 30 octobre."
+      },
+      "sources": [
+        "https://fr.onepiece-cardgame.com/products/eb05.html"
+      ]
+    },
+    {
       "id": "2026-10-31-guide",
       "jour": "2026-10-31",
       "pilier": "guide",
       "licence": "mixte",
       "twitter": {
         "heure": "10:50",
-        "texte": "Le bon geste 📦\nExpédier une carte sans l'abîmer :\n\n1. Une pochette souple\n2. Un étui rigide (toploader)\n3. Un sachet refermable par-dessus\n4. Le tout entre deux cartons rigides\n5. Une enveloppe à bulles, en envoi suivi\n\nTu ajoutes quoi ? 👇\n\n#TCG"
+        "texte": "Le bon geste 📦\nExpédier une carte sans l'abîmer :\n\n1. Une pochette souple (sleeve)\n2. Un étui rigide (toploader)\n3. Un sachet plastique refermable par-dessus\n4. Le tout entre deux cartons rigides\n5. Une enveloppe à bulles, en envoi suivi\n\nTu ajoutes quoi ? 👇\n\n#TCG #Livraison"
       },
       "instagram": {
         "heure": "15:00",
