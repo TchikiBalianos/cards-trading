@@ -20,7 +20,8 @@ Le site est en ligne sur https://cards-trading.com.
 - `scripts/` : publication, Buffer, Discord, newsletter, cotes (tests dans `scripts/lib/*.test.mjs`)
 - `data/` : cotes, réseaux sociaux, visuels (JSON)
 - `supabase/migrations/` : schéma SQL
-- `docs/` : briefs, plans, journal des corrections
+- `docs/` : briefs, plans, journal des corrections, règles détaillées citées par `CLAUDE.md`
+- `.claude/rules/` : règles qui se chargent seules sur certains fichiers (`landing-public.md`, `buffer-api.md`)
 - `.github/workflows/` : crons de publication, alertes, keep-alive
 
 **Points d'entrée**
@@ -43,12 +44,12 @@ Le site est en ligne sur https://cards-trading.com.
 - Tester : `npm test` (`node --test "scripts/**/*.test.mjs"`)
 
 **Pièges connus**
-- Supabase plan gratuit : pause après environ 7 jours d'inactivité, d'où `keep-alive` (CLAUDE.md:188)
-- Cache CSS : incrémenter `landing.css?v=N` ET les `@import` (CLAUDE.md:26), cache de 7 jours (CLAUDE.md:31)
-- Images `public/assets/` en `immutable` (1 an) : changer l'URL, pas seulement le fichier (CLAUDE.md:55)
-- Vercel Hobby : 2 crons maximum, ne pas en ajouter un troisième (CLAUDE.md:251)
-- `vercel.json` : ne jamais remettre `"public": true`, cela casse le déploiement (CLAUDE.md:255)
-- Apex `cards-trading.com` redirige en 307 vers `www` : utiliser `curl -L`, aussi dans les workflows (CLAUDE.md:257)
-- API Buffer changée sans préavis en août 2026 (CLAUDE.md:322) : ne pas accuser la clé
-- Navigation mobile : zéro JS de scroll, ne pas y toucher sans raison (CLAUDE.md:691)
+- Supabase plan gratuit : pause après environ 7 jours d'inactivité, d'où `keep-alive` (CLAUDE.md:106)
+- Cache CSS : incrémenter `landing.css?v=N` ET les `@import` (CLAUDE.md:41), cache de 7 jours (CLAUDE.md:46)
+- Images `public/assets/` en `immutable` (1 an) : changer l'URL, pas seulement le fichier (CLAUDE.md:70)
+- Vercel Hobby : 2 crons maximum, ne pas en ajouter un troisième (CLAUDE.md:119)
+- `vercel.json` : ne jamais remettre `"public": true`, cela casse le déploiement (CLAUDE.md:123)
+- Apex `cards-trading.com` redirige en 307 vers `www` : utiliser `curl -L`, aussi dans les workflows (CLAUDE.md:125)
+- API Buffer changée sans préavis en août 2026 (`.claude/rules/buffer-api.md`) : ne pas accuser la clé
+- Navigation mobile : zéro JS de scroll, ne pas y toucher sans raison (`.claude/rules/landing-public.md`)
 - Ne jamais committer `.env*` ; noms des variables de `.env.local.example` : `RESEND_API_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `NODE_ENV`

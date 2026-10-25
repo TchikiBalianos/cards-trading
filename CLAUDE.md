@@ -1,10 +1,25 @@
-# Cards-Trading — Landing page
+# Cards-Trading : Landing page
 
 Landing de la marketplace TCG **Cards-Trading.com**. Éditeur : **Thugz Labs**.
+Pile, flux, commandes : `docs/CARTE.md`. Histoire des correctifs : `docs/journal-des-corrections.md`.
 
----
+## Quand lire quoi
 
-## Architecture — le piège principal
+Ce fichier ne garde que les règles valables pour toute tâche. Le détail est rangé : lire le fichier cité **avant** de commencer.
+
+| Quand tu... | Lire |
+|---|---|
+| touches `public/` (images, logos, `width`/`height`, navigation mobile) | `.claude/rules/landing-public.md` (se charge seul) |
+| touches le relais Buffer, les brouillons ou la semaine sociale | `.claude/rules/buffer-api.md` (se charge seul) |
+| rédiges, programmes ou fusionnes un article (date de sortie, chiffre, prix compris) | `docs/blog-redaction.md` |
+| diagnostiques la publication des articles ou l'alerte de relecture | `docs/blog-publication.md` |
+| prépares les posts X, Instagram, Facebook, leurs visuels, les cartes Build in Public | `docs/posts-sociaux.md` |
+| touches `/api/keep-alive`, son rapport mensuel ou la pause Supabase | `docs/supabase-keep-alive.md` |
+| dépannes un déploiement Vercel (rien ne part, test d'attente en échec) | `docs/deploiement-vercel.md` |
+| mesures un rendu, le balisage FAQ ou le trafic Vercel Analytics | `docs/verification-mesures.md` |
+| touches `annonce-discord`, `cote-hebdo`, `publie-cote`, `alerte-automatisations` | `docs/discord-cotes-alertes.md` |
+
+## Architecture : le piège principal
 
 Le projet mélange **deux mondes**, et s'y tromper fait perdre du temps :
 
@@ -23,12 +38,12 @@ est copié tel quel. Un build vert ne prouve donc rien sur la landing.
 
 ### CSS
 `public/landing.css` importe les autres via `@import` (dont `layout.css`).
-Cache-busting manuel : `landing.css?v=N` dans `index.html` — **incrémenter N
+Cache-busting manuel : `landing.css?v=N` dans `index.html` : **incrémenter N
 à chaque modification CSS**, sinon Vercel/le navigateur sert l'ancienne version.
 
 ⚠️ **Le numéro de version doit être répercuté sur les `@import`**, pas
 seulement sur `landing.css`. Vercel sert les CSS de `public/` avec
-`Cache-Control: public, max-age=604800` — **7 jours**. Tant que les
+`Cache-Control: public, max-age=604800` : **7 jours**. Tant que les
 `@import` pointaient vers des URL nues (`url(comparatif.css)`), bumper
 `landing.css?v=N` rechargeait le fichier parent mais les 9 enfants
 restaient servis depuis le cache : toute correction faite dans
@@ -40,7 +55,7 @@ fichier servi par `curl` était bien le nouveau.
 Les deux endroits doivent donc rester synchronisés sur le même N :
 
 ```bash
-# depuis public/ — remplacer 17 par le nouveau numéro
+# depuis public/ : remplacer 17 par le nouveau numéro
 sed -i -E 's|\.css\?v=[0-9]+\)|.css?v=17)|' landing.css
 sed -i -E 's|landing\.css\?v=[0-9]+|landing.css?v=17|' index.html
 grep -c "v=17" landing.css   # attendu : 9
@@ -48,12 +63,12 @@ grep -c "v=17" landing.css   # attendu : 9
 
 Vérification : `curl -sI "https://cards-trading.com/comparatif.css"` doit
 répondre, et la valeur mesurée dans le navigateur doit correspondre au
-fichier — sinon c'est du cache, pas un bug de CSS.
+fichier, sinon c'est du cache, pas un bug de CSS.
 
 ### Remplacer une image : changer l'URL, pas seulement le fichier
 
 Les images de `public/assets/` sont servies en
-`Cache-Control: public, max-age=31536000, immutable` — **un an, sans
+`Cache-Control: public, max-age=31536000, immutable` : **un an, sans
 revalidation**. `immutable` dit explicitement au navigateur de ne jamais
 revérifier : réécrire le fichier sous le même nom ne touchera donc
 personne l'ayant déjà chargé.
@@ -68,100 +83,7 @@ C'est plus strict que pour le CSS (7 jours, revalidable). Constaté le
 19 août 2026 en remplaçant le logo Discord quinze minutes après l'avoir
 déployé.
 
-### Décliner un logo de réseau social
-
-Règle de la DA : **pastille à la couleur du réseau + le « C » de
-Cards-Trading en bleu de marque**, jamais la marque du réseau. La source
-canonique est `public/assets/img/logo-icon.png` (512×512, fond
-transparent). Les vignettes font 200×200, pastille de rayon 95 centrée,
-et le « C » mesure 138px de haut, centre optique à (99, 105) :
-
-```js
-const marque = await sharp('public/assets/img/logo-icon.png')
-  .extract({ left: 23, top: 53, width: 360, height: 407 })  // cadre la marque
-  .resize({ height: 138 })
-  .toBuffer({ resolveWithObject: true });
-await sharp(Buffer.from(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
-     <circle cx="100" cy="100" r="95" fill="COULEUR_DU_RESEAU"/></svg>`))
-  .composite([{ input: marque.data, left: 38, top: 36 }])
-  .png().toFile('public/assets/img/logo-social-NOM.png');
-```
-
-### Effet de bord : attributs `width`/`height` sur les `<img>`
-
-Ces attributs ne sont pas inertes. Le navigateur les applique **comme du CSS
-de spécificité 0** (« presentational hints »). Partout où une règle fixe
-seulement la largeur — `.logo img`, `.footer-logo`, les cartes de slider —
-l'attribut `height` reste actif et **écrase le ratio**.
-
-En août 2026, les avoir ajoutés sur 31 images a écrasé le logo (287×68
-affiché en 90×68, soit 69 % de déformation), `goku.png` et les visuels de
-slider. Invisible en desktop large, flagrant sur téléphone.
-
-Le garde-fou est en fin de `public/landing.css` :
-
-```css
-img { height: auto; }
-```
-
-Spécificité (0,0,1) : bat l'attribut, cède à toute règle portée par une
-classe — les hauteurs voulues (`features.css`, `hero.css`) sont préservées.
-Placée **après les `@import`**, donc gagnante sur les égalités.
-
-⚠️ Ne pas supprimer les attributs pour autant : ils servent à déduire
-`aspect-ratio` et à réserver la place avant chargement (gain CLS).
-`height: auto` est justement la moitié prévue de ce mécanisme, pas son ennemi.
-
-⚠️ **Une règle portée par une classe bat ce garde-fou — c'est voulu, mais
-elle doit alors fournir l'autre moitié de la contrainte.** `features.css`
-imposait `height: 80%` à `feature3.webp`, seul visuel portrait du carrousel
-(848×981) : l'attribut HTML `width` continuait de s'appliquer et
-`max-width: 100%` étirait l'image sur toute la colonne, d'où 30 %
-d'écrasement. Dès qu'on fixe une hauteur en CSS sur une image, il faut
-ajouter `width: auto` (ou `object-fit: contain`).
-
-**Contrôle après toute modification touchant les images.** Trois pièges à
-neutraliser, chacun découvert à ses dépens :
-
-- `object-fit: contain/cover` met le contenu en boîte à lettres sans le
-  déformer → ~7 faux positifs sur les logos de TCG si on ne les exclut pas ;
-- `getBoundingClientRect()` inclut les transformations 3D — le `rotateY` des
-  cartes de carrousel simule ~7 % de déformation. Utiliser
-  `offsetWidth`/`offsetHeight` ;
-- **les images `loading="lazy"` hors écran ont `naturalWidth === 0`** et
-  passent donc au travers d'un filtre naïf. C'est exactement comme ça que
-  l'écrasement de `feature3.webp` est resté invisible à trois passes de
-  vérification. Il faut charger leur taille native à part.
-
-```js
-(async () => {
-  const suspects = [];
-  for (const i of document.images) {
-    const cs = getComputedStyle(i);
-    if (cs.objectFit === 'contain' || cs.objectFit === 'cover') continue;
-    if (!i.offsetWidth || !i.offsetHeight) continue;
-    // contourne le lazy-loading : naturalWidth vaut 0 tant que l'image est hors écran
-    const [nw, nh] = await new Promise(ok => {
-      const im = new Image();
-      im.onload = () => ok([im.naturalWidth, im.naturalHeight]);
-      im.onerror = () => ok([0, 0]);
-      im.src = i.src;
-    });
-    if (!nw || !nh) continue;
-    const rn = nw / nh;
-    if (Math.abs(i.offsetWidth / i.offsetHeight - rn) > 0.03 * rn)
-      suspects.push(i.src.split('/').pop() + ' ' + i.offsetWidth + 'x' + i.offsetHeight + ' (natif ' + nw + 'x' + nh + ')');
-  }
-  return suspects;
-})()
-```
-
-Attendu : `[]`.
-
----
-
-## Chaîne d'inscription — à ne jamais casser
+## Chaîne d'inscription : à ne jamais casser
 
 `public/index.html` (formulaire) → `POST /api/submit-form` → **Supabase** (table
 `beta_submissions`) **+ 2 emails Resend** (notification admin vers
@@ -169,7 +91,7 @@ Attendu : `[]`.
 
 ### Règle absolue
 Un lead est retenu si **la base OU l'email admin** a réussi. Si les deux
-échouent, l'API renvoie **503** — jamais un faux « Inscription réussie ».
+échouent, l'API renvoie **503** : jamais un faux « Inscription réussie ».
 
 **Pourquoi** : entre le 13 mai et le 30 juillet 2026, un `return 200` inconditionnel
 a masqué une base en pause. ~11 semaines d'inscriptions perdues, sans aucun signal.
@@ -179,74 +101,20 @@ Ne jamais réintroduire un chemin où un échec de persistance passe en succès.
 - Base HS → préfixe `[BASE HS] ` dans le sujet de l'email admin + encart d'alerte
 - `/api/keep-alive` échoue → email d'alerte automatique sur `contact@`
 
----
+## Supabase : danger permanent
 
-## Supabase — danger permanent
+Projet `frbwmzgaqmylilzciptg` (eu-west-1), **plan gratuit** : **mis en pause après ~7 jours d'inactivité**
+(hostname muet, `ENOTFOUND`, écritures en échec ; données intactes, bouton *Resume project*).
+`/api/keep-alive` l'empêche, appelé volontairement par **deux planificateurs redondants** : le cron Vercel
+(1×/jour, « best effort », logs Hobby limités à 1 h) et GitHub Actions `keep-alive.yml` (toutes les 6 h).
 
-Projet `frbwmzgaqmylilzciptg` (région eu-west-1), **plan gratuit**.
+- Le ping appelle la **RPC `beta_stats()`**, pas un `SELECT` sur `beta_submissions` : RLS le filtre pour la
+  clé anon (INSERT anonyme autorisé, SELECT réservé aux authentifiés), aucune activité n'est marquée.
+- GitHub désactive les workflows planifiés d'un repo **public** après 60 jours sans commit : les réactiver.
+- Appelé **plusieurs fois par jour** : tout ce qu'on y greffe doit être idempotent (rapport mensuel avec
+  `Idempotency-Key`, tests) : `docs/supabase-keep-alive.md`.
 
-> Le plan gratuit **met le projet en pause après ~7 jours d'inactivité**.
-> En pause, le hostname ne résout plus (`ENOTFOUND`) et toutes les écritures
-> échouent. Les données restent intactes et le projet est restaurable depuis
-> le dashboard (bouton *Resume project*).
-
-`/api/keep-alive` existe uniquement pour empêcher ça. Il est appelé par
-**deux planificateurs redondants**, et c'est volontaire :
-
-| Source | Fréquence | Historique consultable |
-|---|---|---|
-| Cron Vercel (`vercel.json`) | 1×/jour, 04:00 UTC | non — logs Hobby limités à 1 h |
-| GitHub Actions (`.github/workflows/keep-alive.yml`) | toutes les 6 h | oui, onglet Actions |
-
-**Pourquoi deux** : en août 2026, Supabase a averti d'une mise en pause alors
-que le cron Vercel était actif. Les crons du plan Hobby sont « best effort »
-(fenêtre d'1 h, aucune garantie) et la rétention de logs d'1 h empêche même de
-vérifier a posteriori s'ils sont partis. GitHub Actions donne la fréquence ET
-la traçabilité. Le repo étant public, les minutes sont illimitées.
-
-⚠️ Le ping doit appeler la **RPC `beta_stats()`**, pas un `SELECT` sur
-`beta_submissions` : RLS filtre intégralement le SELECT pour la clé anon, ce
-qui ne renvoie aucune ligne et ne suffisait pas à marquer l'activité.
-
-⚠️ GitHub désactive les workflows planifiés d'un repo **public** après 60 jours
-sans commit. Le rythme de publication du blog suffit à l'éviter, mais en cas de
-longue pause du projet, penser à réactiver le workflow.
-
-RLS : INSERT anonyme autorisé, SELECT réservé aux authentifiés. La clé anon
-ne peut donc pas lire la table — utiliser la RPC `beta_stats()` pour les agrégats.
-
-### Rapport mensuel : un seul envoi, malgré les appels multiples
-
-Le 1er de chaque mois (jour UTC), `/api/keep-alive` envoie à `contact@cards-trading.com` un
-rapport de santé : inscriptions du mois écoulé, total, dernière inscription, base joignable.
-Il vaut aussi test de la chaîne d'email : un mois sans rapport est un signal. Avant le
-30 septembre 2026 il était hebdomadaire, envoyé « le lundi ».
-
-⚠️ **Ce endpoint est appelé plusieurs fois par jour** : une fois par le cron Vercel, et toutes
-les 6 h par `keep-alive.yml` (avec du retard). Tout ce qu'on y greffe s'exécute donc plusieurs
-fois. Le rapport du lundi partait en **quatre exemplaires identiques** (constatés les 7, 14, 21
-et 28 septembre 2026, entre 04h et 23h UTC). Le rapport mensuel passe par l'API HTTP de Resend
-avec un en-tête `Idempotency-Key` (`rapport-mensuel/AAAA-MM`) : les appels suivants du même
-jour reçoivent la même réponse, sans renvoyer d'email. Le SDK `resend` installé (3.5.0) ne
-connaît pas cette option, d'où un `fetch` direct. Le texte du rapport ne dépend que du jour
-civil, sans quoi Resend refuserait le second appel pour « charge utile différente » (409,
-traité comme « déjà envoyé »).
-
-Le chiffre du mois vient de la fonction SQL `beta_stats_mois_precedent()` (mois calendaire
-Europe/Paris, définition dans `supabase/migrations/`). **`beta_stats()` n'a pas été touchée** :
-c'est celle du ping qui empêche la pause de Supabase. Si la nouvelle fonction manque, le
-rapport part quand même, sans le chiffre du mois.
-
-Test à la demande : `GET /api/keep-alive?rapport=1` envoie un rapport, au plus un par heure
-(clé d'idempotence horaire, distincte de celle du vrai rapport). Tests hors réseau :
-`node --test scripts/lib/rapport-mensuel.test.mjs`.
-
-Le « total » du rapport compte **toutes les soumissions** du formulaire, doublons et tests
-compris : ce n'est pas le nombre de personnes inscrites.
-
----
-
-## Vercel — contraintes du plan Hobby
+## Vercel : contraintes du plan Hobby
 
 - **2 cron jobs maximum**, déclenchés **au plus une fois par jour**.
   Les deux sont pris : `keep-alive` (quotidien) et `refresh-instagram-token`
@@ -254,251 +122,16 @@ compris : ce n'est pas le nombre de personnes inscrites.
   plutôt qu'en créer un troisième.
 - `vercel.json` : la propriété `public` a été **retirée du schéma Vercel**.
   La remettre casse le déploiement en ~1 seconde, avant tout build.
-- Le domaine apex redirige en 307 vers `www.` — utiliser `curl -L`.
+- Le domaine apex redirige en 307 vers `www.` : utiliser `curl -L`.
 - Vercel consomme `s-maxage` et `stale-while-revalidate` et les retire de la
   réponse envoyée au navigateur : voir seulement `Cache-Control: public` est normal.
-- ⚠️ **Le `curl -L` de la règle précédente vaut AUSSI dans les workflows.**
-  Un test d'attente qui interroge l'apex sans `-L` reçoit 307 et n'atteint
-  jamais 200 : il échoue au bout de son timeout, quelle qu'en soit la durée.
+- ⚠️ **`curl -L` vaut AUSSI dans les workflows** : un test d'attente sans `-L` reçoit 307, n'atteint jamais 200
+  et échoue à son timeout. Reproduire **exactement** la commande qui échoue, options comprises, avant de théoriser.
+- ⚠️ **Le déploiement sur push peut s'arrêter sans aucune erreur** (l'app GitHub de Vercel attend une validation
+  de permissions, action humaine) : `gh api repos/<owner>/<repo>/commits/<sha>/status` sans AUCUN statut `Vercel`
+  sur plusieurs commits désigne ce blocage. Récits, déploiement manuel : `docs/deploiement-vercel.md`.
 
-  `cote-hebdo` committe sa vignette puis attend qu'elle soit servie avant
-  de publier. Ce test tournait sans `-L` : les trois premiers passages
-  réels du 27 août 2026 ont tous échoué là, après que le calcul, la
-  vignette et le commit avaient pourtant réussi.
-
-  **Le piège se referme deux fois**, et c'est le plus important à retenir :
-  vérifier la même URL à la main avec `curl -L` répond 200, ce qui fait
-  conclure « la vignette est bien là, le workflow a juste été trop
-  impatient ». J'ai perdu deux itérations à élargir le timeout (5 → 12 min)
-  et à documenter une fausse cause (« les déploiements Vercel s'empilent »)
-  avant de comparer les deux commandes :
-
-  ```bash
-  curl -s  -o /dev/null -w '%{http_code}' "https://cards-trading.com/…"  # 307
-  curl -sL -o /dev/null -w '%{http_code}' "https://cards-trading.com/…"  # 200
-  ```
-
-  Reproduire **exactement** la commande qui échoue, options comprises,
-  avant de théoriser sur sa cause.
-
-⚠️ **Le déploiement automatique sur push peut s'arrêter sans le moindre
-message d'erreur : l'app GitHub de Vercel demande parfois une validation
-de permissions.** Constaté le 28 septembre 2026 : `main` a reçu six
-commits sans qu'aucun ne se déploie, ni en production ni même en preview.
-`git push` rapportait un succès normal à chaque fois.
-
-Cause trouvée sur `github.com/settings/installations` : l'app **Vercel**
-y affichait « Permission updates requested. Review request. », en
-attente depuis un moment. Tant qu'elle n'est pas validée (passkey ou
-2FA, action qu'un agent ne peut pas faire à la place de l'humain), GitHub
-cesse d'envoyer certains événements à l'app, dont les push sur `main` —
-sans que rien ne le signale côté dépôt.
-
-Le signal qui tranche : comparer, pour un commit donné, `gh api
-repos/<owner>/<repo>/commits/<sha>/status` à l'heure du push. Une
-automatisation saine dépose un statut `Vercel` à la même minute. Une
-absence totale de statut (pas un échec, une ABSENCE) sur plusieurs
-commits d'affilée pointe vers ce blocage, pas vers un bug de build.
-
-```bash
-gh api repos/TchikiBalianos/cards-trading/commits/<sha>/status \
-  --jq '.statuses[] | "\(.context) \(.state) \(.created_at)"'
-```
-
-Le déploiement manuel via l'API Vercel (`create_deployment`, gitSource
-type `github`, `sha` explicite) reste possible en attendant que la
-permission soit validée — mais vérifier le SHA réellement déployé plutôt
-que de faire confiance à `ref: "main"`, qui peut résoudre une vieille
-position si Vercel n'a pas non plus reçu le dernier push.
-
----
-
----
-
-## Buffer : l'API change sous les pieds
-
-Le relais d'articles vers X, Instagram et TikTok passe par
-`scripts/annonce-buffer.mjs`, lancé par `.github/workflows/annonce-buffer.yml`
-les dimanches, mardis et vendredis. Entre le 23 et le 25 août 2026, **deux évolutions
-simultanées** de l'API GraphQL l'ont cassé net, sans préavis ni changement
-de version. Le premier symptôme fait accuser la clé : ce n'est pas elle.
-
-### `channels` : seule la requête racine passe
-
-`account { organizations { channels } }` répond **FORBIDDEN** à une clé
-personnelle. La requête racine renvoie exactement les mêmes champs :
-
-```graphql
-query ($input: ChannelsInput!) {
-  channels(input: $input) { id service isDisconnected }
-}
-```
-
-Le message « Not authorized to access this resource » oriente vers un
-problème de périmètre. Il n'en est rien : vérifié le 27 août 2026 avec une
-clé neuve portant les 9 permissions proposées, sans effet. Il n'existe
-aucun scope `channels:*` à cocher, la liste s'arrête à `account`, `posts`,
-`ideas`, `insights` et `engagements`.
-
-⚠️ Ne pas figer les identifiants de canaux dans le dépôt pour contourner :
-reconnecter un compte dans Buffer lui en attribue un nouveau, et le relais
-partirait alors silencieusement vers le vide.
-
-### `createPost` : un refus arrive en réponse **valide**
-
-Le type de retour est devenu `PostActionPayload`, une **union** dont seul
-`PostActionSuccess` porte le post. Les six autres membres sont des erreurs
-(`InvalidInputError`, `LimitReachedError`, `RestProxyError`,
-`UnauthorizedError`, `NotFoundError`, `UnexpectedError`), toutes porteuses
-d'un `message`.
-
-C'est le piège de fond, et il survivra à cet incident : **un rejet du réseau
-ne remplit plus `errors`**. La réponse est un HTTP 200 sans la moindre
-erreur GraphQL. Un code qui teste `if (j.errors)` conclut au succès, sort
-l'article de la file, et le post n'existe nulle part. Même famille que le
-`return 200` inconditionnel de mai 2026 sur `/api/submit-form`.
-
-Le `__typename` est donc obligatoire, et son contrôle aussi :
-
-```js
-if (r.__typename !== 'PostActionSuccess') throw new Error(r.message);
-```
-
-### Éprouver sans rien publier
-
-Le workflow accepte un mode brouillon, qui crée les posts sans les mettre
-en file :
-
-```bash
-gh workflow run annonce-buffer.yml --repo TchikiBalianos/cards-trading -f brouillon=true
-```
-
-Un brouillon ne consomme pas l'article : `.github/etat-annonces-buffer.json`
-n'est écrit que si un post part réellement. Sans quoi un simple test
-retirerait l'article de la file et il ne serait jamais annoncé.
-
-## Publication des articles : jamais depuis un poste
-
-Un article de blog passe en ligne quand `publie-articles.yml` (GitHub
-Actions, quotidien à 05:12 UTC) trouve sur `main` un fichier réunissant
-trois conditions : `draft: true`, `pubDate` atteinte, et sommaire + FAQ
-présents. Il lève le drapeau, génère les vignettes, contrôle le build et
-la concordance FAQ, committe, puis **attend le 200 en production**.
-
-La relecture reste humaine : le script ne touche à aucune branche
-`blog/*`. Programmer un article, c'est le fusionner sur `main` en
-brouillon avec la bonne `pubDate`.
-
-> **Pourquoi ce n'est plus une tâche planifiée de l'app Claude Desktop.**
-> Celles-ci ne tournent que si l'app est ouverte. Le 4 septembre 2026, la
-> tâche armée pour 08h30 a démarré à 15h02, soit après `annonce-discord`
-> (11:17 Paris) et `annonce-buffer` (12:23). L'article OP-17 est resté en
-> brouillon, 404 en production, et le relais du vendredi a republié
-> l'article du mardi faute de nouveauté. Personne n'a rien vu pendant
-> trois jours. Même famille que les crons Vercel « best effort » qui ont
-> justifié le doublement du keep-alive : une automatisation qui dépend
-> d'un poste allumé n'est pas une automatisation.
-
-### Alerte de relecture par email
-
-`alerte-relecture.yml` prévient Julian dès qu'un brouillon attend, à
-`julian.schmerkin@gmail.com` via Resend (secret `RESEND_API_KEY`, déjà en
-place). Deux déclencheurs : un **push sur `blog/**`** envoie l'email tout
-de suite, et un **cron quotidien à 05:32 UTC** rappelle les branches qui
-dépassent 2 jours. L'email porte le verdict des mêmes contrôles que la
-publication, plus les points éditoriaux à vérifier.
-
-> **Pourquoi.** Les tâches de rédaction poussent un brouillon sur une
-> branche et s'arrêtent là. Rien ne le signalait : le 18 août 2026, un
-> article y est resté six jours. Les vérifications du mercredi et du
-> samedi le voyaient, mais deux fois par semaine et seulement si l'app
-> était ouverte, ce qui faisait dépendre le rythme de publication d'un
-> poste allumé.
-
-⚠️ **Le déclencheur `push` ne vaut que pour les branches créées après le
-8 septembre 2026.** Sur un push, GitHub exécute le workflow tel qu'il est
-*sur la branche poussée* : une branche partie d'un `main` antérieur ne le
-contient pas. Le rappel quotidien, lui, tourne depuis `main` et les
-couvre toutes.
-
-⚠️ **Le rappel ne part que si une branche dépasse le seuil**, et jamais
-sinon. Une alerte quotidienne systématique cesse d'être lue au bout d'une
-semaine, soit exactement le jour où elle compte. Le seuil est
-`SEUIL_JOURS` dans `scripts/alerte-relecture.mjs`.
-
-Les critères de complétude sont dans `scripts/lib/article.mjs`, partagés
-avec `publie-articles.mjs` : séparés, ils divergeraient et l'alerte
-annoncerait « publiable » un article que la publication refuserait le
-lendemain.
-
-```bash
-node scripts/alerte-relecture.mjs --rappel --dry-run
-node scripts/alerte-relecture.mjs --branche=blog/<slug> --dry-run
-```
-
-⚠️ **Un commit sur la branche ne fusionne rien : Julian s'y est fait
-prendre le 22 septembre 2026.** Prévenu par cette alerte, il a cliqué
-« Lire l'article » (qui ouvre le fichier sur la branche `blog/<slug>`),
-changé `draft: true` en `draft: false` dans l'éditeur GitHub, et committé
-là, en pensant qu'une fusion suivrait. Aucune pull request n'a été
-ouverte : l'article est resté deux jours hors ligne, jusqu'à ce qu'un
-contrôle manuel s'en aperçoive.
-
-Le `draft: false` posé sur la branche aggravait le risque plutôt que de
-le résoudre : fusionnée telle quelle, `publie-articles.mjs` l'aurait
-ignorée quand même, puisqu'il ne traite que les articles `draft: true`
-sur `main`. Ni vignette, ni contrôle du build ou de la FAQ, ni attente du
-200, alors que Vercel aurait déployé l'article dès le premier push.
-
-L'email porte donc, pour chaque article, un lien direct
-`compare/main...<branche>?expand=1` qui ouvre le formulaire de pull
-request en un clic, et une consigne en trois étapes : ne pas toucher au
-`draft`, ne rien committer sur la branche, ouvrir la pull request puis la
-fusionner. Une branche non fusionnée dont l'article porte `draft: false`
-est désormais signalée en rouge dans sa carte. L'email ne promet plus
-d'heure de publication précise : mesuré entre le 19 et le 24 septembre
-2026, le cron programmé à 05:12 UTC démarre en réalité vers 09:57 UTC
-(GitHub retarde ses crons programmés, sans garantie d'horaire), même si
-l'ordre avec les crons d'annonce reste largement respecté. Il dit
-seulement « le matin même ».
-
-⚠️ **Les corrections d'articles déjà en ligne sont signalées à part** (cartes « Correctif »,
-`correctifsDeLaBranche`) : un article corrigé reste servi faux en production tant que sa branche
-n'est pas fusionnée, et deux correctifs sont restés trois et dix-huit jours sans email avant le
-20 septembre 2026. **Piège si un jour une pull request est fusionnée en *squash*** : la branche
-garde des commits absents de `main` et un contenu différent, donc elle repasse pour un correctif
-en attente et le rappel repart chaque matin pour une branche morte. Le test d'ancêtre commun ne
-sert alors à rien ; celui qui tranche est « `main` a-t-il touché cet article depuis que la
-branche s'en est séparée ? » (`git rev-list --count <branche>..origin/main -- <chemin>`, plus de
-0 = branche périmée). Non appliqué aujourd'hui, les pull requests étant fusionnées en commit de
-fusion ; l'implémentation complète est gardée sous le tag `archive/alerte-relecture-squash`.
-
-⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
-commits d'archivage des autres workflows. On a longtemps cru que Vercel
-honorait ce marqueur (l'article serait committé et jamais déployé). **Il ne
-l'honore pas dans ce dépôt** : vérifié le 5 octobre 2026, les 42 commits
-`[skip ci]` de `main` depuis le 27 août portent tous un statut Vercel
-« success », et `cote-hebdo` en dépend depuis sa création (sa vignette est
-committée avec le marqueur, puis l'étape suivante attend qu'elle soit
-servie). La règle reste par prudence : elle ne coûte rien.
-
-⚠️ Le créneau de 05:12 UTC est **avant** les deux crons d'annonce, et
-c'est le seul point qui compte dans le choix de l'heure. Le déplacer
-après 09:17 UTC ferait attendre chaque article jusqu'au créneau éditorial
-suivant, soit trois ou quatre jours.
-
-⚠️ Un brouillon incomplet est **refusé, pas publié** : sans sommaire ni
-FAQ d'au moins trois questions, le script sort en erreur et l'article
-reste en attente. L'étape est en `continue-on-error` pour qu'un article
-bancal n'empêche pas la sortie des articles valides du même jour ;
-l'échec est rejoué en fin de job.
-
-```bash
-node scripts/publie-articles.mjs --controle              # état du jour, aucune écriture
-node scripts/publie-articles.mjs --controle --date=2026-09-10   # simule un autre jour
-```
-
-## Vérification — non négociable
+## Vérification : non négociable
 
 Ce projet a une histoire de correctifs annoncés sans preuve. **Toujours vérifier
 en production avant d'affirmer que c'est réglé** :
@@ -515,451 +148,25 @@ curl -sL -X POST https://cards-trading.com/api/submit-form \
 # Attendu : {"success":true,...,"dbSaved":true}
 ```
 
-⚠️ **Les titres `.reveal-h2` sont décalés de 32px dans ce navigateur.**
-Ils portent `opacity: 0; transform: translateY(32px)`, levés par un
-IntersectionObserver au défilement — qui ne se déclenche jamais ici.
-`getBoundingClientRect()` incluant les transformations, toute mesure de
-position d'un `h2` est fausse de 32px, et un élément suivant paraît
-« au-dessus » de lui. Neutraliser avant de conclure :
-
-```js
-const m = new DOMMatrix(getComputedStyle(h2).transform);
-const basReel = h2.getBoundingClientRect().bottom - m.f;
-```
-
-Sans ça, on conclut par exemple qu'un `margin-bottom` « n'a aucun effet »
-alors qu'il fonctionne parfaitement — erreur commise le 19 août 2026.
-
-⚠️ **`scrollWidth > clientWidth` n'est PAS une preuve de débordement.**
-L'emprise *peinte* d'un élément transformé compte dans le débordement
-défilable de son conteneur, même si rien ne dépasse à l'écran. Le chevron
-de la FAQ (`::after` de 9px + 2px de bordure, tourné à 45°) peint sur
-15,6px : chaque `<summary>` signalait donc 2px de débordement alors que
-le chevron reste à 21px du bord de sa carte, absorbé par le `padding`.
-
-Six « défauts » détectés, zéro réel. Même famille que les faux positifs
-d'`object-fit` et de `rotateY` déjà consignés plus haut. Le seul signal
-qui tranche est celui du document :
-
-```js
-document.documentElement.scrollWidth > innerWidth   // là, c'est vrai
-```
-
-Pour un élément précis, comparer les bords réels plutôt que les largeurs :
-`element.getBoundingClientRect().right > parent.getBoundingClientRect().right`.
-
-⚠️ **Ce signal du document a lui-même un faux positif : `overflow-x: clip`.**
-Le `<body>` le porte, si bien qu'un carrousel volontairement plus large que
-l'écran (`#licenceTrack`, 2240px, encapsulé dans un conteneur en
-`overflow-x: hidden`) gonfle `documentElement.scrollWidth` sans que rien ne
-dépasse ni ne défile. Mesuré le 2 septembre 2026 : 1035px de `scrollWidth`
-pour 985px de fenêtre, et pourtant aucun défilement possible.
-
-Le seul test qui tranche est donc de TENTER le défilement :
-
-```js
-const de = document.documentElement, avant = de.scrollLeft;
-de.scrollLeft = 9999;
-const vraiDebordement = de.scrollLeft > 0;   // verdict fiable
-de.scrollLeft = avant;
-```
-
-⚠️ **Autre piège, sur la mesure d'une largeur responsive :** réduire un
-conteneur en JavaScript (`element.style.width = '1050px'`) ne reproduit PAS
-un vrai redimensionnement de fenêtre — les `@media` ne se réévaluent pas et
-les pourcentages se recalculent sur une autre base. Un balayage de 720 à
-1100px fait ainsi conclure « aucun débordement » là où un vrai
-`resize_window` à 1050px révèle 10px de débordement sur « Cardmarket ».
-Toujours redimensionner la fenêtre, jamais le conteneur.
-
-### Balisage FAQPage — le visible et le JSON-LD doivent concorder
-
-Un `FAQPage` dont les questions-réponses ne figurent pas *visiblement*
-sur la page est traité comme du balisage trompeur, et la sanction porte
-sur la page entière. Le risque n'est pas de mal l'écrire au départ : c'est
-de corriger une réponse dans le HTML et d'oublier le JSON-LD.
-
-```bash
-node scripts/verifie-faq.mjs   # 0 si les deux concordent, 1 sinon
-```
-
-Le contrôle normalise `&nbsp;`, les entités et les apostrophes typographiques
-avant de comparer, sans quoi chaque « 3 % » signale une fausse divergence.
-
-⚠️ Pour éprouver un contrôle de ce genre, viser une chaîne tenant sur **une
-seule ligne** : `sed` travaille ligne par ligne et ne remplacera jamais un
-texte que le formatage a coupé en deux. Un test qui ne modifie rien laisse
-croire que le garde-fou est aveugle.
-
-### Mesure du trafic : Vercel Web Analytics
-
-Actif et collecteur depuis le 1er août 2026 (commit `3fa51b3`, script posé sur toutes les
-pages). Trois pièges, tous rencontrés le 30 septembre 2026 :
-
-- **Interroger l'API SANS identifiant d'équipe.** Le projet `cards-trading` répond dans le
-  scope personnel : avec `teamId`, Vercel renvoie 404 (« Project not found ») ou « Web
-  Analytics not found ». Le matin du 30 septembre, `RESTE-A-FAIRE.md` a consigné à tort
-  « l'API répond introuvable, à vérifier dans le tableau de bord » : c'était un mauvais
-  cadrage de l'appel, pas une désactivation. Même famille que le `curl` sans `-L` plus haut :
-  reproduire l'appel autrement avant de théoriser sur la cause.
-- **Le plan Hobby ne donne que les 31 derniers jours** pour toute ventilation (source, page,
-  appareil) : au-delà, l'API répond 400. Le compteur global depuis l'activation reste lisible,
-  pas son détail. Sans relevé en début de mois, le passé se perd.
-- **Les UTM sont payants** (Web Analytics Plus, réponse 402) : la source se lit dans
-  `referrerHostname`, jamais dans `utmSource`.
-
-⚠️ **« Visiteurs » sur plusieurs jours est une somme de visiteurs quotidiens.** Un lecteur revenu
-trois jours compte trois fois : mesuré le 30 septembre, le total du mois est égal à la somme
-des totaux de chaque jour. C'est donc un majorant des personnes distinctes, et un taux de
-conversion calculé dessus est une borne basse.
-
-Les chiffres de trafic et d'inscrits n'ont pas leur place ici : le dépôt est public.
-
-### Un 504 de Discord n'est pas un échec certain
-
-Trois 504 constatés, trois messages pourtant publiés : `publie-cote.mjs` le 10 septembre et le
-1er octobre 2026, `annonce-discord.mjs` le 15 septembre. Chaque fois, le message est créé en
-moins de 3 s, puis la passerelle de Discord abandonne la réponse au bout de 30 s (l'identifiant
-d'un message Discord contient sa date de création, c'est ce qui l'a prouvé). Comptés comme des
-échecs, ils ont fait passer deux tops pour ratés (celui du 1er octobre avec un email d'alerte
-par jour jusqu'au jeudi suivant, l'alerte n'existant pas encore le 10 septembre), et surtout
-**fait republier le 18 septembre une annonce déjà en ligne** : `annonce-discord` ne mémorisait
-un article qu'en cas de succès.
-
-Depuis le 5 octobre 2026, les deux scripts passent par `scripts/lib/discord.mjs`, qui classe un
-envoi en trois issues :
-
-- **ok** : 2xx, identifiant du message journalisé grâce à `?wait=true` ;
-- **incertain** : 504, délai de 60 s dépassé, connexion coupée, et par prudence toute erreur
-  réseau qu'on ne sait pas situer avant l'envoi ;
-- **échec** : 4xx, 500, 502, 503 (présumés sans publication : seuls des 504 ont été observés),
-  URL de webhook invalide, redirection, ou connexion jamais établie (DNS, refus, réseau
-  injoignable, délai de connexion, certificat).
-
-Un « incertain » ne fait plus échouer l'étape, mais il n'est pas un succès : avertissement dans
-le journal et **un email** (clé d'idempotence par script, jour et texte : un rejeu ne le renvoie
-pas, un second incident du jour si) qui dit quel salon regarder et donne le texte à coller s'il
-manque. **Si cet email ne part pas, l'étape échoue** : un avertissement dans un passage vert,
-personne ne le lit. `annonce-discord` mémorise l'article avant d'envoyer l'email (étape
-« Mémoriser » en `if: always()`) : une annonce manquée se rattrape à la main, une annonce
-doublée non. Tests, dont trois sur un vrai serveur local : `node --test
-scripts/lib/discord.test.mjs`.
-
-⚠️ **Aucune nouvelle tentative automatique**, jamais : les webhooks Discord n'ont pas de clé
-d'idempotence, et les trois 504 auraient tous donné un doublon.
-
-⚠️ **Ne jamais cliquer « Re-run » sur un passage de `cote-hebdo` raté**, ni le relancer à la
-main un autre jour. Le marché est recalculé à la date du jour : relancé une autre semaine, un
-passage Pokémon peut publier un top One Piece (semaine ISO 41, par exemple), et la phase
-« préparer » recalcule de toute façon un autre podium avec une autre vignette. L'option
-`sans_discord` ne sert que le jour même, quand Discord est parti et Buffer non, en sachant que
-le podium sera recalculé. Le
-garde-fou « un seul top par jour » ne protège pas de ce cas, ni d'un Re-run du jour même (il
-reprend le commit d'origine, où le podium du jour n'est pas encore archivé), ni jamais du
-marché One Piece, qui n'est pas archivé. Quand Discord n'a pas confirmé, le journal affiche le
-texte prévu : vérifier d'abord le salon, le coller seulement s'il manque.
-
-⚠️ `alerte-automatisations` ne regarde que le **dernier passage terminé** de chaque workflow.
-Le passage #11 du 1er octobre reste rouge jusqu'au suivant (jeudi 8 octobre) : l'email
-« Cote hebdomadaire échoue » continue d'ici là, même avec ce correctif en place. L'ignorer,
-et surtout ne pas cliquer « Re-run » depuis le lien qu'il contient.
-
-Depuis le 8 octobre 2026, l'email le dit lui-même : `CONSIGNES` (dans
-`scripts/alerte-automatisations.mjs`) ajoute sous un workflow sa consigne propre, et le rappel
-« images en 404 » ne s'affiche plus que si la chaîne blog puis annonces est en cause. Sous
-l'alerte de la cote, il faisait chercher des images qui n'existaient pas. Le chemin du 504 a été
-rejoué de bout en bout ce jour-là (phase « publier », faux Discord et faux Resend sur
-127.0.0.1, tout autre réseau bloqué) : 504 et email parti, passage vert ; Resend en panne,
-passage rouge ; 400, rouge ; 200, vert.
-
-### Limites de l'environnement de test
-- Le navigateur headless **ne défile pas** (`window.scrollTo` sans effet) et ne
-  compose pas de frames → **transitions et animations CSS ne s'exécutent pas**.
-  Ne jamais conclure « le scroll fonctionne » depuis ce navigateur ; mesurer
-  les valeurs CIBLES en neutralisant les transitions, et dire honnêtement que
-  le rendu animé reste à valider sur un vrai téléphone.
-- Le Chrome de l'utilisateur a des extensions qui **bloquent Vercel Analytics**
-  (`transferSize: 0`). Ses propres visites ne sont jamais comptées.
-
----
-
-## Navigation mobile (v6)
-
-Historique lourd : 8 tentatives avant que ça tienne. Le principe actuel —
-**ne pas y toucher sans raison forte** :
-
-- **Zéro JS de scroll.** Le navigateur gère `<a href="#section">` nativement,
-  avec `scroll-behavior: smooth` + `scroll-margin-top` en CSS.
-- **Transitions CSS, pas animations.** Les `animation` + `forwards` + reflow
-  trick étaient la cause des « ça marche 3 fois puis ça s'arrête ».
-- `closeMenuDeferred(80ms)` : le navigateur traite le `href` avant toute
-  modification du DOM. Listener `hashchange` en filet de sécurité.
-- `pointer-events: none` sur le panneau fermé, `touch-action: manipulation`.
-
-Le skip-link est en `position: fixed` (pas `absolute`) : le `<body>` démarre à
-y=60px à cause du margin collapsing de `.hero`, ce qui rendait le lien visible
-en permanence par-dessus le logo.
-
----
+Mesures en navigateur (headless sans scroll ni animations, `.reveal-h2` décalés de 32px, `scrollWidth` trompeur,
+redimensionner la fenêtre et jamais le conteneur) et balisage FAQ (`node scripts/verifie-faq.mjs` doit renvoyer 0) :
+lire `docs/verification-mesures.md` avant de conclure. Le rendu animé reste à valider sur un vrai téléphone.
 
 ## Ne jamais faire
 
-- Committer une clé (`.env*` est ignoré — vérifier avant tout `git add -A`)
+- Committer une clé (`.env*` est ignoré : vérifier avant tout `git add -A`)
 - Réintroduire `"public": true` dans `vercel.json`
 - Supprimer des lignes de `beta_submissions` sans demande explicite
 - Annoncer un correctif sans l'avoir vérifié en production
-
----
-
-## Blog — calendrier éditorial
-
-Rotation **déterministe**, calculée par `scripts/prochain-article.mjs` :
-
-```bash
-node scripts/prochain-article.mjs 8   # les 8 prochaines semaines
-```
-
-- **Mardi** — article obligatoire, alternant **Pokémon / One Piece**
-  → 2 Pokémon et 2 One Piece par mois
-- **Vendredi** : article obligatoire depuis le 19 septembre 2026, rotation
-  sur Magic, Yu-Gi-Oh!, Lorcana, Dragon Ball, Star Wars
-
-> La constante `REF` du script (lundi 27 juillet 2026) fixe l'origine de
-> l'alternance. **Ne jamais la modifier** : tout le calendrier, passé comme
-> futur, se décalerait.
-
-Deux tâches planifiées rédigent ces articles automatiquement
-(`blog-cards-trading-article-hebdo` et `-secondaire`). Elles écrivent
-toujours `draft: true` et poussent sur une **branche dédiée**, jamais sur
-`main` — la relecture et la fusion restent manuelles.
-
-Le schéma du frontmatter (`src/content.config.ts`) est strict : une
-catégorie hors de l'énumération casse le build.
-
-### Supprimer la branche après fusion, sans quoi la routine se bloque
-
-Les deux tâches de rédaction commencent par lister les branches `blog/*`
-distantes et s'arrêtent si l'une porte la catégorie de la semaine, pour
-ne pas écrire un doublon. Une branche fusionnée mais jamais supprimée
-déclenche ce garde-fou à vide.
-
-Cinq d'entre elles traînaient sur le dépôt en septembre 2026, et elles
-couvraient quatre des cinq catégories du vendredi. Trois créneaux
-consécutifs sont partis en fumée (mardi 15, vendredis 11 et 18) : la
-routine démarrait, sortait en une minute, et rendait compte d'un arrêt
-parfaitement légitime. Aucune alerte ne pouvait le voir, puisque rien
-n'avait échoué. Même famille que le `return 200` inconditionnel de mai
-2026 : le mécanisme de sécurité déclenche, et son déclenchement ressemble
-à un succès.
-
-**Le symptôme qui trahit ce cas est la durée du passage.** Une rédaction
-dure des minutes, souvent des heures. Un passage à soixante-dix secondes
-n'a rien écrit, quoi qu'en dise son compte-rendu. C'est la première chose
-à regarder quand un article manque sans qu'aucune alerte ne soit partie.
-
-Les consignes ignorent désormais toute branche dont l'article est déjà
-sur `main` (`git cat-file -e origin/main:src/content/blog/<slug>.md`),
-mais la vraie hygiène reste de supprimer la branche à la fusion.
-
-⚠️ Avant de supprimer, confirmer que l'article répond 200 en production,
-pas seulement qu'il est présent sur `main`.
-
-### Dates de sortie de produits : quelles sources croire
-
-Le 20 septembre 2026, une « correction » du calendrier du 30ᵉ Anniversaire
-Pokémon est restée quelques heures en production alors qu'elle était fausse :
-elle plaçait la Pokébox et les Tripacks au 16 septembre. Julian, présent en
-magasin à l'ouverture après douze heures de queue, a constaté qu'ils n'y
-étaient pas. Les pages officielles de Pokémon France lui donnaient raison
-depuis le 1er septembre.
-
-La correction avait été validée par des sources toutes secondaires : presse
-généraliste écrite le matin de la sortie, blogs de revendeurs, calendriers
-agrégés. Elles recopient le calendrier **annoncé** et n'ont aucun moyen de
-savoir ce qui est **arrivé en rayon**. Certaines appellent même « Pokébox »
-les coffrets Amphinobi-ex et Nymphali-ex, qui sont des produits différents.
-
-Hiérarchie à respecter pour toute date de sortie de produit :
-
-1. **Le constat de Julian**, s'il existe : il bat toute source écrite.
-2. **Le site officiel de l'éditeur** (pokemon.com/fr, page d'actualités
-   datée, puis fiche produit). Il ne donne souvent que des trimestres :
-   c'est une information, pas un vide à combler avec un blog.
-3. **Fiches produit de revendeurs** (une date par référence) et feuilles de
-   distributeurs. **La Maison du TCG** (lamaisondutcg.com), boutique dont
-   Julian connaît le sérieux, écrit la date dans la description de chaque
-   fiche (« PRÉCOMMANDE: sortie le … »), lisible dans les données
-   structurées de la page plutôt que dans le texte affiché. C'est une date
-   **annoncée** : le 20 septembre 2026, ses fiches Tripack et Pokébox
-   donnaient encore le 16 septembre alors que ni l'un ni l'autre n'était
-   sorti, et le Classeur y figurait au 2 octobre alors que les États-Unis
-   l'ont repoussé au 4 décembre. Cohérente avec les faits connus pour cinq
-   produits sur huit ce jour-là : précieuse pour repérer un changement,
-   jamais suffisante seule.
-4. **Presse et blogs**, jamais seuls.
-
-Une date que seules les sources 3 et 4 portent s'écrit « annoncée pour »
-ou « à confirmer », jamais comme un fait. Distinguer toujours *annoncé*,
-*sorti* et *constaté*.
-
-⚠️ Une branche de correction écrite par une session précédente n'est pas une
-source, et un message de commit qui affirme un fait sans URL ne prouve rien.
-La fusionner sans revérifier le fait lui-même est ce qui a mis la fausse
-date en ligne.
-
-### Chiffres et prix dans les articles : jamais inventés
-
-Règle de Julian, 22 septembre 2026 : **il est interdit d'inventer un chiffre ou un
-prix ; mieux vaut un vocabulaire plus vague.** Un prix, un taux de tirage, un volume
-d'impression ou une statistique n'entre dans un article que s'il a été lu sur la page
-d'origine, en entier, et il y est attribué (« selon … »). Sinon, ou si deux sources
-divergent, ou si c'est un comptage communautaire encore fragile, on l'écrit en mots :
-« nettement plus fréquentes », « une fraction de son prix d'avant-sortie ».
-
-⚠️ **Les résumés d'outils ne sont pas des lectures.** En préparant un seul dossier
-(`docs/briefs/2026-09-22-pokemon-scalpers-sortie-mondiale.md`), les résumés d'un
-moteur de recherche et d'un outil de lecture ont attribué des chiffres de Kotaku à
-Wargamer, daté de l'été 2025 un fait de l'été 2026, et laissé passer un taux (« un
-booster sur deux avec une carte ex ») absent de la source qu'il citait. Tout est apparu
-en relisant les pages en texte brut dans le navigateur.
-
-Même prudence pour la presse elle-même : un article peut citer un chiffre que sa propre
-source ne contient pas. Remonter à la source primaire, ou renoncer au chiffre.
-
----
-
-## Posts éditoriaux X et Instagram : un par jour, validés dans Buffer
-
-Depuis le 29 septembre 2026, les réseaux ne se limitent plus au relais des articles.
-Un post par réseau et par jour, cible **Pokémon 70 % / One Piece 30 %**, inspirée de
-@ActuPokemon7 (actu, cotes, humour) et @pokeitem_ (build in public).
-
-**Grille.** Les relais automatiques tiennent le mercredi (article du mardi), le vendredi
-(cotes) et le samedi (article du vendredi). L'éditorial prend les quatre autres jours,
-calculés par `planEditorial` dans `scripts/lib/semaine-sociale.mjs` :
-
-| Jour | Pilier | Licence |
-|---|---|---|
-| Lundi | « Ça vaut combien ? » (cote sourcée) | Pokémon |
-| Mardi | Actu (révélation, calendrier, anecdote) | inverse de l'article du mardi |
-| Jeudi | Humour et communauté | inverse de l'article du mardi |
-| Dimanche | Coulisses (build in public) | mixte |
-
-Créneaux : X 10h20, Instagram 11h30 (heure de Paris, converties par `Intl`, le
-passage à l'heure d'hiver tombe le 25 octobre 2026). TikTok reste le compte personnel de
-Julian, hors périmètre. **Facebook** (page Cards Trading) y entre le 23 octobre 2026 : même
-légende qu'Instagram, où « lien du site en bio » devient un vrai lien (`texteFacebook`), même
-visuel portrait, même heure ; les relais d'articles et de cotes y partent aussi.
-
-**Circuit.** La routine du samedi (tâche Desktop `social-cards-trading-semaine`) écrit
-`data/social/<lundi>.json` et le pousse sur `main`. Ce push déclenche
-`brouillons-sociaux.yml` : validation, visuels (`scripts/lib/visuel-social.mjs`, modèles
-texte, carte, photo), commit, attente du 200 en production, puis création de
-**brouillons datés** dans Buffer et email à Julian. Il relit dans Buffer et clique
-**Schedule Post**. `controle-social.yml` (quotidien, 15:30 UTC) le prévient seulement
-si quelque chose cloche.
-
-```bash
-node scripts/semaine-sociale.mjs --plan                       # grille de la semaine à préparer
-node scripts/brouillons-sociaux.mjs --valider                 # règles éditoriales, sans réseau
-node scripts/brouillons-sociaux.mjs --phase=brouillons --dry-run
-node scripts/semaine-sociale.mjs --controle --dry-run         # exige BUFFER_API_KEY
-```
-
-### Pièges de l'API Buffer, éprouvés le 29 septembre 2026
-
-- **Un brouillon daté ne part jamais tout seul.** Il apparaît au calendrier à son
-  créneau, mais seul le clic « Schedule Post » (onglet Drafts, vue All Channels ou appli
-  mobile) le programme. Un brouillon oublié est donc silencieux : c'est le premier
-  contrôle de `controle-social` (brouillon daté de demain, ou déjà passé).
-- **`editPost` refuse de changer une date seule** : « Post must have either text or
-  media ». Il faut renvoyer le contenu. C'est pourquoi il n'existe pas de rééquilibrage
-  automatique d'un relais tombé le même jour qu'un post éditorial : le contrôle le signale
-  (« doublon »), Julian déplace le post dans Buffer.
-- **Plan gratuit : 10 posts programmés par canal**, brouillons illimités. Au-delà, les
-  relais automatiques répondent `LimitReachedError`. Le contrôle alerte dès 8.
-- **L'API ne crée pas d'étiquettes** : les posts éditoriaux sont suivis par leurs
-  identifiants (`buffer` dans le fichier de semaine), pas par tag.
-- **Relancer est sans danger** : un brouillon identique (même canal, même heure, même
-  texte) est adopté au lieu d'être recréé, et les identifiants sont écrits au fur et à
-  mesure. Le commit des identifiants porte `[skip ci]`, celui des visuels **jamais**, par
-  prudence (Vercel ne l'honore pas dans ce dépôt, voir plus haut).
-
-### Règles éditoriales, refusées par `valider` avant tout envoi
-
-Aucun tiret long. Un prix, un pourcentage ou une cote exige `sources` (liens lus en
-entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pondérés,
-2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
-Une photo exige un `credit`, porté par le visuel et **jamais dans la légende** (Julian,
-23 octobre 2026).
-
-**Lexique des raretés Pokémon** (Julian, 18 octobre 2026) : les fans français disent **AR**
-(une étoile dorée, « Illustration rare »), **ALT** (deux étoiles dorées, « Illustration
-spéciale rare ») et **GOLD** (trois étoiles dorées, « Méga Hyper Rare »). TCGdex renvoie les
-noms officiels : les traduire. `valider` refuse les noms officiels dans les textes comme sur
-le visuel. Depuis le 21 octobre 2026, la règle vaut aussi pour les **articles Pokémon** : le
-nom officiel n'y est admis qu'entre parenthèses juste après le terme des fans, et l'email de
-relecture signale tout écart (`points_de_vigilance`, lexique partagé dans `lexique.mjs`).
-**Une phrase par ligne** : `unePhraseParLigne` (dans `brouillons.mjs`) passe à la
-ligne après chaque fin de phrase au moment de l'envoi à Buffer, sans toucher aux listes
-numérotées, aux abréviations ni aux citations.
-
-**Vivier de photos** (`data/visuels/vivier.json`, 22 octobre 2026) : le catalogue des photos
-réutilisables pour un visuel `photo`, avec auteur, licence, page source et sujets. Le dépôt
-étant public, il ne garde que des liens. Trois licences admises, contrôlées par
-`vivier.test.mjs` : `unsplash`, `propre` (photo de Cards-Trading servie sous
-`public/assets/social/photos/`, sans visage ni donnée personnelle) et `autorisation` (photo
-de la communauté, avec le lien de l'accord écrit dans `preuve`). Les visuels officiels des
-éditeurs n'y entrent pas : leurs kits presse sont réservés à un usage éditorial.
-
-**Piliers d'appoint** (22 octobre 2026) : `calendrier`, `guide`, `duel` et `retro`, hors de
-la grille de `planEditorial`, pour un post en plus un jour de relais (heure décalée, X
-10:50, Instagram 15:00). **Occasionnels** (Julian, 25 octobre 2026) : au plus un par semaine,
-ajouté à la main et seulement quand il y a un vrai sujet (des sorties à dater, un vrai
-anniversaire). La routine du samedi n'en écrit jamais.
-
-Une photo dont la licence n'exige pas de crédit (aujourd'hui Unsplash seul,
-`HOTES_CREDIT_FACULTATIF` dans `visuel-spec.mjs`) garde son `credit` dans la spec, mais il
-quitte le visuel X ; il reste sur celui d'Instagram, où la photo est centrée entre deux
-bandes de flou (décisions de Julian, 14 octobre 2026). Ajouter un hébergeur à la liste
-seulement après avoir lu sa licence à la source. Un visuel refait après publication porte
-`visuel.version` (2, 3…) : son fichier prend le suffixe `-v2`, et le circuit l'utilise ensuite
-pour les autres réseaux.
-
-**Le post cité est notre meilleur format sur X** : le lien du post d'origine en fin de
-texte a donné nos meilleures impressions (430 et 342, contre environ 200 pour un relais
-d'article). @pokeitem_ tire son record d'une vidéo d'humour qui parle à tous, 60 fois sa
-médiane : l'humour communautaire n'est pas du remplissage.
-
-**Ce que ce système ne fait pas** : le temps réel. Les alertes de réapprovisionnement,
-premier moteur de portée d'@ActuPokemon7, ne se planifient pas une semaine à l'avance.
-Julian a choisi de ne pas les couvrir.
-
-### Build in Public : les cartes « Set de base »
-
-Le post « coulisses » du dimanche est une carte numérotée d'un set (visuel `type: "bip"`,
-`scripts/lib/carte-bip.mjs`), tirée d'une banque d'épisodes **privée**, hors de ce dépôt.
-Charte complète : `docs/build-in-public/charte.md`. Le numéro compte les posts de la
-saison, jamais l'avancement du MVP. La validation refuse toute fuite (clé, IP, email,
-chemin) dans les textes de la carte, et les lignes trop longues plutôt que de les couper.
-La police DejaVu Sans Mono est installée par `brouillons-sociaux.yml` : sans elle, les
-bordereaux en chasse fixe débordent.
-
-### Fonds des visuels : des motifs dessinés, plus d'IA
-
-Le fond IA de Pollinations.ai est tombé le 29 septembre 2026 (HTTP 402 depuis l'accès
-anonyme, puis 500 sur limite de débit en amont, le nouvel accès `gen.pollinations.ai`
-exigeant une clé). `scripts/lib/motifs.mjs` le remplace : huit familles en SVG (rayons,
-hexagones, courbes de niveau, demi-teinte, constellation, vagues, diagonales, orbites),
-choisies et déclinées par le slug de l'article ou le titre du post, à la couleur
-d'accent de la licence. Sans réseau, sans clé, et le même slug redonne toujours la
-même image.
-
-⚠️ **Ne jamais `--force` sur l'existant.** Régénérer une vignette publiée change l'image
-sous la même URL, alors que `/assets/` est servi en cache immuable d'un an : personne ne
-la reverrait. Seules les vignettes créées après le 30 septembre 2026 portent un motif,
-les autres gardent leur fond d'origine. `VIGNETTES_SORTIE=<dossier>` permet de juger un
-rendu sans toucher à `public/`.
+- Mettre dans ce dépôt public un chiffre de trafic ou d'inscrits
+- Inventer un chiffre ou un prix dans un article, ni modifier la constante `REF` de `scripts/prochain-article.mjs`
+- Publier un article depuis un poste, ou pousser sur `main` depuis une tâche de rédaction : `draft: true` sur
+  une branche `blog/*`, pull request (un commit sur la branche ne fusionne rien), puis `publie-articles.yml`
+- Lancer `annonce-buffer.yml` sans `-f brouillon=true` pour un essai, ou tenir un `createPost` pour réussi
+  sans `__typename === 'PostActionSuccess'`
+- Réessayer automatiquement un envoi Discord (un 504 n'est pas un échec certain) ou cliquer « Re-run » sur
+  un `cote-hebdo` raté
+- Toucher à la navigation mobile (zéro JS de scroll) sans raison forte
 
 ## Méthode Triade
 
