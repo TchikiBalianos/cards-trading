@@ -124,10 +124,32 @@ function articlesPublies() {
     .sort((a, b) => new Date(a.fm.pubDate) - new Date(b.fm.pubDate));
 }
 
+/*
+  Image de l'embed : la vignette sociale de l'article, celle des balises og.
+  Un embed fourni par le webhook remplace l'aperçu automatique de Discord,
+  donc sans champ image l'annonce n'en a pas (constaté le 27 octobre 2026).
+  On vérifie qu'elle répond avant de l'ajouter : un déploiement Vercel bloqué
+  la laisserait en 404, et Discord garderait l'image cassée. On garde l'URL
+  finale, car l'apex redirige en 307 vers www et rien ne garantit que le
+  proxy d'images de Discord suive la redirection.
+*/
+async function imageSociale(slug) {
+  const adresse = `${SITE}/assets/social/${slug}-og.png`;
+  try {
+    const r = await fetch(adresse, { method: 'HEAD', signal: AbortSignal.timeout(10_000) });
+    if (r.ok) return r.url;
+    console.warn(`⚠️  Vignette en ${r.status}, annonce sans image : ${adresse}`);
+  } catch (e) {
+    console.warn(`⚠️  Vignette injoignable (${e.message}), annonce sans image.`);
+  }
+  return null;
+}
+
 async function poster(article) {
   const { slug, fm } = article;
   const url = `${SITE}/blog/${slug}/`;
   const categorie = ETIQUETTES[fm.category] || fm.category || 'Article';
+  const image = await imageSociale(slug);
 
   const charge = {
     username: 'Cards-Trading',
@@ -137,6 +159,7 @@ async function poster(article) {
         description: fm.description || '',
         url,
         color: COULEURS[fm.category] ?? 0x2997ff,
+        ...(image && { image: { url: image } }),
         footer: { text: `${categorie} · cards-trading.com` },
         timestamp: new Date(fm.pubDate).toISOString(),
       },
