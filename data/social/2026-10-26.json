@@ -251,7 +251,12 @@
         "https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-",
         "https://x.com/McDonalds/status/2115807108360995093",
         "https://www.pokebeach.com/2026/10/mcdonalds-pokemon-tcg-promotion-starts-november-10th-features-mini-happy-meal-box-toys-and-15-cards"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ae4dc6b260ad0ee5bc0492e",
+        "instagram": "6ae4dc6ca351214acfa0354a",
+        "facebook": "6ae4dc6c260ad0ee5bc0499c"
+      }
     }
   ]
 }

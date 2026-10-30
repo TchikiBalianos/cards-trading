@@ -22,7 +22,12 @@
         "https://api.tcgdex.net/v2/fr/cards/2021swsh-25",
         "https://api.tcgdex.net/v2/fr/cards/2024sv-1",
         "https://api.tcgdex.net/v2/fr/cards/2024sv-2"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ae4dc6dcd8290b9b90533d6",
+        "instagram": "6ae4dc6e10a950f13738533f",
+        "facebook": "6ae4dc6ea351214acfa035ed"
+      }
     },
     {
       "id": "2026-11-03-actu",
@@ -43,7 +48,12 @@
       },
       "sources": [
         "https://fr.onepiece-cardgame.com/products/op18.html"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ae4dc6fcd8290b9b9053434",
+        "instagram": "6ae4dc6fcd8290b9b9053489",
+        "facebook": "6ae4dc70a351214acfa0364f"
+      }
     },
     {
       "id": "2026-11-03-guide",
@@ -69,7 +79,12 @@
         "https://x.com/McQuaza_/status/2115826993920926128",
         "https://x.com/McDonalds/status/2115807108360995093",
         "https://www.pokebeach.com/2026/10/mcdonalds-pokemon-tcg-promotion-starts-november-10th-features-mini-happy-meal-box-toys-and-15-cards"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ae4dc70cd8290b9b90534f5",
+        "instagram": "6ae4dc71a351214acfa036ee",
+        "facebook": "6ae4dc7134702c2daac41d64"
+      }
     },
     {
       "id": "2026-11-04-actu",
@@ -96,7 +111,12 @@
         "https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-",
         "https://x.com/McQuaza_/status/2115407724653539515",
         "https://x.com/pokebeach/status/2115496031450460245"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ae4dc72cd8290b9b9053556",
+        "instagram": "6ae4dc7234702c2daac41daa",
+        "facebook": "6ae4dc7210a950f1373855b6"
+      }
     },
     {
       "id": "2026-11-05-communaute",
@@ -114,6 +134,11 @@
         "image": "https://images.unsplash.com/photo-1765633358974-cde0829a0e42?w=2400&q=85&fm=jpg",
         "credit": "Rajesh Rajput / Unsplash",
         "titre": "« Juste pour le fun », qu'il disait"
+      },
+      "buffer": {
+        "twitter": "6ae4dc7398505e7f52286f0b",
+        "instagram": "6ae4dc7434702c2daac41e1a",
+        "facebook": "6ae4dc74cd8290b9b9053971"
       }
     },
     {
@@ -138,7 +163,12 @@
       "sources": [
         "https://www.pokemon.com/fr/jcc-pokemon/mega-evolution-regne-delta",
         "https://www.pokemon.com/fr/actualites/apercu-de-la-carte-mega-rayquaza-ex-de-mega-evolution-regne-delta-du-jcc-pokemon"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6ae4dc7498505e7f52286f43",
+        "instagram": "6ae4dc75cd8290b9b90539ec",
+        "facebook": "6ae4dc7598505e7f52286f7c"
+      }
     },
     {
       "id": "2026-11-07-communaute",
@@ -158,6 +188,11 @@
         "etiquette": "Happy Meal Pokémon",
         "titre": "« C'est pour un enfant ? »",
         "sous_titre": "« Oui, l'enfant en moi. »"
+      },
+      "buffer": {
+        "twitter": "6ae4dc7610a950f1373856ac",
+        "instagram": "6ae4dc76a351214acfa03b79",
+        "facebook": "6ae4dc76a351214acfa03bd3"
       }
     },
     {
@@ -184,14 +219,37 @@
           "gabarit": "bordereau",
           "entete": "L'ÉQUIPE IA",
           "lignes": [
-            ["Analyste", "Mary"],
-            ["Produit", "John"],
-            ["Architecte", "Winston"],
-            ["UX", "Sally"],
-            ["Dev", "Amelia"],
-            ["Rédaction", "Paige"]
+            [
+              "Analyste",
+              "Mary"
+            ],
+            [
+              "Produit",
+              "John"
+            ],
+            [
+              "Architecte",
+              "Winston"
+            ],
+            [
+              "UX",
+              "Sally"
+            ],
+            [
+              "Dev",
+              "Amelia"
+            ],
+            [
+              "Rédaction",
+              "Paige"
+            ]
           ]
         }
+      },
+      "buffer": {
+        "twitter": "6ae4dc77260ad0ee5bc05060",
+        "instagram": "6ae4dc7810a950f137385718",
+        "facebook": "6ae4dc78cd8290b9b9053ae2"
       }
     }
   ]
