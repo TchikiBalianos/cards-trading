@@ -1,8 +1,8 @@
 ---
-title: "Cartes Pokémon Happy Meal 2026 : une fuite américaine pour novembre, et la France ?"
-description: "Des cartes Pokémon dans les Happy Meals américains du 5 novembre au 9 décembre 2026, selon PokéBeach. Ce qui est rapporté, ce qui reste inconnu, et ce que la France peut en attendre."
+title: "Happy Meal Pokémon 2026 : c'est officiel, rendez-vous le 10 novembre avec 15 jouets et 15 cartes"
+description: "McDonald's et Pokémon ont officialisé le Happy Meal Pokémon : 3 boîtes, 15 mini-boîtes à collectionner et 2 cartes par menu, à partir du 10 novembre 2026. Contenu, liste des cartes et conseils."
 pubDate: 2026-10-06
-updatedDate: 2026-10-14
+updatedDate: 2026-10-30
 category: "pokemon"
 tags: ["pokemon", "mcdonalds", "happy-meal", "30e-anniversaire", "scalping"]
 author: "Cards Trading"
@@ -13,63 +13,96 @@ draft: false
 <!-- sommaire -->
 **Au sommaire**
 
-- [Une fuite américaine, pas encore une annonce](#une-fuite-américaine-pas-encore-une-annonce)
-- [Ce que PokéBeach rapporte](#ce-que-pokébeach-rapporte)
-- [Ce que l'on ignore encore](#ce-que-lon-ignore-encore)
-- [Et la France ?](#et-la-france-)
+- [C'est officiel : rendez-vous le 10 novembre](#cest-officiel--rendez-vous-le-10-novembre)
+- [Ce que contient le Happy Meal Pokémon](#ce-que-contient-le-happy-meal-pokémon)
+- [Les 15 cartes, selon PokéBeach](#les-15-cartes-selon-pokébeach)
+- [La France, dans la première vague](#la-france-dans-la-première-vague)
+- [Déjà sur eBay, avant même la sortie](#déjà-sur-ebay-avant-même-la-sortie)
 - [La leçon du Japon en août 2025](#la-leçon-du-japon-en-août-2025)
 - [Que faire en tant que collectionneur français](#que-faire-en-tant-que-collectionneur-français)
 - [Questions fréquentes](#questions-fréquentes)
 - [Découvrez les autres articles du moment](#découvrez-les-autres-articles-du-moment)
 <!-- /sommaire -->
 
-## Une fuite américaine, pas encore une annonce
+## C'est officiel : rendez-vous le 10 novembre
 
-Les cartes Pokémon seraient de retour dans les Happy Meals de McDonald's pour les 30 ans de la licence. C'est ce que rapporte [PokéBeach](https://www.pokebeach.com/2026/09/mcdonalds-pokemon-tcg-promotion-to-launch-in-november-for-30th-anniversary), un site spécialisé dans le Jeu de Cartes à Collectionner, qui a publié l'information le 27 septembre 2026. Plusieurs médias l'ont relayée depuis, dont le [Journal du Geek](https://www.journaldugeek.com/2026/09/30/pour-les-30-ans-de-pokemon-mcdonalds-va-distribuer-des-cartes-gratuites-dans-ses-happy-meals/) le 30 septembre.
+Pokémon revient dans les Happy Meal de McDonald's. Le [compte X de McDonald's](https://x.com/McDonalds/status/2115807108360995093) l'a annoncé le 29 octobre 2026 : 3 boîtes, 15 jouets et 2 cartes avec chaque jouet, à partir du 10 novembre. [Pokémon.com](https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-) a publié sa page le même jour, avec la liste des pays. La France y figure, dans la vague de novembre 2026.
 
-Deux précisions avant d'aller plus loin.
+*Cet article a été publié le 6 octobre, quand l'opération n'était encore qu'une fuite. Nous l'avons réécrit le 30 octobre 2026, à partir de l'annonce officielle.*
 
-**Ces cartes ne sont pas gratuites.** Elles accompagnent un Happy Meal, donc un menu acheté. Cette nuance explique les files d'attente que ce genre d'opération déclenche.
+Une précision avant d'aller plus loin : **ces cartes ne sont pas gratuites.** Elles accompagnent un Happy Meal, donc un menu acheté. Certains titres parlent de cartes « gratuites », c'est un raccourci.
 
-**Rien n'est officiel à ce jour.** Au 14 octobre 2026, nous n'avons trouvé aucune annonce de McDonald's ni de The Pokémon Company : rien dans les actualités de Pokémon France, et la page Happy Meal de McDonald's France met toujours en avant Bob l'éponge x One Piece, sans aucune mention de Pokémon. Tout ce qui suit est donc préliminaire, comme PokéBeach le précise lui-même.
+## Ce que contient le Happy Meal Pokémon
 
-## Ce que PokéBeach rapporte
+Le format change par rapport aux années précédentes. Voici ce qu'annoncent McDonald's et Pokémon.
 
-PokéBeach affirme avoir la primeur de l'information. Voici ce qu'il avance, et rien de plus.
+- **3 boîtes de menu :** Pikachu, Noctali ou Poussifeu.
+- **15 jouets à collectionner :** des mini-boîtes Happy Meal à l'effigie de Pokémon, comme Pikachu, Brindibou ou Poussacha.
+- **2 cartes du JCC Pokémon par menu :** à découvrir parmi 15, dont 7 brillantes.
+- **Un jouet par Happy Meal :** dans les restaurants participants, pour une durée limitée et dans la limite des stocks.
 
-- **Les dates aux États-Unis :** du 5 novembre au 9 décembre 2026.
-- **Les autres pays :** la promotion doit aussi y arriver, à des dates qui peuvent varier.
-- **Le nombre de cartes :** 15 cartes à collectionner, dont le site ne connaît pas encore la liste.
-- **Le format, s'il ressemble aux éditions précédentes :** des boosters de 4 cartes, avec une carte brillante et trois normales. Les brillantes sont imprimées sur un papier holographique « confetti », et il y en a en général six différentes.
-- **Le complément :** un choix entre un jouet Pokémon et un livre, le « Pokémon Essential Handbook ». Le jouet pourrait servir de présentoir à cartes, ce qui n'est pas confirmé.
+PokéBeach, site spécialisé dans le jeu de cartes, [ajoute quelques détails](https://www.pokebeach.com/2026/10/mcdonalds-pokemon-tcg-promotion-starts-november-10th-features-mini-happy-meal-box-toys-and-15-cards) :
 
-Le site prévient que ces informations sont préliminaires et susceptibles de changer. D'autres détails devraient suivre dans les prochaines semaines.
+- Chaque jouet a un anneau extensible, pour l'accrocher à un sac ou à un pantalon.
+- Les 2 cartes sont tirées au hasard.
+- Ce sont des rééditions de cartes plus anciennes, avec une numérotation McDonald's. Les brillantes sont imprimées sur le papier « confetti » habituel.
+- C'est la première fois depuis 2018 que les Happy Meal Pokémon contiennent des jouets en plastique.
 
-## Ce que l'on ignore encore
+Fini, donc, le booster de 4 cartes des dernières éditions, sauf exception. Pokémon précise que le Québec recevra un autocollant et un booster de 4 cartes à la place du jouet, et PokéBeach cite aussi la Norvège. La France n'apparaît dans aucune de ces exceptions.
 
-- **Quelles cartes.** PokéBeach rappelle que, jusqu'ici, il s'agissait toujours de rééditions de cartes existantes.
-- **S'il y aura une carte inédite.** En août 2025, McDonald's Japon a distribué une carte Pikachu à l'illustration exclusive. PokéBeach juge « mince » la possibilité de la voir arriver en anglais, d'autant que sa sortie a provoqué un chaos massif.
-- **Si l'opération aura un lien avec l'anniversaire.** [Kotaku](https://kotaku.com/pokemon-happy-meals-mcdonalds-celebrations-30th-anniversary-2000737883) note qu'aucune information ne dit si les cartes seront vraiment liées aux 30 ans.
-- **Les règles de vente.** Les sources consultées ne disent rien d'une limite par client ni d'une restriction de commande.
-- **Le calendrier français officiel.** Des dates circulent depuis début octobre, mais aucune n'est confirmée (voir ci-dessous).
+## Les 15 cartes, selon PokéBeach
 
-## Et la France ?
+Attention à la liste que vous verrez circuler. Selon PokéBeach, Pokémon a d'abord publié de mauvaises cartes le 29 octobre, et elles ont été recopiées sur de nombreux sites. Voici la liste que le site donne comme la bonne, pour la version anglaise. Celle de la version française reste à confirmer.
 
-Aucune date officielle n'a été communiquée pour la France, et celle des États-Unis ne vaut pas pour nous.
+**Les 7 brillantes :**
 
-Des dates françaises circulent pourtant depuis début octobre : **du 4 décembre 2026 au 21 janvier 2027**. Selon [jeuxvideo.com](https://www.jeuxvideo.com/news/2107288/pokemon-30-ans-chez-mcdonalds-quand-les-cartes-exclusives-seront-disponibles-en-france.htm), le 3 octobre, elles viennent de « documents logistiques internes », alors que McDonald's France n'a publié aucun communiqué. Le [Journal du Geek](https://www.journaldugeek.com/2026/10/06/pokemon-mcdonalds-confirme-enfin-larrivee-des-cartes-30-ans-dans-ses-happy-meal-en-france/) les attribue le 6 octobre à un leaker, relayé par le compte spécialisé Pokekalos, et décrit le même contenu que PokéBeach pour les États-Unis : un booster de 4 cartes par Happy Meal, 15 cartes à collectionner, et le choix entre un jouet présentoir et le Pokémon Essential Handbook. Malgré son titre, qui parle de confirmation, l'article ne cite aucune annonce de McDonald's ni de Pokémon.
+- n°2 Lugulabre
+- n°3 Superdofin
+- n°4 Pikachu
+- n°5 Mimiqui
+- n°6 Lucario
+- n°8 Tyranocif
+- n°12 Jirachi
 
-Une raison de plus d'être prudent : ces dates reprennent au jour près celles de la vague de 2024, présentée le 4 décembre 2024 et proposée jusqu'au 21 janvier 2025 (voir ci-dessous). Un calendrier reconduit d'une année sur l'autre est plausible, mais la coïncidence ne prouve rien. Tenez-les pour une fuite à confirmer.
+**Les 8 autres :**
 
-Les opérations précédentes donnent quelques repères, sans garantie :
+- n°1 Archéduc
+- n°7 Brutalibré
+- n°9 Absol
+- n°10 Zoroark
+- n°11 Métalosse
+- n°13 Évoli
+- n°14 Ronflex
+- n°15 Moumouton
 
-- **2022 :** Pokémon présente le 27 septembre 2022 le format « Combat Express », disponible dans les Happy Meals jusqu'au 15 novembre : un booster de 4 cartes, dont une brillante ([Pokémon.com](https://www.pokemon.com/fr/actualites/mcdonald-s-et-pokemon-presentent-jcc-pokemon-combat-express-a-decouvrir-dans-les-happy-meal)).
-- **Fin 2023 :** du 6 décembre 2023 au 16 janvier 2024, 15 nouvelles cartes dont 4 brillantes, en paquets de 4 cartes, selon la [page des restaurants McDonald's de Strasbourg](https://www.mcdo-strasbourg.fr/les-pokemon-sont-de-retour-dans-votre-happy-meal-2/).
-- **Fin 2024 :** jusqu'au 21 janvier 2025, sur le même principe (15 cartes dont 4 brillantes), d'après une [page publiée le 4 décembre 2024](https://www.mcdo-strasbourg.fr/preparez-vos-decks-les-pokemon-sont-dans-vos-happy-meal-%E2%9A%A1/) par ces mêmes restaurants.
+Une absence notable : le Pikachu de McDonald's Japon, surnommé « Burgerchu », avec son illustration exclusive. [Selon PokéBeach](https://x.com/pokebeach/status/2115496031450460245), il ne fait pas partie de cette série et reste une exclusivité japonaise.
 
-Deux constats en ressortent. Les deux dernières vagues françaises ont été annoncées début décembre. Et lors de la dernière, la France a devancé les États-Unis : la page de [Pokémon.com](https://www.pokemon.com/us/news/mcdonalds-pokemon-happy-meals-collaboration) consacrée à la version américaine date du 21 janvier 2025. Cela ne prédit rien pour 2026, mais cela montre qu'un calendrier français n'a pas à copier le calendrier américain.
+## La France, dans la première vague
 
-Au 14 octobre 2026, le menu Happy Meal en vigueur en France est toujours celui de Bob l'éponge x One Piece, proposé à partir du 1er septembre d'après McDonald's France.
+La liste de Pokémon et de McDonald's répartit les pays par mois :
+
+- **Novembre 2026 :** Australie, Canada, Fidji, France, Nouvelle-Zélande, Espagne, États-Unis.
+- **Décembre 2026 :** de nombreux pays, dont la Belgique, la Suisse, l'Allemagne et le Portugal.
+- **Janvier 2027 :** notamment l'Italie et le Mexique.
+- **Février 2027 :** l'Irlande et le Royaume-Uni.
+
+Les dates qui circulaient depuis début octobre pour la France, du 4 décembre 2026 au 21 janvier 2027, ne tiennent donc plus : elles venaient d'une fuite, jamais confirmée.
+
+La date de fin n'est pas annoncée pour la France, et l'opération reste « dans la limite des stocks ». Pour les autres pays, PokéBeach, qui dit avoir interrogé plusieurs restaurants, donne ces périodes :
+
+- **Canada :** du 3 novembre au 7 décembre.
+- **Australie :** du 5 novembre au 9 décembre.
+- **États-Unis :** du 10 novembre au 14 décembre.
+
+Au 30 octobre 2026, les [actualités de McDonald's France](https://www.mcdonalds.fr/actualites) ne parlent pas encore de Pokémon, et mettent en avant [l'opération BT21](https://www.mcdonalds.fr/actualites/bt21). Surveillez le site et l'application de l'enseigne dans les prochains jours.
+
+L'opération arrive plus tôt que les précédentes en France. Celle de 2023 a couru du 6 décembre 2023 au 16 janvier 2024, avec 15 cartes dont 4 brillantes, en paquets de 4 cartes, selon la [page des restaurants McDonald's de Strasbourg](https://www.mcdo-strasbourg.fr/les-pokemon-sont-de-retour-dans-votre-happy-meal-2/). Celle de 2024 a suivi le même principe, [à partir de début décembre](https://www.mcdo-strasbourg.fr/preparez-vos-decks-les-pokemon-sont-dans-vos-happy-meal-%E2%9A%A1/).
+
+## Déjà sur eBay, avant même la sortie
+
+La revente n'a pas attendu. Dès le 29 octobre, le [compte McQuaza](https://x.com/McQuaza_/status/2115826993920926128), qui suit de près ces promotions, a repéré sur eBay les premières annonces de jouets et de matériel promotionnel des restaurants.
+
+Pour garder la mesure : McDonald's France affiche son [menu Happy Meal](https://www.mcdonalds.fr/nos-produits/menus/happy-meal) à partir de 4 €, en prix maximum conseillé. C'est le point de comparaison à garder en tête devant une annonce.
 
 ## La leçon du Japon en août 2025
 
@@ -77,37 +110,41 @@ La dernière opération de ce type à mal tourner s'est déroulée au Japon. Sel
 
 Cela n'a pas suffi. Dans un communiqué du 11 août, McDonald's Japon a reconnu de la cohue autour de ses restaurants, et des repas commandés puis abandonnés ou jetés. L'enseigne a présenté ses excuses, annulé la campagne, et promis des règles de vente plus strictes pour les prochaines opérations : restriction possible des commandes mobiles et de la livraison, refus de vente aux acheteurs en gros ou à ceux qui reviennent en boucle au comptoir.
 
-Ce précédent pèse sur novembre, alors que l'engouement autour des cartes Pokémon reste très fort, comme le souligne Kotaku. Ce que McDonald's décidera pour les États-Unis, puis pour la France, n'est pas connu.
+Ce précédent pèse sur novembre, alors que la demande de cartes Pokémon reste très forte, comme le souligne PokéBeach. Les annonces lues au 30 octobre 2026 parlent d'un jouet par Happy Meal, mais ne détaillent pas d'autre règle de vente pour la France.
 
 ## Que faire en tant que collectionneur français
 
-- **Attendez l'annonce officielle** de McDonald's France et de Pokémon avant de planifier quoi que ce soit. Ni une date américaine ni une date qui fuite ne font une date française.
-- **Ne payez pas de sur-prix.** Ces cartes s'obtiennent avec un menu. Acheter très cher un lot avant l'opération, c'est nourrir la revente à prix gonflé que McDonald's Japon a voulu combattre.
-- **Méfiez-vous des précommandes.** Dans les vagues françaises précédentes, un pack s'obtenait avec un Happy Meal acheté. Une annonce de vente de boosters McDonald's avant l'opération est un signal d'alerte.
+- **Notez le 10 novembre,** et vérifiez auprès de votre restaurant : seuls les restaurants participants proposent l'opération, et les stocks sont limités.
+- **Ne payez pas de sur-prix.** Ces jouets et ces cartes s'obtiennent avec un menu. Acheter très cher un lot avant l'opération, c'est nourrir la revente à prix gonflé que McDonald's Japon a voulu combattre.
+- **Méfiez-vous des précommandes.** Une annonce qui promet des cartes McDonald's avant le lancement est un signal d'alerte.
 - **Ne commandez pas plus que vous ne mangerez.** Le gaspillage a été le sujet central de l'affaire japonaise.
-- **Gardez la mesure sur la valeur.** D'ordinaire, ce sont des rééditions, donc des cartes de collection avant d'être un placement. Rien de tout cela ne constitue un conseil d'investissement.
+- **Gardez la mesure sur la valeur.** Ce sont des rééditions, donc des cartes de collection avant d'être un placement. Rien de tout cela ne constitue un conseil d'investissement.
 
 ## Questions fréquentes
 
-### Quand les cartes Pokémon McDonald's arriveront-elles en France ?
+### Quand les cartes Pokémon McDonald's arrivent-elles en France ?
 
-Aucune date n'est annoncée officiellement. Une fuite relayée début octobre par plusieurs médias évoque le 4 décembre 2026 au 21 janvier 2027, des dates que ni McDonald's France ni Pokémon n'avaient confirmées au 14 octobre 2026. Aux États-Unis, PokéBeach évoque le 5 novembre au 9 décembre 2026.
+À partir du 10 novembre 2026, selon le compte X de McDonald's. La liste officielle place bien la France dans la vague de novembre 2026. Au 30 octobre, le site de McDonald's France ne détaillait pas encore l'opération.
 
-### Les cartes Pokémon des Happy Meals sont-elles gratuites ?
+### Les cartes Pokémon des Happy Meal sont-elles gratuites ?
 
 Non. Elles sont incluses dans un Happy Meal, donc dans un menu acheté. Certains titres parlent de cartes « gratuites » : c'est un raccourci.
 
-### Combien de cartes, et comment sont-elles distribuées ?
+### Combien de cartes et de jouets y a-t-il ?
 
-Selon PokéBeach, 15 cartes à collectionner. Si le format des éditions précédentes est reconduit, chaque Happy Meal contient un booster de 4 cartes dont une brillante. En France, les vagues de 2023 et de 2024 annonçaient 15 cartes dont 4 brillantes.
+15 jouets et 15 cartes à collectionner, dont 7 brillantes, selon Pokémon. Chaque Happy Meal contient un jouet et 2 cartes.
 
-### Y aura-t-il une carte inédite en 2026 ?
+### Quelles sont les 15 cartes ?
 
-On ne le sait pas. Jusqu'ici, les cartes étaient des rééditions. Une carte Pikachu à l'illustration exclusive a été distribuée au Japon en 2025, mais PokéBeach juge faible la chance de la voir en anglais.
+Selon PokéBeach, pour la version anglaise : Archéduc, Lugulabre, Superdofin, Pikachu, Mimiqui, Lucario, Brutalibré, Tyranocif, Absol, Zoroark, Métalosse, Jirachi, Évoli, Ronflex et Moumouton. La liste de la version française reste à confirmer.
 
-### Peut-on acheter des boosters McDonald's sans prendre de menu ?
+### Le Pikachu « Burgerchu » du Japon sera-t-il dans le Happy Meal ?
 
-Dans les vagues françaises précédentes, un pack s'obtenait pour chaque Happy Meal acheté. Rien n'indique un changement pour 2026, mais l'opération n'est pas officielle.
+Non, selon PokéBeach : cette carte à l'illustration exclusive ne fait pas partie de la série et reste une exclusivité japonaise.
+
+### Peut-on obtenir les cartes sans prendre de menu ?
+
+Les annonces officielles ne décrivent qu'une distribution avec le Happy Meal, à raison d'un jouet par menu. Elles ne mentionnent aucune vente séparée.
 
 ### Pourquoi McDonald's Japon a-t-il annulé sa campagne Pokémon de 2025 ?
 
@@ -122,4 +159,4 @@ Dans les vagues françaises précédentes, un pack s'obtenait pour chaque Happy 
 
 C'est précisément pour ces moments, quand une promotion attire tout le monde et que les cartes finissent chez des revendeurs, que nous construisons **Cards-Trading.com** : une place de marché française pour acheter et vendre des cartes avec preuve photo et état standardisé, avec 0 % de commission pendant la bêta pour ceux qui vendent. [Rejoignez la liste d'attente](https://cards-trading.com/#beta).
 
-Et vous, vous ferez la queue chez McDonald's pour ces cartes, ou vous attendrez de voir ce que la France annonce ?
+Et vous, vous visez quelle mini-boîte en premier ?
