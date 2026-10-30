@@ -204,7 +204,7 @@
         "texte": "Carte erreur 🟥\n\nDu 11 au 18 septembre, notre blog n'a rien publié. 8 échecs d'affilée dans GitHub, et personne ne l'a vu.\nLa cause : une version de Node trop ancienne.\n\nDepuis, un robot vérifie chaque matin nos automatisations.\n\nCarte 04/20 #buildinpublic #dev"
       },
       "instagram": {
-        "texte": "Carte erreur : la panne silencieuse 🟥\n\nDu 11 au 18 septembre, notre blog n'a publié aucun article.\nLe robot de publication échouait chaque matin, et personne ne le voyait.\nUn article est resté en attente neuf jours.\n\nLa leçon : le plus dangereux, ce n'est pas la panne.\nC'est la panne que personne ne voit.\n\nDepuis, un robot vérifie chaque matin que toutes nos automatisations tournent, et nous écrit dès que l'une d'elles casse, jusqu'à ce qu'elle soit réparée.\n\nOn te montre aussi ce qui casse : c'est comme ça qu'on construit une plateforme fiable.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+        "texte": "Carte erreur : la panne silencieuse 🟥\n\nDu 11 au 18 septembre, notre blog n'a publié aucun article.\nLe robot de publication échouait chaque matin, et personne ne le voyait.\nUn article est resté en attente neuf jours.\n\nLa leçon : le plus dangereux, ce n'est pas la panne.\nC'est la panne que personne ne voit.\n\nDepuis, un robot vérifie chaque matin que toutes nos automatisations tournent, et nous écrit dès que l'une d'elles casse, jusqu'à ce qu'elle soit réparée.\n\nOn te montre aussi ce qui casse : c'est comme ça qu'on construit une plateforme fiable.\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #startup"
       },
       "visuel": {
         "type": "bip",
@@ -226,6 +226,32 @@
         "twitter": "6ada9fb3d447d56a6469200c",
         "facebook": "6adac0bc9ef33e7811b1d6eb"
       }
+    },
+    {
+      "id": "2026-11-01-actu",
+      "jour": "2026-11-01",
+      "pilier": "actu",
+      "licence": "pokemon",
+      "twitter": {
+        "heure": "09:45",
+        "texte": "🍔 C'est officiel : Pokémon revient dans les Happy Meal !\n\n3 boîtes, 15 mini-boîtes à collectionner et 2 cartes par menu.\nEn France, c'est prévu en novembre, selon McDonald's.\n\nTu y vas pour le burger ou pour les cartes ? 👇\n\n#PokemonTCG",
+        "citation": "https://x.com/McDonalds/status/2115807108360995093"
+      },
+      "instagram": {
+        "heure": "15:00",
+        "texte": "🍔 C'est officiel : Pokémon revient dans les Happy Meal\n\nMcDonald's et Pokémon l'ont annoncé le 29 octobre, et le format change :\n• 3 boîtes de menu : Pikachu, Noctali ou Poussifeu\n• 15 jouets à collectionner, en forme de mini-boîtes Happy Meal (Pikachu, Brindibou, Poussacha…)\n• 2 cartes du JCC Pokémon dans chaque menu, parmi 15, dont 7 brillantes\n\nEt la France ?\nElle figure bien dans la liste officielle de novembre 2026.\nLe jour exact n'est pas donné : le 10 novembre qui circule est la date américaine, selon PokéBeach.\n\nC'est dans les restaurants participants et dans la limite des stocks, avec un jouet par Happy Meal.\n\nTu vises quelle mini-boîte ?\nDis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #mcdonalds #happymeal #pokemon"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "C'est officiel",
+        "titre": "Pokémon revient dans les Happy Meal",
+        "sous_titre": "3 boîtes, 15 mini-boîtes à collectionner, 2 cartes par menu. En France en novembre."
+      },
+      "sources": [
+        "https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-",
+        "https://x.com/McDonalds/status/2115807108360995093",
+        "https://www.pokebeach.com/2026/10/mcdonalds-pokemon-tcg-promotion-starts-november-10th-features-mini-happy-meal-box-toys-and-15-cards"
+      ]
     }
   ]
 }
