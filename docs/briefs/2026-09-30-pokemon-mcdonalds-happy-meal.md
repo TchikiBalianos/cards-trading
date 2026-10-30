@@ -58,3 +58,21 @@ One Piece à partir du 1er septembre, sans mention de Pokémon.
 Ne pas committer sur la branche `blog/…` ni toucher au `draft`. Ouvrir la pull request (lien
 `compare/main...blog/pokemon-mcdonalds-happy-meal-cartes-2026?expand=1`) puis la fusionner : l'article
 reste en `draft: true` avec `pubDate: 2026-10-06`, et `publie-articles.yml` le met en ligne le matin du 6.
+
+## Mise à jour du 30 octobre 2026 : l'opération est officielle
+
+Article réécrit sur la branche `blog/correctif-mcdonalds-happy-meal-officiel`.
+
+| Fait | Origine lue en texte brut |
+|---|---|
+| 3 boîtes, 15 jouets, 2 cartes avec chaque jouet, « 11.10.26 », un jouet par Happy Meal, liste des pays par mois avec la France en novembre 2026 | Compte X de McDonald's, `x.com/McDonalds/status/2115807108360995093` (texte et visuels) |
+| Boîtes Pikachu, Noctali, Poussifeu ; jouets dont Pikachu, Brindibou, Poussacha ; 15 cartes dont 7 brillantes ; Québec : autocollant et booster de 4 cartes ; durée limitée, stocks, restaurants participants | Pokémon.com, `pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-` (29 octobre 2026) |
+| Liste des 15 cartes, anneau extensible, cartes au hasard, rééditions, papier confetti, Norvège, mauvaises cartes d'abord publiées par Pokémon, dates du Canada, de l'Australie et des États-Unis, premiers jouets en plastique depuis 2018 | PokéBeach, `pokebeach.com/2026/10/mcdonalds-pokemon-tcg-promotion-starts-november-10th-features-mini-happy-meal-box-toys-and-15-cards` |
+| « Burgerchu » exclusif au Japon | PokéBeach, `x.com/pokebeach/status/2115496031450460245` |
+| Annonces sur eBay dès le 29 octobre | McQuaza, `x.com/McQuaza_/status/2115826993920926128` |
+| Happy Meal à partir de 4 € en prix maximum conseillé ; rien sur Pokémon dans les actualités au 30 octobre ; opération BT21 en cours | McDonald's France, `mcdonalds.fr/nos-produits/menus/happy-meal`, `mcdonalds.fr/actualites`, `mcdonalds.fr/actualites/bt21` |
+
+**La date du 10 novembre pour la France est une décision de Julian** (30 octobre 2026), à partir du
+compte X de McDonald's. PokéBeach la donne pour les États-Unis, et McDonald's France n'a encore rien
+publié : à revérifier si une page française paraît. Le titre et la description de la vignette sociale
+(`-og.png`) restent ceux du 6 octobre : l'URL est fixée par le slug et `/assets/` est en cache immuable.
