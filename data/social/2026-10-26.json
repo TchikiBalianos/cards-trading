@@ -234,18 +234,19 @@
       "licence": "pokemon",
       "twitter": {
         "heure": "09:45",
-        "texte": "🍔 C'est officiel : Pokémon revient dans les Happy Meal !\n\n3 boîtes, 15 mini-boîtes à collectionner et 2 cartes par menu.\nEn France, c'est prévu en novembre, selon McDonald's.\n\nTu y vas pour le burger ou pour les cartes ? 👇\n\n#PokemonTCG",
+        "texte": "🍔 C'est officiel : Pokémon revient dans les Happy Meal !\n\n3 boîtes, 15 mini-boîtes à collectionner et 2 cartes par menu.\nRendez-vous le 10 novembre, selon McDonald's.\n\nTu y vas pour le burger ou pour les cartes ? 👇\n\n#PokemonTCG",
         "citation": "https://x.com/McDonalds/status/2115807108360995093"
       },
       "instagram": {
         "heure": "15:00",
-        "texte": "🍔 C'est officiel : Pokémon revient dans les Happy Meal\n\nMcDonald's et Pokémon l'ont annoncé le 29 octobre, et le format change :\n• 3 boîtes de menu : Pikachu, Noctali ou Poussifeu\n• 15 jouets à collectionner, en forme de mini-boîtes Happy Meal (Pikachu, Brindibou, Poussacha…)\n• 2 cartes du JCC Pokémon dans chaque menu, parmi 15, dont 7 brillantes\n\nEt la France ?\nElle figure bien dans la liste officielle de novembre 2026.\nLe jour exact n'est pas donné : le 10 novembre qui circule est la date américaine, selon PokéBeach.\n\nC'est dans les restaurants participants et dans la limite des stocks, avec un jouet par Happy Meal.\n\nTu vises quelle mini-boîte ?\nDis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #mcdonalds #happymeal #pokemon"
+        "texte": "🍔 C'est officiel : Pokémon revient dans les Happy Meal\n\nMcDonald's et Pokémon l'ont annoncé le 29 octobre, et le format change :\n• 3 boîtes de menu : Pikachu, Noctali ou Poussifeu\n• 15 jouets à collectionner, en forme de mini-boîtes Happy Meal (Pikachu, Brindibou, Poussacha…)\n• 2 cartes du JCC Pokémon dans chaque menu, parmi 15, dont 7 brillantes\n\nRendez-vous le 10 novembre, selon le compte X de McDonald's.\nEt la France figure bien dans la liste officielle de novembre 2026.\n\nC'est dans les restaurants participants et dans la limite des stocks, avec un jouet par Happy Meal.\n\nTu vises quelle mini-boîte ?\nDis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #mcdonalds #happymeal #pokemon"
       },
       "visuel": {
         "type": "texte",
         "etiquette": "C'est officiel",
         "titre": "Pokémon revient dans les Happy Meal",
-        "sous_titre": "3 boîtes, 15 mini-boîtes à collectionner, 2 cartes par menu. En France en novembre."
+        "sous_titre": "3 boîtes, 15 mini-boîtes à collectionner, 2 cartes par menu. Rendez-vous le 10 novembre.",
+        "version": 2
       },
       "sources": [
         "https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-",

@@ -28,6 +28,9 @@ Julian, hors périmètre. **Facebook** (page Cards Trading) y entre le 23 octobr
 légende qu'Instagram, où « lien du site en bio » devient un vrai lien (`texteFacebook`), même
 visuel portrait, même heure ; les relais d'articles et de cotes y partent aussi.
 
+**Sortie du jour** (Julian, 30 octobre 2026) : un post qui annonce une sortie le jour même part
+**le matin** sur Instagram et Facebook (`instagram.heure` à 09:30), sans attendre 11h30 ou 15h00.
+
 **Circuit.** La routine du samedi (tâche Desktop `social-cards-trading-semaine`) écrit
 `data/social/<lundi>.json` et le pousse sur `main`. Ce push déclenche
 `brouillons-sociaux.yml` : validation, visuels (`scripts/lib/visuel-social.mjs`, modèles
