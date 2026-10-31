@@ -23,7 +23,10 @@
  * /assets/ est servi en cache immuable d'un an : personne ne la reverrait. Ne
  * pas utiliser --force sur l'existant sans changer l'URL (voir CLAUDE.md).
  *
- * Sortie : public/assets/social/<slug>[-og].png, servi en URL publique —
+ * Pour un article corrigé après publication : `vignetteVersion: 2` dans son
+ * frontmatter, sans --force. Le fichier prend le suffixe `-v2`, l'ancien reste.
+ *
+ * Sortie : public/assets/social/<slug>[-vN][-og].png, servi en URL publique —
  * ce dont Buffer a besoin pour récupérer le média.
  */
 
@@ -33,6 +36,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BLEU, FOND, ETIQUETTES, COULEURS, echapper, decouper } from './lib/charte.mjs';
 import { motif, choisirMotif, hachage } from './lib/motifs.mjs';
+import { nomVignette } from './lib/vignette-article.mjs';
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOSSIER_BLOG = join(RACINE, 'src', 'content', 'blog');
@@ -173,7 +177,7 @@ async function vignette(slug, fm, format) {
   await sharp(Buffer.from(svg))
     .composite([{ input: marque, left: marge, top: Math.round(H * 0.057) }])
     .png({ compressionLevel: 9 })
-    .toFile(join(SORTIE, `${slug}${suffixe}.png`));
+    .toFile(join(SORTIE, nomVignette(slug, fm.vignetteVersion, suffixe)));
 }
 
 /* ── Exécution ─────────────────────────────────────────── */
@@ -187,12 +191,12 @@ const articles = readdirSync(DOSSIER_BLOG)
 
 let faites = 0;
 for (const a of articles) {
-  const aFaire = FORMATS.filter((fo) => FORCER || !existsSync(join(SORTIE, `${a.slug}${fo.suffixe}.png`)));
+  const aFaire = FORMATS.filter((fo) => FORCER || !existsSync(join(SORTIE, nomVignette(a.slug, a.fm.vignetteVersion, fo.suffixe))));
   if (aFaire.length === 0) continue;
 
   for (const format of aFaire) {
     await vignette(a.slug, a.fm, format);
-    console.log(`✅ ${a.slug}${format.suffixe}.png (${format.largeur}×${format.hauteur}) motif ${choisirMotif(graineDe(a.slug))}`);
+    console.log(`✅ ${nomVignette(a.slug, a.fm.vignetteVersion, format.suffixe)} (${format.largeur}×${format.hauteur}) motif ${choisirMotif(graineDe(a.slug))}`);
     faites++;
   }
 }

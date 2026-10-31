@@ -8,6 +8,8 @@ const blog = defineCollection({
     description: z.string(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
+    /* Article corrigé après publication : nouvelle vignette sous une nouvelle URL. */
+    vignetteVersion: z.number().int().min(2).optional(),
     heroImage: z.string().optional(),
     category: z.enum([
       'pokemon',

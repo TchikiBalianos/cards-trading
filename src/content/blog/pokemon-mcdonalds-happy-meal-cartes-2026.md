@@ -3,6 +3,7 @@ title: "Happy Meal Pokémon 2026 : c'est officiel, rendez-vous le 10 novembre av
 description: "McDonald's et Pokémon ont officialisé le Happy Meal Pokémon : 3 boîtes, 15 mini-boîtes à collectionner et 2 cartes par menu, à partir du 10 novembre 2026. Contenu, liste des cartes et conseils."
 pubDate: 2026-10-06
 updatedDate: 2026-10-30
+vignetteVersion: 2
 category: "pokemon"
 tags: ["pokemon", "mcdonalds", "happy-meal", "30e-anniversaire", "scalping"]
 author: "Cards Trading"
