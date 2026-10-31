@@ -100,6 +100,13 @@ branche s'en est séparée ? » (`git rev-list --count <branche>..origin/main --
 0 = branche périmée). Non appliqué aujourd'hui, les pull requests étant fusionnées en commit de
 fusion ; l'implémentation complète est gardée sous le tag `archive/alerte-relecture-squash`.
 
+**Vignette d'un article corrigé** (30 octobre 2026) : quand un correctif change le titre ou le chapô,
+ajouter `vignetteVersion: 2` au frontmatter puis lancer `node scripts/vignettes-sociales.mjs`, sans
+`--force`. La vignette prend le suffixe `-v2` (`nomVignette`, `scripts/lib/vignette-article.mjs`), la
+page du blog la reprend, et l'ancienne reste en place. Les relais et la newsletter gardent la vignette
+d'origine : ils ne concernent que les articles pas encore annoncés. `updatedDate` alimente le
+`dateModified` de la page et la mention « Mis à jour le ».
+
 ⚠️ **Pas de `[skip ci]` dans le commit de publication**, contrairement aux
 commits d'archivage des autres workflows. On a longtemps cru que Vercel
 honorait ce marqueur (l'article serait committé et jamais déployé). **Il ne
