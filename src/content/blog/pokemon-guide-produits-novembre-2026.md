@@ -6,7 +6,7 @@ category: "pokemon"
 tags: ["pokemon", "regne-delta", "30e-anniversaire", "produits", "novembre-2026"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-pokemon.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
