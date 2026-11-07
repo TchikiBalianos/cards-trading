@@ -1,0 +1,97 @@
+{
+  "semaine": "2026-11-09",
+  "posts": [
+    {
+      "id": "2026-11-09-cote",
+      "jour": "2026-11-09",
+      "pilier": "cote",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Ça vaut combien ? 💰\n\nMéga-Darkrai-ex, Nuit Noire :\n• ALT : 169,53 €\n• GOLD : 125,17 €\n\nPrix tendance Cardmarket au 6 novembre, via TCGdex.\nOui, l'ALT passe devant la GOLD.\n\nTu aurais misé sur laquelle ? 👇\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "texte": "Ça vaut combien ? 💰\nMéga-Darkrai-ex, Nuit Noire\n\nDeux versions rares de la même carte.\nEt ce n'est pas la plus dorée qui coûte le plus cher.\n\nPrix tendance relevés sur Cardmarket le 6 novembre, via TCGdex :\n• L'ALT, illustrée par Akira Egawa : 169,53 €\n• La GOLD : 125,17 €\n\nSur cette carte, les collectionneurs paient plus pour l'illustration que pour l'or.\nEt une cote bouge vite : regarde toujours la tendance du jour avant d'acheter ou de vendre.\n\nEt toi, tu prends laquelle ?\nL'ALT ou la GOLD ? Dis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #nuitnoire #pokemon #tcg"
+      },
+      "visuel": {
+        "type": "carte",
+        "image": "https://assets.tcgdex.net/fr/me/me05/116/high.png",
+        "titre": "Méga-Darkrai-ex ALT : 169,53 €",
+        "sous_titre": "Devant la GOLD (125,17 €). Prix tendance Cardmarket au 6 novembre, via TCGdex."
+      },
+      "sources": [
+        "https://api.tcgdex.net/v2/fr/cards/me05-116",
+        "https://api.tcgdex.net/v2/fr/cards/me05-120"
+      ]
+    },
+    {
+      "id": "2026-11-10-actu",
+      "jour": "2026-11-10",
+      "pilier": "actu",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "🍟 Sortie du jour : le Happy Meal Pokémon, à la date annoncée par McDonald's.\n\n3 boîtes, 15 jouets, et 2 cartes du JCC Pokémon dans chaque menu.\nDans la limite des stocks, selon Pokémon.\n\nTu vises quel jouet ? 👇\n\n#PokemonTCG",
+        "citation": "https://x.com/McDonalds/status/2115807108360995093"
+      },
+      "instagram": {
+        "heure": "09:30",
+        "texte": "🍟 Sortie du jour : le Happy Meal Pokémon\n\nC'est le 10 novembre, la date annoncée par McDonald's sur X.\nLa France fait partie de la vague de novembre, selon Pokémon.\n\nCe qu'il y a dans le menu, selon Pokémon :\n• une boîte aux couleurs de Pikachu, Noctali ou Poussifeu\n• un mini jouet en forme de boîte Happy Meal, parmi 15 (Pikachu, Brindibou, Poussacha…)\n• deux cartes du JCC Pokémon, parmi 15, dont 7 brillantes\n\nC'est pour une durée limitée, dans les restaurants participants et dans la limite des stocks.\nMcDonald's France n'en parle pas encore sur son site : demande à ton restaurant avant de te déplacer.\n\nUne seule règle : on finit son menu 🍟\n\nTu vises quel jouet en premier ?\nDis-le en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #mcdonalds #happymeal #pokemon"
+      },
+      "visuel": {
+        "type": "texte",
+        "etiquette": "Sortie du jour",
+        "titre": "Le Happy Meal Pokémon est là",
+        "sous_titre": "15 jouets et 2 cartes Pokémon par menu, dans la limite des stocks."
+      },
+      "sources": [
+        "https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-",
+        "https://x.com/McDonalds/status/2115807108360995093",
+        "https://www.mcdonalds.fr/actualites"
+      ]
+    },
+    {
+      "id": "2026-11-12-communaute",
+      "jour": "2026-11-12",
+      "pilier": "communaute",
+      "licence": "pokemon",
+      "twitter": {
+        "texte": "Cette sensation quand tu retrouves ta vieille boîte de cartes Pokémon chez tes parents…\n\nEt que tu la vides en cherchant UNE seule carte. 🫠\n\nC'était laquelle, la tienne ? 👇\n\n#PokemonTCG"
+      },
+      "instagram": {
+        "texte": "Cette sensation quand tu retrouves ta vieille boîte de cartes Pokémon chez tes parents… 🫠\n\nLa poussière, les élastiques qui lâchent, les cartes en vrac.\nEt toi, tu fouilles en cherchant UNE seule carte.\nCelle que tu gardais comme un trésor dans la cour de récré.\n\nElle y est encore ?\nOu tu l'as échangée contre trois cartes que tu ne retrouves même plus ?\n\nRaconte-nous ta carte trésor en commentaire 👇\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#pokemontcg #cartespokemon #nostalgie #pokemon"
+      },
+      "visuel": {
+        "type": "photo",
+        "image": "https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=2400&q=85&fm=jpg",
+        "credit": "Thimo Pedersen / Unsplash",
+        "titre": "La vieille boîte de chez tes parents"
+      }
+    },
+    {
+      "id": "2026-11-15-coulisses",
+      "jour": "2026-11-15",
+      "pilier": "coulisses",
+      "licence": "mixte",
+      "twitter": {
+        "texte": "Pour vendre sur une marketplace, il faut se faire vérifier. Notre premier parcours envoyait le vendeur ailleurs.\n\nDepuis le 19 septembre, tout se fait chez nous. En testant, on a trouvé 3 défauts, dont un qui aurait bloqué de vrais vendeurs 24 h.\n\nCarte 06/20 #buildinpublic"
+      },
+      "instagram": {
+        "texte": "Vendre chez nous : la vérification se fait sans quitter le site ✅\n\nPour protéger acheteurs et vendeurs, chaque vendeur doit être vérifié avant de recevoir son argent. Notre premier parcours l'envoyait sur une autre page pour ça : une étape de plus, et un risque de le perdre en route.\n\nDepuis le 19 septembre, tout se passe dans la page Cards-Trading. En la testant dans le navigateur, on a trouvé trois défauts, dont un qui aurait pu bloquer de vrais vendeurs pendant 24 heures. Corrigés avant d'en accueillir un seul.\n\nTu vends déjà des cartes en ligne ? Qu'est-ce qui te freine le plus quand tu t'inscris sur une plateforme ?\n\nCards-Trading.com, la marketplace 100 % TCG\nLien du site en bio 🔗\n\n#buildinpublic #tcg #cartesacollectionner #startupfrancaise"
+      },
+      "visuel": {
+        "type": "bip",
+        "numero": 6,
+        "total": 20,
+        "rarete": "commune",
+        "nom": "Vérifié sans quitter",
+        "titre": "Vendre chez nous : la vérification se fait sans quitter le site",
+        "sous_titre": "Moins d'étapes pour les vendeurs.",
+        "effet": "Un vendeur se fait vérifier sans jamais quitter Cards-Trading.",
+        "illustration": {
+          "gabarit": "preuve",
+          "ligne": "la vérification ne sort plus du site",
+          "legende": "message de commit, 19/09/2026"
+        }
+      }
+    }
+  ]
+}
