@@ -21,7 +21,12 @@
       "sources": [
         "https://api.tcgdex.net/v2/fr/cards/me05-116",
         "https://api.tcgdex.net/v2/fr/cards/me05-120"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6aeedea49214322f68db5012",
+        "instagram": "6aeedea59214322f68db5033",
+        "facebook": "6aeedea5af7e526d430c09a9"
+      }
     },
     {
       "id": "2026-11-10-actu",
@@ -46,7 +51,12 @@
         "https://www.pokemon.com/us/news/pokemon-happy-meals-are-coming-to-mcdonalds-in-an-exciting-new-way-",
         "https://x.com/McDonalds/status/2115807108360995093",
         "https://www.mcdonalds.fr/actualites"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6aeedea6a7751de7c9d4ff24",
+        "instagram": "6aeedea69214322f68db506c",
+        "facebook": "6aeedea6a7751de7c9d4ff53"
+      }
     },
     {
       "id": "2026-11-12-communaute",
@@ -64,6 +74,11 @@
         "image": "https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=2400&q=85&fm=jpg",
         "credit": "Thimo Pedersen / Unsplash",
         "titre": "La vieille boîte de chez tes parents"
+      },
+      "buffer": {
+        "twitter": "6aeedea6004e4879a741981b",
+        "instagram": "6aeedea7004e4879a7419858",
+        "facebook": "6aeedea79214322f68db50be"
       }
     },
     {
@@ -91,6 +106,11 @@
           "ligne": "la vérification ne sort plus du site",
           "legende": "message de commit, 19/09/2026"
         }
+      },
+      "buffer": {
+        "twitter": "6aeedea8229bf05daf386ea3",
+        "instagram": "6aeedea8004e4879a7419890",
+        "facebook": "6aeedea8229bf05daf386ef5"
       }
     }
   ]
