@@ -11,7 +11,8 @@
  *   node scripts/essai-images-ia.mjs --fournisseur=cloudflare        # 5 images FLUX.2 klein 9B
  *   node scripts/essai-images-ia.mjs --fournisseur=tous --nombre=1   # celles dont les secrets existent
  *
- * Options : --sortie=dossier (défaut images-ia-test, ignoré par git), --nombre=1 à 5
+ * Options : --sortie=dossier (défaut images-ia-test, ignoré par git), --nombre=1 à 5,
+ *           --scene=echange-mains (une seule scène, au lieu des premières)
  * Variables : CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN, GEMINI_API_KEY,
  *             GEMINI_MODELE (facultatif, défaut gemini-3.1-flash-lite-image)
  *
@@ -45,6 +46,7 @@ try {
   const { resultats, ignores } = await lancerEssai({
     choix: option('fournisseur') || 'tous',
     nombre: option('nombre') ? Number(option('nombre')) : undefined,
+    scene: option('scene'),
     sortie: option('sortie') || 'images-ia-test',
     seulementPlan: drapeau('dry-run'),
   });

@@ -139,6 +139,20 @@ test('le nombre de scènes est borné entre 1 et 5, une valeur absurde retombe s
   });
 });
 
+test('`scene` rejoue UNE scène, garde son numéro de fichier, et un identifiant inconnu est refusé', async () => {
+  await dossierTemporaire(async (sortie) => {
+    const { generer, appels } = await faux();
+    const { resultats } = await lancerEssai({ choix: 'gemini', scene: 'echange-mains', nombre: 2, sortie, env: ENV_GEMINI, generer, journal: () => {} });
+    assert.equal(appels.length, 1);
+    assert.equal(appels[0].invite, inviteDe(SCENES.find((s) => s.id === 'echange-mains')));
+    assert.equal(resultats[0].fichier, 'gemini-03-echange-mains.jpg');
+    await assert.rejects(
+      () => lancerEssai({ choix: 'gemini', scene: 'inconnue', sortie, env: ENV_GEMINI, generer, journal: () => {} }),
+      /Scène inconnue : inconnue \(attendu : table-de-jeu/,
+    );
+  });
+});
+
 test('un 429 arrête CE fournisseur (inutile d\'insister), l\'autre continue', async () => {
   await dossierTemporaire(async (sortie) => {
     const { generer, appels } = await faux({ echecs: { 'cloudflare#1': { message: 'cloudflare : HTTP 429 quota', statut: 429 } } });

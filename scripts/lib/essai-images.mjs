@@ -218,6 +218,7 @@ export async function planche(resultats, { titre = 'Essai d\'illustrations IA', 
 export async function lancerEssai({
   choix = 'tous',
   nombre = SCENES.length,
+  scene = '',
   sortie = 'images-ia-test',
   seulementPlan = false,
   env = process.env,
@@ -225,8 +226,17 @@ export async function lancerEssai({
   journal = console.log,
 } = {}) {
   verifierScenes();
-  const n = Number.isFinite(nombre) ? Math.min(SCENES.length, Math.max(1, Math.round(nombre))) : SCENES.length;
-  const scenes = SCENES.slice(0, n);
+  /* `scene` vise UNE scène par son identifiant (rejouer celle qu'un 500 a fait échouer
+     sans repayer les autres) ; sans elle, `nombre` prend les premières dans l'ordre. */
+  let scenes;
+  if (scene) {
+    const voulue = SCENES.find((s) => s.id === scene);
+    if (!voulue) throw new Error(`Scène inconnue : ${scene} (attendu : ${SCENES.map((s) => s.id).join(', ')}).`);
+    scenes = [voulue];
+  } else {
+    const n = Number.isFinite(nombre) ? Math.min(SCENES.length, Math.max(1, Math.round(nombre))) : SCENES.length;
+    scenes = SCENES.slice(0, n);
+  }
   const { actifs, ignores } = resoudreFournisseurs(choix, env, seulementPlan);
 
   if (!actifs.length) {
@@ -251,12 +261,13 @@ export async function lancerEssai({
   const resultats = [];
 
   for (const f of actifs) {
-    for (const [index, s] of scenes.entries()) {
+    for (const s of scenes) {
       const base = { fournisseur: f, scene: s.id, libelle: s.libelle };
       try {
         const r = await generer(f, inviteDe(s), { env, ratio: '16:9' });
         const extension = r.format === 'jpeg' ? 'jpg' : r.format;
-        const fichier = `${f}-${String(index + 1).padStart(2, '0')}-${s.id}.${extension}`;
+        /* Le rang est celui de la liste complète : rejouée seule, la scène garde son numéro. */
+        const fichier = `${f}-${String(SCENES.indexOf(s) + 1).padStart(2, '0')}-${s.id}.${extension}`;
         await writeFile(join(sortie, fichier), r.octets);
         resultats.push({ ...base, ok: true, modele: r.modele, fichier, ms: r.ms, octets: r.octets.length, format: r.format, buffer: r.octets });
         journal(`✓ ${f}  ${s.id}  ${secondes(r.ms)} s  ${kilo(r.octets.length)}  ${r.format}`);
