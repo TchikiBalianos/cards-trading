@@ -27,33 +27,38 @@ import { FOURNISSEURS, genererImage, secretsManquants, fournisseursConfigures } 
 const POLICE = 'Arial, Helvetica, sans-serif';
 
 /* Suffixe commun : la charte visuelle et les interdits, dits au modèle. */
-export const STYLE = 'Photographic, cinematic look, deep navy blue and electric blue color palette, soft rim lighting, shallow depth of field, high detail. No text, no letters, no numbers, no logos, no watermark, no real trading cards, no fictional characters, no recognizable faces.';
+/* Le 8 novembre 2026, le premier essai (FLUX.1 schnell, cartes « vierges », consignes
+   en négatif) donnait des images brouillonnes : un classeur en dalles de verre, une
+   salle floue. FLUX.2 comprend une phrase complète : chaque scène décrit donc ce
+   qu'on VEUT voir (des cartes vues de dos, unies, bleu marine) plutôt que ce qu'on
+   évite, et garde le bas du cadre sombre, là où la vignette pose le titre. */
+export const STYLE = 'Premium editorial photograph, 35mm lens, cinematic lighting, deep navy blue and electric blue color grade with a warm golden accent, soft rim light, shallow depth of field, realistic textures, crisp focus on the subject. No text, no letters, no numbers, no logos, no watermark, no real trading cards, no fictional characters, no recognizable faces.';
 
 export const SCENES = [
   {
     id: 'table-de-jeu',
     libelle: 'Table de jeu',
-    prompt: 'Top-down view of a wooden game table covered with stacks of blank collectible cards with plain dark blue backs, transparent card sleeves, colorful dice and a warm desk lamp glow.',
+    prompt: 'A dark wooden gaming table at night seen from a low angle, tidy stacks of trading cards lying face down with plain navy blue backs, a few cards fanned out, clear card sleeves, polished dice, and a warm desk lamp casting a golden pool of light. The lower third of the frame fades into deep shadow.',
   },
   {
     id: 'boutique-nuit',
     libelle: 'Boutique de nuit',
-    prompt: 'Interior of a cozy hobby shop at night, shelves of colorful unlabeled boxes, display cases, a blue neon glow coming through the front window, empty shop with nobody inside.',
+    prompt: 'A cozy independent game shop at night, seen from the doorway: wooden shelves of colorful board game boxes, a glass display counter, warm lamps, and electric blue neon light spilling through the front window onto the floor. Quiet and inviting. The lower third of the frame fades into deep shadow.',
   },
   {
     id: 'echange-mains',
     libelle: 'Échange de cartes',
-    prompt: 'Close-up of two people\'s hands exchanging a few blank collectible cards across a table, only the hands and forearms visible, blurred background.',
+    prompt: 'Close-up photograph of two pairs of hands passing a small stack of trading cards, shown from their plain navy blue backs, across a wooden table. Dark knit sleeves, warm friendly light, a softly blurred game shop with blue lights behind. The lower third of the frame fades into deep shadow.',
   },
   {
     id: 'classeur',
     libelle: 'Classeur de collection',
-    prompt: 'Macro photograph of an open collector\'s binder with empty transparent card pockets, a few blank cards slightly out of focus, soft window light.',
+    prompt: 'Macro photograph of a collector\'s binder lying open on a dark desk, clear plastic pockets each holding a trading card shown from its plain navy blue back, soft window light from the left, a mug and card sleeves blurred in the background. The lower third of the frame fades into deep shadow.',
   },
   {
     id: 'salle-tournoi',
     libelle: 'Salle de tournoi',
-    prompt: 'Wide high-angle view of a card tournament hall, long rows of tables, players as small distant blurred silhouettes, cool blue ambient light, no readable signs.',
+    prompt: 'Wide cinematic view of a large tournament hall, long rows of tables with players seen from behind, small and softly blurred, cool blue ambient light, light haze, ceiling lights turning into soft bokeh. The lower third of the frame fades into deep shadow.',
   },
 ];
 
@@ -111,7 +116,11 @@ const TARIF_GEMINI_PAR_IMAGE_USD = 0.0336;
 const MODELE_TARIFE = 'gemini-3.1-flash-lite-image';
 
 function coutIndicatif(fournisseur, modele, nombre) {
-  if (fournisseur === 'cloudflare') return 'niveau gratuit (10 000 neurones par jour selon la documentation)';
+  if (fournisseur === 'cloudflare') {
+    const base = 'niveau gratuit de 10 000 neurones par jour selon la documentation';
+    /* Tarif de la page Workers AI lu le 8 novembre 2026 : 1 363,64 neurones pour le premier mégapixel. */
+    return modele.endsWith('/flux-2-klein-9b') ? `${base}, environ ${Math.round(nombre * 1364)} neurones pour cette passe` : base;
+  }
   if (modele !== MODELE_TARIFE) return 'tarif non relevé pour ce modèle';
   return `environ ${(nombre * TARIF_GEMINI_PAR_IMAGE_USD).toFixed(2).replace('.', ',')} $ au tarif relevé le 30 septembre 2026`;
 }

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import sharp from 'sharp';
 import {
-  FOURNISSEURS, secretsManquants, fournisseursConfigures, construireRequete, verifierPrompt,
+  FOURNISSEURS, secretsManquants, fournisseursConfigures, construireRequete, verifierPrompt, dimensions,
   formatImage, extraireCloudflare, extraireGemini, genererImage,
 } from './image-ia.mjs';
 
@@ -44,17 +44,54 @@ test('verifierPrompt : vide et trop long refusés', () => {
 
 /* ── Construction des requêtes ─────────────────────────────── */
 
-test('requête Cloudflare : URL du modèle, jeton en Bearer, prompt et 4 étapes par défaut', () => {
+const SCHNELL = { ...ENV, CLOUDFLARE_MODELE: '@cf/black-forest-labs/flux-1-schnell' };
+
+test('requête Cloudflare : FLUX.2 [klein] 9B par défaut, formulaire multipart en 1360 x 768', () => {
   const { url, init, modele } = construireRequete('cloudflare', { prompt: 'une table', env: ENV });
-  assert.equal(modele, '@cf/black-forest-labs/flux-1-schnell');
-  assert.equal(url, 'https://api.cloudflare.com/client/v4/accounts/compte123/ai/run/@cf/black-forest-labs/flux-1-schnell');
+  assert.equal(modele, '@cf/black-forest-labs/flux-2-klein-9b');
+  assert.equal(url, 'https://api.cloudflare.com/client/v4/accounts/compte123/ai/run/@cf/black-forest-labs/flux-2-klein-9b');
   assert.equal(init.method, 'POST');
   assert.equal(init.headers.Authorization, 'Bearer jeton-secret-cf');
+  assert.equal(init.headers['Content-Type'], undefined, 'fetch pose le Content-Type avec la frontière du multipart');
+  assert.ok(init.body instanceof FormData);
+  assert.equal(init.body.get('prompt'), 'une table');
+  assert.equal(init.body.get('width'), '1360');
+  assert.equal(init.body.get('height'), '768');
+  assert.equal(init.body.get('steps'), null, 'les klein sont distillés : pas de réglage d\'étapes');
+});
+
+test('requête Cloudflare : le ratio demandé règle les dimensions du formulaire', () => {
+  const { init } = construireRequete('cloudflare', { prompt: 'x', env: ENV, ratio: '1:1' });
+  assert.equal(init.body.get('width'), '1024');
+  assert.equal(init.body.get('height'), '1024');
+});
+
+test('dimensions : multiples de 16, environ un mégapixel, ratio invalide refusé', () => {
+  for (const ratio of ['16:9', '4:5', '1:1', '9:16', '3:2']) {
+    const { largeur, hauteur } = dimensions(ratio);
+    assert.equal(largeur % 16, 0, ratio);
+    assert.equal(hauteur % 16, 0, ratio);
+    assert.ok(largeur * hauteur > 900_000 && largeur * hauteur < 1_100_000, `${ratio} : ${largeur} x ${hauteur}`);
+  }
+  assert.throws(() => dimensions('large'), /Ratio invalide/);
+  assert.throws(() => dimensions('0:9'), /Ratio invalide/);
+});
+
+test('requête Cloudflare : CLOUDFLARE_MODELE remplace le modèle, une valeur vide non', () => {
+  assert.equal(construireRequete('cloudflare', { prompt: 'x', env: { ...ENV, CLOUDFLARE_MODELE: '@cf/black-forest-labs/flux-2-dev' } }).modele, '@cf/black-forest-labs/flux-2-dev');
+  assert.equal(construireRequete('cloudflare', { prompt: 'x', env: { ...ENV, CLOUDFLARE_MODELE: '  ' } }).modele, '@cf/black-forest-labs/flux-2-klein-9b');
+});
+
+test('requête Cloudflare avec FLUX.1 schnell : JSON, prompt et 4 étapes par défaut', () => {
+  const { url, init, modele } = construireRequete('cloudflare', { prompt: 'une table', env: SCHNELL });
+  assert.equal(modele, '@cf/black-forest-labs/flux-1-schnell');
+  assert.equal(url, 'https://api.cloudflare.com/client/v4/accounts/compte123/ai/run/@cf/black-forest-labs/flux-1-schnell');
+  assert.equal(init.headers['Content-Type'], 'application/json');
   assert.deepEqual(JSON.parse(init.body), { prompt: 'une table', steps: 4 });
 });
 
-test('requête Cloudflare : les étapes restent dans 1 à 8', () => {
-  const pas = (etapes) => JSON.parse(construireRequete('cloudflare', { prompt: 'x', env: ENV, etapes }).init.body).steps;
+test('requête Cloudflare avec FLUX.1 schnell : les étapes restent dans 1 à 8', () => {
+  const pas = (etapes) => JSON.parse(construireRequete('cloudflare', { prompt: 'x', env: SCHNELL, etapes }).init.body).steps;
   assert.equal(pas(99), 8);
   assert.equal(pas(0), 1);
   assert.equal(pas(6), 6);
@@ -143,7 +180,8 @@ test('genererImage Cloudflare : appelle l\'URL du modèle et décode le JPEG', a
   };
   const r = await genererImage('cloudflare', 'une table', { env: ENV, fetchImpl });
   assert.equal(appels.length, 1);
-  assert.ok(appels[0].url.endsWith('/ai/run/@cf/black-forest-labs/flux-1-schnell'));
+  assert.ok(appels[0].url.endsWith('/ai/run/@cf/black-forest-labs/flux-2-klein-9b'));
+  assert.ok(appels[0].init.body instanceof FormData);
   assert.ok(appels[0].init.signal, 'un délai maximal doit être armé');
   assert.deepEqual(r.octets, jpeg);
   assert.equal(r.format, 'jpeg');

@@ -5,8 +5,10 @@
   en sortie. Le module ne sait que parler aux API et décoder leur réponse. Il
   n'écrit rien sur le disque et ne publie rien.
 
-    cloudflare   Workers AI, modèle FLUX.1 schnell. Niveau gratuit de 10 000
-                 neurones par jour, mais il faut un compte Cloudflare, un jeton
+    cloudflare   Workers AI, modèle FLUX.2 [klein] 9B (FLUX.1 schnell, essayé le
+                 8 novembre 2026, rendait des images brouillonnes). Niveau gratuit
+                 de 10 000 neurones par jour, soit environ 7 images d'un mégapixel
+                 par jour, mais il faut un compte Cloudflare, un jeton
                  « Workers AI » et l'identifiant du compte.
     gemini       Modèles d'image de Gemini (« Nano Banana »), via l'API
                  « interactions » (format lu dans la documentation le 30 septembre
@@ -27,7 +29,9 @@ export const FOURNISSEURS = {
   cloudflare: {
     libelle: 'Cloudflare Workers AI',
     secrets: ['CLOUDFLARE_ACCOUNT_ID', 'CLOUDFLARE_API_TOKEN'],
-    modele: () => '@cf/black-forest-labs/flux-1-schnell',
+    /* FLUX.2 [klein] 9B : 4 étapes fixes, environ 1 364 neurones pour un mégapixel.
+       `CLOUDFLARE_MODELE` permet d'en essayer un autre (flux-2-dev, flux-1-schnell...). */
+    modele: (env) => (env.CLOUDFLARE_MODELE || '').trim() || '@cf/black-forest-labs/flux-2-klein-9b',
   },
   gemini: {
     libelle: 'Google Gemini',
@@ -61,6 +65,20 @@ export function verifierPrompt(prompt) {
   }
 }
 
+/* Les modèles FLUX.2 de Workers AI prennent un formulaire multipart (prompt, width,
+   height), pas du JSON ; FLUX.1 schnell prend du JSON. */
+const EST_FLUX_2 = /\/flux-2-/;
+
+/* Largeur et hauteur d'environ un mégapixel (le premier est facturé au forfait chez
+   Cloudflare), en multiples de 16 comme l'exige la famille FLUX. 16:9 donne 1360 x 768. */
+export function dimensions(ratio = '16:9') {
+  const [a, b] = String(ratio).split(':').map(Number);
+  if (!(a > 0 && b > 0)) throw new Error(`Ratio invalide : ${ratio}`);
+  const largeur = Math.sqrt((1024 * 1024 * a) / b);
+  const arrondi = (v) => Math.max(256, Math.round(v / 16) * 16);
+  return { largeur: arrondi(largeur), hauteur: arrondi((largeur * b) / a) };
+}
+
 /* Construit l'appel HTTP sans l'émettre : c'est ce que les tests examinent. */
 export function construireRequete(fournisseur, { prompt, env = process.env, ratio = '16:9', etapes = 4 } = {}) {
   verifierFournisseur(fournisseur);
@@ -70,14 +88,28 @@ export function construireRequete(fournisseur, { prompt, env = process.env, rati
   const modele = FOURNISSEURS[fournisseur].modele(env);
 
   if (fournisseur === 'cloudflare') {
+    /* `@` et `/` du nom de modèle restent tels quels : c'est la forme de la doc. */
+    const url = `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CLOUDFLARE_ACCOUNT_ID.trim())}/ai/run/${modele}`;
+    const autorisation = { Authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN.trim()}` };
+
+    if (EST_FLUX_2.test(modele)) {
+      const { largeur, hauteur } = dimensions(ratio);
+      const formulaire = new FormData();
+      formulaire.append('prompt', prompt);
+      formulaire.append('width', String(largeur));
+      formulaire.append('height', String(hauteur));
+      /* Pas de `Content-Type` : fetch le pose, avec la frontière du multipart. Pas de
+         `steps` non plus : les « klein » sont distillés à 4 étapes fixes. */
+      return { modele, url, init: { method: 'POST', headers: autorisation, body: formulaire } };
+    }
+
     return {
       modele,
-      /* `@` et `/` du nom de modèle restent tels quels : c'est la forme de la doc. */
-      url: `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CLOUDFLARE_ACCOUNT_ID.trim())}/ai/run/${modele}`,
+      url,
       init: {
         method: 'POST',
-        headers: { Authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN.trim()}`, 'Content-Type': 'application/json' },
-        /* `steps` : 1 à 8, 4 par défaut. Ni largeur ni hauteur : le modèle ne les
+        headers: { ...autorisation, 'Content-Type': 'application/json' },
+        /* `steps` : 1 à 8, 4 par défaut. Ni largeur ni hauteur : FLUX.1 schnell ne les
            documente pas, et un paramètre inconnu peut valoir un 400. */
         body: JSON.stringify({ prompt, steps: Math.min(8, Math.max(1, Math.round(etapes))) }),
       },

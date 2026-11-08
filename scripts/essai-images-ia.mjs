@@ -8,7 +8,7 @@
  *
  *   node scripts/essai-images-ia.mjs --dry-run                       # plan seul : aucun appel, aucun secret
  *   node scripts/essai-images-ia.mjs --fournisseur=gemini            # 5 images Gemini
- *   node scripts/essai-images-ia.mjs --fournisseur=cloudflare        # 5 images FLUX.1 schnell
+ *   node scripts/essai-images-ia.mjs --fournisseur=cloudflare        # 5 images FLUX.2 klein 9B
  *   node scripts/essai-images-ia.mjs --fournisseur=tous --nombre=1   # celles dont les secrets existent
  *
  * Options : --sortie=dossier (défaut images-ia-test, ignoré par git), --nombre=1 à 5
