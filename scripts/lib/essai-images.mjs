@@ -48,7 +48,10 @@ export const SCENES = [
   {
     id: 'echange-mains',
     libelle: 'Échange de cartes',
-    prompt: 'Close-up photograph of two pairs of hands passing a small stack of trading cards, shown from their plain navy blue backs, across a wooden table. Dark knit sleeves, warm friendly light, a softly blurred game shop with blue lights behind. The lower third of the frame fades into deep shadow.',
+    /* Reformulée le 8 novembre 2026 : la version avec des mains qui se passent des cartes
+       a reçu deux fois HTTP 500 de Workers AI (deux requêtes différentes, les quatre autres
+       scènes passant), sans doute un filtre de contenu. Aucune présence humaine ici. */
+    prompt: 'Close-up photograph of two small stacks of trading cards, shown from their plain navy blue backs, sliding toward each other across a wooden table as if being traded. Warm friendly light, a softly blurred game shop with blue lights behind. The lower third of the frame fades into deep shadow.',
   },
   {
     id: 'classeur',
