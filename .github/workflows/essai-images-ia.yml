@@ -32,6 +32,10 @@ on:
         description: "Nombre de scènes (1 à 5)"
         type: string
         default: '5'
+      scene:
+        description: "Une seule scène (identifiant, ex. echange-mains), vide pour les premières"
+        type: string
+        default: ''
       essai:
         description: "Essai à blanc : afficher le plan, n'appeler aucune API"
         type: boolean
@@ -69,12 +73,15 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           FOURNISSEUR: ${{ inputs.fournisseur }}
           NOMBRE: ${{ inputs.nombre }}
+          SCENE: ${{ inputs.scene }}
           ESSAI: ${{ inputs.essai }}
         run: |
+          ARGS=(--fournisseur="$FOURNISSEUR" --nombre="$NOMBRE")
+          if [ -n "$SCENE" ]; then ARGS+=(--scene="$SCENE"); fi
           if [ "$ESSAI" = "true" ]; then
-            node scripts/essai-images-ia.mjs --dry-run --fournisseur="$FOURNISSEUR" --nombre="$NOMBRE"
+            node scripts/essai-images-ia.mjs --dry-run "${ARGS[@]}"
           else
-            node scripts/essai-images-ia.mjs --fournisseur="$FOURNISSEUR" --nombre="$NOMBRE"
+            node scripts/essai-images-ia.mjs "${ARGS[@]}"
           fi
 
       # `always()` : même si un fournisseur a échoué, ce qui a réussi est à voir.
