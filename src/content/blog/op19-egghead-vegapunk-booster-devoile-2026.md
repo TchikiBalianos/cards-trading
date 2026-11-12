@@ -6,7 +6,7 @@ category: "one-piece"
 tags: ["one-piece", "opcg", "op19", "op18", "actualite", "egghead"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-onepiece.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
