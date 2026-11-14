@@ -21,7 +21,12 @@
       "sources": [
         "https://api.tcgdex.net/v2/fr/cards/30th-152",
         "https://api.tcgdex.net/v2/fr/cards/30th-151"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6af889a2e5a113497a93dd9d",
+        "instagram": "6af889a3918fe79d2e8d585a",
+        "facebook": "6af889a3918fe79d2e8d5876"
+      }
     },
     {
       "id": "2026-11-17-actu",
@@ -47,7 +52,12 @@
         "https://fr.onepiece-cardgame.com/products/eb06.html",
         "https://fr.onepiece-cardgame.com/products/op19.html",
         "https://fr.onepiece-cardgame.com/products/per01.html"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6af889a4b9a106584c56aeba",
+        "instagram": "6af889a5918fe79d2e8d58e5",
+        "facebook": "6af889a576c23bf1c727cf60"
+      }
     },
     {
       "id": "2026-11-19-communaute",
@@ -68,7 +78,12 @@
       },
       "sources": [
         "https://fr.onepiece-cardgame.com/products/op18.html"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6af889a676c23bf1c727cfd1",
+        "instagram": "6af889a6c5b364e06201225b",
+        "facebook": "6af889a7e5a113497a93de8c"
+      }
     },
     {
       "id": "2026-11-22-coulisses",
@@ -99,6 +114,11 @@
             "Compte rendu"
           ]
         }
+      },
+      "buffer": {
+        "twitter": "6af889a7e5a113497a93dec5",
+        "instagram": "6af889a876c23bf1c727d06b",
+        "facebook": "6af889a8e5a113497a93defe"
       }
     }
   ]
