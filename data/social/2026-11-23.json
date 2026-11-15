@@ -21,7 +21,12 @@
       "sources": [
         "https://api.tcgdex.net/v2/fr/cards/30th-154",
         "https://api.tcgdex.net/v2/fr/cards/30th-153"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6afa452506e1675856b38e50",
+        "instagram": "6afa452660a910801c56da5e",
+        "facebook": "6afa4526a869c35e5ba4a653"
+      }
     },
     {
       "id": "2026-11-24-actu",
@@ -42,7 +47,12 @@
       },
       "sources": [
         "https://www.pokemon.com/fr/actualites/decouvrez-tous-les-produits-du-jcc-pokemon-qui-sortiront-en-novembre-2026"
-      ]
+      ],
+      "buffer": {
+        "twitter": "6afa452706e1675856b38e83",
+        "instagram": "6afa4527d7e5fee6388a7ee4",
+        "facebook": "6afa452760a910801c56da9b"
+      }
     },
     {
       "id": "2026-11-26-communaute",
@@ -60,6 +70,11 @@
         "image": "https://images.unsplash.com/photo-1708032563840-e77e426411dd?w=2400&q=85&fm=jpg",
         "credit": "Branden Skeli / Unsplash",
         "titre": "La carte du booster"
+      },
+      "buffer": {
+        "twitter": "6afa452760a910801c56dab8",
+        "instagram": "6afa4528ff465c57dabdc7ec",
+        "facebook": "6afa45288e87c256a39cb730"
       }
     },
     {
@@ -104,6 +119,11 @@
             ]
           ]
         }
+      },
+      "buffer": {
+        "twitter": "6afa4529d7e5fee6388a7f53",
+        "instagram": "6afa452b8e87c256a39cb868",
+        "facebook": "6afa452bd7e5fee6388a7fc6"
       }
     }
   ]
