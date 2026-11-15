@@ -6,7 +6,7 @@ category: "magic"
 tags: ["magic", "star-trek", "universes-beyond", "commander", "booster"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-magic.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
