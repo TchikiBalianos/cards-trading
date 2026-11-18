@@ -6,7 +6,7 @@ category: "pokemon"
 tags: ["pokemon", "pokemon-day", "produits", "collection", "2027"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-pokemon.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
