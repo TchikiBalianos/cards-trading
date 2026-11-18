@@ -31,13 +31,25 @@ const MAX_X = 280;
 const MAX_INSTAGRAM = 2200;
 const RE_CITATION = /^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]{1,15}\/status\/\d+/;
 
-/* X compte un lien pour 23 caractères et un emoji pour 2. Le décompte est
-   volontairement prudent : mieux vaut refuser un texte limite que voir Buffer
+/* Poids d'un texte selon les règles de X (twitter-text) : un lien pèse 23 ; un caractère
+   pèse 1 de U+0000 à U+10FF, de U+2000 à U+200D, de U+2010 à U+201F et de U+2032 à U+2037,
+   et 2 partout ailleurs, donc la puce « • », « … », « € », le japonais et les emoji.
+   Le 16 novembre 2026, ce décompte ne doublait que les emoji : un post à 279 sur 280 avec
+   trois puces pesait 282 pour X, et Buffer l'a refusé à la programmation.
+   Les emoji restent comptés double même quand X les compterait simple (« © »), et les
+   sélecteurs de variation (U+FE0E, U+FE0F) ne comptent pas : ils suivent l'emoji qu'ils
+   précisent. Le décompte reste prudent : mieux vaut refuser un texte limite que voir Buffer
    rejeter le post au moment de le programmer. */
+const POIDS_UN = [[0x0000, 0x10ff], [0x2000, 0x200d], [0x2010, 0x201f], [0x2032, 0x2037]];
 export function poidsX(texte) {
-  const sansLien = String(texte).replace(/https?:\/\/\S+/g, ' '.repeat(23));
+  const sansLien = String(texte).normalize('NFC').replace(/https?:\/\/\S+/g, ' '.repeat(23));
   let p = 0;
-  for (const c of sansLien) p += /\p{Extended_Pictographic}/u.test(c) ? 2 : 1;
+  for (const c of sansLien) {
+    const cp = c.codePointAt(0);
+    if (cp === 0xfe0e || cp === 0xfe0f) continue;
+    const simple = POIDS_UN.some(([debut, fin]) => cp >= debut && cp <= fin) && !/\p{Extended_Pictographic}/u.test(c);
+    p += simple ? 1 : 2;
+  }
   return p;
 }
 

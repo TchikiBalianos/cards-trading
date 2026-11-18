@@ -30,6 +30,47 @@ test('poidsX : un lien pèse 23, un emoji pèse 2', () => {
   assert.equal(poidsX('voir https://cards-trading.com/blog/un-tres-long-slug-de-blog/'), 5 + 23);
 });
 
+test('poidsX : la puce, les points de suspension et l\'euro pèsent 2, comme pour X', () => {
+  assert.equal(poidsX('•'), 2);
+  assert.equal(poidsX('…'), 2);
+  assert.equal(poidsX('61,80 €'), 6 + 2);
+});
+
+test('poidsX : lettres accentuées, guillemets et apostrophe typographique pèsent 1, accent décomposé compris', () => {
+  assert.equal(poidsX('é'), 1);
+  assert.equal(poidsX('é'), 1, 'X normalise en NFC avant de compter');
+  assert.equal(poidsX('« l’été »'), 9);
+});
+
+test('poidsX : un sélecteur de variation ne s\'ajoute pas à son emoji', () => {
+  assert.equal(poidsX('✨'), 2);
+  assert.equal(poidsX('✨️'), 2);
+});
+
+test('poidsX : le post X du 24 novembre refusé par Buffer pèse bien plus de 280', () => {
+  const refuse = [
+    '🆕 30e Anniversaire : trois produits annoncés pour novembre, selon Pokémon.',
+    '',
+    '• Collection Premium Métamorph : 8 boosters et un porte-carte acrylique',
+    '• Collection avec figurine : Mew ou Mewtwo, 5 boosters',
+    '• Collection Ultra-Premium : 30 boosters',
+    '',
+    'Lequel te tente ? 👇',
+    '',
+    '#PokemonTCG',
+  ].join('\n');
+  assert.equal(poidsX(refuse), 282);
+  assert.ok(poidsX(refuse.replace('• Collection Premium Métamorph : 8 boosters et un porte-carte acrylique', '• Premium Métamorph : 8 boosters, porte-carte acrylique')) <= 280);
+});
+
+test('un texte X de 280 caractères avec une puce pèse 281 et est refusé', () => {
+  const d = bon();
+  d.posts[0].twitter.texte = `• ${'a'.repeat(278)}`;
+  assert.equal(d.posts[0].twitter.texte.length, 280);
+  assert.equal(poidsX(d.posts[0].twitter.texte), 281);
+  assert.ok(erreursDe(d).some((e) => /trop long \(281 sur 280\)/.test(e)));
+});
+
 test('compterHashtags', () => {
   assert.equal(compterHashtags('#pokemontcg #cartespokemon salut'), 2);
   assert.equal(compterHashtags('aucun'), 0);
