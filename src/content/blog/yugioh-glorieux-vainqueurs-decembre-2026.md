@@ -6,7 +6,7 @@ category: "yugioh"
 tags: ["yugioh", "glorious-victors", "zenet", "raise-moon", "nouveaute"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-yugiho.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
