@@ -49,8 +49,8 @@ node scripts/semaine-sociale.mjs --controle --dry-run         # exige BUFFER_API
 ### Règles éditoriales, refusées par `valider` avant tout envoi
 
 Aucun tiret long. Un prix, un pourcentage ou une cote exige `sources` (liens lus en
-entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pondérés,
-2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
+entier, règle du 22 septembre 2026 sur les chiffres). X : 280 caractères pondérés comme X les compte (`poidsX`, `scripts/lib/brouillons.mjs` :
+un lien pèse 23 ; la puce `•`, `…`, `€` et les emoji pèsent 2), 2 hashtags au plus. Instagram : 5 hashtags au plus, aucun lien (« lien du site en bio »).
 Une photo exige un `credit`, porté par le visuel et **jamais dans la légende** (Julian,
 23 octobre 2026).
 
