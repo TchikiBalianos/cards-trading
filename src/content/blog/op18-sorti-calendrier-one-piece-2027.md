@@ -6,7 +6,7 @@ category: "one-piece"
 tags: ["one-piece", "opcg", "op18", "op19", "actualite", "calendrier"]
 author: "Cards Trading"
 heroImage: "/assets/img/logo-onepiece.png"
-draft: true
+draft: false
 ---
 
 <!-- sommaire -->
